@@ -99,7 +99,7 @@ const ProgrammeSection = () => {
         </motion.div>
 
         {/* Carousel */}
-        <Carousel opts={{ align: "start", loop: true }} className="w-full">
+        <Carousel opts={{ align: "start", loop: true, dragFree: true }} className="w-full">
           <CarouselContent className="-ml-5">
             {pillars.map((pillar, i) => (
               <CarouselItem key={i} className="pl-5 basis-[75%] sm:basis-[40%] lg:basis-[28%]">
@@ -131,17 +131,17 @@ const ProgrammeSection = () => {
 
                     {/* Content */}
                     <div className="relative z-10 flex-1 flex flex-col justify-end py-4">
-                      <h3 className={`font-accent text-sm sm:text-base font-extrabold ${pillar.textColor} uppercase tracking-wide leading-tight mb-3 break-words`}>
+                      <h3 className={`font-accent text-base sm:text-lg lg:text-xl font-extrabold ${pillar.textColor} uppercase tracking-wide leading-tight mb-3 break-words`}>
                         {pillar.title}
                       </h3>
-                      <p className={`${pillar.subtextColor} text-xs sm:text-sm leading-relaxed`}>
+                      <p className={`${pillar.subtextColor} text-sm sm:text-base leading-relaxed`}>
                         {pillar.desc}
                       </p>
                     </div>
 
                     {/* Bottom indicator */}
                     <div className={`relative z-10 flex items-center gap-2 ${pillar.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
-                      <span className="text-xs font-bold uppercase tracking-wider">En savoir plus</span>
+                      <span className="text-sm font-bold uppercase tracking-wider">En savoir plus</span>
                       <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                     </div>
                   </div>

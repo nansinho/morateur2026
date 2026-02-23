@@ -112,7 +112,7 @@ const EngagezVousSection = () => {
         </motion.div>
 
         {/* Carousel */}
-        <Carousel opts={{ align: "start", loop: true }} className="w-full max-w-6xl mx-auto">
+        <Carousel opts={{ align: "start", loop: true, dragFree: true }} className="w-full max-w-6xl mx-auto">
           <CarouselContent className="-ml-5">
             {actions.map((action, i) => (
               <CarouselItem key={i} className="pl-5 basis-[75%] sm:basis-[40%] lg:basis-[28%]">
@@ -142,10 +142,10 @@ const EngagezVousSection = () => {
 
                     {/* Content */}
                     <div className="relative z-10 flex-1 flex flex-col justify-end py-4">
-                      <h3 className={`font-accent text-sm sm:text-base font-extrabold ${action.textColor} uppercase tracking-wide leading-tight mb-3 break-words`}>
+                      <h3 className={`font-accent text-base sm:text-lg lg:text-xl font-extrabold ${action.textColor} uppercase tracking-wide leading-tight mb-3 break-words`}>
                         {action.title}
                       </h3>
-                      <p className={`${action.subtextColor} text-xs sm:text-sm leading-relaxed`}>
+                      <p className={`${action.subtextColor} text-sm sm:text-base leading-relaxed`}>
                         {action.desc}
                       </p>
                     </div>
