@@ -65,7 +65,7 @@ const RoadmapSection = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className={`flex-shrink-0 w-[260px] sm:w-[300px] md:w-[320px] rounded-2xl border-2 p-5 sm:p-8 flex flex-col relative overflow-hidden ${
+                  className={`flex-shrink-0 w-[75vw] sm:w-[300px] md:w-[320px] rounded-2xl border-2 p-5 sm:p-8 flex flex-col relative overflow-hidden ${
                     m.done ? "bg-campaign-ice border-campaign-lime/30" : "bg-muted border-transparent opacity-70"
                   }`}
                 >

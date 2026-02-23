@@ -9,9 +9,9 @@ const VillageBanner = () => {
   const scale = useTransform(scrollYProgress, [0, 0.5], [1.15, 1]);
 
   return (
-    <div ref={ref} className="relative h-[60vh] md:h-[70vh] overflow-hidden">
+    <div ref={ref} className="relative h-[50vh] md:h-[70vh] overflow-hidden">
       <motion.div className="absolute inset-0" style={{ y: imgY, scale }}>
-        <img src={villageBanner} alt="Vue du village de Bouc-Bel-Air" className="w-full h-full object-cover" />
+        <img src={villageBanner} alt="Vue panoramique de Bouc-Bel-Air, commune des Bouches-du-Rhône" className="w-full h-full object-cover" loading="lazy" />
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">

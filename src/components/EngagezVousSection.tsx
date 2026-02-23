@@ -1,13 +1,6 @@
 import { motion } from "framer-motion";
 import { HandHeart, FileText, Instagram, Facebook, Mail, BookOpen, ExternalLink, ChevronRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from "@/components/ui/carousel";
 
 const actions: {
   Icon: LucideIcon;
@@ -90,7 +83,7 @@ const actions: {
 
 const EngagezVousSection = () => {
   return (
-    <section className="bg-campaign-ice py-16 sm:py-24 overflow-hidden min-h-screen flex items-center">
+    <section aria-label="Rejoignez la campagne" className="bg-campaign-ice py-16 sm:py-24 overflow-hidden">
       <div className="w-full relative z-10">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div

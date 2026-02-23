@@ -46,7 +46,7 @@ const CounterStat = ({ value, label, suffix = "" }: { value: number; label: stri
 
 const CandidateSection = () => {
   return (
-    <section id="candidat" className="gradient-teal-deep relative overflow-hidden min-h-screen flex items-center">
+    <section id="candidat" aria-label="Le candidat Mathieu Morateur" className="gradient-teal-deep relative overflow-hidden">
       <div className="py-16 sm:py-24 w-full">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
@@ -59,10 +59,10 @@ const CandidateSection = () => {
               className="relative"
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <img src={candidatImg} alt="Mathieu Morateur" className="w-full aspect-[3/4] object-cover object-top" />
+                <img src={candidatImg} alt="Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air" className="w-full aspect-[3/4] object-cover object-top" loading="lazy" />
                 <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-primary/60 to-transparent" />
               </div>
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-xl gradient-lime opacity-40 -z-10" />
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-xl gradient-lime opacity-40 -z-10" aria-hidden="true" />
             </motion.div>
 
             {/* Text + Stats + Highlights all together */}

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ShieldCheck, Building2, Store, ChevronDown, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
+import useDocumentMeta from "@/hooks/useDocumentMeta";
 import Navbar from "@/components/Navbar";
 import RoadmapSection from "@/components/RoadmapSection";
 import Footer from "@/components/Footer";
@@ -95,6 +96,11 @@ const AccordionItem = ({ item, isOpen, toggle, index }: { item: { title: string;
 const ProgrammePage = () => {
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
   const navigate = useNavigate();
+
+  useDocumentMeta({
+    title: "Programme | Morateur 2026",
+    description: "Découvrez les 3 piliers du programme de Mathieu Morateur pour Bouc-Bel-Air : urbanisme, infrastructures, revitalisation du village.",
+  });
 
   const toggleItem = (key: string) => {
     setOpenItems((prev) => ({ ...prev, [key]: !prev[key] }));

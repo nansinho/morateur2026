@@ -1,3 +1,4 @@
+import useDocumentMeta from "@/hooks/useDocumentMeta";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import MarqueeBand from "@/components/MarqueeBand";
@@ -10,6 +11,10 @@ import ProcurationSection from "@/components/ProcurationSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  useDocumentMeta({
+    title: "Morateur 2026 — Bouc Bel Air a de l'Avenir",
+    description: "Mathieu Morateur, candidat aux élections municipales 2026 à Bouc-Bel-Air. Découvrez le programme et l'équipe.",
+  });
   return (
     <main>
       <Navbar />
