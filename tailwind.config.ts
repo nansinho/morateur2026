@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['"Sora"', 'system-ui', 'sans-serif'],
-        body: ['"Inter"', 'system-ui', 'sans-serif'],
+        heading: ['"Plus Jakarta Sans"', '"Sora"', 'system-ui', 'sans-serif'],
+        body: ['"Plus Jakarta Sans"', '"Inter"', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -60,6 +60,9 @@ export default {
           sky: "hsl(var(--campaign-sky))",
           warm: "hsl(var(--campaign-warm))",
           glow: "hsl(var(--campaign-glow))",
+          coral: "hsl(var(--campaign-coral))",
+          lavender: "hsl(var(--campaign-lavender))",
+          mint: "hsl(var(--campaign-mint))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

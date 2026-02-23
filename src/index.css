@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -44,6 +44,9 @@
     --campaign-sky: 200 75% 94%;
     --campaign-warm: 40 30% 96%;
     --campaign-glow: 160 80% 60%;
+    --campaign-coral: 12 80% 62%;
+    --campaign-lavender: 270 60% 70%;
+    --campaign-mint: 160 50% 85%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;

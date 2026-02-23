@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import MarqueeBand from "@/components/MarqueeBand";
 import CandidateSection from "@/components/CandidateSection";
 import VillageBanner from "@/components/VillageBanner";
 import ProgrammeSection from "@/components/ProgrammeSection";
@@ -15,6 +16,7 @@ const Index = () => {
     <main>
       <Navbar />
       <HeroSection />
+      <MarqueeBand />
       <CandidateSection />
       <VillageBanner />
       <ProgrammeSection />
