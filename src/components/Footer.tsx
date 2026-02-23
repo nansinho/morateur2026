@@ -148,10 +148,10 @@ const Footer = () => {
 
           {/* SEO text */}
           <div className="border-t border-primary-foreground/[0.15] mt-10 pt-8">
-            <p className="text-primary-foreground/30 text-[10px] uppercase tracking-[0.25em] font-bold mb-4">
+            <p className="text-primary-foreground/50 text-[10px] uppercase tracking-[0.25em] font-bold mb-4">
               À propos de Bouc-Bel-Air et des élections municipales 2026
             </p>
-            <div className="space-y-3 text-primary-foreground/20 text-xs leading-relaxed max-w-4xl">
+            <div className="space-y-3 text-primary-foreground/40 text-xs leading-relaxed max-w-4xl">
               <p>
                 Bouc-Bel-Air est une commune française située dans le département des Bouches-du-Rhône, en région Provence-Alpes-Côte d'Azur.
                 Nichée entre Aix-en-Provence et Marseille, cette ville provençale d'environ 15 000 habitants allie cadre de vie naturel
