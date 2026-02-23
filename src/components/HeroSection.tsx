@@ -78,22 +78,24 @@ const HeroSection = () => {
         </div>
 
         <motion.span
-          className="inline-block font-accent font-extrabold uppercase text-primary-foreground text-lg sm:text-2xl md:text-3xl tracking-widest px-4 py-1 bg-campaign-lime/20 backdrop-blur-sm rounded-lg mb-3 -rotate-3"
-          initial={{ opacity: 0, scale: 0.8, rotate: -6 }}
-          animate={{ opacity: 1, scale: 1, rotate: -3 }}
-          transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="inline-block font-accent font-extrabold uppercase text-primary text-xl sm:text-2xl md:text-4xl tracking-[0.25em] px-6 py-1.5 bg-campaign-lime rounded-md mb-4 shadow-lg"
+          style={{ rotate: "-2deg" }}
+          initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
+          animate={{ opacity: 1, scale: 1, rotate: -2 }}
+          transition={{ duration: 0.7, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           SERA
         </motion.span>
 
-        <div className="overflow-hidden mb-12" style={{ height: "clamp(4.5rem, 12vw, 10rem)" }}>
+        <div className="overflow-hidden mb-12" style={{ height: "clamp(5rem, 13vw, 11rem)", paddingTop: "0.15em" }}>
           <AnimatePresence mode="wait">
             <motion.p
               key={rotatingWords[wordIndex].word}
-              className="font-accent font-extrabold uppercase tracking-tight leading-none py-1"
+              className="font-accent font-extrabold uppercase tracking-tight"
               style={{
                 fontSize: "clamp(3.5rem, 10vw, 8rem)",
                 color: rotatingWords[wordIndex].color,
+                lineHeight: 1.15,
               }}
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
