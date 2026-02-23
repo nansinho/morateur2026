@@ -145,35 +145,33 @@ const Footer = () => {
               <ArrowUp className="w-4 h-4 text-primary-foreground/50" />
             </motion.button>
           </div>
-        </div>
-      </footer>
 
-      {/* SEO Block */}
-      <section className="bg-foreground py-8 sm:py-10">
-        <div className="container mx-auto px-4 sm:px-6">
-          <p className="text-background/30 text-[10px] uppercase tracking-[0.25em] font-bold mb-4">
-            À propos de Bouc-Bel-Air et des élections municipales 2026
-          </p>
-          <div className="space-y-3 text-background/20 text-xs leading-relaxed max-w-4xl">
-            <p>
-              Bouc-Bel-Air est une commune française située dans le département des Bouches-du-Rhône, en région Provence-Alpes-Côte d'Azur.
-              Nichée entre Aix-en-Provence et Marseille, cette ville provençale d'environ 15 000 habitants allie cadre de vie naturel
-              préservé et proximité des grands pôles urbains métropolitains.
+          {/* SEO text */}
+          <div className="border-t border-primary-foreground/[0.15] mt-10 pt-8">
+            <p className="text-primary-foreground/30 text-[10px] uppercase tracking-[0.25em] font-bold mb-4">
+              À propos de Bouc-Bel-Air et des élections municipales 2026
             </p>
-            <p>
-              Les élections municipales 2026 à Bouc-Bel-Air représentent un moment démocratique majeur pour l'avenir de la commune.
-              Mathieu Morateur, candidat à la mairie, porte un projet ambitieux articulé autour de la préservation du village,
-              de la lutte contre l'urbanisation excessive, du renforcement des infrastructures scolaires et sportives,
-              et de la transition écologique du territoire.
-            </p>
-            <p>
-              Le programme municipal couvre les enjeux essentiels : urbanisme maîtrisé, protection de l'environnement et des espaces naturels,
-              amélioration des écoles et des équipements publics, sécurité, mobilité douce, vie associative
-              et dynamisme économique local. Bouc-Bel-Air a de l'Avenir avec une équipe engagée et à l'écoute des habitants.
-            </p>
+            <div className="space-y-3 text-primary-foreground/20 text-xs leading-relaxed max-w-4xl">
+              <p>
+                Bouc-Bel-Air est une commune française située dans le département des Bouches-du-Rhône, en région Provence-Alpes-Côte d'Azur.
+                Nichée entre Aix-en-Provence et Marseille, cette ville provençale d'environ 15 000 habitants allie cadre de vie naturel
+                préservé et proximité des grands pôles urbains métropolitains.
+              </p>
+              <p>
+                Les élections municipales 2026 à Bouc-Bel-Air représentent un moment démocratique majeur pour l'avenir de la commune.
+                Mathieu Morateur, candidat à la mairie, porte un projet ambitieux articulé autour de la préservation du village,
+                de la lutte contre l'urbanisation excessive, du renforcement des infrastructures scolaires et sportives,
+                et de la transition écologique du territoire.
+              </p>
+              <p>
+                Le programme municipal couvre les enjeux essentiels : urbanisme maîtrisé, protection de l'environnement et des espaces naturels,
+                amélioration des écoles et des équipements publics, sécurité, mobilité douce, vie associative
+                et dynamisme économique local. Bouc-Bel-Air a de l'Avenir avec une équipe engagée et à l'écoute des habitants.
+              </p>
+            </div>
           </div>
         </div>
-      </section>
+      </footer>
     </>
   );
 };
