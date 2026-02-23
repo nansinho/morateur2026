@@ -156,11 +156,11 @@
 
 @layer utilities {
   .gradient-teal {
-    background: linear-gradient(135deg, hsl(192 82% 29%), hsl(210 30% 47%));
+    background: linear-gradient(135deg, hsl(var(--campaign-teal)), hsl(var(--campaign-steel)));
   }
 
   .gradient-teal-deep {
-    background: linear-gradient(160deg, hsl(192 82% 14%), hsl(192 82% 22%), hsl(210 30% 35%));
+    background: linear-gradient(160deg, hsl(var(--primary)), hsl(var(--campaign-teal)), hsl(var(--campaign-steel)));
   }
 
   .gradient-lime {
@@ -175,7 +175,7 @@
   }
 
   .text-gradient-teal {
-    background: linear-gradient(135deg, hsl(192 82% 29%), hsl(192 65% 40%));
+    background: linear-gradient(135deg, hsl(var(--campaign-teal)), hsl(var(--campaign-teal-light)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -186,7 +186,7 @@
   }
   .hover-lift:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 60px hsl(192 82% 18% / 0.12);
+    box-shadow: 0 20px 60px hsl(var(--campaign-teal) / 0.12);
   }
 
   .section-label {
