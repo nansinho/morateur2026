@@ -1,7 +1,14 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, Building2, Store, Leaf, GraduationCap, ArrowRight } from "lucide-react";
+import { ShieldCheck, Building2, Store, Leaf, GraduationCap, ArrowRight, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
 
 const pillars: {
   icon: LucideIcon;
@@ -9,41 +16,47 @@ const pillars: {
   desc: string;
   iconBg: string;
   gradient: string;
+  number: string;
 }[] = [
   {
     icon: ShieldCheck,
     title: "Faire barrage aux promoteurs",
     desc: "Moratoire sur les grands projets, révision du PLU, consultation citoyenne systématique.",
     iconBg: "gradient-lime",
-    gradient: "from-campaign-lime/20 via-campaign-lime/5 to-transparent",
+    gradient: "from-campaign-lime/30 via-campaign-lime/10 to-transparent",
+    number: "01",
   },
   {
     icon: Building2,
     title: "Des infrastructures à la hauteur",
     desc: "Plan d'investissement pluriannuel, rénovation énergétique, mise aux normes d'accessibilité.",
     iconBg: "gradient-teal",
-    gradient: "from-primary/20 via-primary/5 to-transparent",
+    gradient: "from-primary/30 via-primary/10 to-transparent",
+    number: "02",
   },
   {
     icon: Store,
     title: "Revitaliser le village",
     desc: "Aide aux commerces de proximité, embellissement des façades, marchés thématiques.",
     iconBg: "bg-campaign-steel",
-    gradient: "from-campaign-steel/20 via-campaign-steel/5 to-transparent",
+    gradient: "from-campaign-steel/30 via-campaign-steel/10 to-transparent",
+    number: "03",
   },
   {
     icon: Leaf,
     title: "Environnement & cadre de vie",
     desc: "Corridors verts, lutte contre les nuisances, protection des collines et espaces boisés.",
     iconBg: "bg-campaign-olive",
-    gradient: "from-campaign-olive/20 via-campaign-olive/5 to-transparent",
+    gradient: "from-campaign-olive/30 via-campaign-olive/10 to-transparent",
+    number: "04",
   },
   {
     icon: GraduationCap,
     title: "Écoles & jeunesse",
     desc: "Rénovation des cantines, espaces périscolaires modernes, soutien aux associations.",
     iconBg: "gradient-lime",
-    gradient: "from-campaign-lime/20 via-campaign-lime/5 to-transparent",
+    gradient: "from-campaign-lime/30 via-campaign-lime/10 to-transparent",
+    number: "05",
   },
 ];
 
@@ -73,53 +86,73 @@ const ProgrammeSection = () => {
           </p>
         </motion.div>
 
-        {/* TikTok-style vertical cards */}
-        <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0">
-          {pillars.map((pillar, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.4 }}
-              className="flex-shrink-0 w-[200px] sm:w-auto snap-center"
-            >
-              <div
-                className={`relative rounded-[1.25rem] aspect-[9/16] bg-background/95 backdrop-blur-sm border border-primary-foreground/10
-                  flex flex-col items-center justify-between p-6 text-center overflow-hidden
-                  transition-all duration-300 cursor-pointer group
-                  hover:-translate-y-2 hover:shadow-2xl hover:shadow-campaign-lime/10 hover:border-campaign-lime/30`}
-              >
-                {/* Gradient accent at top */}
-                <div className={`absolute top-0 left-0 right-0 h-32 bg-gradient-to-b ${pillar.gradient} opacity-60 group-hover:opacity-100 transition-opacity duration-300`} />
-
-                {/* Top spacer */}
-                <div className="relative z-10 pt-4">
-                  <motion.div
-                    className={`w-16 h-16 rounded-2xl ${pillar.iconBg} flex items-center justify-center shadow-lg mx-auto`}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.2 }}
+        {/* Carousel */}
+        <Carousel opts={{ align: "start", loop: true }} className="w-full">
+          <CarouselContent className="-ml-5">
+            {pillars.map((pillar, i) => (
+              <CarouselItem key={i} className="pl-5 basis-[75%] sm:basis-[40%] lg:basis-[28%]">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08, duration: 0.4 }}
+                  whileHover={{ y: -8 }}
+                  className="cursor-pointer group"
+                >
+                  <div
+                    className="relative rounded-[1.25rem] aspect-[9/16] bg-background/95 backdrop-blur-sm border border-primary-foreground/10
+                      flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
+                      transition-all duration-300
+                      group-hover:shadow-2xl group-hover:shadow-campaign-lime/10 group-hover:border-campaign-lime/30"
                   >
-                    <pillar.icon className="w-8 h-8 text-primary-foreground" strokeWidth={1.5} />
-                  </motion.div>
-                </div>
+                    {/* Gradient accent at top */}
+                    <div className={`absolute top-0 left-0 right-0 h-36 bg-gradient-to-b ${pillar.gradient} opacity-60 group-hover:opacity-100 transition-opacity duration-300`} />
 
-                {/* Center content */}
-                <div className="relative z-10 flex-1 flex flex-col justify-center py-4">
-                  <h3 className="font-accent text-sm font-extrabold text-foreground uppercase tracking-wide leading-tight mb-3 break-words">
-                    {pillar.title}
-                  </h3>
-                  <p className="text-muted-foreground text-xs leading-relaxed">
-                    {pillar.desc}
-                  </p>
-                </div>
+                    {/* Number */}
+                    <div className="relative z-10 self-start">
+                      <span className="font-accent text-5xl sm:text-6xl font-black text-primary-foreground/[0.07] group-hover:text-campaign-lime/20 transition-colors duration-300 leading-none">
+                        {pillar.number}
+                      </span>
+                    </div>
 
-                {/* Bottom indicator */}
-                <div className="relative z-10 w-10 h-1 rounded-full bg-campaign-lime/30 group-hover:bg-campaign-lime group-hover:w-14 transition-all duration-300" />
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                    {/* Icon */}
+                    <div className="relative z-10">
+                      <motion.div
+                        className={`w-20 h-20 rounded-2xl ${pillar.iconBg} flex items-center justify-center shadow-lg mx-auto`}
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <pillar.icon className="w-10 h-10 text-primary-foreground" strokeWidth={1.5} />
+                      </motion.div>
+                      {/* Glow */}
+                      <div className={`absolute inset-0 w-20 h-20 mx-auto rounded-2xl ${pillar.iconBg} opacity-30 blur-xl`} />
+                    </div>
+
+                    {/* Content */}
+                    <div className="relative z-10 flex-1 flex flex-col justify-end py-4">
+                      <h3 className="font-accent text-sm sm:text-base font-extrabold text-foreground uppercase tracking-wide leading-tight mb-3 break-words">
+                        {pillar.title}
+                      </h3>
+                      <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
+                        {pillar.desc}
+                      </p>
+                    </div>
+
+                    {/* Bottom indicator */}
+                    <div className="relative z-10 flex items-center gap-2 text-campaign-lime/50 group-hover:text-campaign-lime transition-colors duration-300">
+                      <span className="text-xs font-bold uppercase tracking-wider">En savoir plus</span>
+                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    </div>
+                  </div>
+                </motion.div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="flex items-center justify-center gap-4 mt-10">
+            <CarouselPrevious className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-300" />
+            <CarouselNext className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-300" />
+          </div>
+        </Carousel>
 
         {/* CTA */}
         <motion.div
