@@ -16,7 +16,7 @@ export default {
       fontFamily: {
         heading: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-        editorial: ['"Playfair Display"', 'Georgia', '"Times New Roman"', 'serif'],
+        accent: ['"Sora"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -61,10 +61,6 @@ export default {
           sky: "hsl(var(--campaign-sky))",
           warm: "hsl(var(--campaign-warm))",
           glow: "hsl(var(--campaign-glow))",
-          coral: "hsl(var(--campaign-coral))",
-          lavender: "hsl(var(--campaign-lavender))",
-          mint: "hsl(var(--campaign-mint))",
-          cream: "hsl(var(--campaign-cream))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

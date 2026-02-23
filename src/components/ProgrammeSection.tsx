@@ -4,13 +4,11 @@ import { ShieldCheck, Building2, Store, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
 
-const pillars: { icon: LucideIcon; title: string; desc: string; stat: string; statLabel: string; items: string[] }[] = [
+const pillars: { icon: LucideIcon; title: string; desc: string; items: string[] }[] = [
   {
     icon: ShieldCheck,
     title: "Faire barrage aux promoteurs",
     desc: "Protéger notre cadre de vie face à l'avalanche de permis de construire.",
-    stat: "1000+",
-    statLabel: "logements menacés",
     items: [
       "Refus permanent des permis de construire des promoteurs",
       "Utilisation systématique du droit de préemption urbain",
@@ -22,8 +20,6 @@ const pillars: { icon: LucideIcon; title: string; desc: string; stat: string; st
     icon: Building2,
     title: "Des infrastructures à la hauteur",
     desc: "Rénover nos bâtiments publics et moderniser nos voiries.",
-    stat: "30°C",
-    statLabel: "dans nos écoles en mai",
     items: [
       "Rénovation complète des bâtiments municipaux",
       "Climatisation réversible dans toutes les écoles",
@@ -35,8 +31,6 @@ const pillars: { icon: LucideIcon; title: string; desc: string; stat: string; st
     icon: Store,
     title: "Revitaliser le village",
     desc: "Redonner vie à notre centre ancien et attirer de nouveaux commerces.",
-    stat: "100%",
-    statLabel: "centre-ville à revitaliser",
     items: [
       "Centre ancien attractif et vivant",
       "Commerces et artisanat de proximité",
@@ -56,23 +50,16 @@ const PillarCard = ({ pillar, index, className }: { pillar: typeof pillars[0]; i
   return (
     <motion.div
       ref={ref}
-      className={`rounded-3xl overflow-hidden relative bg-card border border-border group ${className}`}
+      className={`rounded-2xl overflow-hidden relative bg-card border border-border group ${className}`}
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -6, transition: { duration: 0.3 } }}
+      whileHover={{ y: -4, transition: { duration: 0.3 } }}
     >
       <div className={`relative z-10 ${isLarge ? "p-10 md:p-14" : "p-8"} flex flex-col h-full`}>
-        <div className="w-14 h-14 rounded-2xl bg-campaign-green/10 flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110">
-          <pillar.icon className="w-7 h-7 text-campaign-green" />
+        <div className="w-12 h-12 rounded-xl bg-campaign-green/10 flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110">
+          <pillar.icon className="w-6 h-6 text-campaign-green" />
         </div>
-
-        <p className={`font-editorial italic ${isLarge ? "text-6xl md:text-8xl" : "text-5xl"} text-campaign-green/20 font-bold tracking-tighter mb-2 leading-none`}>
-          {pillar.stat}
-        </p>
-        <p className="text-muted-foreground text-xs uppercase tracking-[0.2em] font-bold mb-6">
-          {pillar.statLabel}
-        </p>
 
         <h3 className={`font-heading ${isLarge ? "text-2xl md:text-3xl" : "text-xl"} font-extrabold text-foreground mb-3 leading-tight`}>
           {pillar.title}
@@ -85,7 +72,7 @@ const PillarCard = ({ pillar, index, className }: { pillar: typeof pillars[0]; i
           {pillar.items.map((item, j) => (
             <motion.li
               key={j}
-              className="flex items-start gap-3 text-foreground/60 text-sm leading-relaxed"
+              className="flex items-start gap-3 text-foreground/70 text-sm leading-relaxed"
               initial={{ opacity: 0, x: -15 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: index * 0.15 + j * 0.08 + 0.3, duration: 0.4 }}
@@ -104,7 +91,7 @@ const ProgrammeSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="programme" className="bg-primary relative overflow-hidden">
+    <section id="programme" className="gradient-premium relative overflow-hidden">
       <div className="container mx-auto px-6 py-28 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -114,8 +101,8 @@ const ProgrammeSection = () => {
           className="text-center mb-20"
         >
           <p className="text-campaign-green font-heading font-bold text-xs uppercase tracking-[0.3em] mb-6">Notre vision</p>
-          <h2 className="font-editorial italic text-5xl md:text-8xl text-primary-foreground leading-[0.9]">
-            Le <span className="text-campaign-green">Pro</span><span className="text-campaign-gold">gramme</span>
+          <h2 className="font-heading font-extrabold text-5xl md:text-7xl text-primary-foreground leading-[0.9] tracking-tight">
+            Le <span className="text-gradient">Programme</span>
           </h2>
           <p className="text-primary-foreground/40 max-w-2xl mx-auto text-lg mt-8 font-medium">
             Trois piliers concrets pour redonner à Bouc-Bel-Air le cadre de vie qu'elle mérite.
@@ -137,8 +124,8 @@ const ProgrammeSection = () => {
         >
           <motion.button
             onClick={() => navigate("/programme")}
-            className="inline-flex items-center gap-3 bg-campaign-gold text-primary px-10 py-5 rounded-full font-extrabold text-sm shadow-xl"
-            whileHover={{ scale: 1.05, x: 4 }}
+            className="inline-flex items-center gap-3 bg-campaign-gold text-primary px-10 py-4 rounded-lg font-bold text-sm shadow-xl"
+            whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
             Voir le programme complet

@@ -4,9 +4,6 @@ import { useRef } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import candidatImg from "@/assets/header_candidat_portrait.png";
 
-const words = ["Bouc", "Bel", "Air"];
-const subtitle = ["a", "de", "l'Avenir"];
-
 const HeroSection = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLElement>(null);
@@ -21,94 +18,84 @@ const HeroSection = () => {
   };
 
   return (
-    <section ref={ref} id="hero" className="relative min-h-screen flex items-center overflow-hidden bg-background">
-      {/* Right: Full-height editorial photo */}
+    <section ref={ref} id="hero" className="relative min-h-screen flex items-center overflow-hidden gradient-premium">
+      {/* Right: Full-height photo */}
       <motion.div
-        className="absolute top-0 right-0 w-[55%] h-full hidden lg:block"
+        className="absolute top-0 right-0 w-[50%] h-full hidden lg:block"
         style={{ scale: imgScale, y: imgY }}
       >
         <img src={candidatImg} alt="Mathieu Morateur" className="w-full h-full object-cover object-top" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/60 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-primary to-transparent" />
       </motion.div>
 
       {/* Mobile photo */}
       <div className="absolute inset-0 lg:hidden">
         <img src={candidatImg} alt="Mathieu Morateur" className="w-full h-full object-cover object-top" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/95 via-primary/80 to-primary" />
       </div>
 
-      {/* Left: Editorial text */}
+      {/* Left: Text */}
       <motion.div className="relative container mx-auto px-6 py-32 lg:py-0" style={{ opacity }}>
         <div className="max-w-2xl">
-          {/* Label */}
-          <motion.p
-            className="text-campaign-green font-heading font-bold text-xs uppercase tracking-[0.3em] mb-8"
+          {/* Badge */}
+          <motion.div
+            className="inline-flex items-center gap-2 bg-campaign-green/15 border border-campaign-green/20 text-campaign-green px-4 py-1.5 rounded-lg mb-8"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Élections municipales 2026
-          </motion.p>
+            <span className="w-1.5 h-1.5 rounded-full bg-campaign-green animate-pulse" />
+            <span className="font-accent text-xs font-bold uppercase tracking-widest">Municipales 2026</span>
+          </motion.div>
 
-          {/* Title — serif/sans mix word reveal */}
+          {/* Title */}
           <div className="mb-3">
-            <div className="flex flex-wrap gap-x-5 items-baseline">
-              {words.map((word, i) => (
-                <div key={i} className="overflow-hidden">
-                  <motion.span
-                    className="font-editorial text-foreground text-[clamp(3.5rem,10vw,8rem)] font-bold leading-[0.9] block italic"
-                    initial={{ y: "110%" }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.9, delay: 0.4 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    {word}
-                  </motion.span>
-                </div>
-              ))}
+            <div className="overflow-hidden">
+              <motion.h1
+                className="font-heading text-primary-foreground text-[clamp(3rem,9vw,7rem)] font-extrabold leading-[0.9] tracking-tight"
+                initial={{ y: "110%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              >
+                Bouc Bel Air
+              </motion.h1>
             </div>
           </div>
 
           <div className="mb-10">
-            <div className="flex flex-wrap gap-x-4 items-baseline">
-              {subtitle.map((word, i) => (
-                <div key={i} className="overflow-hidden">
-                  <motion.span
-                    className={`text-[clamp(2.5rem,7vw,5.5rem)] font-extrabold leading-[1] block ${
-                      i === 0 ? "text-campaign-green font-heading" :
-                      i === 1 ? "text-campaign-green font-heading" :
-                      "text-campaign-gold font-editorial italic"
-                    }`}
-                    initial={{ y: "110%" }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.9, delay: 0.7 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    {word}
-                  </motion.span>
-                </div>
-              ))}
+            <div className="overflow-hidden">
+              <motion.p
+                className="text-[clamp(2rem,6vw,4.5rem)] font-extrabold leading-[1] tracking-tight"
+                initial={{ y: "110%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <span className="text-gradient">a de </span>
+                <span className="text-gradient-gold">l'Avenir</span>
+              </motion.p>
             </div>
           </div>
 
           <motion.p
-            className="text-muted-foreground text-lg sm:text-xl leading-relaxed max-w-md mb-10"
+            className="text-primary-foreground/60 text-lg sm:text-xl leading-relaxed max-w-md mb-10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
           >
-            Avec <span className="text-foreground font-bold">Mathieu Morateur</span>, construisons ensemble une commune où il fait bon vivre.
+            Avec <span className="text-primary-foreground font-bold">Mathieu Morateur</span>, construisons ensemble une commune où il fait bon vivre.
           </motion.p>
 
           <motion.div
             className="flex flex-wrap gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.3 }}
+            transition={{ duration: 0.6, delay: 1.1 }}
           >
             <motion.button
               onClick={() => navigate("/programme")}
-              className="gradient-green text-primary-foreground px-8 py-4 rounded-full font-extrabold text-sm flex items-center gap-3 shadow-xl"
-              whileHover={{ scale: 1.05, x: 4 }}
+              className="gradient-green text-primary-foreground px-7 py-3.5 rounded-lg font-bold text-sm flex items-center gap-3 shadow-xl"
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
               Découvrir le programme
@@ -116,8 +103,8 @@ const HeroSection = () => {
             </motion.button>
             <motion.button
               onClick={() => scrollTo("#procuration")}
-              className="bg-campaign-gold text-primary px-8 py-4 rounded-full font-extrabold text-sm shadow-xl"
-              whileHover={{ scale: 1.05 }}
+              className="bg-campaign-gold text-primary px-7 py-3.5 rounded-lg font-bold text-sm shadow-xl"
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
               Rejoignez-nous
@@ -133,14 +120,14 @@ const HeroSection = () => {
         style={{ opacity }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
+        transition={{ delay: 1.8 }}
       >
         <motion.div
-          className="w-10 h-10 rounded-full border border-border flex items-center justify-center"
+          className="w-10 h-10 rounded-full border border-primary-foreground/20 flex items-center justify-center"
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <ArrowDown className="w-4 h-4 text-muted-foreground" />
+          <ArrowDown className="w-4 h-4 text-primary-foreground/50" />
         </motion.div>
       </motion.div>
     </section>

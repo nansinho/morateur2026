@@ -4,48 +4,44 @@
 
 @layer base {
   :root {
-    --background: 40 30% 97%;
-    --foreground: 220 40% 13%;
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 40% 13%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 40% 13%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 222 47% 14%;
-    --primary-foreground: 40 25% 97%;
+    --primary: 222 47% 11%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 160 84% 39%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 40 15% 93%;
-    --muted-foreground: 220 15% 46%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
     --accent: 160 84% 39%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 40 15% 88%;
-    --input: 40 15% 88%;
-    --ring: 222 47% 14%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 222 47% 11%;
 
     --radius: 0.75rem;
 
-    --campaign-navy: 222 47% 14%;
-    --campaign-navy-light: 222 35% 24%;
+    --campaign-navy: 222 47% 11%;
+    --campaign-navy-light: 222 35% 20%;
     --campaign-green: 160 84% 39%;
     --campaign-green-light: 160 70% 50%;
     --campaign-gold: 42 85% 58%;
     --campaign-sky: 200 75% 94%;
-    --campaign-warm: 40 30% 96%;
+    --campaign-warm: 220 14% 96%;
     --campaign-glow: 160 80% 60%;
-    --campaign-coral: 12 80% 62%;
-    --campaign-lavender: 270 60% 70%;
-    --campaign-mint: 160 50% 85%;
-    --campaign-cream: 40 40% 95%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -108,28 +104,16 @@
 }
 
 @layer utilities {
-  .font-editorial {
-    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  }
-
   .gradient-green {
     background: linear-gradient(135deg, hsl(160 84% 39%), hsl(160 70% 50%));
   }
 
   .gradient-navy {
-    background: linear-gradient(135deg, hsl(222 47% 14%), hsl(222 35% 24%));
+    background: linear-gradient(135deg, hsl(222 47% 11%), hsl(222 35% 20%));
   }
 
   .gradient-premium {
-    background: linear-gradient(160deg, hsl(222 47% 11%), hsl(222 47% 16%), hsl(222 35% 20%));
-  }
-
-  .gradient-editorial {
-    background: linear-gradient(180deg, hsl(40 30% 97%) 0%, hsl(40 25% 94%) 100%);
-  }
-
-  .gradient-marquee {
-    background: linear-gradient(90deg, hsl(160 84% 39%), hsl(160 70% 50%), hsl(42 85% 58%));
+    background: linear-gradient(160deg, hsl(222 47% 8%), hsl(222 47% 14%), hsl(222 35% 18%));
   }
 
   .text-gradient {
@@ -150,20 +134,12 @@
     @apply transition-all duration-500;
   }
   .hover-lift:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 60px hsl(222 47% 14% / 0.15);
-  }
-
-  .clip-diagonal {
-    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
-  }
-
-  .clip-diagonal-mobile {
-    clip-path: polygon(0 15%, 100% 0, 100% 100%, 0% 100%);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px hsl(222 47% 11% / 0.12);
   }
 
   .section-label {
-    @apply inline-flex items-center gap-2 font-semibold text-xs uppercase tracking-[0.3em] mb-4;
+    @apply inline-flex items-center gap-2 font-heading font-bold text-xs uppercase tracking-[0.3em] mb-4;
     color: hsl(160 84% 39%);
   }
 
@@ -173,7 +149,6 @@
     background: linear-gradient(135deg, hsl(160 84% 39%), hsl(160 70% 50%));
   }
 
-  /* Hide scrollbar for horizontal scroll */
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
