@@ -1,8 +1,16 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
-import { ArrowRight, ArrowDown } from "lucide-react";
+import { ArrowRight, ArrowDown, Facebook, Instagram, Linkedin } from "lucide-react";
 import candidatImg from "@/assets/header_candidat_portrait.png";
+
+const socials = [
+  { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
+  { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+  { icon: () => <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>, href: "https://x.com", label: "X" },
+  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+  { icon: () => <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.75a8.18 8.18 0 0 0 4.76 1.52V6.84a4.84 4.84 0 0 1-1-.15z"/></svg>, href: "https://tiktok.com", label: "TikTok" },
+];
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -34,6 +42,30 @@ const HeroSection = () => {
       {/* Overlay gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-primary/30" />
       <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-transparent to-primary/40" />
+
+      {/* Social sidebar – left */}
+      <motion.div
+        className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col gap-3"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 1.6 }}
+      >
+        {socials.map((s) => {
+          const Icon = s.icon;
+          return (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              className="w-10 h-10 rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 flex items-center justify-center text-primary-foreground/60 hover:text-campaign-lime hover:border-campaign-lime/50 hover:bg-campaign-lime/10 transition-all duration-300"
+            >
+              <Icon className="w-4 h-4" />
+            </a>
+          );
+        })}
+      </motion.div>
 
       {/* Centered text */}
       <motion.div
@@ -93,23 +125,19 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.2 }}
         >
-          <motion.button
+          <button
             onClick={() => navigate("/programme")}
-            className="gradient-lime text-accent-foreground px-6 py-4 sm:px-10 sm:py-5 rounded-2xl font-extrabold text-base flex items-center gap-3 shadow-2xl uppercase tracking-wide -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.94, rotate: -4 }}
+            className="gradient-lime text-accent-foreground px-6 py-4 sm:px-10 sm:py-5 rounded-2xl font-extrabold text-base flex items-center gap-3 shadow-2xl uppercase tracking-wide -rotate-2 hover:rotate-0 hover:scale-105 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
           >
             Découvrir le programme
             <ArrowRight className="w-5 h-5" />
-          </motion.button>
-          <motion.button
+          </button>
+          <button
             onClick={() => scrollTo("#procuration")}
-            className="bg-primary-foreground/10 backdrop-blur-sm border-2 border-primary-foreground/30 text-primary-foreground px-6 py-4 sm:px-10 sm:py-5 rounded-2xl font-extrabold text-base uppercase tracking-wide hover:bg-primary-foreground/20 rotate-1 hover:rotate-0 transition-all duration-300"
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.94, rotate: 3 }}
+            className="bg-primary-foreground/10 backdrop-blur-sm border-2 border-primary-foreground/30 text-primary-foreground px-6 py-4 sm:px-10 sm:py-5 rounded-2xl font-extrabold text-base uppercase tracking-wide hover:bg-primary-foreground/20 rotate-1 hover:rotate-0 hover:scale-105 transition-all duration-300"
           >
             Rejoignez-nous
-          </motion.button>
+          </button>
         </motion.div>
       </motion.div>
 
