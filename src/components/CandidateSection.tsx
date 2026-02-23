@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import candidatImg from "@/assets/candidat-banner.png";
-import { Briefcase, GraduationCap, Users } from "lucide-react";
+import { Briefcase, GraduationCap, Users, Quote } from "lucide-react";
 
 const highlights = [
   {
@@ -21,7 +21,7 @@ const highlights = [
   },
 ];
 
-const CounterStat = ({ value, label }: { value: string; label: string }) => {
+const CounterStat = ({ value, label, suffix = "+" }: { value: string; label: string; suffix?: string }) => {
   const [count, setCount] = useState(0);
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -42,17 +42,26 @@ const CounterStat = ({ value, label }: { value: string; label: string }) => {
     const step = (timestamp: number) => {
       if (!start) start = timestamp;
       const progress = Math.min((timestamp - start) / duration, 1);
-      setCount(Math.floor(progress * numericVal));
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * numericVal));
       if (progress < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
   }, [inView, numericVal]);
 
   return (
-    <div ref={ref} className="text-center">
-      <p className="text-campaign-green font-heading text-4xl md:text-5xl font-extrabold">{count}+</p>
-      <p className="text-muted-foreground text-sm mt-1">{label}</p>
-    </div>
+    <motion.div
+      ref={ref}
+      className="text-center group"
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 300 }}
+    >
+      <p className="text-campaign-green font-heading text-4xl md:text-5xl font-extrabold tracking-tight">
+        {count}{suffix}
+      </p>
+      <div className="ornament-line !w-8 !h-0.5 mt-2 mb-1.5 opacity-40 group-hover:opacity-100 group-hover:!w-12 transition-all duration-500" />
+      <p className="text-muted-foreground text-sm">{label}</p>
+    </motion.div>
   );
 };
 
@@ -80,7 +89,7 @@ const CandidateSection = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="grid grid-cols-3 gap-8 max-w-lg mx-auto mb-24 p-8 rounded-3xl bg-card border border-border shadow-sm"
+          className="grid grid-cols-3 gap-8 max-w-lg mx-auto mb-24 p-8 rounded-3xl bg-card border border-border shadow-sm card-glow"
         >
           <CounterStat value="6" label="ans adjoint" />
           <CounterStat value="36" label="ans" />
@@ -98,7 +107,7 @@ const CandidateSection = () => {
                 alt="Mathieu Morateur"
                 className="w-full object-cover max-h-[600px]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -125,8 +134,23 @@ const CandidateSection = () => {
               Un enfant de{" "}
               <span className="text-gradient">Bouc-Bel-Air</span>
             </h2>
+
+            {/* Citation */}
+            <motion.div
+              className="relative pl-6 mb-8 border-l-2 border-campaign-green/30"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <Quote className="absolute -left-3 -top-1 w-5 h-5 text-campaign-green/40 bg-background" />
+              <p className="text-foreground/80 italic leading-relaxed text-lg">
+                Ma motivation est de permettre à mes enfants de grandir avec les mêmes chances que j'ai eues.
+              </p>
+            </motion.div>
+
             <p className="text-muted-foreground leading-relaxed mb-4 text-lg">
-              J'ai 36 ans et je me présente à vos suffrages pour devenir votre nouveau maire. Enfant de Bouc-Bel-Air, ma motivation est de permettre à mes enfants de grandir avec les mêmes chances que j'ai eues.
+              J'ai 36 ans et je me présente à vos suffrages pour devenir votre nouveau maire. Enfant de Bouc-Bel-Air, je suis profondément attaché à notre commune.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-10">
               Notre commune se trouve à un tournant de son histoire. Le fragile équilibre entre développement et préservation se rompt. Si vous aussi pensez que Bouc-Bel-Air a de l'avenir, rejoignez-nous !
@@ -140,10 +164,9 @@ const CandidateSection = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 + i * 0.12, duration: 0.5 }}
-                  whileHover={{ x: 8, transition: { duration: 0.25 } }}
-                  className="flex items-start gap-4 p-5 rounded-2xl bg-card border border-border cursor-default group hover:shadow-lg hover:shadow-campaign-green/5 hover:border-campaign-green/20 transition-all duration-500"
+                  className="flex items-start gap-4 p-5 rounded-2xl bg-card border border-border cursor-default group card-glow"
                 >
-                  <div className="w-12 h-12 rounded-xl gradient-green flex items-center justify-center flex-shrink-0 shadow-lg shadow-campaign-green/20 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-12 h-12 rounded-xl gradient-green flex items-center justify-center flex-shrink-0 glow-green-sm group-hover:scale-110 transition-transform duration-300">
                     <h.icon className="w-5 h-5 text-primary-foreground" />
                   </div>
                   <div>
