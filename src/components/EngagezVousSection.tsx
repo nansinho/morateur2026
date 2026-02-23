@@ -44,10 +44,11 @@ const EngagezVousSection = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.06, duration: 0.2 }}
-              whileHover={{ y: -12, scale: 1.06 }}
-              whileTap={{ scale: 0.96 }}
-              className={`${action.cardBg} rounded-2xl p-6 flex flex-col items-center text-center gap-4 group cursor-pointer transition-all duration-200 hover:shadow-2xl hover:brightness-110 justify-center`}
+              transition={{ delay: i * 0.06, duration: 0.3 }}
+              className={`${action.cardBg} rounded-2xl p-6 flex flex-col items-center text-center gap-4 group cursor-pointer justify-center
+                transition-[transform,box-shadow,filter] duration-150 ease-out
+                hover:-translate-y-3 hover:scale-105 hover:shadow-2xl hover:brightness-110
+                active:scale-95`}
             >
               <div className={`w-16 h-16 rounded-full ring-2 ${action.iconRingColor} bg-white/10 flex items-center justify-center`}>
                 <action.Icon className="w-7 h-7 text-white" strokeWidth={1.5} />
