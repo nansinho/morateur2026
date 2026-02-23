@@ -38,16 +38,15 @@ const HeroSection = () => {
         className="relative z-10 text-center px-6 max-w-5xl mx-auto"
         style={{ y: textY, opacity }}
       >
-        {/* Badge */}
-        <motion.div
-          className="inline-flex items-center gap-2 bg-campaign-lime/20 border border-campaign-lime/40 text-campaign-lime px-5 py-2 rounded-full mb-10"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
+        {/* Section label */}
+        <motion.span
+          className="section-label justify-center mb-10"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <span className="w-2 h-2 rounded-full bg-campaign-lime animate-pulse" />
-          <span className="font-accent text-xs font-bold uppercase tracking-widest">Municipales 2026</span>
-        </motion.div>
+          Municipales 2026
+        </motion.span>
 
         {/* Line 1 */}
         <div className="overflow-hidden mb-2">
@@ -94,18 +93,18 @@ const HeroSection = () => {
         >
           <motion.button
             onClick={() => navigate("/programme")}
-            className="gradient-lime text-accent-foreground px-8 py-4 rounded-xl font-bold text-sm flex items-center gap-3 shadow-2xl uppercase tracking-wide"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
+            className="gradient-lime text-accent-foreground px-8 py-4 rounded-xl font-bold text-sm flex items-center gap-3 shadow-2xl uppercase tracking-wide -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.4)] transition-all duration-300"
+            whileHover={{ scale: 1.07 }}
+            whileTap={{ scale: 0.95 }}
           >
             Découvrir le programme
             <ArrowRight className="w-4 h-4" />
           </motion.button>
           <motion.button
             onClick={() => scrollTo("#procuration")}
-            className="bg-primary-foreground/10 backdrop-blur-sm border-2 border-primary-foreground/30 text-primary-foreground px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-wide hover:bg-primary-foreground/20 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
+            className="bg-primary-foreground/10 backdrop-blur-sm border-2 border-primary-foreground/30 text-primary-foreground px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-wide hover:bg-primary-foreground/20 rotate-1 hover:rotate-0 transition-all duration-300"
+            whileHover={{ scale: 1.07 }}
+            whileTap={{ scale: 0.95 }}
           >
             Rejoignez-nous
           </motion.button>

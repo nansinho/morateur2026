@@ -59,10 +59,7 @@ const ActualitesSection = () => {
           transition={{ duration: 0.6 }}
           className="mb-14"
         >
-          <span className="inline-flex items-center gap-2 gradient-teal text-primary-foreground font-bold text-xs uppercase tracking-wider px-4 py-2 rounded-lg mb-4">
-            <Newspaper className="w-3.5 h-3.5" />
-            Sur le terrain
-          </span>
+          <span className="section-label">Sur le terrain</span>
           <h2
             className="font-accent font-extrabold uppercase leading-[0.9] tracking-tight text-primary break-words"
             style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}

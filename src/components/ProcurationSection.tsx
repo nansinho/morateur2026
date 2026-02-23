@@ -105,7 +105,7 @@ const ProcurationSection = () => {
                   href="https://www.maprocuration.gouv.fr/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 gradient-lime text-accent-foreground px-5 py-2.5 rounded-lg text-sm font-bold hover:brightness-110 transition-all"
+                  className="inline-flex items-center gap-2 gradient-lime text-accent-foreground px-5 py-2.5 rounded-lg text-sm font-bold -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.4)] hover:scale-105 transition-all duration-300"
                 >
                   maprocuration.gouv.fr
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -208,9 +208,9 @@ const ProcurationSection = () => {
 
                   <motion.button
                     type="submit"
-                    className="w-full gradient-lime text-accent-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 shadow-lg"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.97 }}
+                    className="w-full gradient-lime text-accent-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.4)] transition-all duration-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     <Send className="w-4 h-4" />
                     Envoyer
