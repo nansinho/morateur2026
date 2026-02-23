@@ -58,9 +58,9 @@ const HeroSection = () => {
       >
         <motion.span
           className="section-label justify-center mb-6"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
         >
           Municipales 2026
         </motion.span>
@@ -72,7 +72,7 @@ const HeroSection = () => {
               style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
               initial={{ y: "120%" }}
               animate={{ y: 0 }}
-              transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
               BOUC BEL AIR
             </motion.h1>
@@ -85,7 +85,7 @@ const HeroSection = () => {
               style={{ rotate: "-3deg" }}
               initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
               animate={{ opacity: 1, scale: 1, rotate: -3 }}
-              transition={{ duration: 0.7, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
               SERA
             </motion.span>
@@ -113,18 +113,18 @@ const HeroSection = () => {
 
         <motion.p
           className="text-primary-foreground/70 text-lg sm:text-xl leading-relaxed max-w-lg mx-auto mb-10"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
         >
           Avec <span className="text-primary-foreground font-bold">Mathieu Morateur</span>, construisons ensemble une commune où il fait bon vivre.
         </motion.p>
 
         <motion.div
           className="flex flex-wrap justify-center gap-4"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
+          transition={{ duration: 0.4, delay: 0.5 }}
         >
           <button
             onClick={() => navigate("/programme")}
@@ -149,7 +149,7 @@ const HeroSection = () => {
         style={{ opacity }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8 }}
+        transition={{ delay: 0.8 }}
       >
         <motion.div
           className="w-12 h-12 rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 flex items-center justify-center"
