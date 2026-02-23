@@ -4,16 +4,14 @@ import { useRef } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import candidatImg from "@/assets/header_candidat_portrait.png";
 
-const words1 = ["BOUC", "BEL", "AIR"];
-const words2 = ["A", "DE", "L'AVENIR"];
-
 const HeroSection = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgScale = useTransform(scrollYProgress, [0, 0.6], [1, 1.12]);
-  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const textY = useTransform(scrollYProgress, [0, 0.5], ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
 
   const scrollTo = (href: string) => {
     const el = document.querySelector(href);
@@ -21,112 +19,102 @@ const HeroSection = () => {
   };
 
   return (
-    <section ref={ref} id="hero" className="relative min-h-screen flex items-center overflow-hidden gradient-teal-deep">
-      {/* Right: Full-height photo */}
-      <motion.div
-        className="absolute top-0 right-0 w-[45%] h-full hidden lg:block"
-        style={{ scale: imgScale, y: imgY }}
-      >
-        <img src={candidatImg} alt="Mathieu Morateur" className="w-full h-full object-cover object-top" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/50 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-primary to-transparent" />
+    <section ref={ref} id="hero" className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Fullscreen parallax photo */}
+      <motion.div className="absolute inset-0" style={{ scale: imgScale, y: imgY }}>
+        <img
+          src={candidatImg}
+          alt="Mathieu Morateur"
+          className="w-full h-full object-cover object-top"
+        />
       </motion.div>
 
-      {/* Mobile photo */}
-      <div className="absolute inset-0 lg:hidden">
-        <img src={candidatImg} alt="Mathieu Morateur" className="w-full h-full object-cover object-top" />
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/95 via-primary/80 to-primary" />
-      </div>
+      {/* Overlay gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-primary/30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-transparent to-primary/40" />
 
-      {/* Left: Text */}
-      <motion.div className="relative container mx-auto px-6 py-32 lg:py-0" style={{ opacity }}>
-        <div className="max-w-2xl">
-          {/* Badge */}
-          <motion.div
-            className="inline-flex items-center gap-2 bg-campaign-lime/15 border border-campaign-lime/30 text-campaign-lime px-4 py-1.5 rounded-lg mb-8"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+      {/* Centered text */}
+      <motion.div
+        className="relative z-10 text-center px-6 max-w-5xl mx-auto"
+        style={{ y: textY, opacity }}
+      >
+        {/* Badge */}
+        <motion.div
+          className="inline-flex items-center gap-2 bg-campaign-lime/20 border border-campaign-lime/40 text-campaign-lime px-5 py-2 rounded-full mb-10"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <span className="w-2 h-2 rounded-full bg-campaign-lime animate-pulse" />
+          <span className="font-accent text-xs font-bold uppercase tracking-widest">Municipales 2026</span>
+        </motion.div>
+
+        {/* Line 1 */}
+        <div className="overflow-hidden mb-2">
+          <motion.h1
+            className="font-accent text-primary-foreground font-extrabold uppercase leading-[0.9] tracking-tight"
+            style={{ fontSize: "clamp(3.5rem, 10vw, 8rem)" }}
+            initial={{ y: "120%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="w-2 h-2 rounded-full bg-campaign-lime animate-pulse" />
-            <span className="font-accent text-xs font-bold uppercase tracking-widest">Municipales 2026</span>
-          </motion.div>
-
-          {/* Title line 1 - word by word slide in */}
-          <div className="mb-1 overflow-hidden">
-            <div className="flex flex-wrap gap-x-4">
-              {words1.map((word, i) => (
-                <motion.span
-                  key={word}
-                  className="font-accent text-primary-foreground font-extrabold uppercase leading-[0.95]"
-                  style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)" }}
-                  initial={{ x: -100, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.7, delay: 0.4 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </div>
-          </div>
-
-          {/* Title line 2 - lime color */}
-          <div className="mb-10 overflow-hidden">
-            <div className="flex flex-wrap gap-x-4">
-              {words2.map((word, i) => (
-                <motion.span
-                  key={word}
-                  className="font-accent text-campaign-lime font-extrabold uppercase leading-[0.95]"
-                  style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)" }}
-                  initial={{ x: -100, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.7, delay: 0.7 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </div>
-          </div>
-
-          <motion.p
-            className="text-primary-foreground/60 text-lg sm:text-xl leading-relaxed max-w-md mb-10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-          >
-            Avec <span className="text-primary-foreground font-bold">Mathieu Morateur</span>, construisons ensemble une commune où il fait bon vivre.
-          </motion.p>
-
-          <motion.div
-            className="flex flex-wrap gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.3 }}
-          >
-            <motion.button
-              onClick={() => navigate("/programme")}
-              className="gradient-lime text-accent-foreground px-7 py-3.5 rounded-lg font-bold text-sm flex items-center gap-3 shadow-xl"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Découvrir le programme
-              <ArrowRight className="w-4 h-4" />
-            </motion.button>
-            <motion.button
-              onClick={() => scrollTo("#procuration")}
-              className="border-2 border-primary-foreground/30 text-primary-foreground px-7 py-3.5 rounded-lg font-bold text-sm hover:bg-primary-foreground/10 transition-colors"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Rejoignez-nous
-            </motion.button>
-          </motion.div>
+            BOUC BEL AIR
+          </motion.h1>
         </div>
+
+        {/* Line 2 */}
+        <div className="overflow-hidden mb-12">
+          <motion.p
+            className="font-accent text-campaign-lime font-extrabold uppercase leading-[0.9] tracking-tight"
+            style={{ fontSize: "clamp(3.5rem, 10vw, 8rem)" }}
+            initial={{ y: "120%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            A DE L'AVENIR
+          </motion.p>
+        </div>
+
+        {/* Subtitle */}
+        <motion.p
+          className="text-primary-foreground/70 text-lg sm:text-xl leading-relaxed max-w-lg mx-auto mb-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.0 }}
+        >
+          Avec <span className="text-primary-foreground font-bold">Mathieu Morateur</span>, construisons ensemble une commune où il fait bon vivre.
+        </motion.p>
+
+        {/* Buttons */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.2 }}
+        >
+          <motion.button
+            onClick={() => navigate("/programme")}
+            className="gradient-lime text-accent-foreground px-8 py-4 rounded-xl font-bold text-sm flex items-center gap-3 shadow-2xl uppercase tracking-wide"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            Découvrir le programme
+            <ArrowRight className="w-4 h-4" />
+          </motion.button>
+          <motion.button
+            onClick={() => scrollTo("#procuration")}
+            className="bg-primary-foreground/10 backdrop-blur-sm border-2 border-primary-foreground/30 text-primary-foreground px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-wide hover:bg-primary-foreground/20 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            Rejoignez-nous
+          </motion.button>
+        </motion.div>
       </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-10"
         onClick={() => scrollTo("#candidat")}
         style={{ opacity }}
         initial={{ opacity: 0 }}
@@ -134,11 +122,11 @@ const HeroSection = () => {
         transition={{ delay: 1.8 }}
       >
         <motion.div
-          className="w-10 h-10 rounded-full border border-primary-foreground/20 flex items-center justify-center"
-          animate={{ y: [0, 6, 0] }}
+          className="w-12 h-12 rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 flex items-center justify-center"
+          animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <ArrowDown className="w-4 h-4 text-primary-foreground/50" />
+          <ArrowDown className="w-5 h-5 text-primary-foreground/60" />
         </motion.div>
       </motion.div>
     </section>
