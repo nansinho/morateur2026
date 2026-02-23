@@ -23,8 +23,8 @@ const Index = () => {
       <HeroSection />
       <MarqueeBand />
       <CandidateSection />
-      <ProgrammeSection />
       <EngagezVousSection />
+      <ProgrammeSection />
       <VillageBanner />
       <ActualitesSection />
       <ProcurationSection />
