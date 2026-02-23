@@ -151,18 +151,31 @@ const Footer = () => {
           </div>
 
           {/* Bottom */}
-          <div className="border-t border-primary-foreground/[0.15] pt-6 flex items-center justify-between">
+          <div className="border-t border-primary-foreground/[0.15] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="text-primary-foreground/50 text-xs flex items-center gap-1.5 font-medium">
               © 2026 Morateur 2026 — Fait avec <Heart className="w-3 h-3 text-campaign-lime" /> pour Bouc-Bel-Air
             </p>
-            <motion.button
-              onClick={scrollToTop}
-              aria-label="Retour en haut de page"
-              className="w-10 h-10 rounded-xl border border-primary-foreground/20 flex items-center justify-center hover:border-campaign-lime/30 hover:bg-campaign-lime/10 transition-all"
-              whileHover={{ y: -3 }}
-            >
-              <ArrowUp className="w-4 h-4 text-primary-foreground/50" />
-            </motion.button>
+            <div className="flex items-center gap-4">
+              <p className="text-primary-foreground/40 text-xs font-medium">
+                Site créé par{" "}
+                <a
+                  href="https://agencehds.fr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-campaign-lime hover:underline"
+                >
+                  Agence HDS
+                </a>
+              </p>
+              <motion.button
+                onClick={scrollToTop}
+                aria-label="Retour en haut de page"
+                className="w-10 h-10 rounded-xl border border-primary-foreground/20 flex items-center justify-center hover:border-campaign-lime/30 hover:bg-campaign-lime/10 transition-all"
+                whileHover={{ y: -3 }}
+              >
+                <ArrowUp className="w-4 h-4 text-primary-foreground/50" />
+              </motion.button>
+            </div>
           </div>
 
           {/* SEO text */}
@@ -170,7 +183,7 @@ const Footer = () => {
             <p className="text-primary-foreground/50 text-[10px] uppercase tracking-[0.25em] font-bold mb-4 text-center">
               À propos de Bouc-Bel-Air et des élections municipales 2026
             </p>
-            <div className="space-y-3 text-primary-foreground/40 text-xs leading-relaxed max-w-4xl mx-auto text-center">
+            <div className="space-y-3 text-primary-foreground/40 text-xs leading-relaxed text-center">
               <p>
                 Bouc-Bel-Air est une commune française située dans le département des Bouches-du-Rhône, en région Provence-Alpes-Côte d'Azur.
                 Nichée entre Aix-en-Provence et Marseille, cette ville provençale d'environ 15 000 habitants allie cadre de vie naturel
