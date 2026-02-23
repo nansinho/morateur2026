@@ -1,21 +1,22 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import candidatImg from "@/assets/candidat-banner.png";
-import { Briefcase, GraduationCap, Users } from "lucide-react";
+import { Briefcase, GraduationCap, Users, ArrowRight } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-const highlights = [
-  { icon: Briefcase, title: "Ancien adjoint au maire", desc: "De 2014 à 2020, engagé pour Bouc-Bel-Air", color: "bg-campaign-green", emoji: "🏛️" },
-  { icon: GraduationCap, title: "Analyste financier expert", desc: "Diplômé de Sciences Po Aix et de l'INSP (ex-ÉNA)", color: "bg-campaign-gold", emoji: "🎓" },
-  { icon: Users, title: "Spécialiste du service public", desc: "Expert des délégations de service public et mutualisations", color: "bg-campaign-coral", emoji: "🤝" },
+const highlights: { icon: LucideIcon; title: string; desc: string; color: string }[] = [
+  { icon: Briefcase, title: "Ancien adjoint au maire", desc: "De 2014 à 2020, engagé pour Bouc-Bel-Air", color: "bg-campaign-green" },
+  { icon: GraduationCap, title: "Analyste financier expert", desc: "Diplômé de Sciences Po Aix et de l'INSP (ex-ÉNA)", color: "bg-campaign-gold" },
+  { icon: Users, title: "Spécialiste du service public", desc: "Expert des délégations de service public", color: "bg-campaign-coral" },
 ];
 
 const stats = [
-  { value: 6, label: "ans adjoint", suffix: "+", emoji: "💼" },
-  { value: 36, label: "ans", emoji: "🎂" },
-  { value: 10, label: "colistiers", suffix: "+", emoji: "👥" },
+  { value: 6, label: "ans adjoint", suffix: "+" },
+  { value: 36, label: "ans" },
+  { value: 10, label: "colistiers", suffix: "+" },
 ];
 
-const CounterStat = ({ value, label, suffix = "", emoji }: { value: number; label: string; suffix?: string; emoji: string }) => {
+const CounterStat = ({ value, label, suffix = "" }: { value: number; label: string; suffix?: string }) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -36,15 +37,15 @@ const CounterStat = ({ value, label, suffix = "", emoji }: { value: number; labe
   return (
     <motion.div
       ref={ref}
-      className="text-center bg-card rounded-3xl p-6 border border-border shadow-sm"
-      whileHover={{ scale: 1.08, rotate: Math.random() > 0.5 ? 2 : -2 }}
-      transition={{ type: "spring", stiffness: 300 }}
+      className="text-center bg-card rounded-2xl p-6 border border-border shadow-sm"
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 400 }}
     >
-      <span className="text-3xl mb-2 block">{emoji}</span>
       <p className="text-campaign-green font-heading text-5xl md:text-6xl font-extrabold tracking-tight">
         {count}{suffix}
       </p>
-      <p className="text-muted-foreground text-sm uppercase tracking-[0.15em] font-bold mt-2">{label}</p>
+      <div className="w-8 h-1 mx-auto mt-3 mb-2 rounded-full bg-campaign-gold" />
+      <p className="text-muted-foreground text-xs uppercase tracking-[0.15em] font-bold">{label}</p>
     </motion.div>
   );
 };
@@ -73,12 +74,10 @@ const CandidateSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <motion.span
-                className="inline-block bg-campaign-green text-primary-foreground font-extrabold text-sm uppercase tracking-wider px-5 py-2 rounded-full mb-4 shadow-lg"
-                whileHover={{ scale: 1.05, rotate: -2 }}
-              >
-                👋 Le Candidat
-              </motion.span>
+              <span className="inline-flex items-center gap-2 bg-campaign-green text-primary-foreground font-bold text-xs uppercase tracking-wider px-4 py-2 rounded-full mb-4">
+                <Users className="w-3.5 h-3.5" />
+                Le Candidat
+              </span>
               <h2 className="font-heading text-5xl md:text-8xl font-extrabold text-foreground leading-[0.9]">
                 Mathieu<br />
                 <span className="text-campaign-green">Mora</span><span className="text-campaign-gold">teur</span>
@@ -90,63 +89,57 @@ const CandidateSection = () => {
 
       {/* Content on light background */}
       <div className="bg-campaign-warm relative">
-        {/* Decorative blob */}
-        <div className="absolute top-20 right-0 w-80 h-80 rounded-full bg-campaign-mint/50 blur-3xl" />
-        <div className="absolute bottom-40 left-0 w-60 h-60 rounded-full bg-campaign-gold/10 blur-3xl" />
-
         <div className="container mx-auto px-6 py-20 relative z-10">
-          {/* Stats */}
           <div className="grid grid-cols-3 gap-5 max-w-2xl mx-auto mb-20">
             {stats.map((s, i) => (
-              <CounterStat key={i} value={s.value} label={s.label} suffix={s.suffix} emoji={s.emoji} />
+              <CounterStat key={i} value={s.value} label={s.label} suffix={s.suffix} />
             ))}
           </div>
 
-          {/* Quote */}
           <motion.div
-            className="max-w-3xl mx-auto mb-20 bg-card rounded-3xl p-10 border border-border shadow-sm relative overflow-hidden"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            className="max-w-3xl mx-auto mb-20 bg-card rounded-2xl p-10 border border-border shadow-sm"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, type: "spring" }}
+            transition={{ duration: 0.6 }}
           >
-            <span className="absolute top-4 right-6 text-6xl opacity-10">💬</span>
-            <blockquote className="relative">
+            <blockquote className="relative border-l-4 border-campaign-gold pl-8">
               <p className="text-foreground/80 italic text-xl md:text-2xl leading-snug font-heading font-medium">
                 « Ma motivation est de permettre à mes enfants de grandir avec les <span className="text-campaign-green font-extrabold not-italic">mêmes chances</span> que j'ai eues. »
               </p>
               <footer className="mt-6 flex items-center gap-3">
-                <div className="w-12 h-1.5 bg-campaign-gold rounded-full" />
+                <div className="w-10 h-1 bg-campaign-green rounded-full" />
                 <p className="text-campaign-green text-sm font-extrabold tracking-wider uppercase">Mathieu Morateur</p>
               </footer>
             </blockquote>
           </motion.div>
 
-          {/* Bio */}
           <div className="max-w-3xl mx-auto mb-16 space-y-4">
             <motion.p className="text-muted-foreground leading-relaxed text-lg" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              J'ai 36 ans et je me présente à vos suffrages pour devenir votre nouveau maire. Enfant de Bouc-Bel-Air, je suis profondément attaché à notre commune. 🌿
+              J'ai 36 ans et je me présente à vos suffrages pour devenir votre nouveau maire. Enfant de Bouc-Bel-Air, je suis profondément attaché à notre commune.
             </motion.p>
             <motion.p className="text-muted-foreground leading-relaxed text-lg" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
-              Notre commune se trouve à un tournant de son histoire. Si vous aussi pensez que Bouc-Bel-Air a de l'avenir, rejoignez-nous ! 💪
+              Notre commune se trouve à un tournant de son histoire. Si vous aussi pensez que Bouc-Bel-Air a de l'avenir, rejoignez-nous.
             </motion.p>
           </div>
 
-          {/* Highlight cards */}
-          <div className="max-w-3xl mx-auto grid sm:grid-cols-3 gap-5">
+          {/* Highlight cards — horizontal, colorful, pro */}
+          <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-5">
             {highlights.map((h, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: i * 0.1, type: "spring" }}
-                whileHover={{ y: -8, rotate: i === 1 ? -2 : 2 }}
-                className={`p-6 rounded-3xl text-center cursor-pointer ${h.color} shadow-lg`}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                whileHover={{ y: -6 }}
+                className={`p-7 rounded-2xl ${h.color} shadow-lg cursor-pointer group`}
               >
-                <span className="text-4xl mb-3 block">{h.emoji}</span>
-                <p className="font-heading font-extrabold text-primary-foreground text-base mb-1">{h.title}</p>
-                <p className="text-primary-foreground/70 text-sm">{h.desc}</p>
+                <div className="w-12 h-12 rounded-xl bg-primary-foreground/20 flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110">
+                  <h.icon className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <p className="font-heading font-extrabold text-primary-foreground text-lg mb-1">{h.title}</p>
+                <p className="text-primary-foreground/70 text-sm font-medium">{h.desc}</p>
               </motion.div>
             ))}
           </div>
