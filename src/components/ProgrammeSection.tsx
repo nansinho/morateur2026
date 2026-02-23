@@ -45,7 +45,7 @@ const ProgrammeSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="programme" className="gradient-teal-deep relative overflow-hidden min-h-screen flex items-center">
+    <section id="programme" className="gradient-teal-deep relative overflow-hidden min-h-screen flex items-center justify-center">
       <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-28 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

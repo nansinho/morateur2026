@@ -13,7 +13,7 @@ const actions: { Icon: LucideIcon; title: string; desc: string; href: string; ex
 
 const EngagezVousSection = () => {
   return (
-    <section className="bg-campaign-ice py-16 sm:py-24 overflow-hidden">
+    <section className="bg-campaign-ice py-16 sm:py-24 overflow-hidden min-h-screen flex items-center">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
