@@ -26,7 +26,7 @@ const SocialSidebar = () => {
       aria-label="Réseaux sociaux"
       className="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:block"
     >
-      <div className="bg-foreground/80 backdrop-blur-md rounded-r-xl py-3 px-2 flex flex-col items-center gap-3 shadow-lg">
+      <div className="bg-foreground/80 backdrop-blur-md rounded-r-xl shadow-lg flex flex-col items-stretch overflow-hidden">
         {socials.map((s) => {
           const Icon = s.icon;
           return (
@@ -36,7 +36,7 @@ const SocialSidebar = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="w-9 h-9 rounded-lg flex items-center justify-center text-background/80 hover:text-campaign-lime hover:bg-background/10 transition-all duration-200"
+              className="w-11 h-11 flex items-center justify-center text-background/80 hover:text-campaign-lime hover:bg-campaign-lime/15 transition-all duration-200"
             >
               <Icon className="w-4 h-4" />
             </a>

@@ -1,17 +1,33 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import candidatImg from "@/assets/header_candidat_portrait.png";
+
+const rotatingWords = [
+  { word: "SÉCURISÉE", color: "hsl(var(--campaign-lime))" },
+  { word: "PROPRE", color: "hsl(var(--campaign-teal-light))" },
+  { word: "APAISÉE", color: "hsl(var(--campaign-ice))" },
+  { word: "RESPIRABLE", color: "hsl(var(--campaign-lime-light))" },
+  { word: "SÛRE", color: "hsl(var(--campaign-lime))" },
+];
 
 const HeroSection = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLElement>(null);
+  const [wordIndex, setWordIndex] = useState(0);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const textY = useTransform(scrollYProgress, [0, 0.5], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % rotatingWords.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   const scrollTo = (href: string) => {
     const el = document.querySelector(href);
@@ -61,16 +77,24 @@ const HeroSection = () => {
           </motion.h1>
         </div>
 
-        <div className="overflow-hidden mb-12">
-          <motion.p
-            className="font-accent text-campaign-lime font-extrabold uppercase leading-[0.9] tracking-tight"
-            style={{ fontSize: "clamp(3.5rem, 10vw, 8rem)" }}
-            initial={{ y: "120%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          >
-            A DE L'AVENIR
-          </motion.p>
+        <div className="overflow-hidden mb-12" style={{ height: "clamp(3.5rem, 10vw, 8rem)", lineHeight: "0.9" }}>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={rotatingWords[wordIndex].word}
+              className="font-accent font-extrabold uppercase tracking-tight"
+              style={{
+                fontSize: "clamp(3.5rem, 10vw, 8rem)",
+                color: rotatingWords[wordIndex].color,
+                lineHeight: "0.9",
+              }}
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "-100%", opacity: 0 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {rotatingWords[wordIndex].word}
+            </motion.p>
+          </AnimatePresence>
         </div>
 
         <motion.p
