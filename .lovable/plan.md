@@ -1,78 +1,48 @@
 
-# Restructuration du site -- Accueil minimaliste + Pages separees
+# Refonte des cartes : Carrousel de cartes TikTok (3.5 visibles)
 
-## Objectif
-Transformer le site one-page en un site multi-pages avec une page d'accueil epuree et impactante, et des pages dediees pour le contenu detaille. Chaque section principale occupera 100vh (plein ecran).
+## Probleme actuel
+Les cartes Programme (grille 5 colonnes) et Engagement (grille 6 colonnes) sont trop petites et peu attractives sur desktop. Le format grille ecrase les cartes et rend le design monotone.
 
-## Architecture des pages
+## Solution
+Remplacer les grilles statiques par des **carrousels Embla** (composant `Carousel` deja present dans le projet) affichant **3.5 cartes visibles** sur desktop, avec un scroll fluide. Les cartes gardent le format vertical TikTok mais deviennent plus grandes et plus soignees.
 
-```text
-/              -> Accueil minimaliste (Hero + Candidat + Programme apercu + CTA Rejoignez-nous)
-/programme     -> Programme complet (existe deja, a adapter)
-/equipe        -> Nouvelle page Equipe
-/actualites    -> Nouvelle page Actualites
-```
+---
 
-## Page d'accueil `/` (Index.tsx)
+## Section Programme (`ProgrammeSection.tsx`)
 
-Sections conservees (chacune en 100vh ou min-h-screen) :
-1. **Hero** -- deja 100vh, aucun changement
-2. **MarqueeBand** -- bandeau entre hero et candidat (pas 100vh, c'est un element decoratif)
-3. **CandidateSection** -- passe en `min-h-screen` avec centrage vertical via `flex items-center`
-4. **ProgrammeSection** -- passe en `min-h-screen`, garde l'apercu des 5 piliers + bouton "Voir le programme complet" (lien vers /programme)
-5. **ProcurationSection** (Rejoignez-nous / formulaire) -- passe en `min-h-screen`
-6. **Footer**
+- Remplacer la grille `sm:grid-cols-5` par un `Carousel` avec `basis-[28%]` sur desktop (= 3.5 cartes visibles) et `basis-[70%]` sur mobile
+- Cartes plus grandes avec :
+  - Fond sombre semi-transparent avec un gradient colore en haut
+  - Icone plus imposante (w-20 h-20) dans un cercle avec glow subtil
+  - Numero du pilier affiche en grand (style editorial "01", "02"...)
+  - Titre et description plus lisibles
+  - Fleche ou indicateur "en savoir plus" en bas
+- Boutons precedent/suivant stylises en lime (comme dans ActualitesSection)
+- Dots indicateurs optionnels
 
-Sections retirees de l'accueil :
-- EngagezVousSection (les CTAs sont deja dans Procuration et le footer)
-- VillageBanner (decoratif, alourdit la page)
-- RoadmapSection (deplace dans /programme comme timeline)
-- ActualitesSection (nouvelle page /actualites)
-- TeamSection (nouvelle page /equipe)
+## Section Rejoignez la campagne (`EngagezVousSection.tsx`)
 
-## Nouvelle page `/equipe` (pages/Equipe.tsx)
+- Meme principe : remplacer la grille `lg:grid-cols-6` par un `Carousel` avec `basis-[28%]` sur desktop
+- Cartes verticales TikTok avec :
+  - Fond colore par theme (rose/Instagram, bleu/Facebook, lime/terrain, teal/newsletter)
+  - Icone centree plus grande avec un halo de couleur
+  - Texte plus lisible (tailles de police augmentees)
+  - Indicateur d'action en bas (fleche externe pour les liens sortants, chevron pour les internes)
+- Boutons de navigation carrousel identiques au style lime
 
-- Navbar partagee (avec navigation inter-pages au lieu d'ancres)
-- Section hero compacte avec titre "L'EQUIPE"
-- Carrousel horizontal des membres (TeamSection actuel)
-- Footer
+## Details techniques
 
-## Nouvelle page `/actualites` (pages/Actualites.tsx)
+1. **Import du composant Carousel** dans les deux fichiers (deja disponible dans `@/components/ui/carousel`)
+2. **Options Embla** : `{ align: "start", loop: true }` pour un defilement en boucle
+3. **Breakpoints** :
+   - Mobile : `basis-[75%]` (1.3 cartes visibles)
+   - Tablette : `basis-[40%]` (2.5 cartes)
+   - Desktop : `basis-[28%]` (3.5 cartes)
+4. **Espacement** : gap de 20px (`-ml-5` / `pl-5`) comme dans ActualitesSection
+5. **Animations** : conserver les `motion.div` avec `whileInView` et `whileHover` existants
+6. **Navigation** : boutons prev/next centres sous le carrousel, style `border-2 border-campaign-lime` identique a ActualitesSection
 
-- Navbar partagee
-- Section hero compacte avec titre "ACTUALITES"
-- Grille/carrousel des actualites (ActualitesSection actuel)
-- Footer
-
-## Mise a jour de la navigation (Navbar.tsx)
-
-Les liens de navigation passent d'ancres (`#candidat`) a des routes :
-
-```text
-Le Candidat   -> /#candidat (scroll sur la home)
-Programme     -> /programme
-L'Equipe      -> /equipe
-Actualites    -> /actualites
-Procuration   -> /#procuration (scroll sur la home)
-```
-
-Le bouton "Rejoignez-nous" redirige vers `/#procuration`.
-
-## Sections 100vh
-
-Pour les sections principales (Candidat, Programme, Procuration), ajouter `min-h-screen flex items-center` sur le wrapper pour que chaque section occupe au minimum tout l'ecran avec le contenu centre verticalement.
-
-## Fichiers concernes
-
-| Fichier | Action |
-|---|---|
-| `src/pages/Index.tsx` | Retirer EngagezVous, VillageBanner, Roadmap, Actualites, Team |
-| `src/pages/Equipe.tsx` | Creer -- Navbar + TeamSection + Footer |
-| `src/pages/Actualites.tsx` | Creer -- Navbar + ActualitesSection + Footer |
-| `src/App.tsx` | Ajouter routes `/equipe` et `/actualites` |
-| `src/components/Navbar.tsx` | Passer les liens en routes (useNavigate) au lieu d'ancres |
-| `src/components/CandidateSection.tsx` | Ajouter `min-h-screen` + centrage vertical |
-| `src/components/ProgrammeSection.tsx` | Ajouter `min-h-screen` + centrage vertical |
-| `src/components/ProcurationSection.tsx` | Ajouter `min-h-screen` + centrage vertical |
-| `src/components/Footer.tsx` | Mettre a jour les liens de navigation vers les nouvelles routes |
-| `src/pages/Programme.tsx` | Integrer la RoadmapSection en bas de page |
+## Fichiers modifies
+- `src/components/ProgrammeSection.tsx` : refonte complete du layout en carrousel
+- `src/components/EngagezVousSection.tsx` : refonte complete du layout en carrousel
