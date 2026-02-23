@@ -109,32 +109,77 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className={`md:hidden overflow-hidden ${isScrolled ? "bg-background/98" : "bg-primary/98"} backdrop-blur-xl`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden fixed inset-0 top-0 z-40 gradient-teal-deep flex flex-col"
           >
-            <div className="px-6 pb-6 pt-2 flex flex-col gap-4">
-              {navItems.map((item, i) => (
+            {/* Header row */}
+            <div className="flex items-center justify-between px-6 py-5">
+              <button
+                onClick={() => handleNav("/#hero")}
+                className="font-accent text-base font-extrabold tracking-widest uppercase text-primary-foreground"
+              >
+                MORATEUR <span className="text-campaign-lime">2026</span>
+              </button>
+              <button
+                onClick={() => setIsOpen(false)}
+                aria-label="Fermer le menu"
+                className="text-primary-foreground"
+              >
+                <X size={28} />
+              </button>
+            </div>
+
+            {/* Nav links */}
+            <nav className="flex-1 flex flex-col justify-center px-8 gap-2">
+              {[
+                ...navItems,
+                { label: "Contact", to: "/#procuration" },
+              ].map((item, i) => (
                 <motion.button
                   key={item.to}
                   onClick={() => handleNav(item.to)}
-                  className={`text-left text-sm font-semibold uppercase tracking-wide ${
-                    isScrolled ? "text-foreground/70 hover:text-foreground" : "text-primary-foreground/70 hover:text-primary-foreground"
-                  }`}
-                  initial={{ x: -20, opacity: 0 }}
+                  className="text-left text-primary-foreground/80 hover:text-campaign-lime text-3xl font-accent font-extrabold uppercase tracking-wide py-3 border-b border-primary-foreground/10 transition-colors duration-300"
+                  initial={{ x: -30, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: i * 0.05 }}
+                  transition={{ delay: 0.1 + i * 0.06 }}
                 >
                   {item.label}
                 </motion.button>
               ))}
-              <button
+            </nav>
+
+            {/* Bottom actions */}
+            <div className="px-8 pb-10 flex flex-col gap-5">
+              <motion.button
                 onClick={() => handleNav("/#procuration")}
-                className="gradient-lime text-accent-foreground py-3 rounded-xl text-sm font-extrabold mt-2 -rotate-1"
+                className="gradient-lime text-accent-foreground py-4 rounded-2xl text-base font-extrabold uppercase tracking-wider shadow-lg"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
               >
                 Rejoignez-nous
-              </button>
+              </motion.button>
+              <motion.div
+                className="flex items-center justify-between"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                <div className="flex gap-4">
+                  <a href="https://www.instagram.com/morateur2026/" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/50 hover:text-campaign-lime transition-colors text-sm font-medium">Instagram</a>
+                  <a href="https://www.facebook.com/profile.php?id=61571627498498" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/50 hover:text-campaign-lime transition-colors text-sm font-medium">Facebook</a>
+                </div>
+                <button
+                  onClick={toggleTheme}
+                  aria-label="Changer de thème"
+                  className="w-10 h-10 rounded-xl border border-primary-foreground/20 flex items-center justify-center text-primary-foreground/50 hover:text-campaign-lime hover:border-campaign-lime/40 transition-all"
+                >
+                  {theme === "default" ? <TreePine className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+                </button>
+              </motion.div>
             </div>
           </motion.div>
         )}
