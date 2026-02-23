@@ -1,16 +1,26 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShieldCheck, Building2, Store, ChevronDown, ArrowLeft } from "lucide-react";
+import { ShieldCheck, Building2, Store, ChevronDown, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import type { LucideIcon } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import RoadmapSection from "@/components/RoadmapSection";
 import Footer from "@/components/Footer";
 
-const pillars = [
+const pillars: {
+  icon: LucideIcon;
+  title: string;
+  intro: string;
+  color: string;
+  iconBg: string;
+  items: { title: string; detail: string }[];
+}[] = [
   {
     icon: ShieldCheck,
     title: "Faire barrage aux promoteurs",
     intro: "Notre commune se trouve à un tournant. En moins d'un an, des permis pour plus de 1000 logements ont été déposés. Il est temps d'agir.",
+    color: "border-campaign-lime/30",
+    iconBg: "gradient-lime",
     items: [
       { title: "Refus systématique des permis de construire des promoteurs", detail: "Nous refuserons systématiquement les permis de construire demandés par les promoteurs immobiliers afin de les forcer à la négociation et protéger le cadre de vie des Boucains." },
       { title: "Droit de préemption urbain", detail: "Utilisation systématique du droit de préemption urbain pour permettre la création de logements sociaux adaptés à notre commune, sans laisser le champ libre aux promoteurs." },
@@ -22,6 +32,8 @@ const pillars = [
     icon: Building2,
     title: "Des infrastructures à la hauteur",
     intro: "La vétusté de nos bâtiments publics est indigne de notre commune. Écoles, crèches, voiries : tout doit être remis à niveau.",
+    color: "border-campaign-steel/30",
+    iconBg: "gradient-teal",
     items: [
       { title: "Rénovation des bâtiments municipaux", detail: "Réaliser la rénovation complète de l'ensemble des bâtiments municipaux, y compris le foyer des Anciens, pour offrir des conditions dignes à tous les usagers." },
       { title: "Climatisation dans les écoles et crèches", detail: "Installer la climatisation réversible dans toutes les crèches, toutes les écoles et au foyer des anciens. Il est inacceptable que le thermomètre dépasse 30°C dès mai dans certaines écoles." },
@@ -33,6 +45,8 @@ const pillars = [
     icon: Store,
     title: "Revitaliser le village",
     intro: "Notre centre ancien a tant à offrir. Retrouver son âme, ramener la vie dans ses ruelles pittoresques : c'est notre priorité.",
+    color: "border-campaign-olive/30",
+    iconBg: "bg-campaign-olive",
     items: [
       { title: "Centre ancien attractif", detail: "Faire de notre centre ancien un lieu attractif pour l'ensemble des habitants, en s'appuyant sur son caractère unique, son histoire et son patrimoine architectural." },
       { title: "Animations et vie culturelle", detail: "Étendre les animations au-delà de la place principale, dans les ruelles pittoresques du centre ancien. Retrouver l'esprit des retraites aux flambeaux et des fêtes de village." },
@@ -42,15 +56,20 @@ const pillars = [
   },
 ];
 
-const AccordionItem = ({ item, isOpen, toggle }: { item: typeof pillars[0]["items"][0]; isOpen: boolean; toggle: () => void }) => (
+const AccordionItem = ({ item, isOpen, toggle, index }: { item: { title: string; detail: string }; isOpen: boolean; toggle: () => void; index: number }) => (
   <div className="border-b border-primary-foreground/[0.08] last:border-b-0">
     <button
       onClick={toggle}
       className="w-full flex items-center justify-between py-5 px-1 text-left group"
     >
-      <span className="font-semibold text-primary-foreground group-hover:text-campaign-green transition-colors pr-4">
-        {item.title}
-      </span>
+      <div className="flex items-center gap-4 pr-4">
+        <span className="font-accent text-sm font-extrabold text-campaign-lime/40">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span className="font-accent font-bold text-primary-foreground text-sm sm:text-base uppercase tracking-wide group-hover:text-campaign-lime transition-colors">
+          {item.title}
+        </span>
+      </div>
       <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
         <ChevronDown className="w-5 h-5 text-primary-foreground/40 flex-shrink-0" />
       </motion.div>
@@ -64,7 +83,7 @@ const AccordionItem = ({ item, isOpen, toggle }: { item: typeof pillars[0]["item
           transition={{ duration: 0.3 }}
           className="overflow-hidden"
         >
-          <p className="text-primary-foreground/50 leading-relaxed pb-5 px-1">
+          <p className="text-primary-foreground/50 leading-relaxed pb-5 pl-12 pr-4 text-sm sm:text-base">
             {item.detail}
           </p>
         </motion.div>
@@ -87,13 +106,16 @@ const ProgrammePage = () => {
 
       {/* Hero */}
       <section className="pt-32 pb-16">
-        <div className="container mx-auto px-6 text-center">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="section-label justify-center">
               Notre vision pour Bouc-Bel-Air
             </span>
-            <h1 className="font-heading text-5xl md:text-6xl font-extrabold text-primary-foreground mt-3 mb-4">
-              Le Programme
+            <h1
+              className="font-accent font-extrabold text-primary-foreground leading-[0.9] uppercase tracking-tight break-words mt-3 mb-4"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)" }}
+            >
+              LE <span className="text-campaign-lime">PROGRAMME</span>
             </h1>
             <p className="text-primary-foreground/40 max-w-2xl mx-auto text-lg">
               Trois piliers concrets pour redonner à notre commune le cadre de vie qu'elle mérite. Cliquez sur chaque mesure pour en savoir plus.
@@ -104,7 +126,7 @@ const ProgrammePage = () => {
 
       {/* Pillars */}
       <section className="pb-24">
-        <div className="container mx-auto px-6 space-y-16">
+        <div className="container mx-auto px-4 sm:px-6 space-y-16">
           {pillars.map((pillar, i) => (
             <motion.div
               key={i}
@@ -116,22 +138,26 @@ const ProgrammePage = () => {
             >
               {/* Pillar header */}
               <div className="lg:sticky lg:top-24">
-                <div className="w-14 h-14 rounded-2xl gradient-green flex items-center justify-center mb-4 shadow-lg shadow-campaign-green/25">
-                  <pillar.icon className="w-7 h-7 text-primary-foreground" />
+                <div className={`w-14 h-14 rounded-2xl ${pillar.iconBg} flex items-center justify-center mb-4 shadow-lg`}>
+                  <pillar.icon className="w-7 h-7 text-accent-foreground" />
                 </div>
-                <h2 className="font-heading text-3xl font-bold text-primary-foreground mb-3">
+                <h2
+                  className="font-accent font-extrabold text-primary-foreground uppercase tracking-tight leading-[0.95] mb-3 break-words"
+                  style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
+                >
                   {pillar.title}
                 </h2>
-                <p className="text-primary-foreground/50 leading-relaxed">{pillar.intro}</p>
-                <div className="mt-4 h-1 w-16 gradient-green rounded-full" />
+                <p className="text-primary-foreground/50 leading-relaxed text-sm sm:text-base">{pillar.intro}</p>
+                <div className="mt-4 h-[2px] w-16 bg-campaign-lime rounded-full" />
               </div>
 
               {/* Accordion */}
-              <div className="rounded-2xl border border-primary-foreground/[0.08] bg-primary-foreground/[0.03] p-6 md:p-8">
+              <div className={`rounded-2xl border ${pillar.color} bg-primary-foreground/[0.03] p-6 md:p-8`}>
                 {pillar.items.map((item, j) => (
                   <AccordionItem
                     key={j}
                     item={item}
+                    index={j}
                     isOpen={!!openItems[`${i}-${j}`]}
                     toggle={() => toggleItem(`${i}-${j}`)}
                   />
@@ -145,19 +171,26 @@ const ProgrammePage = () => {
       <RoadmapSection />
 
       {/* CTA */}
-      <section className="border-t border-primary-foreground/[0.08] py-16 text-primary-foreground text-center">
-        <div className="container mx-auto px-6">
-          <h2 className="font-heading text-3xl font-bold mb-4">Convaincu·e ?</h2>
-          <p className="text-primary-foreground/40 mb-8 max-w-lg mx-auto">
-            Rejoignez notre équipe et participez à construire l'avenir de Bouc-Bel-Air.
+      <section className="border-t border-primary-foreground/[0.08] py-16 sm:py-24 text-center">
+        <div className="container mx-auto px-4 sm:px-6">
+          <span className="section-label justify-center">Convaincu·e ?</span>
+          <h2
+            className="font-accent font-extrabold text-primary-foreground uppercase tracking-tight leading-[0.9] mb-4 break-words"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+          >
+            REJOIGNEZ-<span className="text-campaign-lime">NOUS</span>
+          </h2>
+          <p className="text-primary-foreground/40 mb-10 max-w-lg mx-auto text-lg">
+            Participez à construire l'avenir de Bouc-Bel-Air.
           </p>
           <motion.button
             onClick={() => navigate("/#procuration")}
-            className="gradient-lime text-accent-foreground px-10 py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base shadow-lg -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
+            className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-10 py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base shadow-lg -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
             whileHover={{ scale: 1.08, y: -3 }}
             whileTap={{ scale: 0.94, rotate: -4 }}
           >
             Rejoignez-nous
+            <ArrowRight className="w-5 h-5" />
           </motion.button>
         </div>
       </section>
