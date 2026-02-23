@@ -52,19 +52,47 @@
     --sidebar-ring: 70 80% 43%;
   }
 
-  /* Thème Sapin — vert forêt remplace lime/olive */
+  /* Thème Sapin — palette vert forêt complète */
   .theme-sapin {
-    --accent: 150 40% 28%;
-    --accent-foreground: 0 0% 100%;
-    --ring: 150 40% 28%;
+    --background: 0 0% 100%;
+    --foreground: 150 40% 12%;
 
-    --campaign-olive: 150 45% 25%;
-    --campaign-lime: 150 40% 28%;
-    --campaign-lime-light: 150 35% 40%;
+    --card: 0 0% 100%;
+    --card-foreground: 150 40% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 150 40% 12%;
+
+    --primary: 155 45% 22%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 140 20% 38%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 140 20% 92%;
+    --muted-foreground: 150 20% 35%;
+
+    --accent: 42 75% 50%;
+    --accent-foreground: 150 45% 12%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 140 20% 85%;
+    --input: 140 20% 85%;
+    --ring: 42 75% 50%;
+
+    --campaign-teal: 155 45% 22%;
+    --campaign-teal-light: 150 35% 32%;
+    --campaign-steel: 140 20% 38%;
+    --campaign-ice: 140 20% 92%;
+    --campaign-olive: 155 50% 18%;
+    --campaign-lime: 42 75% 50%;
+    --campaign-lime-light: 42 70% 60%;
   }
 
   .theme-sapin ::selection {
-    background: hsl(150 40% 28% / 0.3);
+    background: hsl(42 75% 50% / 0.3);
   }
 
   .dark {
