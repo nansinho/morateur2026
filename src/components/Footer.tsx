@@ -84,7 +84,7 @@ const Footer = () => {
 
         {/* Main grid */}
         <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-16">
-          <div className="grid md:grid-cols-3 gap-12 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-12">
             {/* Logo */}
             <div>
               <p className="font-accent text-2xl font-extrabold text-primary-foreground uppercase tracking-widest mb-2">
@@ -98,6 +98,25 @@ const Footer = () => {
             <nav aria-label="Navigation secondaire" className="flex flex-col gap-3">
               <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-1">Navigation</p>
               {navLinks.map((link, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleNav(link.to)}
+                  className="group text-left text-primary-foreground/70 hover:text-campaign-lime transition-colors text-sm font-medium flex items-center gap-2"
+                >
+                  <span className="w-0 group-hover:w-3 h-px bg-campaign-lime transition-all duration-300" />
+                  {link.label}
+                </button>
+              ))}
+            </nav>
+
+            {/* Légales */}
+            <nav aria-label="Mentions légales" className="flex flex-col gap-3">
+              <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-1">Légales</p>
+              {[
+                { label: "Mentions légales", to: "#" },
+                { label: "Cookies", to: "#" },
+                { label: "Politique de confidentialité", to: "#" },
+              ].map((link, i) => (
                 <button
                   key={i}
                   onClick={() => handleNav(link.to)}
@@ -148,10 +167,10 @@ const Footer = () => {
 
           {/* SEO text */}
           <div className="border-t border-primary-foreground/[0.15] mt-10 pt-8">
-            <p className="text-primary-foreground/50 text-[10px] uppercase tracking-[0.25em] font-bold mb-4">
+            <p className="text-primary-foreground/50 text-[10px] uppercase tracking-[0.25em] font-bold mb-4 text-center">
               À propos de Bouc-Bel-Air et des élections municipales 2026
             </p>
-            <div className="space-y-3 text-primary-foreground/40 text-xs leading-relaxed max-w-4xl">
+            <div className="space-y-3 text-primary-foreground/40 text-xs leading-relaxed max-w-4xl mx-auto text-center">
               <p>
                 Bouc-Bel-Air est une commune française située dans le département des Bouches-du-Rhône, en région Provence-Alpes-Côte d'Azur.
                 Nichée entre Aix-en-Provence et Marseille, cette ville provençale d'environ 15 000 habitants allie cadre de vie naturel
