@@ -1,66 +1,54 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { ShieldCheck, Building2, Store, Leaf, GraduationCap, ArrowRight, ChevronRight } from "lucide-react";
+import { ShieldCheck, Building2, Store, Leaf, GraduationCap, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
-import candidatTerrain from "@/assets/candidat-terrain.jpg";
-import candidatReunion from "@/assets/candidat-reunion.jpg";
-import candidatMarche from "@/assets/candidat-marche.jpg";
 
 const pillars: {
   icon: LucideIcon;
   title: string;
-  subtitle: string;
   desc: string;
-  img: string;
   iconBg: string;
+  gradient: string;
 }[] = [
   {
     icon: ShieldCheck,
     title: "Faire barrage aux promoteurs",
-    subtitle: "Urbanisme maîtrisé",
-    desc: "Moratoire sur les grands projets immobiliers, révision du PLU et consultation citoyenne systématique pour protéger notre cadre de vie.",
-    img: candidatTerrain,
+    desc: "Moratoire sur les grands projets, révision du PLU, consultation citoyenne systématique.",
     iconBg: "gradient-lime",
+    gradient: "from-campaign-lime/20 via-campaign-lime/5 to-transparent",
   },
   {
     icon: Building2,
     title: "Des infrastructures à la hauteur",
-    subtitle: "Bâtir l'avenir",
-    desc: "Plan pluriannuel d'investissement, rénovation énergétique des écoles, mise aux normes d'accessibilité de nos bâtiments publics.",
-    img: candidatReunion,
+    desc: "Plan d'investissement pluriannuel, rénovation énergétique, mise aux normes d'accessibilité.",
     iconBg: "gradient-teal",
+    gradient: "from-primary/20 via-primary/5 to-transparent",
   },
   {
     icon: Store,
     title: "Revitaliser le village",
-    subtitle: "Commerce & lien social",
-    desc: "Aide à l'installation de commerces de proximité, embellissement des façades, marchés thématiques au cœur du village.",
-    img: candidatMarche,
+    desc: "Aide aux commerces de proximité, embellissement des façades, marchés thématiques.",
     iconBg: "bg-campaign-steel",
+    gradient: "from-campaign-steel/20 via-campaign-steel/5 to-transparent",
   },
   {
     icon: Leaf,
     title: "Environnement & cadre de vie",
-    subtitle: "Préserver nos espaces",
-    desc: "Création de corridors verts, lutte contre les nuisances sonores, protection des collines et espaces boisés.",
-    img: candidatTerrain,
+    desc: "Corridors verts, lutte contre les nuisances, protection des collines et espaces boisés.",
     iconBg: "bg-campaign-olive",
+    gradient: "from-campaign-olive/20 via-campaign-olive/5 to-transparent",
   },
   {
     icon: GraduationCap,
     title: "Écoles & jeunesse",
-    subtitle: "L'avenir de nos enfants",
-    desc: "Rénovation des cantines, création d'espaces périscolaires modernes, soutien aux associations jeunesse.",
-    img: candidatReunion,
+    desc: "Rénovation des cantines, espaces périscolaires modernes, soutien aux associations.",
     iconBg: "gradient-lime",
+    gradient: "from-campaign-lime/20 via-campaign-lime/5 to-transparent",
   },
 ];
 
 const ProgrammeSection = () => {
   const navigate = useNavigate();
-  const [featured, setFeatured] = useState(0);
-  const current = pillars[featured];
 
   return (
     <section id="programme" className="gradient-teal-deep relative overflow-hidden min-h-screen flex items-center justify-center">
@@ -80,92 +68,62 @@ const ProgrammeSection = () => {
           >
             LE <span className="text-campaign-lime">PROGRAMME</span>
           </h2>
+          <p className="text-primary-foreground/40 max-w-2xl mx-auto text-lg mt-8 font-medium">
+            Cinq piliers concrets pour redonner à Bouc-Bel-Air le cadre de vie qu'elle mérite.
+          </p>
         </motion.div>
 
-        {/* Featured pillar — large image + text */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="grid lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden mb-8 shadow-2xl"
-        >
-          {/* Image side */}
-          <div className="relative h-64 lg:h-auto lg:min-h-[400px] overflow-hidden">
-            <motion.img
-              key={featured}
-              src={current.img}
-              alt={current.title}
-              className="w-full h-full object-cover"
-              initial={{ opacity: 0, scale: 1.1 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-primary/30 lg:bg-gradient-to-r lg:from-transparent lg:to-primary/50" />
-          </div>
-
-          {/* Text side */}
-          <div className="bg-background/95 backdrop-blur-sm p-8 sm:p-12 flex flex-col justify-center">
-            <motion.div
-              key={featured}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <div className={`w-14 h-14 rounded-2xl ${current.iconBg} flex items-center justify-center mb-6 shadow-lg`}>
-                <current.icon className="w-7 h-7 text-primary-foreground" strokeWidth={1.5} />
-              </div>
-              <p className="text-campaign-lime font-accent font-bold text-xs uppercase tracking-[0.2em] mb-2">{current.subtitle}</p>
-              <h3
-                className="font-accent font-extrabold text-foreground uppercase tracking-tight leading-tight mb-4 break-words"
-                style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)" }}
-              >
-                {current.title}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed text-base">
-                {current.desc}
-              </p>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Pillar selector tabs */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-14">
+        {/* TikTok-style vertical cards */}
+        <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0">
           {pillars.map((pillar, i) => (
-            <motion.button
+            <motion.div
               key={i}
-              onClick={() => setFeatured(i)}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.06, duration: 0.3 }}
-              className={`rounded-xl p-4 sm:p-5 flex flex-col items-center text-center gap-3 transition-all duration-300 cursor-pointer border-2
-                ${featured === i
-                  ? "bg-campaign-lime/10 border-campaign-lime shadow-lg shadow-campaign-lime/10"
-                  : "bg-primary-foreground/5 border-primary-foreground/10 hover:border-primary-foreground/25 hover:bg-primary-foreground/10"
-                }`}
+              transition={{ delay: i * 0.08, duration: 0.4 }}
+              className="flex-shrink-0 w-[200px] sm:w-auto snap-center"
             >
-              <div className={`w-10 h-10 rounded-xl ${featured === i ? "gradient-lime" : "bg-primary-foreground/10"} flex items-center justify-center transition-all duration-300`}>
-                <pillar.icon className={`w-5 h-5 ${featured === i ? "text-accent-foreground" : "text-primary-foreground/60"}`} strokeWidth={1.5} />
+              <div
+                className={`relative rounded-[1.25rem] aspect-[9/16] bg-background/95 backdrop-blur-sm border border-primary-foreground/10
+                  flex flex-col items-center justify-between p-6 text-center overflow-hidden
+                  transition-all duration-300 cursor-pointer group
+                  hover:-translate-y-2 hover:shadow-2xl hover:shadow-campaign-lime/10 hover:border-campaign-lime/30`}
+              >
+                {/* Gradient accent at top */}
+                <div className={`absolute top-0 left-0 right-0 h-32 bg-gradient-to-b ${pillar.gradient} opacity-60 group-hover:opacity-100 transition-opacity duration-300`} />
+
+                {/* Top spacer */}
+                <div className="relative z-10 pt-4">
+                  <motion.div
+                    className={`w-16 h-16 rounded-2xl ${pillar.iconBg} flex items-center justify-center shadow-lg mx-auto`}
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <pillar.icon className="w-8 h-8 text-primary-foreground" strokeWidth={1.5} />
+                  </motion.div>
+                </div>
+
+                {/* Center content */}
+                <div className="relative z-10 flex-1 flex flex-col justify-center py-4">
+                  <h3 className="font-accent text-sm font-extrabold text-foreground uppercase tracking-wide leading-tight mb-3 break-words">
+                    {pillar.title}
+                  </h3>
+                  <p className="text-muted-foreground text-xs leading-relaxed">
+                    {pillar.desc}
+                  </p>
+                </div>
+
+                {/* Bottom indicator */}
+                <div className="relative z-10 w-10 h-1 rounded-full bg-campaign-lime/30 group-hover:bg-campaign-lime group-hover:w-14 transition-all duration-300" />
               </div>
-              <span className={`font-accent text-[11px] sm:text-xs font-bold uppercase tracking-wide leading-tight transition-colors duration-300 ${
-                featured === i ? "text-campaign-lime" : "text-primary-foreground/50"
-              }`}>
-                {pillar.title}
-              </span>
-              {featured === i && (
-                <motion.div
-                  layoutId="pillar-indicator"
-                  className="w-6 h-1 rounded-full bg-campaign-lime"
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                />
-              )}
-            </motion.button>
+            </motion.div>
           ))}
         </div>
 
         {/* CTA */}
         <motion.div
-          className="text-center"
+          className="text-center mt-12 sm:mt-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
