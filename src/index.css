@@ -52,6 +52,21 @@
     --sidebar-ring: 70 80% 43%;
   }
 
+  /* Thème Sapin — vert forêt remplace lime/olive */
+  .theme-sapin {
+    --accent: 150 40% 28%;
+    --accent-foreground: 0 0% 100%;
+    --ring: 150 40% 28%;
+
+    --campaign-olive: 150 45% 25%;
+    --campaign-lime: 150 40% 28%;
+    --campaign-lime-light: 150 35% 40%;
+  }
+
+  .theme-sapin ::selection {
+    background: hsl(150 40% 28% / 0.3);
+  }
+
   .dark {
     --background: 192 60% 6%;
     --foreground: 210 20% 95%;
@@ -97,8 +112,8 @@
     @apply font-heading;
   }
 
-  ::selection {
-    background: hsl(70 80% 43% / 0.3);
+  .selection-color ::selection {
+    background: hsl(var(--campaign-lime) / 0.3);
   }
 }
 
@@ -112,11 +127,11 @@
   }
 
   .gradient-lime {
-    background: linear-gradient(135deg, hsl(70 80% 43%), hsl(70 75% 55%));
+    background: linear-gradient(135deg, hsl(var(--campaign-lime)), hsl(var(--campaign-lime-light)));
   }
 
   .text-gradient-lime {
-    background: linear-gradient(135deg, hsl(70 80% 43%), hsl(70 75% 55%));
+    background: linear-gradient(135deg, hsl(var(--campaign-lime)), hsl(var(--campaign-lime-light)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -139,13 +154,13 @@
 
   .section-label {
     @apply inline-flex items-center gap-2 font-accent font-bold text-xs uppercase tracking-[0.3em] mb-4;
-    color: hsl(70 80% 43%);
+    color: hsl(var(--campaign-lime));
   }
 
   .section-label::before {
     content: '';
     @apply w-10 h-[2px] inline-block;
-    background: linear-gradient(135deg, hsl(70 80% 43%), hsl(70 75% 55%));
+    background: linear-gradient(135deg, hsl(var(--campaign-lime)), hsl(var(--campaign-lime-light)));
   }
 
   .scrollbar-hide::-webkit-scrollbar {
