@@ -77,6 +77,15 @@ const HeroSection = () => {
           </motion.h1>
         </div>
 
+        <motion.span
+          className="inline-block font-accent font-extrabold uppercase text-primary-foreground text-lg sm:text-2xl md:text-3xl tracking-widest px-4 py-1 bg-campaign-lime/20 backdrop-blur-sm rounded-lg mb-3 -rotate-3"
+          initial={{ opacity: 0, scale: 0.8, rotate: -6 }}
+          animate={{ opacity: 1, scale: 1, rotate: -3 }}
+          transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
+          SERA
+        </motion.span>
+
         <div className="overflow-hidden mb-12" style={{ height: "clamp(4.5rem, 12vw, 10rem)" }}>
           <AnimatePresence mode="wait">
             <motion.p
