@@ -66,56 +66,62 @@ const Equipe = () => {
         </div>
       </section>
 
-      {/* Team grid */}
-      <section className="gradient-teal-deep pb-24">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {members.map((m, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ y: -10 }}
-                className="group cursor-pointer"
-              >
-                <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/30">
-                  {/* Photo */}
-                  <div className="aspect-[3/4] overflow-hidden relative">
-                    <img
-                      src={m.img}
-                      alt={m.name}
-                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent" />
+      {/* Team carousel */}
+      <section className="gradient-teal-deep py-16 sm:py-24">
+        <div className="container mx-auto px-4 sm:px-6 mb-10">
+          <span className="section-label">Nos colistiers</span>
+          <h2
+            className="font-accent font-extrabold uppercase leading-[0.9] tracking-tight text-primary-foreground break-words"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+          >
+            CEUX QUI <span className="text-campaign-lime">S'ENGAGENT</span>
+          </h2>
+        </div>
 
-                    {/* Role badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="gradient-lime text-accent-foreground px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-extrabold uppercase tracking-wider">
-                        {m.role}
-                      </span>
-                    </div>
+        <div className="flex gap-5 sm:gap-6 overflow-x-auto scrollbar-hide pb-6 px-4 sm:px-6">
+          {members.map((m, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              whileHover={{ y: -10 }}
+              className="group cursor-pointer flex-shrink-0 w-[260px] sm:w-[280px] md:w-[300px]"
+            >
+              <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/40">
+                {/* Photo 9:16 */}
+                <div className="aspect-[9/16] overflow-hidden relative">
+                  <img
+                    src={m.img}
+                    alt={m.name}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent" />
 
-                    {/* Name overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
-                      <h3 className="font-accent font-extrabold text-primary-foreground text-lg sm:text-xl leading-snug group-hover:text-campaign-lime transition-colors duration-300 uppercase tracking-wide">
-                        {m.name}
-                      </h3>
-                    </div>
+                  {/* Role badge */}
+                  <div className="absolute top-4 left-4">
+                    <span className="gradient-lime text-accent-foreground px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-extrabold uppercase tracking-wider">
+                      {m.role}
+                    </span>
                   </div>
 
-                  {/* Description */}
-                  <div className="bg-primary-foreground/[0.05] p-5 sm:p-6 border-t border-primary-foreground/[0.08]">
-                    <p className="text-primary-foreground/50 text-sm leading-relaxed">
+                  {/* Bottom content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 flex flex-col justify-end">
+                    <h3
+                      className="font-accent font-extrabold text-primary-foreground text-2xl sm:text-3xl leading-[0.95] group-hover:text-campaign-lime transition-colors duration-300 uppercase tracking-wide -rotate-3 mb-3 break-words overflow-hidden"
+                    >
+                      {m.name}
+                    </h3>
+                    <p className="text-primary-foreground/60 text-xs sm:text-sm leading-relaxed line-clamp-3">
                       {m.desc}
                     </p>
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
