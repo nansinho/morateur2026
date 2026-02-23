@@ -28,8 +28,8 @@ const Navbar = () => {
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
         isScrolled
-          ? "bg-primary/90 backdrop-blur-2xl shadow-2xl shadow-primary/20 py-3"
-          : "bg-transparent py-6"
+          ? "bg-primary/95 backdrop-blur-2xl shadow-2xl shadow-primary/20 py-3"
+          : "bg-primary py-6"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
