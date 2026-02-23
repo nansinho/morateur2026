@@ -9,13 +9,83 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 
-const actions: { Icon: LucideIcon; title: string; desc: string; href: string; external: boolean; accentColor: string; iconBg: string }[] = [
-  { Icon: HandHeart, title: "J'agis sur le terrain", desc: "Tractage, porte-à-porte, événements locaux — chaque geste compte.", href: "#procuration", external: false, accentColor: "from-campaign-lime/30 via-campaign-lime/10 to-transparent", iconBg: "gradient-lime" },
-  { Icon: FileText, title: "Je fais une procuration", desc: "Donnez procuration en ligne facilement sur le site officiel.", href: "https://www.maprocuration.gouv.fr/", external: true, accentColor: "from-campaign-lime/40 via-campaign-lime/15 to-transparent", iconBg: "gradient-lime" },
-  { Icon: Instagram, title: "Instagram", desc: "Suivez notre campagne au quotidien et partagez nos publications.", href: "https://www.instagram.com/morateur2026/", external: true, accentColor: "from-pink-500/30 via-pink-500/10 to-transparent", iconBg: "bg-gradient-to-br from-pink-500 to-orange-400" },
-  { Icon: Facebook, title: "Facebook", desc: "Rejoignez la communauté, échangez et restez informé.", href: "https://www.facebook.com/profile.php?id=61571627498498", external: true, accentColor: "from-blue-500/30 via-blue-500/10 to-transparent", iconBg: "bg-blue-600" },
-  { Icon: Mail, title: "Newsletter", desc: "Recevez chaque semaine les dernières infos de la campagne.", href: "#procuration", external: false, accentColor: "from-primary/30 via-primary/10 to-transparent", iconBg: "gradient-teal" },
-  { Icon: BookOpen, title: "Le programme", desc: "Découvrez nos 5 piliers et nos engagements concrets.", href: "/programme", external: false, accentColor: "from-campaign-steel/30 via-campaign-steel/10 to-transparent", iconBg: "bg-campaign-steel" },
+const actions: {
+  Icon: LucideIcon;
+  title: string;
+  desc: string;
+  href: string;
+  external: boolean;
+  bg: string;
+  iconColor: string;
+  textColor: string;
+  subtextColor: string;
+}[] = [
+  {
+    Icon: HandHeart,
+    title: "J'agis sur le terrain",
+    desc: "Tractage, porte-à-porte, événements locaux — chaque geste compte.",
+    href: "#procuration",
+    external: false,
+    bg: "bg-gradient-to-br from-campaign-lime to-campaign-lime-light",
+    iconColor: "text-accent-foreground",
+    textColor: "text-accent-foreground",
+    subtextColor: "text-accent-foreground/70",
+  },
+  {
+    Icon: FileText,
+    title: "Je fais une procuration",
+    desc: "Donnez procuration en ligne facilement sur le site officiel.",
+    href: "https://www.maprocuration.gouv.fr/",
+    external: true,
+    bg: "gradient-teal",
+    iconColor: "text-primary-foreground",
+    textColor: "text-primary-foreground",
+    subtextColor: "text-primary-foreground/70",
+  },
+  {
+    Icon: Instagram,
+    title: "Instagram",
+    desc: "Suivez notre campagne au quotidien et partagez nos publications.",
+    href: "https://www.instagram.com/morateur2026/",
+    external: true,
+    bg: "bg-gradient-to-br from-pink-500 via-rose-500 to-orange-400",
+    iconColor: "text-white",
+    textColor: "text-white",
+    subtextColor: "text-white/70",
+  },
+  {
+    Icon: Facebook,
+    title: "Facebook",
+    desc: "Rejoignez la communauté, échangez et restez informé.",
+    href: "https://www.facebook.com/profile.php?id=61571627498498",
+    external: true,
+    bg: "bg-blue-600",
+    iconColor: "text-white",
+    textColor: "text-white",
+    subtextColor: "text-white/70",
+  },
+  {
+    Icon: Mail,
+    title: "Newsletter",
+    desc: "Recevez chaque semaine les dernières infos de la campagne.",
+    href: "#procuration",
+    external: false,
+    bg: "gradient-teal-deep",
+    iconColor: "text-campaign-lime",
+    textColor: "text-primary-foreground",
+    subtextColor: "text-primary-foreground/60",
+  },
+  {
+    Icon: BookOpen,
+    title: "Le programme",
+    desc: "Découvrez nos 5 piliers et nos engagements concrets.",
+    href: "/programme",
+    external: false,
+    bg: "bg-campaign-steel",
+    iconColor: "text-primary-foreground",
+    textColor: "text-primary-foreground",
+    subtextColor: "text-primary-foreground/70",
+  },
 ];
 
 const EngagezVousSection = () => {
@@ -58,46 +128,40 @@ const EngagezVousSection = () => {
                   className="block cursor-pointer group"
                 >
                   <div
-                    className="relative rounded-[1.25rem] aspect-[9/16] bg-background border border-border
+                    className={`relative rounded-[1.25rem] aspect-[9/16] ${action.bg}
                       flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
-                      transition-all duration-300
-                      group-hover:shadow-2xl group-hover:shadow-primary/10 group-hover:border-campaign-lime/30"
+                      transition-all duration-300 shadow-lg
+                      group-hover:shadow-2xl group-hover:shadow-black/20`}
                   >
-                    {/* Gradient accent at top */}
-                    <div className={`absolute top-0 left-0 right-0 h-36 bg-gradient-to-b ${action.accentColor} opacity-60 group-hover:opacity-100 transition-opacity duration-300`} />
-
-                    {/* Spacer top */}
-                    <div className="relative z-10" />
-
                     {/* Icon */}
-                    <div className="relative z-10">
-                      <motion.div
-                        className={`w-20 h-20 rounded-2xl ${action.iconBg} flex items-center justify-center shadow-lg mx-auto`}
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <action.Icon className="w-10 h-10 text-primary-foreground" strokeWidth={1.5} />
-                      </motion.div>
-                      {/* Glow */}
-                      <div className={`absolute inset-0 w-20 h-20 mx-auto rounded-2xl ${action.iconBg} opacity-30 blur-xl`} />
+                    <div className="relative z-10 mt-8">
+                      <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto">
+                        <action.Icon className={`w-10 h-10 ${action.iconColor}`} strokeWidth={1.5} />
+                      </div>
                     </div>
 
                     {/* Content */}
                     <div className="relative z-10 flex-1 flex flex-col justify-end py-4">
-                      <h3 className="font-accent text-sm sm:text-base font-extrabold text-foreground uppercase tracking-wide leading-tight mb-3 break-words">
+                      <h3 className={`font-accent text-sm sm:text-base font-extrabold ${action.textColor} uppercase tracking-wide leading-tight mb-3 break-words`}>
                         {action.title}
                       </h3>
-                      <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
+                      <p className={`${action.subtextColor} text-xs sm:text-sm leading-relaxed`}>
                         {action.desc}
                       </p>
                     </div>
 
                     {/* Bottom indicator */}
-                    <div className="relative z-10 flex items-center gap-2 text-campaign-lime/50 group-hover:text-campaign-lime transition-colors duration-300">
+                    <div className={`relative z-10 flex items-center gap-2 ${action.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
                       {action.external ? (
-                        <ExternalLink className="w-4 h-4" />
+                        <>
+                          <span className="text-xs font-bold uppercase tracking-wider">Visiter</span>
+                          <ExternalLink className="w-4 h-4" />
+                        </>
                       ) : (
-                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                        <>
+                          <span className="text-xs font-bold uppercase tracking-wider">Découvrir</span>
+                          <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                        </>
                       )}
                     </div>
                   </div>
