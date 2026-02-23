@@ -1,32 +1,25 @@
 
-## Refonte complete du Footer
+## Modifications du Footer
 
-Le probleme actuel : le fond `gradient-teal-deep` se confond avec le reste du site, et les opacites tres basses (`/20`, `/30`, `/40`) rendent le texte quasi invisible.
+### 1. Centrer le texte SEO
+Le bloc SEO en bas du footer sera centre (`text-center`) au lieu d'etre aligne a gauche.
 
-### Changements prevus (`src/components/Footer.tsx`)
+### 2. Ajouter une colonne "Legales" dans la grille
+La grille passe de 3 colonnes (`md:grid-cols-3`) a 4 colonnes (`md:grid-cols-4`) :
+- Logo
+- Navigation (existant)
+- **Legales** (nouvelle colonne) avec les liens :
+  - Mentions legales
+  - Cookies
+  - Politique de confidentialite
+- Suivez-nous (existant)
 
-**1. Fond du footer**
-- Remplacer `gradient-teal-deep` par un fond sombre solide : `bg-[#0B162C]` (bleu nuit profond) qui cree un vrai contraste avec le contenu du site
-- Ajouter un separateur visuel en haut : un trait gradient lime pleine largeur (4px)
+Les liens legaux auront le meme style que la colonne Navigation (meme taille, meme hover lime). Pour l'instant ils ne meneront nulle part (ancre `#`).
 
-**2. Section CTA (partie haute)**
-- Titre "Bouc Bel Air a de l'Avenir" : passer le texte en `text-white` au lieu de `text-primary-foreground` pour garantir la lisibilite
-- Sous-titre : monter l'opacite a `/70` au lieu de `/40`
-- Bouton CTA : conserver le style actuel (gradient-lime, tilt) qui fonctionne bien
+### Details techniques
 
-**3. Grille principale (Logo / Nav / Socials)**
-- Tous les textes : remplacer les `text-primary-foreground/60` par `text-white/70` et les `/30` par `text-white/50` pour une lisibilite correcte
-- Labels "NAVIGATION" et "SUIVEZ-NOUS" : garder en `text-campaign-lime` (bien visible sur fond sombre)
-- Separateurs : monter de `/[0.06]` a `/[0.15]` pour qu'ils soient visibles
+**Fichier modifie** : `src/components/Footer.tsx`
 
-**4. Barre copyright**
-- Monter l'opacite du texte copyright de `/20` a `/50`
-- Bouton retour en haut : border plus visible (`/20` au lieu de `/10`)
-
-**5. Bloc SEO**
-- Fond : utiliser `bg-[#060E1E]` (encore plus sombre que le footer) pour creer une separation nette
-- Titre SEO : `text-white/30` au lieu de `text-background/20`
-- Paragraphes : `text-white/20` au lieu de `text-background/15`
-
-### Fichier modifie
-- `src/components/Footer.tsx` uniquement
+- Ligne 87 : `grid-cols-3` devient `grid-cols-4`
+- Apres le bloc Nav (ligne 110), ajout d'une nouvelle colonne "Legales" avec 3 boutons : Mentions legales, Cookies, Politique de confidentialite
+- Ligne 150-172 : ajout de `text-center` et suppression de `max-w-4xl` sur le bloc SEO pour centrer le texte
