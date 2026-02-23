@@ -87,7 +87,7 @@ const HeroSection = () => {
           SERA
         </motion.span>
 
-        <div className="overflow-hidden mb-6" style={{ height: "clamp(4rem, 11vw, 9rem)", paddingTop: "0.1em" }}>
+        <div className="mb-6" style={{ height: "clamp(5rem, 12vw, 10rem)", overflow: "visible" }}>
           <AnimatePresence mode="wait">
             <motion.p
               key={rotatingWords[wordIndex].word}
