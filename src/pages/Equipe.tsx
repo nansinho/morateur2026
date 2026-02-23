@@ -3,6 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import RoadmapSection from "@/components/RoadmapSection";
+import equipeGroupe from "@/assets/equipe-groupe.png";
 import equipe1 from "@/assets/equipe-1.png";
 import equipe2 from "@/assets/equipe-2.png";
 import equipe3 from "@/assets/equipe-3.png";
@@ -41,6 +43,25 @@ const Equipe = () => {
             <p className="text-primary-foreground/40 max-w-xl mx-auto text-lg mt-6 font-medium">
               Une équipe aux expériences multiples, engagée pour Bouc-Bel-Air.
             </p>
+          </motion.div>
+
+          {/* Photo de groupe */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="mt-10 max-w-5xl mx-auto"
+          >
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30">
+              <div className="aspect-[3/1]">
+                <img
+                  src={equipeGroupe}
+                  alt="L'équipe au complet"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent" />
+            </div>
           </motion.div>
         </div>
       </section>
@@ -97,6 +118,9 @@ const Equipe = () => {
           </div>
         </div>
       </section>
+
+      {/* Roadmap */}
+      <RoadmapSection />
 
       {/* CTA */}
       <section className="gradient-teal-deep border-t border-primary-foreground/[0.08] py-16 sm:py-24 text-center">
