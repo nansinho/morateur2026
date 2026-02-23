@@ -52,24 +52,24 @@
     --sidebar-ring: 70 80% 43%;
   }
 
-  /* Thème Sapin — palette avec #1B9476 en accent */
+  /* Thème Sapin — palette avec #0B162C en fond prédominant */
   .theme-sapin {
-    --background: 202 70% 10%;
+    --background: 221 60% 7%;
     --foreground: 42 52% 90%;
 
-    --card: 202 65% 14%;
+    --card: 221 55% 11%;
     --card-foreground: 42 52% 90%;
 
-    --popover: 202 65% 14%;
+    --popover: 221 55% 11%;
     --popover-foreground: 42 52% 90%;
 
-    --primary: 202 70% 22%;
+    --primary: 221 60% 15%;
     --primary-foreground: 42 52% 90%;
 
-    --secondary: 202 60% 18%;
+    --secondary: 221 50% 13%;
     --secondary-foreground: 42 52% 90%;
 
-    --muted: 202 55% 16%;
+    --muted: 221 45% 12%;
     --muted-foreground: 150 15% 65%;
 
     --accent: 165 69% 34%;
@@ -78,27 +78,27 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 42 52% 95%;
 
-    --border: 202 50% 20%;
-    --input: 202 50% 20%;
+    --border: 221 40% 18%;
+    --input: 221 40% 18%;
     --ring: 165 69% 34%;
 
     --radius: 0.75rem;
 
-    --campaign-teal: 202 70% 22%;
+    --campaign-teal: 221 60% 15%;
     --campaign-teal-light: 165 69% 34%;
-    --campaign-steel: 202 60% 18%;
+    --campaign-steel: 221 50% 13%;
     --campaign-ice: 42 52% 90%;
     --campaign-olive: 165 45% 30%;
     --campaign-lime: 165 69% 34%;
     --campaign-lime-light: 140 45% 69%;
 
-    --sidebar-background: 202 70% 8%;
+    --sidebar-background: 221 60% 6%;
     --sidebar-foreground: 42 52% 90%;
     --sidebar-primary: 165 69% 34%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 202 55% 16%;
+    --sidebar-accent: 221 45% 12%;
     --sidebar-accent-foreground: 42 52% 90%;
-    --sidebar-border: 202 50% 20%;
+    --sidebar-border: 221 40% 18%;
     --sidebar-ring: 165 69% 34%;
   }
 
