@@ -3,12 +3,12 @@ import { useRef } from "react";
 import { Flag, Users, Vote, CalendarCheck, Megaphone, PartyPopper, Check } from "lucide-react";
 
 const milestones = [
-  { icon: Megaphone, date: "Janvier 2026", title: "Lancement de la campagne", desc: "Présentation officielle de la liste et du programme.", done: true },
-  { icon: Users, date: "Février 2026", title: "Rencontres de terrain", desc: "Porte-à-porte, réunions publiques dans tous les quartiers.", done: true },
-  { icon: Flag, date: "Mars 2026", title: "Meetings publics", desc: "Grands rassemblements thématiques sur les 3 piliers du programme.", done: false },
-  { icon: CalendarCheck, date: "Mars 2026", title: "1ᵉʳ tour", desc: "Jour de vote – chaque voix compte pour l'avenir de notre commune.", done: false },
-  { icon: Vote, date: "Mars 2026", title: "2ᵉ tour", desc: "Mobilisation générale pour confirmer le choix du renouveau.", done: false },
-  { icon: PartyPopper, date: "Avril 2026", title: "Installation du conseil", desc: "Mise en œuvre immédiate des premières mesures du programme.", done: false },
+  { icon: Megaphone, date: "Janvier 2026", title: "Lancement de la campagne", desc: "Présentation officielle de la liste et du programme.", done: true, color: "bg-campaign-green" },
+  { icon: Users, date: "Février 2026", title: "Rencontres de terrain", desc: "Porte-à-porte, réunions publiques dans tous les quartiers.", done: true, color: "bg-campaign-gold" },
+  { icon: Flag, date: "Mars 2026", title: "Meetings publics", desc: "Grands rassemblements thématiques sur les 3 piliers du programme.", done: false, color: "bg-campaign-sky" },
+  { icon: CalendarCheck, date: "Mars 2026", title: "1ᵉʳ tour", desc: "Jour de vote – chaque voix compte pour l'avenir de notre commune.", done: false, color: "bg-campaign-green" },
+  { icon: Vote, date: "Mars 2026", title: "2ᵉ tour", desc: "Mobilisation générale pour confirmer le choix du renouveau.", done: false, color: "bg-campaign-gold" },
+  { icon: PartyPopper, date: "Avril 2026", title: "Installation du conseil", desc: "Mise en œuvre immédiate des premières mesures du programme.", done: false, color: "bg-campaign-green" },
 ];
 
 const doneCount = milestones.filter(m => m.done).length;
@@ -21,39 +21,40 @@ const MilestoneCard = ({ m, i, isLeft }: { m: typeof milestones[0]; i: number; i
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, y: 40, scale: 0.95 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
       className={`relative flex items-center mb-14 md:mb-16 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"} flex-row`}
     >
       {/* Dot */}
       <div className="absolute left-6 md:left-1/2 -translate-x-1/2 z-10">
-        <div className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${
-          m.done ? "gradient-green border-transparent shadow-md shadow-campaign-green/20" : "bg-card border-border"
-        }`}>
-          <m.icon className={`w-5 h-5 ${m.done ? "text-primary-foreground" : "text-muted-foreground"}`} />
-        </div>
+        <motion.div
+          className={`w-14 h-14 rounded-2xl flex items-center justify-center border-2 transition-all duration-500 ${
+            m.done ? `${m.color} border-transparent shadow-lg` : "bg-card border-border"
+          }`}
+          whileHover={{ scale: 1.15, rotate: 5 }}
+        >
+          <m.icon className={`w-6 h-6 ${m.done ? "text-primary-foreground" : "text-muted-foreground"}`} />
+        </motion.div>
       </div>
-
-      {/* Connector */}
-      <div className={`hidden md:block absolute top-1/2 w-8 h-px ${
-        isLeft ? "right-1/2 mr-6" : "left-1/2 ml-6"
-      } ${m.done ? "bg-campaign-green/20" : "bg-border"}`} />
 
       {/* Card */}
       <div className={`ml-20 md:ml-0 md:w-[calc(50%-3.5rem)] ${isLeft ? "md:mr-auto md:pr-4" : "md:ml-auto md:pl-4"}`}>
-        <div className={`rounded-xl p-6 border bg-card shadow-sm transition-all duration-300 ${
-          m.done ? "border-campaign-green/15" : "border-border opacity-50"
-        }`}>
-          {m.done && <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-campaign-green rounded-full" />}
+        <motion.div
+          className={`rounded-2xl p-6 border bg-card shadow-sm transition-all duration-300 group cursor-pointer ${
+            m.done ? "border-campaign-green/20 hover:shadow-md" : "border-border opacity-60"
+          }`}
+          whileHover={m.done ? { scale: 1.02, x: isLeft ? -5 : 5 } : {}}
+        >
+          {m.done && <div className={`absolute top-0 bottom-0 left-0 w-1 ${m.color} rounded-full`} />}
           
           <div className="relative">
             <div className="flex items-center justify-between mb-2">
-              <span className={`text-xs font-semibold uppercase tracking-wider ${m.done ? "text-campaign-green" : "text-muted-foreground"}`}>
+              <span className={`text-xs font-bold uppercase tracking-wider ${m.done ? "text-campaign-green" : "text-muted-foreground"}`}>
                 {m.date}
               </span>
               {m.done && (
-                <div className="w-6 h-6 rounded-full gradient-green flex items-center justify-center">
+                <div className="w-6 h-6 rounded-full bg-campaign-green flex items-center justify-center">
                   <Check className="w-3.5 h-3.5 text-primary-foreground" />
                 </div>
               )}
@@ -65,7 +66,7 @@ const MilestoneCard = ({ m, i, isLeft }: { m: typeof milestones[0]; i: number; i
               {m.desc}
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );
@@ -85,26 +86,30 @@ const RoadmapSection = () => {
           viewport={{ once: true }}
           className="text-center mb-6"
         >
-          <p className="text-campaign-green font-semibold text-xs uppercase tracking-[0.3em] mb-4">Notre feuille de route</p>
-          <h2 className="font-heading text-5xl md:text-6xl font-extrabold text-foreground leading-tight">
-            Les grandes <span className="text-campaign-green">étapes</span>
+          <p className="text-campaign-green font-bold text-xs uppercase tracking-[0.3em] mb-4">Notre feuille de route</p>
+          <h2 className="font-heading text-5xl md:text-7xl font-extrabold text-foreground leading-tight">
+            Les grandes <span className="text-campaign-green">éta</span><span className="text-campaign-gold">pes</span>
           </h2>
-          <div className="w-16 h-[2px] mx-auto mt-4 bg-campaign-green/40 rounded-full" />
         </motion.div>
 
         {/* Progress */}
-        <div className="text-center mb-20">
-          <span className="text-campaign-green font-heading text-3xl font-extrabold">
+        <motion.div
+          className="text-center mb-20"
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+        >
+          <span className="text-campaign-green font-heading text-5xl font-extrabold">
             {progressPercent}%
           </span>
-          <p className="text-muted-foreground text-xs mt-1 uppercase tracking-[0.2em]">accompli</p>
-        </div>
+          <p className="text-muted-foreground text-xs mt-1 uppercase tracking-[0.2em] font-semibold">accompli</p>
+        </motion.div>
 
         <div className="relative max-w-3xl mx-auto">
           {/* Track */}
-          <div className="absolute left-6 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-[2px] bg-border rounded-full" />
+          <div className="absolute left-6 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-[3px] bg-border/50 rounded-full" />
           <motion.div
-            className="absolute left-6 md:left-1/2 md:-translate-x-px top-0 w-[2px] origin-top rounded-full bg-campaign-green"
+            className="absolute left-6 md:left-1/2 md:-translate-x-px top-0 w-[3px] origin-top rounded-full bg-gradient-to-b from-campaign-green via-campaign-gold to-campaign-green"
             style={{ height: lineHeight }}
           />
 
@@ -113,8 +118,6 @@ const RoadmapSection = () => {
           ))}
         </div>
       </div>
-
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
     </section>
   );
 };
