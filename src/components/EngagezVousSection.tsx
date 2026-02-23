@@ -130,7 +130,7 @@ const EngagezVousSection = () => {
                 className="block cursor-pointer group"
               >
                 <div
-                  className={`relative rounded-[1.25rem] aspect-[3/4] ${action.bg}
+                  className={`relative rounded-[1.25rem] aspect-[4/5] ${action.bg}
                     flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
                     transition-all duration-300 shadow-lg
                     group-hover:shadow-2xl group-hover:shadow-black/20`}
