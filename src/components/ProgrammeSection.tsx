@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ShieldCheck, Building2, Store, ArrowRight, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -47,102 +47,61 @@ const pillars = [
 
 const PillarCard = ({ pillar, index }: { pillar: typeof pillars[0]; index: number }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-15%" });
+  const isInView = useInView(ref, { once: true, margin: "-10%" });
 
   return (
-    <div
+    <motion.div
       ref={ref}
-      className="h-screen flex items-center justify-center px-6 sticky top-0"
-      style={{ zIndex: index + 1 }}
+      className="rounded-3xl overflow-hidden relative border border-primary-foreground/[0.08] h-full"
+      style={{
+        background: `linear-gradient(160deg, hsl(222 47% ${11 + index * 3}%), hsl(222 47% ${16 + index * 2}%))`,
+      }}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
     >
-      <motion.div
-        className="w-full max-w-5xl mx-auto rounded-3xl overflow-hidden relative border border-primary-foreground/[0.08]"
-        style={{
-          background: `linear-gradient(160deg, hsl(222 47% ${11 + index * 3}%), hsl(222 47% ${16 + index * 2}%))`,
-        }}
-        initial={{ scale: 0.8, opacity: 0, y: 100 }}
-        animate={isInView ? { scale: 1, opacity: 1, y: 0 } : {}}
-        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <div className="absolute inset-0 noise-overlay" />
+      <div className="absolute inset-0 noise-overlay" />
+      <div className="absolute -top-20 -right-20 w-[300px] h-[300px] bg-campaign-green/[0.06] rounded-full blur-[120px]" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-campaign-green/30 to-transparent" />
 
-        {/* Ambient glows */}
-        <div className="absolute -top-20 -right-20 w-[400px] h-[400px] bg-campaign-green/[0.06] rounded-full blur-[150px]" />
-        <div className="absolute -bottom-20 -left-20 w-[300px] h-[300px] bg-campaign-gold/[0.04] rounded-full blur-[120px]" />
+      <div className="relative z-10 p-8 md:p-10 flex flex-col h-full">
+        {/* Icon */}
+        <motion.div
+          className="w-14 h-14 rounded-2xl gradient-green flex items-center justify-center mb-6 glow-green-sm"
+          initial={{ scale: 0 }}
+          animate={isInView ? { scale: 1 } : {}}
+          transition={{ type: "spring", delay: 0.3 + index * 0.1, stiffness: 150 }}
+        >
+          <pillar.icon className="w-7 h-7 text-primary-foreground" />
+        </motion.div>
 
-        {/* Top accent */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-campaign-green/30 to-transparent" />
+        {/* Stat */}
+        <p className="font-heading text-5xl md:text-6xl font-extrabold text-campaign-green tracking-tighter mb-1">
+          {pillar.stat}
+        </p>
+        <p className="text-primary-foreground/30 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
+          {pillar.statLabel}
+        </p>
 
-        <div className="relative z-10 p-10 md:p-16">
-          <div className="grid md:grid-cols-[1.2fr_0.8fr] gap-12 items-center">
-            {/* Content */}
-            <div>
-              <motion.div
-                className="w-16 h-16 rounded-2xl gradient-green flex items-center justify-center mb-8 glow-green"
-                initial={{ scale: 0, rotate: -20 }}
-                animate={isInView ? { scale: 1, rotate: 0 } : {}}
-                transition={{ type: "spring", delay: 0.3, stiffness: 150 }}
-              >
-                <pillar.icon className="w-8 h-8 text-primary-foreground" />
-              </motion.div>
+        {/* Title & desc */}
+        <h3 className="font-heading text-2xl md:text-3xl font-extrabold text-primary-foreground mb-3 leading-tight">
+          {pillar.title}
+        </h3>
+        <p className="text-primary-foreground/40 text-sm leading-relaxed mb-8">
+          {pillar.desc}
+        </p>
 
-              <motion.h3
-                className="font-heading text-3xl md:text-5xl font-extrabold text-primary-foreground mb-5 leading-tight"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.2, duration: 0.6 }}
-              >
-                {pillar.title}
-              </motion.h3>
-
-              <motion.p
-                className="text-primary-foreground/40 text-lg leading-relaxed mb-10"
-                initial={{ opacity: 0 }}
-                animate={isInView ? { opacity: 1 } : {}}
-                transition={{ delay: 0.35 }}
-              >
-                {pillar.desc}
-              </motion.p>
-
-              <ul className="space-y-4">
-                {pillar.items.map((item, j) => (
-                  <motion.li
-                    key={j}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.5 + j * 0.1, duration: 0.5 }}
-                    className="flex items-start gap-3 text-primary-foreground/50 text-base leading-relaxed"
-                  >
-                    <span className="w-2 h-2 rounded-full gradient-green mt-2 flex-shrink-0 shadow-[0_0_8px_hsl(160,84%,39%,0.4)]" />
-                    {item}
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Big stat */}
-            <div className="flex flex-col items-center justify-center text-center">
-              <motion.p
-                className="font-heading text-8xl md:text-9xl font-extrabold text-campaign-green tracking-tighter drop-shadow-[0_0_60px_hsl(160,84%,39%,0.25)]"
-                initial={{ scale: 0.2, opacity: 0 }}
-                animate={isInView ? { scale: 1, opacity: 1 } : {}}
-                transition={{ type: "spring", delay: 0.4, stiffness: 80, damping: 12 }}
-              >
-                {pillar.stat}
-              </motion.p>
-              <motion.p
-                className="text-primary-foreground/30 text-xs mt-4 uppercase tracking-[0.25em] font-semibold"
-                initial={{ opacity: 0, y: 10 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.7 }}
-              >
-                {pillar.statLabel}
-              </motion.p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </div>
+        {/* Items */}
+        <ul className="space-y-3 mt-auto">
+          {pillar.items.map((item, j) => (
+            <li key={j} className="flex items-start gap-3 text-primary-foreground/60 text-sm leading-relaxed">
+              <span className="w-1.5 h-1.5 rounded-full gradient-green mt-2 flex-shrink-0 shadow-[0_0_6px_hsl(160,84%,39%,0.4)]" />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
   );
 };
 
@@ -175,18 +134,22 @@ const ProgrammeSection = () => {
         </div>
       </div>
 
-      {/* Sticky scroll cards */}
-      <div className="relative bg-primary">
+      {/* 3-column grid */}
+      <div className="gradient-premium relative overflow-hidden">
         <div className="absolute inset-0 noise-overlay" />
-        {pillars.map((pillar, i) => (
-          <PillarCard key={i} pillar={pillar} index={i} />
-        ))}
+        <div className="container mx-auto px-6 pb-20 relative z-10">
+          <div className="grid md:grid-cols-3 gap-6">
+            {pillars.map((pillar, i) => (
+              <PillarCard key={i} pillar={pillar} index={i} />
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* CTA */}
       <div className="gradient-premium relative overflow-hidden">
         <div className="absolute inset-0 noise-overlay" />
-        <div className="container mx-auto px-6 py-28 relative z-10 text-center">
+        <div className="container mx-auto px-6 py-20 relative z-10 text-center">
           <motion.button
             onClick={() => navigate("/programme")}
             className="inline-flex items-center gap-3 gradient-green text-primary-foreground px-12 py-5 rounded-full font-semibold text-base glow-green shimmer"
