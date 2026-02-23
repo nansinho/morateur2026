@@ -50,7 +50,7 @@ const Equipe = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="mt-10 max-w-5xl mx-auto"
+            className="mt-10"
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30">
               <div className="aspect-[3/1]">
@@ -78,7 +78,8 @@ const Equipe = () => {
           </h2>
         </div>
 
-        <div className="flex gap-5 sm:gap-6 overflow-x-auto scrollbar-hide pb-6 px-4 sm:px-6">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {members.map((m, i) => (
             <motion.div
               key={i}
@@ -87,7 +88,7 @@ const Equipe = () => {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
               whileHover={{ y: -10 }}
-              className="group cursor-pointer flex-shrink-0 w-[260px] sm:w-[280px] md:w-[300px]"
+              className="group cursor-pointer"
             >
               <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/40">
                 {/* Photo 9:16 */}
@@ -122,6 +123,7 @@ const Equipe = () => {
               </div>
             </motion.div>
           ))}
+          </div>
         </div>
       </section>
 
