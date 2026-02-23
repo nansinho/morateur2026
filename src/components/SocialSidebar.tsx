@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const XIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -20,27 +21,45 @@ const socials = [
   { icon: TikTokIcon, href: "https://tiktok.com", label: "TikTok" },
 ];
 
-const SocialSidebar = () => (
-  <nav
-    aria-label="Réseaux sociaux"
-    className="fixed left-4 sm:left-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-3"
-  >
-    {socials.map((s) => {
-      const Icon = s.icon;
-      return (
-        <a
-          key={s.label}
-          href={s.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={s.label}
-          className="w-10 h-10 rounded-full bg-primary/60 backdrop-blur-sm border border-primary-foreground/15 flex items-center justify-center text-primary-foreground/60 hover:text-campaign-lime hover:border-campaign-lime/50 hover:bg-primary/80 transition-all duration-300"
-        >
-          <Icon className="w-4 h-4" />
-        </a>
-      );
-    })}
-  </nav>
-);
+const SocialSidebar = () => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setVisible(window.scrollY > window.innerHeight * 0.7);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <nav
+      aria-label="Réseaux sociaux"
+      className={`fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col transition-all duration-500 ease-out ${
+        visible
+          ? "translate-x-0 opacity-100"
+          : "-translate-x-full opacity-0"
+      }`}
+    >
+      <div className="bg-background/90 backdrop-blur-md border border-l-0 border-border rounded-r-xl shadow-lg py-3 px-2 flex flex-col gap-2">
+        {socials.map((s) => {
+          const Icon = s.icon;
+          return (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              className="w-9 h-9 rounded-lg flex items-center justify-center text-muted-foreground hover:text-campaign-lime hover:bg-campaign-lime/10 transition-all duration-200"
+            >
+              <Icon className="w-4 h-4" />
+            </a>
+          );
+        })}
+      </div>
+    </nav>
+  );
+};
 
 export default SocialSidebar;
