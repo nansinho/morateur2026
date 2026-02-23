@@ -1,4 +1,4 @@
-import { Facebook, Instagram, ArrowUp, Heart } from "lucide-react";
+import { Facebook, Instagram, ArrowUp, ArrowRight, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -38,69 +38,142 @@ const Footer = () => {
   };
 
   return (
-    <footer className="gradient-teal-deep">
-      <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-16">
-        <div className="grid md:grid-cols-3 gap-12 mb-12">
-          {/* Logo */}
-          <div>
-            <p className="font-accent text-xl font-extrabold text-primary-foreground uppercase tracking-widest mb-2">
-              MORATEUR <span className="text-campaign-lime">2026</span>
+    <>
+      <footer className="gradient-teal-deep relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-campaign-lime/[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-campaign-lime/[0.02] rounded-full blur-2xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
+        {/* Diagonal decorative line */}
+        <div className="absolute top-20 left-0 w-full h-px bg-gradient-to-r from-transparent via-campaign-lime/10 to-transparent rotate-[2deg] pointer-events-none" />
+
+        {/* CTA Section */}
+        <div className="container mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-12 sm:pb-16 text-center relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2
+              className="font-accent font-extrabold text-primary-foreground uppercase tracking-tight leading-[0.85] mb-6"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)" }}
+            >
+              Bouc Bel Air a<br />
+              de l'<span className="text-campaign-lime">Avenir</span>
+            </h2>
+            <p className="text-primary-foreground/40 text-lg max-w-md mx-auto mb-8 font-medium">
+              Ensemble, construisons la ville de demain. Chaque voix compte.
             </p>
-            <p className="text-primary-foreground/30 text-sm font-medium">Bouc Bel Air a de l'Avenir</p>
-          </div>
+            <motion.button
+              onClick={() => handleNav("/#procuration")}
+              className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-10 py-4 rounded-2xl font-extrabold uppercase tracking-wider text-sm shadow-lg -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
+              whileHover={{ scale: 1.08, y: -3 }}
+              whileTap={{ scale: 0.94, rotate: -4 }}
+            >
+              Rejoignez-nous
+              <ArrowRight className="w-5 h-5" />
+            </motion.button>
+          </motion.div>
+        </div>
 
-          {/* Nav */}
-          <nav aria-label="Navigation secondaire" className="flex flex-col gap-3">
-            <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-1">Navigation</p>
-            {navLinks.map((link, i) => (
-              <button
-                key={i}
-                onClick={() => handleNav(link.to)}
-                className="text-left text-primary-foreground/60 hover:text-campaign-lime transition-colors text-sm font-medium"
-              >
-                {link.label}
-              </button>
-            ))}
-          </nav>
+        {/* Separator */}
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="border-t border-primary-foreground/[0.06]" />
+        </div>
 
-          {/* Socials */}
-          <div>
-            <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-4">Suivez-nous</p>
-            <div className="flex flex-col gap-3">
-              {socials.map((s, i) => (
-                <a
+        {/* Main grid */}
+        <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-16">
+          <div className="grid md:grid-cols-3 gap-12 mb-12">
+            {/* Logo */}
+            <div>
+              <p className="font-accent text-2xl font-extrabold text-primary-foreground uppercase tracking-widest mb-2">
+                MORATEUR <span className="text-campaign-lime">2026</span>
+              </p>
+              <p className="text-primary-foreground/30 text-sm font-medium mb-4">Bouc Bel Air a de l'Avenir</p>
+              <div className="w-12 h-1 rounded-full bg-campaign-lime/30" />
+            </div>
+
+            {/* Nav */}
+            <nav aria-label="Navigation secondaire" className="flex flex-col gap-3">
+              <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-1">Navigation</p>
+              {navLinks.map((link, i) => (
+                <button
                   key={i}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-primary-foreground/60 hover:text-campaign-lime transition-colors text-sm font-medium"
+                  onClick={() => handleNav(link.to)}
+                  className="group text-left text-primary-foreground/60 hover:text-campaign-lime transition-colors text-sm font-medium flex items-center gap-2"
                 >
-                  <div className="w-9 h-9 rounded-xl border border-primary-foreground/10 hover:border-campaign-lime/30 flex items-center justify-center transition-colors">
-                    <s.icon className="w-4 h-4" />
-                  </div>
-                  {s.label}
-                </a>
+                  <span className="w-0 group-hover:w-3 h-px bg-campaign-lime transition-all duration-300" />
+                  {link.label}
+                </button>
               ))}
+            </nav>
+
+            {/* Socials */}
+            <div>
+              <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-4">Suivez-nous</p>
+              <div className="flex flex-col gap-3">
+                {socials.map((s, i) => (
+                  <a
+                    key={i}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-3 text-primary-foreground/60 hover:text-campaign-lime transition-colors text-sm font-medium"
+                  >
+                    <div className="w-10 h-10 rounded-xl border border-primary-foreground/10 group-hover:border-campaign-lime/40 group-hover:bg-campaign-lime/10 flex items-center justify-center transition-all duration-300">
+                      <s.icon className="w-4 h-4" />
+                    </div>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Bottom */}
-        <div className="border-t border-primary-foreground/[0.06] pt-6 flex items-center justify-between">
-          <p className="text-primary-foreground/20 text-xs flex items-center gap-1.5 font-medium">
-            © 2026 Morateur 2026 — Fait avec <Heart className="w-3 h-3 text-campaign-lime" /> pour Bouc-Bel-Air
-          </p>
-          <motion.button
-            onClick={scrollToTop}
-            aria-label="Retour en haut de page"
-            className="w-10 h-10 rounded-xl border border-primary-foreground/10 flex items-center justify-center hover:border-campaign-lime/30 transition-all"
-            whileHover={{ y: -3 }}
-          >
-            <ArrowUp className="w-4 h-4 text-primary-foreground/40" />
-          </motion.button>
+          {/* Bottom */}
+          <div className="border-t border-primary-foreground/[0.06] pt-6 flex items-center justify-between">
+            <p className="text-primary-foreground/20 text-xs flex items-center gap-1.5 font-medium">
+              © 2026 Morateur 2026 — Fait avec <Heart className="w-3 h-3 text-campaign-lime" /> pour Bouc-Bel-Air
+            </p>
+            <motion.button
+              onClick={scrollToTop}
+              aria-label="Retour en haut de page"
+              className="w-10 h-10 rounded-xl border border-primary-foreground/10 flex items-center justify-center hover:border-campaign-lime/30 hover:bg-campaign-lime/10 transition-all"
+              whileHover={{ y: -3 }}
+            >
+              <ArrowUp className="w-4 h-4 text-primary-foreground/40" />
+            </motion.button>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+
+      {/* SEO Block */}
+      <section className="bg-foreground py-8 sm:py-10">
+        <div className="container mx-auto px-4 sm:px-6">
+          <p className="text-background/20 text-[10px] uppercase tracking-[0.25em] font-bold mb-4">
+            À propos de Bouc-Bel-Air et des élections municipales 2026
+          </p>
+          <div className="space-y-3 text-background/15 text-xs leading-relaxed max-w-4xl">
+            <p>
+              Bouc-Bel-Air est une commune française située dans le département des Bouches-du-Rhône, en région Provence-Alpes-Côte d'Azur.
+              Nichée entre Aix-en-Provence et Marseille, cette ville provençale d'environ 15 000 habitants allie cadre de vie naturel
+              préservé et proximité des grands pôles urbains métropolitains.
+            </p>
+            <p>
+              Les élections municipales 2026 à Bouc-Bel-Air représentent un moment démocratique majeur pour l'avenir de la commune.
+              Mathieu Morateur, candidat à la mairie, porte un projet ambitieux articulé autour de la préservation du village,
+              de la lutte contre l'urbanisation excessive, du renforcement des infrastructures scolaires et sportives,
+              et de la transition écologique du territoire.
+            </p>
+            <p>
+              Le programme municipal couvre les enjeux essentiels : urbanisme maîtrisé, protection de l'environnement et des espaces naturels,
+              amélioration des écoles et des équipements publics, sécurité, mobilité douce, vie associative
+              et dynamisme économique local. Bouc-Bel-Air a de l'Avenir avec une équipe engagée et à l'écoute des habitants.
+            </p>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 
