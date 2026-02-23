@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Palette } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTheme } from "@/hooks/useTheme";
 
 const navItems = [
   { label: "Le Candidat", to: "/candidat" },
@@ -11,6 +12,7 @@ const navItems = [
 ];
 
 const Navbar = () => {
+  const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
@@ -78,6 +80,18 @@ const Navbar = () => {
             className="gradient-lime text-accent-foreground px-6 py-2.5 rounded-xl text-[13px] font-extrabold tracking-wide shadow-md -rotate-1 hover:rotate-0 hover:shadow-[0_10px_30px_-8px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 transition-all duration-300"
           >
             Rejoignez-nous
+          </button>
+          <button
+            onClick={toggleTheme}
+            aria-label="Changer de thème"
+            className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${
+              isScrolled
+                ? "text-foreground/50 hover:text-foreground hover:bg-muted"
+                : "text-primary-foreground/50 hover:text-primary-foreground hover:bg-primary-foreground/10"
+            }`}
+            title={theme === "default" ? "Passer au thème Sapin" : "Passer au thème par défaut"}
+          >
+            <Palette className="w-4 h-4" />
           </button>
         </div>
 
