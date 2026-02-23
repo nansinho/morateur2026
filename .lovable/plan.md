@@ -1,55 +1,42 @@
 
+# Correction des largeurs de container - Page Equipe
 
-# Refonte de la page Equipe
+## Probleme
 
-## Problemes identifies
+Les cartes de l'equipe utilisent des largeurs fixes (`w-[260px]`) dans un scroll horizontal au lieu de remplir toute la largeur du container. La photo de groupe est aussi limitee par `max-w-5xl`. Le resultat : les elements semblent flotter sans occuper l'espace disponible.
 
-1. Il manque la section "Etapes de la campagne" (RoadmapSection) qui existait mais n'est pas incluse dans la page Equipe
-2. Le header est trop simple -- il faut y integrer la photo d'equipe complete (image-41.png)
-3. La structure generale des sections est a ameliorer
+## Solution
 
-## Modifications prevues
+Remplacer le scroll horizontal par une **grille responsive** qui occupe tout le `container`, et supprimer la contrainte `max-w-5xl` sur la photo de groupe.
 
-### 1. Ajouter la photo d'equipe dans le header
+### Modifications dans `src/pages/Equipe.tsx`
 
-La photo de groupe (image-41.png) sera copiee dans `src/assets/equipe-groupe.png` puis integree dans le hero de la page Equipe :
-- Grande image panoramique sous le titre, avec un effet de gradient sombre par-dessus pour fondre dans le fond teal
-- Format large (aspect-ratio ~3:1) avec `object-cover`
-- Coins arrondis et ombre portee
+**1. Photo de groupe (hero)** : Retirer `max-w-5xl mx-auto` pour que l'image prenne toute la largeur du container.
 
-### 2. Ajouter la RoadmapSection
-
-Le composant `RoadmapSection` (etapes de la campagne) sera importe et insere entre la grille des membres et le CTA "Rejoignez l'aventure". C'est le meme composant deja utilise sur la page Programme.
-
-### 3. Structure finale de la page
+**2. Section equipe** : Remplacer le `flex overflow-x-auto` avec largeurs fixes par une grille CSS responsive :
 
 ```text
-+----------------------------------+
-|  Navbar                          |
-+----------------------------------+
-|  Hero : titre + photo groupe     |
-+----------------------------------+
-|  Grille des 4 membres            |
-+----------------------------------+
-|  RoadmapSection (etapes)         |
-+----------------------------------+
-|  CTA "Rejoignez l'aventure"     |
-+----------------------------------+
-|  Footer                          |
-+----------------------------------+
+Avant :  flex gap-5 overflow-x-auto + w-[260px] fixe par carte
+Apres :  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5
 ```
 
-## Details techniques
+Chaque carte prendra automatiquement 25% de la largeur sur desktop, 50% sur tablette, 100% sur mobile -- plus besoin de largeurs fixes.
 
-### Fichiers modifies
+**3. Ratio des cartes** : Garder le ratio `aspect-[9/16]` existant mais les cartes s'adapteront fluidement a la largeur de leur colonne dans la grille.
 
-**`src/pages/Equipe.tsx`** :
-- Import de `equipeGroupe` depuis `@/assets/equipe-groupe.png`
-- Import de `RoadmapSection` depuis `@/components/RoadmapSection`
-- Dans le hero (section lignes 26-46) : ajout d'un bloc image panoramique apres le paragraphe de description, avec gradient overlay et coins arrondis
-- Insertion de `<RoadmapSection />` entre la section team grid et la section CTA (entre lignes 99 et 101)
+**4. Conteneur** : Mettre les cartes dans le meme `container mx-auto px-4 sm:px-6` que le titre pour un alignement coherent.
 
-### Asset a copier
+### Structure finale
 
-- `user-uploads://image-41.png` vers `src/assets/equipe-groupe.png`
+```text
+container mx-auto
+  +-- Titre "Nos colistiers"
+  +-- Grid 4 colonnes (desktop)
+       +-- Carte 1 (25%)
+       +-- Carte 2 (25%)
+       +-- Carte 3 (25%)
+       +-- Carte 4 (25%)
+```
 
+### Fichier modifie
+- `src/pages/Equipe.tsx` : lignes 49-66 (photo groupe) et lignes 80-125 (section equipe)
