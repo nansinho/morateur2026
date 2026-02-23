@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        heading: ['"Sora"', 'system-ui', 'sans-serif'],
         body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-        accent: ['"Sora"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        accent: ['"Sora"', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -53,14 +53,13 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         campaign: {
-          navy: "hsl(var(--campaign-navy))",
-          "navy-light": "hsl(var(--campaign-navy-light))",
-          green: "hsl(var(--campaign-green))",
-          "green-light": "hsl(var(--campaign-green-light))",
-          gold: "hsl(var(--campaign-gold))",
-          sky: "hsl(var(--campaign-sky))",
-          warm: "hsl(var(--campaign-warm))",
-          glow: "hsl(var(--campaign-glow))",
+          teal: "hsl(var(--campaign-teal))",
+          "teal-light": "hsl(var(--campaign-teal-light))",
+          steel: "hsl(var(--campaign-steel))",
+          ice: "hsl(var(--campaign-ice))",
+          olive: "hsl(var(--campaign-olive))",
+          lime: "hsl(var(--campaign-lime))",
+          "lime-light": "hsl(var(--campaign-lime-light))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -87,10 +86,15 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "marquee": {
+          from: { transform: "translateX(0%)" },
+          to: { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "marquee": "marquee 25s linear infinite",
       },
     },
   },

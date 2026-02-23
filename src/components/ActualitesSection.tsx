@@ -42,15 +42,15 @@ const actualites = [
 ];
 
 const tagColors: Record<string, string> = {
-  "Événement": "bg-campaign-gold text-primary",
-  "Terrain": "bg-campaign-green text-primary-foreground",
+  "Événement": "gradient-lime text-accent-foreground",
+  "Terrain": "gradient-teal text-primary-foreground",
   "Programme": "bg-primary text-primary-foreground",
   "Tribune": "bg-foreground text-background",
 };
 
 const ActualitesSection = () => {
   return (
-    <section className="py-24 bg-muted relative overflow-hidden">
+    <section className="py-24 bg-campaign-ice relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -59,12 +59,15 @@ const ActualitesSection = () => {
           transition={{ duration: 0.6 }}
           className="mb-14"
         >
-          <span className="inline-flex items-center gap-2 bg-foreground text-background font-bold text-xs uppercase tracking-wider px-4 py-2 rounded-lg mb-4">
+          <span className="inline-flex items-center gap-2 gradient-teal text-primary-foreground font-bold text-xs uppercase tracking-wider px-4 py-2 rounded-lg mb-4">
             <Newspaper className="w-3.5 h-3.5" />
             Sur le terrain
           </span>
-          <h2 className="font-heading font-extrabold text-5xl md:text-7xl text-foreground leading-[0.9] tracking-tight">
-            Les <span className="text-gradient">actualités</span>
+          <h2
+            className="font-accent font-extrabold uppercase leading-[0.9] tracking-tight text-primary break-words"
+            style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}
+          >
+            ACTU<span className="text-campaign-lime">ALITÉS</span>
           </h2>
         </motion.div>
 
@@ -94,10 +97,10 @@ const ActualitesSection = () => {
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <div className="flex items-center gap-2 mb-2">
-                        <Calendar className="w-3.5 h-3.5 text-campaign-green" />
+                        <Calendar className="w-3.5 h-3.5 text-campaign-lime" />
                         <span className="text-primary-foreground/70 text-xs font-bold">{actu.date}</span>
                       </div>
-                      <h3 className="font-heading font-extrabold text-primary-foreground text-lg leading-snug group-hover:text-campaign-green transition-colors duration-300">
+                      <h3 className="font-accent font-extrabold text-primary-foreground text-lg leading-snug group-hover:text-campaign-lime transition-colors duration-300">
                         {actu.title}
                       </h3>
                     </div>
@@ -107,8 +110,8 @@ const ActualitesSection = () => {
             ))}
           </CarouselContent>
           <div className="flex items-center justify-center gap-4 mt-10">
-            <CarouselPrevious className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-green bg-transparent text-campaign-green hover:bg-campaign-green hover:text-primary-foreground transition-all duration-300" />
-            <CarouselNext className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-green bg-transparent text-campaign-green hover:bg-campaign-green hover:text-primary-foreground transition-all duration-300" />
+            <CarouselPrevious className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-300" />
+            <CarouselNext className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-300" />
           </div>
         </Carousel>
       </div>

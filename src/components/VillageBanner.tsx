@@ -22,10 +22,13 @@ const VillageBanner = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h3 className="font-heading font-extrabold text-5xl md:text-8xl text-primary-foreground leading-[0.9] uppercase tracking-tight">
-              Notre <span className="text-campaign-green">village</span>,
+            <h3
+              className="font-accent font-extrabold text-primary-foreground leading-[0.9] uppercase tracking-tight break-words"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 6rem)" }}
+            >
+              Notre <span className="text-campaign-lime">village</span>,
               <br />
-              notre <span className="text-gradient-gold">avenir</span>
+              notre <span className="text-gradient-lime">avenir</span>
             </h3>
           </motion.div>
         </div>

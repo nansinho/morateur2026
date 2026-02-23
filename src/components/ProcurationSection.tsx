@@ -59,10 +59,10 @@ const ProcurationSection = () => {
     const isFocused = focused === field;
     const hasError = touched.has(field) && errors[field as keyof FormData];
     const isValid = touched.has(field) && !errors[field as keyof FormData];
-    const base = "w-full pl-11 pr-4 py-3.5 rounded-xl border bg-card text-foreground text-sm transition-all duration-300 outline-none placeholder:text-muted-foreground/50";
-    if (isFocused) return `${base} border-campaign-green ring-1 ring-campaign-green/20`;
+    const base = "w-full pl-11 pr-4 py-3.5 rounded-xl border bg-background text-foreground text-sm transition-all duration-300 outline-none placeholder:text-muted-foreground/50";
+    if (isFocused) return `${base} border-campaign-lime ring-1 ring-campaign-lime/20`;
     if (hasError) return `${base} border-destructive`;
-    if (isValid) return `${base} border-campaign-green/30`;
+    if (isValid) return `${base} border-campaign-lime/30`;
     return `${base} border-border hover:border-muted-foreground/30`;
   };
 
@@ -78,31 +78,34 @@ const ProcurationSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="section-label">Agissez</p>
-              <h2 className="font-heading font-extrabold text-5xl md:text-6xl text-foreground mb-5 leading-[0.95] tracking-tight">
-                Rejoignez-<br />
-                <span className="text-gradient">nous</span>
+              <span className="section-label">Agissez</span>
+              <h2
+                className="font-accent font-extrabold uppercase leading-[0.95] tracking-tight text-primary mb-5 break-words"
+                style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
+              >
+                REJOIGNEZ-<br />
+                <span className="text-campaign-lime">NOUS</span>
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-10">
                 Vous souhaitez soutenir notre projet pour Bouc-Bel-Air ? Remplissez ce formulaire et nous vous recontacterons rapidement.
               </p>
 
               {/* Procuration card */}
-              <div className="rounded-2xl p-6 bg-card border border-border">
+              <div className="rounded-2xl p-6 gradient-teal text-primary-foreground">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl gradient-green flex items-center justify-center">
-                    <FileText className="w-5 h-5 text-primary-foreground" />
+                  <div className="w-10 h-10 rounded-xl gradient-lime flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-accent-foreground" />
                   </div>
-                  <h3 className="font-heading font-bold text-foreground">Procuration</h3>
+                  <h3 className="font-accent font-bold uppercase tracking-wide">Procuration</h3>
                 </div>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                <p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
                   Vous ne pouvez pas vous déplacer le jour du vote ? Donnez procuration à un électeur de votre commune.
                 </p>
                 <a
                   href="https://www.maprocuration.gouv.fr/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 gradient-green text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-bold"
+                  className="inline-flex items-center gap-2 gradient-lime text-accent-foreground px-5 py-2.5 rounded-lg text-sm font-bold"
                 >
                   maprocuration.gouv.fr
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -125,10 +128,10 @@ const ProcurationSection = () => {
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", duration: 0.5 }}
-                  className="bg-card rounded-2xl p-12 text-center border border-border"
+                  className="bg-campaign-ice rounded-2xl p-12 text-center border border-border"
                 >
-                  <CheckCircle className="w-16 h-16 text-campaign-green mx-auto mb-5" />
-                  <h3 className="font-heading font-extrabold text-2xl text-foreground mb-2">Merci !</h3>
+                  <CheckCircle className="w-16 h-16 text-campaign-lime mx-auto mb-5" />
+                  <h3 className="font-accent font-extrabold text-2xl text-foreground mb-2 uppercase">Merci !</h3>
                   <p className="text-muted-foreground">Nous vous recontacterons très vite.</p>
                 </motion.div>
               ) : (
@@ -136,7 +139,7 @@ const ProcurationSection = () => {
                   key="form"
                   onSubmit={handleSubmit}
                   noValidate
-                  className="bg-card rounded-2xl p-8 space-y-5 border border-border"
+                  className="bg-campaign-ice rounded-2xl p-8 space-y-5 border border-border"
                   role="form"
                   aria-label="Formulaire de contact campagne"
                 >
@@ -146,7 +149,7 @@ const ProcurationSection = () => {
                         key={field}
                         className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
                           touched.has(field) && !errors[field as keyof FormData]
-                            ? "bg-campaign-green"
+                            ? "bg-campaign-lime"
                             : touched.has(field) && errors[field as keyof FormData]
                             ? "bg-destructive"
                             : "bg-border"
@@ -158,7 +161,7 @@ const ProcurationSection = () => {
                   <div className="grid sm:grid-cols-2 gap-5">
                     {fieldMeta.filter(f => f.half).map(({ key, label, icon: Icon, type }) => (
                       <div key={key}>
-                        <label htmlFor={key} className="text-sm font-medium text-foreground/80 mb-2 block">{label} <span className="text-campaign-green">*</span></label>
+                        <label htmlFor={key} className="text-sm font-medium text-foreground/80 mb-2 block">{label} <span className="text-campaign-lime">*</span></label>
                         <div className="relative">
                           <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                           <input id={key} type={type} required value={form[key]} onFocus={() => setFocused(key)} onBlur={() => handleBlur(key)} onChange={e => handleChange(key, e.target.value)} className={inputClass(key)} />
@@ -174,7 +177,7 @@ const ProcurationSection = () => {
 
                   {fieldMeta.filter(f => !f.half).map(({ key, label, icon: Icon, type }) => (
                     <div key={key}>
-                      <label htmlFor={key} className="text-sm font-medium text-foreground/80 mb-2 block">{label} <span className="text-campaign-green">*</span></label>
+                      <label htmlFor={key} className="text-sm font-medium text-foreground/80 mb-2 block">{label} <span className="text-campaign-lime">*</span></label>
                       <div className="relative">
                         <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                         <input id={key} type={type} required value={form[key]} onFocus={() => setFocused(key)} onBlur={() => handleBlur(key)} onChange={e => handleChange(key, e.target.value)} className={inputClass(key)} />
@@ -188,7 +191,7 @@ const ProcurationSection = () => {
                   ))}
 
                   <div>
-                    <label htmlFor="motivations" className="text-sm font-medium text-foreground/80 mb-2 block">Vos motivations <span className="text-campaign-green">*</span></label>
+                    <label htmlFor="motivations" className="text-sm font-medium text-foreground/80 mb-2 block">Vos motivations <span className="text-campaign-lime">*</span></label>
                     <div className="relative">
                       <MessageSquare className="absolute left-3.5 top-4 w-4 h-4 text-muted-foreground pointer-events-none" />
                       <textarea id="motivations" required maxLength={500} rows={4} value={form.motivations} onFocus={() => setFocused("motivations")} onBlur={() => handleBlur("motivations")} onChange={e => handleChange("motivations", e.target.value)} className={`${inputClass("motivations")} resize-none pt-3.5`} />
@@ -205,7 +208,7 @@ const ProcurationSection = () => {
 
                   <button
                     type="submit"
-                    className="w-full gradient-green text-primary-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2"
+                    className="w-full gradient-lime text-accent-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2"
                   >
                     <Send className="w-4 h-4" />
                     Envoyer

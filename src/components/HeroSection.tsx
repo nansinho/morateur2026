@@ -4,6 +4,9 @@ import { useRef } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import candidatImg from "@/assets/header_candidat_portrait.png";
 
+const words1 = ["BOUC", "BEL", "AIR"];
+const words2 = ["A", "DE", "L'AVENIR"];
+
 const HeroSection = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLElement>(null);
@@ -18,14 +21,14 @@ const HeroSection = () => {
   };
 
   return (
-    <section ref={ref} id="hero" className="relative min-h-screen flex items-center overflow-hidden gradient-premium">
+    <section ref={ref} id="hero" className="relative min-h-screen flex items-center overflow-hidden gradient-teal-deep">
       {/* Right: Full-height photo */}
       <motion.div
-        className="absolute top-0 right-0 w-[50%] h-full hidden lg:block"
+        className="absolute top-0 right-0 w-[45%] h-full hidden lg:block"
         style={{ scale: imgScale, y: imgY }}
       >
         <img src={candidatImg} alt="Mathieu Morateur" className="w-full h-full object-cover object-top" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/50 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-primary to-transparent" />
       </motion.div>
 
@@ -40,40 +43,48 @@ const HeroSection = () => {
         <div className="max-w-2xl">
           {/* Badge */}
           <motion.div
-            className="inline-flex items-center gap-2 bg-campaign-green/15 border border-campaign-green/20 text-campaign-green px-4 py-1.5 rounded-lg mb-8"
+            className="inline-flex items-center gap-2 bg-campaign-lime/15 border border-campaign-lime/30 text-campaign-lime px-4 py-1.5 rounded-lg mb-8"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-campaign-green animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-campaign-lime animate-pulse" />
             <span className="font-accent text-xs font-bold uppercase tracking-widest">Municipales 2026</span>
           </motion.div>
 
-          {/* Title */}
-          <div className="mb-3">
-            <div className="overflow-hidden">
-              <motion.h1
-                className="font-heading text-primary-foreground text-[clamp(3rem,9vw,7rem)] font-extrabold leading-[0.9] tracking-tight"
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              >
-                Bouc Bel Air
-              </motion.h1>
+          {/* Title line 1 - word by word slide in */}
+          <div className="mb-1 overflow-hidden">
+            <div className="flex flex-wrap gap-x-4">
+              {words1.map((word, i) => (
+                <motion.span
+                  key={word}
+                  className="font-accent text-primary-foreground font-extrabold uppercase leading-[0.95]"
+                  style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)" }}
+                  initial={{ x: -100, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.7, delay: 0.4 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {word}
+                </motion.span>
+              ))}
             </div>
           </div>
 
-          <div className="mb-10">
-            <div className="overflow-hidden">
-              <motion.p
-                className="text-[clamp(2rem,6vw,4.5rem)] font-extrabold leading-[1] tracking-tight"
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <span className="text-gradient">a de </span>
-                <span className="text-gradient-gold">l'Avenir</span>
-              </motion.p>
+          {/* Title line 2 - lime color */}
+          <div className="mb-10 overflow-hidden">
+            <div className="flex flex-wrap gap-x-4">
+              {words2.map((word, i) => (
+                <motion.span
+                  key={word}
+                  className="font-accent text-campaign-lime font-extrabold uppercase leading-[0.95]"
+                  style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)" }}
+                  initial={{ x: -100, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.7, delay: 0.7 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {word}
+                </motion.span>
+              ))}
             </div>
           </div>
 
@@ -81,7 +92,7 @@ const HeroSection = () => {
             className="text-primary-foreground/60 text-lg sm:text-xl leading-relaxed max-w-md mb-10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
           >
             Avec <span className="text-primary-foreground font-bold">Mathieu Morateur</span>, construisons ensemble une commune où il fait bon vivre.
           </motion.p>
@@ -90,11 +101,11 @@ const HeroSection = () => {
             className="flex flex-wrap gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
+            transition={{ duration: 0.6, delay: 1.3 }}
           >
             <motion.button
               onClick={() => navigate("/programme")}
-              className="gradient-green text-primary-foreground px-7 py-3.5 rounded-lg font-bold text-sm flex items-center gap-3 shadow-xl"
+              className="gradient-lime text-accent-foreground px-7 py-3.5 rounded-lg font-bold text-sm flex items-center gap-3 shadow-xl"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
@@ -103,7 +114,7 @@ const HeroSection = () => {
             </motion.button>
             <motion.button
               onClick={() => scrollTo("#procuration")}
-              className="bg-campaign-gold text-primary px-7 py-3.5 rounded-lg font-bold text-sm shadow-xl"
+              className="border-2 border-primary-foreground/30 text-primary-foreground px-7 py-3.5 rounded-lg font-bold text-sm hover:bg-primary-foreground/10 transition-colors"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >

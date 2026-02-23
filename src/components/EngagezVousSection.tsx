@@ -12,7 +12,7 @@ const actions = [
 
 const EngagezVousSection = () => {
   return (
-    <section className="relative overflow-hidden gradient-premium py-24">
+    <section className="gradient-lime py-24 overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -21,15 +21,17 @@ const EngagezVousSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <h2 className="font-heading font-extrabold text-5xl md:text-7xl text-primary-foreground leading-[0.9] tracking-tight mb-6">
-            Rejoignez <span className="text-gradient-gold">la campagne</span>
+          <h2
+            className="font-accent font-extrabold text-accent-foreground leading-[0.9] uppercase tracking-tight break-words mb-6"
+            style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}
+          >
+            REJOIGNEZ <span className="text-primary">LA CAMPAGNE</span>
           </h2>
-          <p className="text-primary-foreground/40 text-lg max-w-xl mx-auto font-medium">
+          <p className="text-accent-foreground/70 text-lg max-w-xl mx-auto font-medium">
             Chaque geste compte. Choisissez comment vous engager à nos côtés.
           </p>
         </motion.div>
 
-        {/* Compact action pills */}
         <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
           {actions.map((action, i) => (
             <motion.a
@@ -43,11 +45,11 @@ const EngagezVousSection = () => {
               transition={{ delay: i * 0.06, duration: 0.4 }}
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-3 bg-primary-foreground/[0.08] border border-primary-foreground/10 text-primary-foreground px-6 py-4 rounded-xl font-heading font-bold text-sm hover:bg-primary-foreground/15 transition-colors"
+              className="inline-flex items-center gap-3 bg-background text-primary px-6 py-4 rounded-xl font-accent font-bold text-sm uppercase tracking-wide hover:bg-primary hover:text-primary-foreground transition-colors shadow-md"
             >
-              <action.Icon className="w-4 h-4 text-campaign-green" />
+              <action.Icon className="w-4 h-4" />
               {action.title}
-              <ArrowRight className="w-3 h-3 text-primary-foreground/30" />
+              <ArrowRight className="w-3 h-3 opacity-50" />
             </motion.a>
           ))}
         </div>
