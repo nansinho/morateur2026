@@ -52,54 +52,54 @@
     --sidebar-ring: 70 80% 43%;
   }
 
-  /* Thème Sapin — mode sombre, palette vert sapin & bleu nuit */
+  /* Thème Sapin — palette Vert Nature Bleu */
   .theme-sapin {
-    --background: 220 40% 6%;
-    --foreground: 210 20% 95%;
+    --background: 200 55% 15%;
+    --foreground: 40 40% 90%;
 
-    --card: 220 35% 10%;
-    --card-foreground: 210 20% 95%;
+    --card: 200 50% 19%;
+    --card-foreground: 40 40% 90%;
 
-    --popover: 220 35% 10%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 200 50% 19%;
+    --popover-foreground: 40 40% 90%;
 
-    --primary: 152 45% 28%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 165 50% 38%;
+    --primary-foreground: 200 55% 10%;
 
-    --secondary: 220 30% 35%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 200 55% 22%;
+    --secondary-foreground: 40 40% 90%;
 
-    --muted: 220 30% 14%;
-    --muted-foreground: 210 20% 65%;
+    --muted: 200 45% 20%;
+    --muted-foreground: 135 20% 70%;
 
-    --accent: 152 50% 40%;
-    --accent-foreground: 220 40% 6%;
+    --accent: 145 45% 62%;
+    --accent-foreground: 200 55% 10%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 40 40% 95%;
 
-    --border: 220 25% 18%;
-    --input: 220 25% 18%;
-    --ring: 152 60% 45%;
+    --border: 200 40% 25%;
+    --input: 200 40% 25%;
+    --ring: 145 45% 62%;
 
     --radius: 0.75rem;
 
-    --campaign-teal: 152 45% 28%;
-    --campaign-teal-light: 152 40% 38%;
-    --campaign-steel: 220 30% 35%;
-    --campaign-ice: 210 20% 92%;
-    --campaign-olive: 140 40% 30%;
-    --campaign-lime: 152 60% 45%;
-    --campaign-lime-light: 152 55% 55%;
+    --campaign-teal: 165 50% 38%;
+    --campaign-teal-light: 145 45% 62%;
+    --campaign-steel: 200 55% 22%;
+    --campaign-ice: 135 25% 80%;
+    --campaign-olive: 165 45% 30%;
+    --campaign-lime: 145 45% 62%;
+    --campaign-lime-light: 135 25% 80%;
 
-    --sidebar-background: 220 40% 5%;
-    --sidebar-foreground: 210 20% 95%;
-    --sidebar-primary: 152 60% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 30% 14%;
-    --sidebar-accent-foreground: 210 20% 95%;
-    --sidebar-border: 220 25% 18%;
-    --sidebar-ring: 152 60% 45%;
+    --sidebar-background: 200 55% 13%;
+    --sidebar-foreground: 40 40% 90%;
+    --sidebar-primary: 145 45% 62%;
+    --sidebar-primary-foreground: 200 55% 10%;
+    --sidebar-accent: 200 45% 20%;
+    --sidebar-accent-foreground: 40 40% 90%;
+    --sidebar-border: 200 40% 25%;
+    --sidebar-ring: 145 45% 62%;
   }
 
   .theme-sapin ::selection {
