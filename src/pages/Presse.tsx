@@ -16,6 +16,13 @@ const articles = [
     excerpt:
       "Après une première expérience municipale, Mathieu Morateur annonce son retour sur la scène politique locale de Bouc-Bel-Air avec l'ambition de proposer une alternative crédible aux habitants.",
     url: "https://www.lamarseillaise.fr/accueil/mathieu-morateur-revient-comme-candidat-ON19366109",
+    bg: "bg-primary",
+    text: "text-primary-foreground",
+    accent: "text-primary-foreground/60",
+    tagBg: "bg-campaign-lime/20",
+    tagText: "text-campaign-lime",
+    linkColor: "text-campaign-lime",
+    logoBrightness: "brightness-0 invert",
   },
   {
     media: "La Provence",
@@ -26,6 +33,13 @@ const articles = [
     excerpt:
       "Le candidat aux municipales de 2026 à Bouc-Bel-Air affirme sa volonté de protéger le cadre de vie des Boucains face à la pression immobilière et aux projets des promoteurs.",
     url: "https://www.laprovence.com/article/elections/1485411779646614/municipales-2026-a-bouc-bel-air-mathieu-morateur-se-veut-faire-barrage-aux-promoteurs",
+    bg: "bg-campaign-lime-light",
+    text: "text-accent-foreground",
+    accent: "text-accent-foreground/60",
+    tagBg: "bg-accent-foreground/15",
+    tagText: "text-accent-foreground",
+    linkColor: "text-accent-foreground",
+    logoBrightness: "",
   },
 ];
 
@@ -79,26 +93,26 @@ const Presse = () => {
                 whileHover={{ y: -8 }}
                 className="group block cursor-pointer"
               >
-                <div className="relative rounded-2xl overflow-hidden border border-border bg-card shadow-lg flex flex-col h-full transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/15">
+                <div className={`relative rounded-[1.25rem] overflow-hidden ${article.bg} shadow-lg flex flex-col h-full transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/20`}>
                   {/* Header with logo */}
                   <div className="p-6 sm:p-7 pb-0 sm:pb-0 flex items-center justify-between">
                     <img
                       src={article.logo}
                       alt={`Logo ${article.media}`}
-                      className="h-8 sm:h-10 w-auto object-contain"
+                      className={`h-8 sm:h-10 w-auto object-contain ${article.logoBrightness}`}
                     />
-                    <span className="bg-campaign-lime/20 text-primary px-3 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider">
+                    <span className={`${article.tagBg} ${article.tagText} px-3 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider`}>
                       Presse
                     </span>
                   </div>
 
                   {/* Content */}
                   <div className="p-6 sm:p-7 flex flex-col flex-1">
-                    <h2 className="font-accent font-extrabold text-foreground text-lg sm:text-xl leading-snug mb-4 uppercase tracking-wide">
+                    <h2 className={`font-accent font-extrabold ${article.text} text-lg sm:text-xl leading-snug mb-4 uppercase tracking-wide -rotate-1`}>
                       {article.title}
                     </h2>
 
-                    <div className="flex flex-wrap items-center gap-3 mb-4 text-[11px] font-bold text-muted-foreground">
+                    <div className={`flex flex-wrap items-center gap-3 mb-4 text-[11px] font-bold ${article.accent}`}>
                       <div className="flex items-center gap-1.5">
                         <Calendar className="w-3 h-3" />
                         <span>{article.date}</span>
@@ -109,11 +123,11 @@ const Presse = () => {
                       </div>
                     </div>
 
-                    <p className="text-muted-foreground text-sm leading-relaxed flex-1">
+                    <p className={`${article.accent} text-sm leading-relaxed flex-1`}>
                       {article.excerpt}
                     </p>
 
-                    <div className="flex items-center gap-1.5 mt-5 text-primary opacity-70 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className={`flex items-center gap-1.5 mt-5 ${article.linkColor} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
                       <span className="text-xs font-bold uppercase tracking-wider">
                         Lire l'article
                       </span>
