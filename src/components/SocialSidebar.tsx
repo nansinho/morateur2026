@@ -1,5 +1,5 @@
 import { Facebook, Instagram, Linkedin } from "lucide-react";
-import { useState, useEffect } from "react";
+
 
 const XIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -22,24 +22,10 @@ const socials = [
 ];
 
 const SocialSidebar = () => {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setVisible(window.scrollY > window.innerHeight * 0.7);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <nav
       aria-label="Réseaux sociaux"
-      className={`fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col transition-all duration-500 ease-out ${
-        visible
-          ? "translate-x-0 opacity-100"
-          : "-translate-x-full opacity-0"
-      }`}
+      className="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col"
     >
       <div className="bg-background/90 backdrop-blur-md border border-l-0 border-border rounded-r-xl shadow-lg py-3 px-2 flex flex-col gap-2">
         {socials.map((s) => {
