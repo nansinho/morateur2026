@@ -1,77 +1,43 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { ShieldCheck, Building2, Store, Leaf, GraduationCap, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
 
-const pillars: { icon: LucideIcon; title: string; desc: string; items: string[]; gradient: string; iconBg: string; dotColor: string }[] = [
+const pillars: { icon: LucideIcon; title: string; desc: string; iconBg: string; accent: string }[] = [
   {
     icon: ShieldCheck,
     title: "Faire barrage aux promoteurs",
     desc: "Protéger notre cadre de vie face à l'avalanche de permis de construire.",
-    items: [
-      "Refus permanent des permis de construire des promoteurs",
-      "Utilisation systématique du droit de préemption urbain",
-      "Soutien aux recours des riverains",
-      "Bail réel solidaire pour limiter la spéculation",
-    ],
-    gradient: "from-campaign-lime/10 via-campaign-lime/5 to-transparent",
     iconBg: "gradient-lime",
-    dotColor: "bg-campaign-lime",
+    accent: "border-campaign-lime/40",
   },
   {
     icon: Building2,
     title: "Des infrastructures à la hauteur",
     desc: "Rénover nos bâtiments publics et moderniser nos voiries.",
-    items: [
-      "Rénovation complète des bâtiments municipaux",
-      "Climatisation réversible dans toutes les écoles",
-      "Requalification des principaux axes routiers",
-      "Études des échangeurs autoroutiers",
-    ],
-    gradient: "from-primary/10 via-primary/5 to-transparent",
     iconBg: "gradient-teal",
-    dotColor: "bg-primary",
+    accent: "border-primary/40",
   },
   {
     icon: Store,
     title: "Revitaliser le village",
     desc: "Redonner vie à notre centre ancien et attirer de nouveaux commerces.",
-    items: [
-      "Centre ancien attractif et vivant",
-      "Commerces et artisanat de proximité",
-      "Incubateur d'entreprises de restauration",
-      "Animations dans les ruelles du village",
-    ],
-    gradient: "from-campaign-steel/10 via-campaign-steel/5 to-transparent",
     iconBg: "bg-campaign-steel",
-    dotColor: "bg-campaign-steel",
+    accent: "border-campaign-steel/40",
   },
   {
     icon: Leaf,
     title: "Environnement & cadre de vie",
     desc: "Préserver nos espaces naturels et améliorer la qualité de vie.",
-    items: [
-      "Protection des espaces verts existants",
-      "Mobilité douce et pistes cyclables",
-      "Transition énergétique des bâtiments publics",
-    ],
-    gradient: "from-campaign-olive/10 via-campaign-olive/5 to-transparent",
     iconBg: "bg-campaign-olive",
-    dotColor: "bg-campaign-olive",
+    accent: "border-campaign-olive/40",
   },
   {
     icon: GraduationCap,
     title: "Écoles & jeunesse",
     desc: "Offrir les meilleures conditions à nos enfants.",
-    items: [
-      "Rénovation complète des écoles",
-      "Activités périscolaires enrichies",
-      "Soutien aux associations sportives et culturelles",
-    ],
-    gradient: "from-campaign-lime/10 via-campaign-lime/5 to-transparent",
     iconBg: "gradient-lime",
-    dotColor: "bg-campaign-lime",
+    accent: "border-campaign-lime/40",
   },
 ];
 
@@ -100,60 +66,31 @@ const ProgrammeSection = () => {
           </p>
         </motion.div>
 
-        {/* Grid - 3 columns */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {pillars.map((pillar, i) => {
-            const CardContent = () => {
-              const ref = useRef<HTMLDivElement>(null);
-              const isInView = useInView(ref, { once: true, margin: "-10%" });
+        {/* Visual grid — large icons, short text, bold layout */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-5 mb-16">
+          {pillars.map((pillar, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08, duration: 0.4 }}
+              className={`rounded-2xl bg-background/95 backdrop-blur-sm border-2 ${pillar.accent} p-6 flex flex-col items-center text-center gap-4
+                transition-[transform,box-shadow] duration-150 ease-out hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/5 group cursor-pointer`}
+            >
+              {/* Large icon */}
+              <div className={`w-20 h-20 rounded-2xl ${pillar.iconBg} flex items-center justify-center transition-transform duration-150 group-hover:scale-110`}>
+                <pillar.icon className="w-10 h-10 text-primary-foreground" strokeWidth={1.5} />
+              </div>
 
-              return (
-                <motion.div
-                  ref={ref}
-                  className={`rounded-2xl overflow-hidden relative bg-gradient-to-br ${pillar.gradient} bg-background border border-border/50 group h-full`}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ y: -6, transition: { duration: 0.3 } }}
-                >
-                  {/* Large background number */}
-                  <span className="absolute top-4 right-6 font-accent font-extrabold text-8xl text-foreground/[0.03] leading-none select-none">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-
-                  <div className="relative z-10 p-8 flex flex-col h-full">
-                    <div className={`w-12 h-12 rounded-xl ${pillar.iconBg} flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110`}>
-                      <pillar.icon className="w-6 h-6 text-primary-foreground" />
-                    </div>
-
-                    <h3 className="font-accent text-lg font-extrabold text-foreground mb-3 leading-tight uppercase tracking-wide">
-                      {pillar.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-6 font-medium">
-                      {pillar.desc}
-                    </p>
-
-                    <ul className="space-y-2.5 mt-auto">
-                      {pillar.items.map((item, j) => (
-                        <motion.li
-                          key={j}
-                          className="flex items-start gap-2.5 text-foreground/70 text-sm leading-relaxed"
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={isInView ? { opacity: 1, x: 0 } : {}}
-                          transition={{ delay: i * 0.1 + j * 0.06 + 0.3, duration: 0.3 }}
-                        >
-                          <span className={`w-1.5 h-1.5 rounded-full ${pillar.dotColor} mt-2 flex-shrink-0`} />
-                          {item}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              );
-            };
-
-            return <CardContent key={i} />;
-          })}
+              <h3 className="font-accent text-sm font-extrabold text-foreground uppercase tracking-wide leading-tight">
+                {pillar.title}
+              </h3>
+              <p className="text-muted-foreground text-xs leading-relaxed">
+                {pillar.desc}
+              </p>
+            </motion.div>
+          ))}
         </div>
 
         <motion.div
