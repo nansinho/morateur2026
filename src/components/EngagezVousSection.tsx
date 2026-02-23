@@ -113,69 +113,59 @@ const EngagezVousSection = () => {
           </motion.div>
         </div>
 
-        {/* Carousel */}
-        <Carousel opts={{ align: "center", loop: true, dragFree: true }} className="w-full px-4 sm:px-6">
-          <CarouselContent className="-ml-5">
+        {/* Grid */}
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {actions.map((action, i) => (
-              <CarouselItem key={i} className="pl-5 basis-[75%] sm:basis-[40%] lg:basis-[28%]">
-                <motion.a
-                  href={action.href}
-                  target={action.external ? "_blank" : undefined}
-                  rel={action.external ? "noopener noreferrer" : undefined}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.06, duration: 0.3 }}
-                  whileHover={{ y: -8 }}
-                  className="block cursor-pointer group"
+              <motion.a
+                key={i}
+                href={action.href}
+                target={action.external ? "_blank" : undefined}
+                rel={action.external ? "noopener noreferrer" : undefined}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06, duration: 0.3 }}
+                whileHover={{ y: -8 }}
+                className="block cursor-pointer group"
+              >
+                <div
+                  className={`relative rounded-[1.25rem] aspect-[9/16] ${action.bg}
+                    flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
+                    transition-all duration-300 shadow-lg
+                    group-hover:shadow-2xl group-hover:shadow-black/20`}
                 >
-                  <div
-                    className={`relative rounded-[1.25rem] aspect-[9/16] ${action.bg}
-                      flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
-                      transition-all duration-300 shadow-lg
-                      group-hover:shadow-2xl group-hover:shadow-black/20`}
-                  >
-                    {/* Icon */}
-                    <div className="relative z-10 mt-8">
-                      <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto">
-                        <action.Icon className={`w-10 h-10 ${action.iconColor}`} strokeWidth={1.5} />
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative z-10 flex-1 flex flex-col justify-center py-4">
-                      <h3 className={`font-accent text-xl sm:text-2xl lg:text-3xl font-extrabold ${action.textColor} uppercase tracking-wide leading-tight mb-3 break-words -rotate-3`}>
-                        {action.title}
-                      </h3>
-                      <p className={`${action.subtextColor} text-sm sm:text-base leading-relaxed`}>
-                        {action.desc}
-                      </p>
-                    </div>
-
-                    {/* Bottom indicator */}
-                    <div className={`relative z-10 flex items-center gap-2 ${action.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
-                      {action.external ? (
-                        <>
-                          <span className="text-xs font-bold uppercase tracking-wider">Visiter</span>
-                          <ExternalLink className="w-4 h-4" />
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-xs font-bold uppercase tracking-wider">Découvrir</span>
-                          <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                        </>
-                      )}
+                  <div className="relative z-10 mt-8">
+                    <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto">
+                      <action.Icon className={`w-10 h-10 ${action.iconColor}`} strokeWidth={1.5} />
                     </div>
                   </div>
-                </motion.a>
-              </CarouselItem>
+                  <div className="relative z-10 flex-1 flex flex-col justify-center py-4">
+                    <h3 className={`font-accent text-xl sm:text-2xl lg:text-3xl font-extrabold ${action.textColor} uppercase tracking-wide leading-tight mb-3 break-words -rotate-3`}>
+                      {action.title}
+                    </h3>
+                    <p className={`${action.subtextColor} text-sm sm:text-base leading-relaxed`}>
+                      {action.desc}
+                    </p>
+                  </div>
+                  <div className={`relative z-10 flex items-center gap-2 ${action.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
+                    {action.external ? (
+                      <>
+                        <span className="text-xs font-bold uppercase tracking-wider">Visiter</span>
+                        <ExternalLink className="w-4 h-4" />
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-xs font-bold uppercase tracking-wider">Découvrir</span>
+                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      </>
+                    )}
+                  </div>
+                </div>
+              </motion.a>
             ))}
-          </CarouselContent>
-          <div className="flex items-center justify-center gap-4 mt-10">
-            <CarouselPrevious className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-300" />
-            <CarouselNext className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-300" />
           </div>
-        </Carousel>
+        </div>
       </div>
     </section>
   );
