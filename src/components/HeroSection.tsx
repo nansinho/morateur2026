@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import candidatImg from "@/assets/candidat-banner.png";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   const scrollTo = (href: string) => {
     const el = document.querySelector(href);
     el?.scrollIntoView({ behavior: "smooth" });
@@ -38,7 +40,7 @@ const HeroSection = () => {
             </p>
             <div className="flex flex-wrap gap-4">
               <button
-                onClick={() => scrollTo("#programme")}
+                onClick={() => navigate("/programme")}
                 className="bg-campaign-green text-primary-foreground px-8 py-3.5 rounded-sm font-semibold uppercase tracking-wider text-sm hover:brightness-110 transition"
               >
                 Découvrir le programme
