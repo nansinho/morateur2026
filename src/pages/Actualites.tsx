@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Calendar, ChevronRight } from "lucide-react";
+import useDocumentMeta from "@/hooks/useDocumentMeta";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -71,6 +72,11 @@ const tagStyles: Record<string, { bg: string; text: string; accent: string; tagB
 const defaultStyle = { bg: "bg-muted", text: "text-foreground", accent: "text-muted-foreground", tagBg: "bg-foreground/10" };
 
 const Actualites = () => {
+  useDocumentMeta({
+    title: "Actualités | Morateur 2026",
+    description: "Suivez la campagne de Mathieu Morateur au quotidien : événements, rencontres terrain et tribunes.",
+  });
+
   return (
     <main className="min-h-screen bg-campaign-ice">
       <Navbar />

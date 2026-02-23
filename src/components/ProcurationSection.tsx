@@ -67,7 +67,7 @@ const ProcurationSection = () => {
   };
 
   return (
-    <section id="procuration" className="gradient-teal-deep relative overflow-hidden min-h-screen flex items-center">
+    <section id="procuration" aria-label="Rejoignez-nous et procuration" className="gradient-teal-deep relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-28 relative z-10">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* Left */}

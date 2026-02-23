@@ -41,13 +41,14 @@ const Navbar = () => {
 
   return (
     <motion.nav
+      aria-label="Navigation principale"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
           ? "bg-background/95 backdrop-blur-xl shadow-lg shadow-foreground/5 py-3"
           : "bg-primary py-5"
       }`}
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
+      <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between">
         <button
           onClick={() => handleNav("/#hero")}
           className={`font-accent text-base font-extrabold tracking-widest uppercase transition-colors ${
@@ -84,6 +85,8 @@ const Navbar = () => {
         <button
           className={`md:hidden ${isScrolled ? "text-foreground" : "text-primary-foreground"}`}
           onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-label="Menu de navigation"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>

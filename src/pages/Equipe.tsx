@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import useDocumentMeta from "@/hooks/useDocumentMeta";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RoadmapSection from "@/components/RoadmapSection";
@@ -19,6 +20,11 @@ const members = [
 
 const Equipe = () => {
   const navigate = useNavigate();
+
+  useDocumentMeta({
+    title: "L'Équipe | Morateur 2026",
+    description: "Découvrez les colistiers de Mathieu Morateur pour les municipales 2026 à Bouc-Bel-Air.",
+  });
 
   return (
     <main className="min-h-screen bg-primary">

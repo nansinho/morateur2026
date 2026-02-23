@@ -76,7 +76,7 @@ const ProgrammeSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="programme" className="gradient-teal-deep relative overflow-hidden min-h-screen flex items-center justify-center">
+    <section id="programme" aria-label="Programme de campagne" className="gradient-teal-deep relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-28 relative z-10">
         {/* Header */}
         <motion.div

@@ -50,7 +50,7 @@ const Footer = () => {
           </div>
 
           {/* Nav */}
-          <nav className="flex flex-col gap-3">
+          <nav aria-label="Navigation secondaire" className="flex flex-col gap-3">
             <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-1">Navigation</p>
             {navLinks.map((link, i) => (
               <button
@@ -92,6 +92,7 @@ const Footer = () => {
           </p>
           <motion.button
             onClick={scrollToTop}
+            aria-label="Retour en haut de page"
             className="w-10 h-10 rounded-xl border border-primary-foreground/10 flex items-center justify-center hover:border-campaign-lime/30 transition-all"
             whileHover={{ y: -3 }}
           >

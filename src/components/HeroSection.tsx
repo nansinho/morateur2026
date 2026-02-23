@@ -24,8 +24,10 @@ const HeroSection = () => {
       <motion.div className="absolute inset-0" style={{ scale: imgScale, y: imgY }}>
         <img
           src={candidatImg}
-          alt="Mathieu Morateur"
+          alt="Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air"
           className="w-full h-full object-cover object-top"
+          loading="eager"
+          fetchPriority="high"
         />
       </motion.div>
 
@@ -93,7 +95,7 @@ const HeroSection = () => {
         >
           <motion.button
             onClick={() => navigate("/programme")}
-            className="gradient-lime text-accent-foreground px-10 py-5 rounded-2xl font-extrabold text-base flex items-center gap-3 shadow-2xl uppercase tracking-wide -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
+            className="gradient-lime text-accent-foreground px-6 py-4 sm:px-10 sm:py-5 rounded-2xl font-extrabold text-base flex items-center gap-3 shadow-2xl uppercase tracking-wide -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.94, rotate: -4 }}
           >
@@ -102,7 +104,7 @@ const HeroSection = () => {
           </motion.button>
           <motion.button
             onClick={() => scrollTo("#procuration")}
-            className="bg-primary-foreground/10 backdrop-blur-sm border-2 border-primary-foreground/30 text-primary-foreground px-10 py-5 rounded-2xl font-extrabold text-base uppercase tracking-wide hover:bg-primary-foreground/20 rotate-1 hover:rotate-0 transition-all duration-300"
+            className="bg-primary-foreground/10 backdrop-blur-sm border-2 border-primary-foreground/30 text-primary-foreground px-6 py-4 sm:px-10 sm:py-5 rounded-2xl font-extrabold text-base uppercase tracking-wide hover:bg-primary-foreground/20 rotate-1 hover:rotate-0 transition-all duration-300"
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.94, rotate: 3 }}
           >

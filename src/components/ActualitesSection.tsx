@@ -50,7 +50,7 @@ const tagColors: Record<string, string> = {
 
 const ActualitesSection = () => {
   return (
-    <section className="py-16 sm:py-24 bg-campaign-ice relative overflow-hidden min-h-screen flex items-center">
+    <section aria-label="Actualités de la campagne" className="py-16 sm:py-24 bg-campaign-ice relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -85,6 +85,7 @@ const ActualitesSection = () => {
                       src={actu.image}
                       alt={actu.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
                     <div className="absolute top-4 left-4">
