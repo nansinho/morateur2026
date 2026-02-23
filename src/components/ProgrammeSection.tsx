@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { ShieldCheck, Building2, Store, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -46,11 +47,17 @@ const pillars = [
 
 const ProgrammeSection = () => {
   const navigate = useNavigate();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
 
   return (
-    <section id="programme" className="py-32 relative overflow-hidden">
-      {/* Dark gradient background */}
-      <div className="absolute inset-0 gradient-navy" />
+    <section ref={sectionRef} id="programme" className="py-32 relative overflow-hidden">
+      {/* Parallax dark background */}
+      <motion.div className="absolute inset-0 gradient-navy" style={{ y: bgY }} />
       <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "50px 50px" }} />
 
       <div className="container mx-auto px-6 relative">
@@ -58,17 +65,18 @@ const ProgrammeSection = () => {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
           className="text-center mb-20"
         >
-          <span className="inline-flex items-center gap-2 text-campaign-green font-semibold text-sm uppercase tracking-[0.25em] mb-4">
-            <span className="w-8 h-[2px] gradient-green inline-block" />
+          <span className="inline-flex items-center gap-2 text-campaign-green font-semibold text-xs uppercase tracking-[0.3em] mb-4">
+            <span className="w-10 h-[2px] gradient-green inline-block" />
             Notre vision
-            <span className="w-8 h-[2px] gradient-green inline-block" />
+            <span className="w-10 h-[2px] gradient-green inline-block" />
           </span>
-          <h2 className="font-heading text-5xl md:text-6xl font-black text-primary-foreground mt-2 mb-4">
+          <h2 className="font-heading text-5xl md:text-6xl font-extrabold text-primary-foreground mt-2 mb-4">
             Le Programme
           </h2>
-          <p className="text-primary-foreground/50 max-w-2xl mx-auto text-lg">
+          <p className="text-primary-foreground/40 max-w-2xl mx-auto text-lg">
             Trois piliers concrets pour redonner à Bouc-Bel-Air le cadre de vie qu'elle mérite.
           </p>
         </motion.div>
@@ -77,40 +85,41 @@ const ProgrammeSection = () => {
           {pillars.map((pillar, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 80, rotateX: 10 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.2 }}
-              className="group relative glass rounded-2xl p-8 hover:bg-white/15 transition-all duration-500"
+              transition={{ duration: 0.7, delay: i * 0.15 }}
+              whileHover={{ y: -12, transition: { duration: 0.3 } }}
+              className="group relative rounded-3xl p-8 bg-primary-foreground/[0.05] backdrop-blur-sm border border-primary-foreground/10 hover:border-campaign-green/30 transition-all duration-500"
             >
               {/* Glow on hover */}
-              <div className="absolute inset-0 rounded-2xl gradient-green opacity-0 group-hover:opacity-5 transition-opacity duration-500" />
+              <div className="absolute inset-0 rounded-3xl gradient-green opacity-0 group-hover:opacity-[0.06] transition-opacity duration-500" />
 
               <div className="relative">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-14 h-14 rounded-xl gradient-green flex items-center justify-center shadow-lg shadow-campaign-green/20">
+                <div className="flex items-center justify-between mb-8">
+                  <div className="w-14 h-14 rounded-2xl gradient-green flex items-center justify-center shadow-lg shadow-campaign-green/25">
                     <pillar.icon className="w-7 h-7 text-primary-foreground" />
                   </div>
                   <div className="text-right">
-                    <p className="text-campaign-green font-heading text-2xl font-black">{pillar.stat}</p>
-                    <p className="text-primary-foreground/40 text-xs">{pillar.statLabel}</p>
+                    <p className="text-campaign-green font-heading text-2xl font-extrabold">{pillar.stat}</p>
+                    <p className="text-primary-foreground/30 text-xs">{pillar.statLabel}</p>
                   </div>
                 </div>
 
                 <h3 className="font-heading text-xl font-bold text-primary-foreground mb-3">{pillar.title}</h3>
-                <p className="text-primary-foreground/50 text-sm mb-6 leading-relaxed">{pillar.desc}</p>
+                <p className="text-primary-foreground/40 text-sm mb-6 leading-relaxed">{pillar.desc}</p>
 
                 <ul className="space-y-3 mb-8">
                   {pillar.items.map((item, j) => (
                     <motion.li
                       key={j}
-                      initial={{ opacity: 0, x: -20 }}
+                      initial={{ opacity: 0, x: -15 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: 0.4 + j * 0.1 + i * 0.15 }}
-                      className="flex items-start gap-3 text-primary-foreground/70 text-sm leading-relaxed"
+                      transition={{ delay: 0.3 + j * 0.08 + i * 0.1 }}
+                      className="flex items-start gap-3 text-primary-foreground/60 text-sm leading-relaxed"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full gradient-green mt-2 flex-shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full gradient-green mt-1.5 flex-shrink-0" />
                       {item}
                     </motion.li>
                   ))}
