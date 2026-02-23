@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { Briefcase, GraduationCap, Users, Building2, School, TreePine } from "lucide-react";
+import { Briefcase, GraduationCap, Users } from "lucide-react";
 import useDocumentMeta from "@/hooks/useDocumentMeta";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,17 +9,11 @@ import candidatImg from "@/assets/header_candidat_portrait.png";
 /* ─── Sub-components ─── */
 
 const PullQuote = ({ children }: { children: React.ReactNode }) => (
-  <motion.blockquote
-    initial={{ opacity: 0, x: -30 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.6 }}
-    className="border-l-4 border-campaign-lime pl-6 md:pl-8 my-10 md:my-14"
-  >
+  <blockquote className="border-l-4 border-campaign-lime pl-6 md:pl-8 my-10 md:my-14">
     <p className="font-heading font-bold text-primary-foreground/90 text-xl md:text-2xl lg:text-3xl leading-snug italic">
       {children}
     </p>
-  </motion.blockquote>
+  </blockquote>
 );
 
 const GradientDivider = () => (
@@ -59,25 +53,8 @@ const CounterStat = ({ value, label, suffix = "" }: { value: number; label: stri
   );
 };
 
-const LetterBlock = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-60px" }}
-    transition={{ duration: 0.6, delay }}
-  >
-    {children}
-  </motion.div>
-);
-
 const HighlightCard = ({ Icon, title, desc }: { Icon: React.ElementType; title: string; desc: string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 15 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    className="flex items-start gap-4 p-4 md:p-5 rounded-xl bg-gradient-to-r from-campaign-lime/15 to-campaign-lime/5 border border-campaign-lime/20 backdrop-blur-sm hover:scale-[1.02] transition-transform"
-  >
+  <div className="flex items-start gap-4 p-4 md:p-5 rounded-xl bg-gradient-to-r from-campaign-lime/15 to-campaign-lime/5 border border-campaign-lime/20 backdrop-blur-sm">
     <div className="w-10 h-10 rounded-lg gradient-lime flex items-center justify-center flex-shrink-0">
       <Icon className="w-5 h-5 text-accent-foreground" />
     </div>
@@ -85,7 +62,7 @@ const HighlightCard = ({ Icon, title, desc }: { Icon: React.ElementType; title: 
       <h3 className="font-accent font-bold text-primary-foreground text-sm uppercase tracking-wide">{title}</h3>
       <p className="text-primary-foreground/50 text-sm mt-0.5">{desc}</p>
     </div>
-  </motion.div>
+  </div>
 );
 
 /* ─── Main Page ─── */
@@ -106,12 +83,7 @@ const Candidat = () => {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-end">
             {/* Portrait */}
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7 }}
-              className="relative max-w-md mx-auto lg:mx-0"
-            >
+            <div className="relative max-w-md mx-auto lg:mx-0">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <img
                   src={candidatImg}
@@ -122,15 +94,10 @@ const Candidat = () => {
                 <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-primary/60 to-transparent" />
               </div>
               <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-xl gradient-lime opacity-40 -z-10" aria-hidden="true" />
-            </motion.div>
+            </div>
 
             {/* Title */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-center lg:text-left"
-            >
+            <div className="text-center lg:text-left">
               <span className="section-label">Le Candidat</span>
               <h1
                 className="font-accent font-extrabold uppercase leading-[0.95] text-primary-foreground mb-4 break-words"
@@ -141,7 +108,7 @@ const Candidat = () => {
               <p className="text-primary-foreground/50 text-lg md:text-xl font-heading leading-relaxed max-w-lg mx-auto lg:mx-0">
                 Lettre aux Boucaines et aux Boucains
               </p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -151,29 +118,25 @@ const Candidat = () => {
         <div className="container mx-auto px-4 sm:px-6 max-w-3xl py-12 md:py-20">
 
           {/* ── Bloc 1 : Introduction personnelle ── */}
-          <LetterBlock>
-            <p className="text-primary-foreground/70 text-lg md:text-xl leading-relaxed mb-6 font-heading font-semibold">
-              Chères Boucaines, Chers Boucains,
-            </p>
-            <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
-              <span className="float-left font-accent text-campaign-lime text-6xl md:text-7xl font-extrabold leading-none mr-3 mt-1">
-                L
-              </span>
-              e 15 mars prochain, vous élirez votre nouveau maire. Je m'appelle{" "}
-              <strong className="text-primary-foreground">Mathieu Morateur</strong>, j'ai 36 ans et je me présente à vos
-              suffrages pour le devenir.
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/70 text-lg md:text-xl leading-relaxed mb-6 font-heading font-semibold">
+            Chères Boucaines, Chers Boucains,
+          </p>
+          <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
+            <span className="float-left font-accent text-campaign-lime text-6xl md:text-7xl font-extrabold leading-none mr-3 mt-1">
+              L
+            </span>
+            e 15 mars prochain, vous élirez votre nouveau maire. Je m'appelle{" "}
+            <strong className="text-primary-foreground">Mathieu Morateur</strong>, j'ai 36 ans et je me présente à vos
+            suffrages pour le devenir.
+          </p>
 
-          <LetterBlock delay={0.1}>
-            <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed mt-6">
-              Enfant de Bouc-Bel-Air, la principale motivation de ma candidature est de permettre à mes très jeunes
-              enfants de grandir avec les mêmes chances et les mêmes opportunités que j'ai eues à leur âge :{" "}
-              <strong className="text-primary-foreground">
-                grandir dans une commune audacieuse, au cadre de vie préservé.
-              </strong>
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed mt-6">
+            Enfant de Bouc-Bel-Air, la principale motivation de ma candidature est de permettre à mes très jeunes
+            enfants de grandir avec les mêmes chances et les mêmes opportunités que j'ai eues à leur âge :{" "}
+            <strong className="text-primary-foreground">
+              grandir dans une commune audacieuse, au cadre de vie préservé.
+            </strong>
+          </p>
 
           <PullQuote>
             « Ma motivation est de permettre à mes enfants de grandir avec les mêmes chances que j'ai eues. »
@@ -182,104 +145,82 @@ const Candidat = () => {
           <GradientDivider />
 
           {/* ── Bloc 2 : Urbanisme / promoteurs ── */}
-          <LetterBlock>
-            <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
-              Notre commune se trouve aujourd'hui même à un{" "}
-              <strong className="text-campaign-lime">tournant de son histoire</strong>. Nous le ressentons dans chacun
-              de nos quartiers : le fragile équilibre entre développement et préservation se rompt. Et ce n'est qu'un
-              aperçu de ce qui nous attend les 5 prochaines années si nous ne reprenons pas en mains notre destinée le
-              15 mars !
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
+            Notre commune se trouve aujourd'hui même à un{" "}
+            <strong className="text-campaign-lime">tournant de son histoire</strong>. Nous le ressentons dans chacun
+            de nos quartiers : le fragile équilibre entre développement et préservation se rompt. Et ce n'est qu'un
+            aperçu de ce qui nous attend les 5 prochaines années si nous ne reprenons pas en mains notre destinée le
+            15 mars !
+          </p>
 
-          <LetterBlock delay={0.1}>
-            <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed mt-6">
-              Car en moins d'un an, ce sont des permis de construire pour{" "}
-              <strong className="text-primary-foreground">plus de 1 000 logements</strong> qui ont été déposés et à ce
-              jour <strong className="text-primary-foreground">650 logements nouveaux</strong> ont été acceptés par la
-              mairie.
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed mt-6">
+            Car en moins d'un an, ce sont des permis de construire pour{" "}
+            <strong className="text-primary-foreground">plus de 1 000 logements</strong> qui ont été déposés et à ce
+            jour <strong className="text-primary-foreground">650 logements nouveaux</strong> ont été acceptés par la
+            mairie.
+          </p>
 
-          {/* Chiffres-clés */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="grid grid-cols-3 gap-3 md:gap-5 my-10 md:my-14"
-          >
+          {/* Chiffres-clés — seul élément animé conservé */}
+          <div className="grid grid-cols-3 gap-3 md:gap-5 my-10 md:my-14">
             <CounterStat value={1000} label="logements déposés" suffix="+" />
             <CounterStat value={650} label="acceptés par la mairie" />
             <CounterStat value={450} label="annulés par la préfecture" />
-          </motion.div>
+          </div>
 
-          <LetterBlock>
-            <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
-              Heureusement, la préfecture a annulé 3 projets représentant 450 logements afin de permettre une{" "}
-              <em>« évaluation environnementale »</em>, en raison des{" "}
-              <em>« effets cumulatifs »</em> de cette avalanche d'autorisations municipales. Mais le répit est de courte
-              durée : environ 1 an.{" "}
-              <strong className="text-campaign-lime">
-                Il faudra donc agir dès mars prochain pour contrecarrer les projets des promoteurs.
-              </strong>
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
+            Heureusement, la préfecture a annulé 3 projets représentant 450 logements afin de permettre une{" "}
+            <em>« évaluation environnementale »</em>, en raison des{" "}
+            <em>« effets cumulatifs »</em> de cette avalanche d'autorisations municipales. Mais le répit est de courte
+            durée : environ 1 an.{" "}
+            <strong className="text-campaign-lime">
+              Il faudra donc agir dès mars prochain pour contrecarrer les projets des promoteurs.
+            </strong>
+          </p>
 
           <GradientDivider />
 
           {/* ── Bloc 3 : Infrastructures dégradées ── */}
-          <LetterBlock>
-            <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
-              Car en face, nos services et nos infrastructures publics se dégradent. La vétusté très avancée des
-              crèches, des écoles et des bâtiments publics en général, comme le foyer des Anciens, est{" "}
-              <strong className="text-primary-foreground">indigne d'une commune comme la nôtre</strong>.
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
+            Car en face, nos services et nos infrastructures publics se dégradent. La vétusté très avancée des
+            crèches, des écoles et des bâtiments publics en général, comme le foyer des Anciens, est{" "}
+            <strong className="text-primary-foreground">indigne d'une commune comme la nôtre</strong>.
+          </p>
 
-          <LetterBlock delay={0.1}>
-            <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed mt-6">
-              Il est inacceptable que les toitures des écoles présentent des défauts d'étanchéité, ou que même dans la
-              dernière née, l'école Virginie Dedieu, qui a été inaugurée il y a 10 ans, le thermomètre monte au-dessus
-              de <strong className="text-primary-foreground">30 °C dès la fin du mois de mai</strong>, et baisse à 16 °C
-              en hiver.
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed mt-6">
+            Il est inacceptable que les toitures des écoles présentent des défauts d'étanchéité, ou que même dans la
+            dernière née, l'école Virginie Dedieu, qui a été inaugurée il y a 10 ans, le thermomètre monte au-dessus
+            de <strong className="text-primary-foreground">30 °C dès la fin du mois de mai</strong>, et baisse à 16 °C
+            en hiver.
+          </p>
 
           <PullQuote>
             « Il est inacceptable que le thermomètre monte au-dessus de 30 °C dans nos écoles dès le mois de mai. »
           </PullQuote>
 
-          <LetterBlock>
-            <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
-              Il en va de même de nos voiries, dont le renouvellement est sans cesse repoussé. Les projets s'enlisent,
-              les permis défilent,{" "}
-              <strong className="text-campaign-lime">
-                Bouc-Bel-Air s'asphyxie dans une crise de croissance non-maîtrisée.
-              </strong>
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
+            Il en va de même de nos voiries, dont le renouvellement est sans cesse repoussé. Les projets s'enlisent,
+            les permis défilent,{" "}
+            <strong className="text-campaign-lime">
+              Bouc-Bel-Air s'asphyxie dans une crise de croissance non-maîtrisée.
+            </strong>
+          </p>
 
           <GradientDivider />
 
           {/* ── Bloc 4 : Village qui se meurt ── */}
-          <LetterBlock>
-            <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
-              Et dans le même temps, notre village se meurt. Les animations se concentrent sur la place principale et
-              oublient les ruelles pittoresques du centre ancien. Pourtant,{" "}
-              <strong className="text-primary-foreground">il a tant à offrir !</strong>
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed">
+            Et dans le même temps, notre village se meurt. Les animations se concentrent sur la place principale et
+            oublient les ruelles pittoresques du centre ancien. Pourtant,{" "}
+            <strong className="text-primary-foreground">il a tant à offrir !</strong>
+          </p>
 
-          <LetterBlock delay={0.1}>
-            <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed mt-6">
-              Je me souviens, enfant, des retraites aux flambeaux qui l'éclairaient, et des commerces qui lui donnaient
-              de la vie.{" "}
-              <strong className="text-campaign-lime">
-                Retrouver cette âme, dans ce lieu central qui nous unit, sera notre priorité.
-              </strong>
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed mt-6">
+            Je me souviens, enfant, des retraites aux flambeaux qui l'éclairaient, et des commerces qui lui donnaient
+            de la vie.{" "}
+            <strong className="text-campaign-lime">
+              Retrouver cette âme, dans ce lieu central qui nous unit, sera notre priorité.
+            </strong>
+          </p>
 
           <PullQuote>
             « Je me souviens, enfant, des retraites aux flambeaux qui éclairaient nos ruelles. Retrouver cette âme sera
@@ -289,11 +230,9 @@ const Candidat = () => {
           <GradientDivider />
 
           {/* ── Bloc 5 : Parcours et compétences ── */}
-          <LetterBlock>
-            <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed mb-8">
-              Vous pourrez compter sur mon équipe, aux expériences multiples et avérées, et sur moi-même.
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/70 text-base md:text-lg leading-relaxed mb-8">
+            Vous pourrez compter sur mon équipe, aux expériences multiples et avérées, et sur moi-même.
+          </p>
 
           <div className="space-y-3 mb-10">
             <HighlightCard
@@ -316,21 +255,13 @@ const Candidat = () => {
           <GradientDivider />
 
           {/* ── Bloc 6 : Appel à l'engagement ── */}
-          <LetterBlock>
-            <p className="text-primary-foreground/90 text-lg md:text-xl leading-relaxed font-heading font-semibold text-center">
-              Si vous aussi, vous pensez que{" "}
-              <span className="text-campaign-lime">Bouc-Bel-Air a de l'avenir</span>, rejoignez-nous !
-            </p>
-          </LetterBlock>
+          <p className="text-primary-foreground/90 text-lg md:text-xl leading-relaxed font-heading font-semibold text-center">
+            Si vous aussi, vous pensez que{" "}
+            <span className="text-campaign-lime">Bouc-Bel-Air a de l'avenir</span>, rejoignez-nous !
+          </p>
 
           {/* Signature */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mt-12 flex flex-col items-center gap-4"
-          >
+          <div className="mt-12 flex flex-col items-center gap-4">
             <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-campaign-lime/40 shadow-lg">
               <img
                 src={candidatImg}
@@ -345,23 +276,17 @@ const Candidat = () => {
               </p>
               <p className="text-primary-foreground/40 text-sm">Candidat aux élections municipales 2026</p>
             </div>
-          </motion.div>
+          </div>
 
           {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-14 text-center"
-          >
+          <div className="mt-14 text-center">
             <a
               href="/#procuration"
               className="inline-block gradient-lime text-accent-foreground px-8 py-4 sm:px-10 sm:py-5 rounded-xl text-sm sm:text-base font-extrabold tracking-wide shadow-md -rotate-1 hover:rotate-0 hover:shadow-[0_10px_30px_-8px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 transition-all duration-300"
             >
               Rejoignez-nous
             </a>
-          </motion.div>
+          </div>
         </div>
       </section>
 
