@@ -58,7 +58,6 @@ const CounterStat = ({ value, label }: { value: string; label: string }) => {
 
 const CandidateSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const imgRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -70,8 +69,9 @@ const CandidateSection = () => {
 
   return (
     <section ref={sectionRef} id="candidat" className="py-32 bg-background relative overflow-hidden">
-      {/* Subtle dot grid */}
-      <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, hsl(222 47% 14%) 1px, transparent 0)", backgroundSize: "40px 40px" }} />
+      {/* Ambient glow */}
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-campaign-green/[0.03] rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-campaign-gold/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative">
         {/* Stats banner */}
@@ -80,7 +80,7 @@ const CandidateSection = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="grid grid-cols-3 gap-8 max-w-lg mx-auto mb-24 p-8 rounded-3xl bg-primary/[0.03] border border-border"
+          className="grid grid-cols-3 gap-8 max-w-lg mx-auto mb-24 p-8 rounded-3xl bg-card border border-border shadow-sm"
         >
           <CounterStat value="6" label="ans adjoint" />
           <CounterStat value="36" label="ans" />
@@ -88,9 +88,9 @@ const CandidateSection = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <div className="relative" ref={imgRef}>
+          <div className="relative">
             <motion.div
-              className="relative overflow-hidden rounded-3xl"
+              className="relative overflow-hidden rounded-3xl shadow-2xl shadow-primary/10"
               style={{ y: imgY, scale: imgScale }}
             >
               <img
@@ -120,10 +120,7 @@ const CandidateSection = () => {
           </div>
 
           <motion.div style={{ x: contentX, opacity: contentOpacity }}>
-            <span className="inline-flex items-center gap-2 text-campaign-green font-semibold text-xs uppercase tracking-[0.25em] mb-4">
-              <span className="w-10 h-[2px] gradient-green inline-block" />
-              Le Candidat
-            </span>
+            <span className="section-label">Le Candidat</span>
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground mt-2 mb-6 leading-tight">
               Un enfant de{" "}
               <span className="text-gradient">Bouc-Bel-Air</span>
@@ -144,7 +141,7 @@ const CandidateSection = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 + i * 0.12, duration: 0.5 }}
                   whileHover={{ x: 8, transition: { duration: 0.25 } }}
-                  className="flex items-start gap-4 p-5 rounded-2xl bg-card border border-border cursor-default group hover:shadow-lg hover:shadow-campaign-green/5 transition-shadow duration-500"
+                  className="flex items-start gap-4 p-5 rounded-2xl bg-card border border-border cursor-default group hover:shadow-lg hover:shadow-campaign-green/5 hover:border-campaign-green/20 transition-all duration-500"
                 >
                   <div className="w-12 h-12 rounded-xl gradient-green flex items-center justify-center flex-shrink-0 shadow-lg shadow-campaign-green/20 group-hover:scale-110 transition-transform duration-300">
                     <h.icon className="w-5 h-5 text-primary-foreground" />
@@ -159,6 +156,9 @@ const CandidateSection = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Bottom section divider */}
+      <div className="absolute bottom-0 left-0 right-0 section-divider" />
     </section>
   );
 };

@@ -9,8 +9,8 @@ const validate = (form: FormData): FormErrors => {
   const errors: FormErrors = {};
   if (form.prenom.trim().length < 2) errors.prenom = "Minimum 2 caractères";
   if (form.nom.trim().length < 2) errors.nom = "Minimum 2 caractères";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = "Email invalide";
-  if (!/^(\+33|0)[1-9]\d{8}$/.test(form.tel.replace(/\s/g, ""))) errors.tel = "Numéro invalide (ex: 06 12 34 56 78)";
+  if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(form.email)) errors.email = "Email invalide";
+  if (!/^(\\+33|0)[1-9]\\d{8}$/.test(form.tel.replace(/\\s/g, ""))) errors.tel = "Numéro invalide (ex: 06 12 34 56 78)";
   if (form.motivations.trim().length < 10) errors.motivations = "Minimum 10 caractères";
   return errors;
 };
@@ -72,9 +72,10 @@ const ProcurationSection = () => {
   };
 
   return (
-    <section id="procuration" className="py-32 bg-background relative overflow-hidden">
-      <div className="absolute top-20 right-0 w-96 h-96 bg-campaign-green/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-0 w-80 h-80 bg-campaign-gold/5 rounded-full blur-3xl" />
+    <section id="procuration" className="py-32 bg-primary relative overflow-hidden">
+      {/* Ambient glows */}
+      <div className="absolute top-20 right-[10%] w-96 h-96 bg-campaign-green/[0.04] rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-20 left-[10%] w-80 h-80 bg-campaign-gold/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
@@ -84,15 +85,12 @@ const ProcurationSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <span className="inline-flex items-center gap-2 text-campaign-green font-semibold text-sm uppercase tracking-[0.2em] mb-4">
-              <span className="w-8 h-[2px] gradient-green inline-block" />
-              Agissez
-            </span>
-            <h2 className="font-heading text-5xl md:text-6xl font-black text-foreground mt-2 mb-6 leading-tight">
+            <span className="section-label">Agissez</span>
+            <h2 className="font-heading text-5xl md:text-6xl font-extrabold text-primary-foreground mt-2 mb-6 leading-tight">
               Rejoignez-<br />
               <span className="text-gradient">nous</span>
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-10">
+            <p className="text-primary-foreground/50 text-lg leading-relaxed mb-10">
               Vous souhaitez soutenir notre projet pour Bouc-Bel-Air ? Remplissez ce formulaire et nous vous recontacterons rapidement.
             </p>
 
@@ -101,22 +99,22 @@ const ProcurationSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="bg-card rounded-2xl p-7 border border-border shadow-sm hover-lift"
+              className="rounded-2xl p-7 border border-primary-foreground/10 bg-primary-foreground/[0.04] hover:border-campaign-green/20 transition-all duration-500"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl gradient-green flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl gradient-green flex items-center justify-center shadow-lg shadow-campaign-green/25">
                   <FileText className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <h3 className="font-heading font-bold text-foreground text-lg">Procuration</h3>
+                <h3 className="font-heading font-bold text-primary-foreground text-lg">Procuration</h3>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+              <p className="text-primary-foreground/40 text-sm leading-relaxed mb-5">
                 Vous ne pouvez pas vous déplacer le jour du vote ? Donnez procuration à un électeur de votre commune.
               </p>
               <motion.a
                 href="https://www.maprocuration.gouv.fr/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 gradient-navy text-primary-foreground px-6 py-3 rounded-xl text-sm font-semibold hover:shadow-lg transition-shadow duration-300"
+                className="inline-flex items-center gap-2 gradient-green text-primary-foreground px-6 py-3 rounded-xl text-sm font-semibold shadow-lg shadow-campaign-green/20 hover:shadow-xl hover:shadow-campaign-green/30 transition-shadow duration-300"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -156,7 +154,7 @@ const ProcurationSection = () => {
                   key="form"
                   onSubmit={handleSubmit}
                   noValidate
-                  className="bg-card rounded-2xl p-8 md:p-10 shadow-xl border border-border space-y-5"
+                  className="bg-card rounded-2xl p-8 md:p-10 shadow-2xl shadow-primary/20 border border-border space-y-5"
                   role="form"
                   aria-label="Formulaire de contact campagne"
                 >
@@ -168,7 +166,7 @@ const ProcurationSection = () => {
                         className="h-1 flex-1 rounded-full"
                         animate={{
                           backgroundColor: touched.has(field) && !errors[field as keyof FormData]
-                            ? "hsl(155 55% 42%)"
+                            ? "hsl(160 84% 39%)"
                             : touched.has(field) && errors[field as keyof FormData]
                             ? "hsl(0 84.2% 60.2%)"
                             : "hsl(210 20% 90%)",
@@ -297,7 +295,7 @@ const ProcurationSection = () => {
 
                   <motion.button
                     type="submit"
-                    className="w-full gradient-green text-primary-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 hover:shadow-xl hover:shadow-campaign-green/25 transition-shadow duration-300"
+                    className="w-full gradient-green text-primary-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 shadow-lg shadow-campaign-green/20 hover:shadow-xl hover:shadow-campaign-green/30 transition-shadow duration-300"
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                   >

@@ -129,6 +129,13 @@
     background-clip: text;
   }
 
+  .text-gradient-gold {
+    background: linear-gradient(135deg, hsl(42 85% 58%), hsl(42 90% 68%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   .glow-green {
     box-shadow: 0 0 40px hsl(160 84% 39% / 0.3), 0 0 80px hsl(160 84% 39% / 0.1);
   }
@@ -141,6 +148,15 @@
     box-shadow: 0 20px 60px hsl(222 47% 14% / 0.15);
   }
 
+  /* Section divider — smooth wave */
+  .section-divider {
+    @apply w-full h-px bg-gradient-to-r from-transparent via-border to-transparent;
+  }
+
+  .section-divider-green {
+    @apply w-full h-px bg-gradient-to-r from-transparent via-campaign-green/20 to-transparent;
+  }
+
   /* Diagonal clip for hero */
   .clip-diagonal {
     clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
@@ -148,5 +164,17 @@
 
   .clip-diagonal-mobile {
     clip-path: polygon(0 15%, 100% 0, 100% 100%, 0% 100%);
+  }
+
+  /* Section label style */
+  .section-label {
+    @apply inline-flex items-center gap-2 font-semibold text-xs uppercase tracking-[0.3em] mb-4;
+    color: hsl(160 84% 39%);
+  }
+
+  .section-label::before {
+    content: '';
+    @apply w-10 h-[2px] inline-block;
+    background: linear-gradient(135deg, hsl(160 84% 39%), hsl(160 70% 50%));
   }
 }
