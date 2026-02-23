@@ -67,7 +67,7 @@ const ProcurationSection = () => {
   };
 
   return (
-    <section id="procuration" className="bg-campaign-warm relative overflow-hidden">
+    <section id="procuration" className="bg-background relative overflow-hidden">
       <div className="container mx-auto px-6 py-28 relative z-10">
         <div className="grid lg:grid-cols-2 gap-14 items-start">
           {/* Left */}
@@ -78,8 +78,8 @@ const ProcurationSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-campaign-green font-semibold text-xs uppercase tracking-[0.3em] mb-4">Agissez</p>
-              <h2 className="font-heading text-5xl md:text-6xl font-extrabold text-foreground mb-5 leading-tight">
+              <p className="section-label">Agissez</p>
+              <h2 className="font-editorial italic text-5xl md:text-6xl text-foreground mb-5 leading-[0.95]">
                 Rejoignez-<br />
                 <span className="text-campaign-green">nous</span>
               </h2>
@@ -88,7 +88,7 @@ const ProcurationSection = () => {
               </p>
 
               {/* Procuration card */}
-              <div className="rounded-xl p-6 bg-card border border-border shadow-sm">
+              <div className="rounded-2xl p-6 bg-card border border-border">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 rounded-lg gradient-green flex items-center justify-center">
                     <FileText className="w-5 h-5 text-primary-foreground" />
@@ -102,7 +102,7 @@ const ProcurationSection = () => {
                   href="https://www.maprocuration.gouv.fr/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 gradient-green text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md shadow-campaign-green/15 hover:shadow-lg transition-shadow"
+                  className="inline-flex items-center gap-2 gradient-green text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold"
                 >
                   maprocuration.gouv.fr
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -125,10 +125,10 @@ const ProcurationSection = () => {
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", duration: 0.5 }}
-                  className="bg-card rounded-xl p-12 text-center border border-border shadow-sm"
+                  className="bg-card rounded-2xl p-12 text-center border border-border"
                 >
                   <CheckCircle className="w-16 h-16 text-campaign-green mx-auto mb-5" />
-                  <h3 className="font-heading text-2xl font-bold text-foreground mb-2">Merci !</h3>
+                  <h3 className="font-editorial italic text-2xl text-foreground mb-2">Merci !</h3>
                   <p className="text-muted-foreground">Nous vous recontacterons très vite.</p>
                 </motion.div>
               ) : (
@@ -136,11 +136,10 @@ const ProcurationSection = () => {
                   key="form"
                   onSubmit={handleSubmit}
                   noValidate
-                  className="bg-card rounded-xl p-8 space-y-5 border border-border shadow-sm"
+                  className="bg-card rounded-2xl p-8 space-y-5 border border-border"
                   role="form"
                   aria-label="Formulaire de contact campagne"
                 >
-                  {/* Progress */}
                   <div className="flex gap-1.5 mb-2">
                     {Object.keys(form).map((field) => (
                       <div
@@ -206,7 +205,7 @@ const ProcurationSection = () => {
 
                   <button
                     type="submit"
-                    className="w-full gradient-green text-primary-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 shadow-lg shadow-campaign-green/20 hover:shadow-xl hover:shadow-campaign-green/25 transition-shadow"
+                    className="w-full gradient-green text-primary-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2"
                   >
                     <Send className="w-4 h-4" />
                     Envoyer

@@ -64,7 +64,7 @@ const ActualitesSection = () => {
             <Newspaper className="w-3.5 h-3.5" />
             Sur le terrain
           </span>
-          <h2 className="font-heading text-5xl md:text-7xl font-extrabold text-foreground leading-tight">
+          <h2 className="font-editorial italic text-5xl md:text-7xl text-foreground leading-[0.9]">
             Les <span className="text-campaign-green">actu</span><span className="text-campaign-gold">alités</span>
           </h2>
         </motion.div>

@@ -15,23 +15,44 @@ const items: { text: string; Icon: LucideIcon }[] = [
 
 const MarqueeBand = () => {
   return (
-    <div className="bg-campaign-green py-4 overflow-hidden relative">
-      <motion.div
-        className="flex whitespace-nowrap gap-10"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-      >
-        {[...items, ...items].map((item, i) => (
-          <span
-            key={i}
-            className="text-primary-foreground font-heading font-bold text-base md:text-lg flex-shrink-0 flex items-center gap-2"
-          >
-            <item.Icon className="w-4 h-4 text-primary-foreground/70" />
-            {item.text}
-            <span className="mx-3 text-primary-foreground/30">—</span>
-          </span>
-        ))}
-      </motion.div>
+    <div className="relative overflow-hidden">
+      {/* Band 1 — Green to Gold gradient */}
+      <div className="gradient-marquee py-4 overflow-hidden">
+        <motion.div
+          className="flex whitespace-nowrap gap-12"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+        >
+          {[...items, ...items].map((item, i) => (
+            <span
+              key={i}
+              className="text-primary-foreground font-heading font-extrabold text-lg md:text-xl flex-shrink-0 flex items-center gap-2.5 uppercase tracking-wide"
+            >
+              <item.Icon className="w-5 h-5 text-primary-foreground/70" />
+              {item.text}
+              <span className="mx-4 text-primary-foreground/20">|</span>
+            </span>
+          ))}
+        </motion.div>
+      </div>
+      {/* Band 2 — Navy, reverse scroll */}
+      <div className="bg-primary py-3 overflow-hidden">
+        <motion.div
+          className="flex whitespace-nowrap gap-12"
+          animate={{ x: ["-50%", "0%"] }}
+          transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+        >
+          {[...items, ...items].map((item, i) => (
+            <span
+              key={i}
+              className="text-primary-foreground/40 font-heading font-bold text-sm flex-shrink-0 flex items-center gap-2 uppercase tracking-widest"
+            >
+              {item.text}
+              <span className="mx-3 text-primary-foreground/10">—</span>
+            </span>
+          ))}
+        </motion.div>
+      </div>
     </div>
   );
 };
