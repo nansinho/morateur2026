@@ -36,10 +36,10 @@ const Navbar = () => {
         <button
           onClick={() => scrollTo("#hero")}
           className={`font-accent text-base font-extrabold tracking-widest uppercase transition-colors ${
-            isScrolled ? "text-foreground" : "text-primary-foreground"
+            isScrolled ? "text-primary" : "text-primary-foreground"
           }`}
         >
-          MORATEUR <span className="text-campaign-green">2026</span>
+          MORATEUR <span className="text-campaign-lime">2026</span>
         </button>
 
         {/* Desktop */}
@@ -59,7 +59,7 @@ const Navbar = () => {
           ))}
           <button
             onClick={() => scrollTo("#procuration")}
-            className="gradient-green text-primary-foreground px-6 py-2.5 rounded-lg text-[13px] font-bold tracking-wide shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-px"
+            className="gradient-lime text-accent-foreground px-6 py-2.5 rounded-lg text-[13px] font-bold tracking-wide shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-px"
           >
             Rejoignez-nous
           </button>
@@ -99,7 +99,7 @@ const Navbar = () => {
               ))}
               <button
                 onClick={() => scrollTo("#procuration")}
-                className="gradient-green text-primary-foreground py-3 rounded-lg text-sm font-bold mt-2"
+                className="gradient-lime text-accent-foreground py-3 rounded-lg text-sm font-bold mt-2"
               >
                 Rejoignez-nous
               </button>

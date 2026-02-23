@@ -50,18 +50,18 @@ const PillarCard = ({ pillar, index, className }: { pillar: typeof pillars[0]; i
   return (
     <motion.div
       ref={ref}
-      className={`rounded-2xl overflow-hidden relative bg-card border border-border group ${className}`}
+      className={`rounded-2xl overflow-hidden relative bg-background border border-border group ${className}`}
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -4, transition: { duration: 0.3 } }}
     >
       <div className={`relative z-10 ${isLarge ? "p-10 md:p-14" : "p-8"} flex flex-col h-full`}>
-        <div className="w-12 h-12 rounded-xl bg-campaign-green/10 flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110">
-          <pillar.icon className="w-6 h-6 text-campaign-green" />
+        <div className="w-12 h-12 rounded-xl gradient-lime flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110">
+          <pillar.icon className="w-6 h-6 text-accent-foreground" />
         </div>
 
-        <h3 className={`font-heading ${isLarge ? "text-2xl md:text-3xl" : "text-xl"} font-extrabold text-foreground mb-3 leading-tight`}>
+        <h3 className={`font-accent ${isLarge ? "text-2xl md:text-3xl" : "text-xl"} font-extrabold text-foreground mb-3 leading-tight uppercase tracking-wide`}>
           {pillar.title}
         </h3>
         <p className="text-muted-foreground text-sm leading-relaxed mb-8 font-medium">
@@ -77,7 +77,7 @@ const PillarCard = ({ pillar, index, className }: { pillar: typeof pillars[0]; i
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: index * 0.15 + j * 0.08 + 0.3, duration: 0.4 }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-campaign-green mt-2 flex-shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-campaign-lime mt-2 flex-shrink-0" />
               {item}
             </motion.li>
           ))}
@@ -91,7 +91,7 @@ const ProgrammeSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="programme" className="gradient-premium relative overflow-hidden">
+    <section id="programme" className="gradient-teal-deep relative overflow-hidden">
       <div className="container mx-auto px-6 py-28 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -100,9 +100,12 @@ const ProgrammeSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <p className="text-campaign-green font-heading font-bold text-xs uppercase tracking-[0.3em] mb-6">Notre vision</p>
-          <h2 className="font-heading font-extrabold text-5xl md:text-7xl text-primary-foreground leading-[0.9] tracking-tight">
-            Le <span className="text-gradient">Programme</span>
+          <p className="text-campaign-lime font-accent font-bold text-xs uppercase tracking-[0.3em] mb-6">Notre vision</p>
+          <h2
+            className="font-accent font-extrabold text-primary-foreground leading-[0.9] uppercase tracking-tight break-words"
+            style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}
+          >
+            LE <span className="text-campaign-lime">PROGRAMME</span>
           </h2>
           <p className="text-primary-foreground/40 max-w-2xl mx-auto text-lg mt-8 font-medium">
             Trois piliers concrets pour redonner à Bouc-Bel-Air le cadre de vie qu'elle mérite.
@@ -124,7 +127,7 @@ const ProgrammeSection = () => {
         >
           <motion.button
             onClick={() => navigate("/programme")}
-            className="inline-flex items-center gap-3 bg-campaign-gold text-primary px-10 py-4 rounded-lg font-bold text-sm shadow-xl"
+            className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-10 py-4 rounded-xl font-bold text-sm shadow-xl uppercase tracking-wide"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
