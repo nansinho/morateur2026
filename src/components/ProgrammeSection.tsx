@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { ShieldCheck, Building2, Store, ArrowRight, Sparkles } from "lucide-react";
+import { ShieldCheck, Building2, Store, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const pillars = [
@@ -52,50 +52,38 @@ const PillarCard = ({ pillar, index }: { pillar: typeof pillars[0]; index: numbe
   return (
     <motion.div
       ref={ref}
-      className="rounded-3xl overflow-hidden relative border border-primary-foreground/[0.08] h-full"
-      style={{
-        background: `linear-gradient(160deg, hsl(222 47% ${11 + index * 3}%), hsl(222 47% ${16 + index * 2}%))`,
-      }}
-      initial={{ opacity: 0, y: 60 }}
+      className="rounded-2xl overflow-hidden relative border border-primary-foreground/[0.06] h-full bg-primary-foreground/[0.04]"
+      initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.7, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div className="absolute inset-0 noise-overlay" />
-      <div className="absolute -top-20 -right-20 w-[300px] h-[300px] bg-campaign-green/[0.06] rounded-full blur-[120px]" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-campaign-green/30 to-transparent" />
-
       <div className="relative z-10 p-8 md:p-10 flex flex-col h-full">
         {/* Icon */}
-        <motion.div
-          className="w-14 h-14 rounded-2xl gradient-green flex items-center justify-center mb-6 glow-green-sm"
-          initial={{ scale: 0 }}
-          animate={isInView ? { scale: 1 } : {}}
-          transition={{ type: "spring", delay: 0.3 + index * 0.1, stiffness: 150 }}
-        >
-          <pillar.icon className="w-7 h-7 text-primary-foreground" />
-        </motion.div>
+        <div className="w-12 h-12 rounded-xl gradient-green flex items-center justify-center mb-6">
+          <pillar.icon className="w-6 h-6 text-primary-foreground" />
+        </div>
 
         {/* Stat */}
-        <p className="font-heading text-5xl md:text-6xl font-extrabold text-campaign-green tracking-tighter mb-1">
+        <p className="font-heading text-4xl md:text-5xl font-extrabold text-campaign-green tracking-tighter mb-1">
           {pillar.stat}
         </p>
-        <p className="text-primary-foreground/30 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
+        <p className="text-primary-foreground/25 text-xs uppercase tracking-[0.2em] font-medium mb-6">
           {pillar.statLabel}
         </p>
 
         {/* Title & desc */}
-        <h3 className="font-heading text-2xl md:text-3xl font-extrabold text-primary-foreground mb-3 leading-tight">
+        <h3 className="font-heading text-xl md:text-2xl font-bold text-primary-foreground mb-3 leading-tight">
           {pillar.title}
         </h3>
-        <p className="text-primary-foreground/40 text-sm leading-relaxed mb-8">
+        <p className="text-primary-foreground/35 text-sm leading-relaxed mb-8">
           {pillar.desc}
         </p>
 
         {/* Items */}
         <ul className="space-y-3 mt-auto">
           {pillar.items.map((item, j) => (
-            <li key={j} className="flex items-start gap-3 text-primary-foreground/60 text-sm leading-relaxed">
-              <span className="w-1.5 h-1.5 rounded-full gradient-green mt-2 flex-shrink-0 shadow-[0_0_6px_hsl(160,84%,39%,0.4)]" />
+            <li key={j} className="flex items-start gap-3 text-primary-foreground/55 text-sm leading-relaxed">
+              <span className="w-1.5 h-1.5 rounded-full bg-campaign-green mt-2 flex-shrink-0" />
               {item}
             </li>
           ))}
@@ -109,63 +97,53 @@ const ProgrammeSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="programme" className="relative">
-      {/* Header */}
-      <div className="gradient-premium relative overflow-hidden">
-        <div className="absolute inset-0 noise-overlay" />
-        <div className="absolute top-20 left-[10%] w-[400px] h-[400px] bg-campaign-green/[0.05] rounded-full blur-[150px] pointer-events-none" />
+    <section id="programme" className="bg-primary relative overflow-hidden">
+      <div className="container mx-auto px-6 py-28 relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
+        >
+          <p className="text-campaign-green font-semibold text-xs uppercase tracking-[0.3em] mb-4">Notre vision</p>
+          <h2 className="font-heading text-5xl md:text-6xl font-extrabold text-primary-foreground mb-4">
+            Le <span className="text-campaign-green">Programme</span>
+          </h2>
+          <div className="w-16 h-[2px] mx-auto bg-campaign-green/40 rounded-full" />
+          <p className="text-primary-foreground/35 max-w-2xl mx-auto text-lg mt-6">
+            Trois piliers concrets pour redonner à Bouc-Bel-Air le cadre de vie qu'elle mérite.
+          </p>
+        </motion.div>
 
-        <div className="container mx-auto px-6 pt-32 pb-20 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <span className="section-label justify-center">Notre vision</span>
-            <h2 className="font-heading text-5xl md:text-7xl font-extrabold text-primary-foreground mt-2 mb-4">
-              Le <span className="text-gradient">Programme</span>
-            </h2>
-            <div className="ornament-line mt-4 mb-6" />
-            <p className="text-primary-foreground/40 max-w-2xl mx-auto text-lg">
-              Trois piliers concrets pour redonner à Bouc-Bel-Air le cadre de vie qu'elle mérite.
-            </p>
-          </motion.div>
+        {/* 3-column grid */}
+        <div className="grid md:grid-cols-3 gap-6 mb-16">
+          {pillars.map((pillar, i) => (
+            <PillarCard key={i} pillar={pillar} index={i} />
+          ))}
         </div>
-      </div>
 
-      {/* 3-column grid */}
-      <div className="gradient-premium relative overflow-hidden">
-        <div className="absolute inset-0 noise-overlay" />
-        <div className="container mx-auto px-6 pb-20 relative z-10">
-          <div className="grid md:grid-cols-3 gap-6">
-            {pillars.map((pillar, i) => (
-              <PillarCard key={i} pillar={pillar} index={i} />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* CTA */}
-      <div className="gradient-premium relative overflow-hidden">
-        <div className="absolute inset-0 noise-overlay" />
-        <div className="container mx-auto px-6 py-20 relative z-10 text-center">
+        {/* CTA */}
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
           <motion.button
             onClick={() => navigate("/programme")}
-            className="inline-flex items-center gap-3 gradient-green text-primary-foreground px-12 py-5 rounded-full font-semibold text-base glow-green shimmer"
-            whileHover={{ scale: 1.05, y: -4 }}
+            className="inline-flex items-center gap-3 gradient-green text-primary-foreground px-10 py-4 rounded-full font-semibold text-sm shadow-lg shadow-campaign-green/20"
+            whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
           >
-            <Sparkles className="w-5 h-5" />
             Voir le programme complet
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4" />
           </motion.button>
-        </div>
-        <div className="section-divider-wide" />
+        </motion.div>
       </div>
+
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-campaign-green/15 to-transparent" />
     </section>
   );
 };
