@@ -64,17 +64,16 @@ const ProcurationSection = () => {
     const isFocused = focused === field;
     const hasError = touched.has(field) && errors[field as keyof FormData];
     const isValid = touched.has(field) && !errors[field as keyof FormData];
-    const base = "w-full pl-11 pr-4 py-3.5 rounded-xl border-2 bg-primary text-primary-foreground text-sm transition-all duration-300 outline-none placeholder:text-primary-foreground/20";
-    if (isFocused) return `${base} border-campaign-green shadow-lg shadow-campaign-green/15`;
+    const base = "w-full pl-11 pr-4 py-3.5 rounded-xl border-2 bg-card text-foreground text-sm transition-all duration-300 outline-none placeholder:text-muted-foreground/50";
+    if (isFocused) return `${base} border-campaign-green shadow-lg shadow-campaign-green/10`;
     if (hasError) return `${base} border-destructive shadow-lg shadow-destructive/10`;
     if (isValid) return `${base} border-campaign-green/30`;
-    return `${base} border-primary-foreground/10 hover:border-primary-foreground/20`;
+    return `${base} border-border hover:border-muted-foreground/30`;
   };
 
   return (
-    <section ref={sectionRef} id="procuration" className="bg-primary relative overflow-hidden">
-      <div className="absolute inset-0 noise-overlay" />
-      <div className="absolute top-20 right-[5%] w-96 h-96 bg-campaign-green/[0.05] rounded-full blur-[180px] pointer-events-none" />
+    <section ref={sectionRef} id="procuration" className="bg-campaign-warm relative overflow-hidden">
+      <div className="absolute top-20 right-[5%] w-96 h-96 bg-campaign-green/[0.04] rounded-full blur-[180px] pointer-events-none" />
       <div className="absolute bottom-20 left-[5%] w-80 h-80 bg-campaign-gold/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 py-32 relative z-10">
@@ -88,11 +87,11 @@ const ProcurationSection = () => {
               transition={{ duration: 0.8 }}
             >
               <span className="section-label">Agissez</span>
-              <h2 className="font-heading text-5xl md:text-7xl font-extrabold text-primary-foreground mt-2 mb-6 leading-tight">
+              <h2 className="font-heading text-5xl md:text-7xl font-extrabold text-foreground mt-2 mb-6 leading-tight">
                 Rejoignez-<br />
                 <span className="text-gradient">nous</span>
               </h2>
-              <p className="text-primary-foreground/40 text-lg leading-relaxed mb-12">
+              <p className="text-muted-foreground text-lg leading-relaxed mb-12">
                 Vous souhaitez soutenir notre projet pour Bouc-Bel-Air ? Remplissez ce formulaire et nous vous recontacterons rapidement.
               </p>
 
@@ -102,15 +101,15 @@ const ProcurationSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="rounded-2xl p-7 glass-card hover:border-campaign-green/20 transition-all duration-500"
+                className="rounded-2xl p-7 bg-card border border-campaign-green/20 shadow-sm hover:shadow-md transition-all duration-500"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-xl gradient-green flex items-center justify-center glow-green-sm">
                     <FileText className="w-5 h-5 text-primary-foreground" />
                   </div>
-                  <h3 className="font-heading font-bold text-primary-foreground text-lg">Procuration</h3>
+                  <h3 className="font-heading font-bold text-foreground text-lg">Procuration</h3>
                 </div>
-                <p className="text-primary-foreground/35 text-sm leading-relaxed mb-5">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-5">
                   Vous ne pouvez pas vous déplacer le jour du vote ? Donnez procuration à un électeur de votre commune.
                 </p>
                 <motion.a
@@ -137,20 +136,20 @@ const ProcurationSection = () => {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", duration: 0.6 }}
-                  className="glass-card rounded-2xl p-14 text-center"
+                  className="bg-card rounded-2xl p-14 text-center border border-border shadow-sm"
                 >
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", delay: 0.2 }}>
-                    <CheckCircle className="w-20 h-20 text-campaign-green mx-auto mb-6 drop-shadow-[0_0_30px_hsl(160,84%,39%,0.4)]" />
+                    <CheckCircle className="w-20 h-20 text-campaign-green mx-auto mb-6" />
                   </motion.div>
-                  <h3 className="font-heading text-3xl font-bold text-primary-foreground mb-3">Merci !</h3>
-                  <p className="text-primary-foreground/40 text-lg">Nous vous recontacterons très vite.</p>
+                  <h3 className="font-heading text-3xl font-bold text-foreground mb-3">Merci !</h3>
+                  <p className="text-muted-foreground text-lg">Nous vous recontacterons très vite.</p>
                 </motion.div>
               ) : (
                 <motion.form
                   key="form"
                   onSubmit={handleSubmit}
                   noValidate
-                  className="glass-card rounded-2xl p-8 md:p-10 space-y-5"
+                  className="bg-card rounded-2xl p-8 md:p-10 space-y-5 border border-border shadow-sm"
                   role="form"
                   aria-label="Formulaire de contact campagne"
                 >
@@ -165,7 +164,7 @@ const ProcurationSection = () => {
                             ? "hsl(160 84% 39%)"
                             : touched.has(field) && errors[field as keyof FormData]
                             ? "hsl(0 84.2% 60.2%)"
-                            : "hsl(0 0% 100% / 0.06)",
+                            : "hsl(var(--border))",
                         }}
                         transition={{ duration: 0.3 }}
                       />
@@ -175,9 +174,9 @@ const ProcurationSection = () => {
                   <div className="grid sm:grid-cols-2 gap-5">
                     {fieldMeta.filter(f => f.half).map(({ key, label, icon: Icon, type }, idx) => (
                       <motion.div key={key} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 + idx * 0.08 }}>
-                        <label htmlFor={key} className="text-sm font-medium text-primary-foreground/70 mb-2 block">{label} <span className="text-campaign-green">*</span></label>
+                        <label htmlFor={key} className="text-sm font-medium text-foreground/80 mb-2 block">{label} <span className="text-campaign-green">*</span></label>
                         <div className="relative">
-                          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-foreground/20 pointer-events-none" />
+                          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                           <input id={key} type={type} required value={form[key]} onFocus={() => setFocused(key)} onBlur={() => handleBlur(key)} onChange={e => handleChange(key, e.target.value)} className={inputClass(key)} />
                         </div>
                         <AnimatePresence>
@@ -193,9 +192,9 @@ const ProcurationSection = () => {
 
                   {fieldMeta.filter(f => !f.half).map(({ key, label, icon: Icon, type }, idx) => (
                     <motion.div key={key} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.25 + idx * 0.08 }}>
-                      <label htmlFor={key} className="text-sm font-medium text-primary-foreground/70 mb-2 block">{label} <span className="text-campaign-green">*</span></label>
+                      <label htmlFor={key} className="text-sm font-medium text-foreground/80 mb-2 block">{label} <span className="text-campaign-green">*</span></label>
                       <div className="relative">
-                        <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-foreground/20 pointer-events-none" />
+                        <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                         <input id={key} type={type} required value={form[key]} onFocus={() => setFocused(key)} onBlur={() => handleBlur(key)} onChange={e => handleChange(key, e.target.value)} className={inputClass(key)} />
                       </div>
                       <AnimatePresence>
@@ -209,9 +208,9 @@ const ProcurationSection = () => {
                   ))}
 
                   <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}>
-                    <label htmlFor="motivations" className="text-sm font-medium text-primary-foreground/70 mb-2 block">Vos motivations <span className="text-campaign-green">*</span></label>
+                    <label htmlFor="motivations" className="text-sm font-medium text-foreground/80 mb-2 block">Vos motivations <span className="text-campaign-green">*</span></label>
                     <div className="relative">
-                      <MessageSquare className="absolute left-3.5 top-4 w-4 h-4 text-primary-foreground/20 pointer-events-none" />
+                      <MessageSquare className="absolute left-3.5 top-4 w-4 h-4 text-muted-foreground pointer-events-none" />
                       <textarea id="motivations" required maxLength={500} rows={4} value={form.motivations} onFocus={() => setFocused("motivations")} onBlur={() => handleBlur("motivations")} onChange={e => handleChange("motivations", e.target.value)} className={`${inputClass("motivations")} resize-none pt-3.5`} />
                     </div>
                     <div className="flex justify-between mt-1.5">
@@ -222,7 +221,7 @@ const ProcurationSection = () => {
                           </motion.p>
                         )}
                       </AnimatePresence>
-                      <span className="text-primary-foreground/20 text-xs ml-auto">{form.motivations.length}/500</span>
+                      <span className="text-muted-foreground text-xs ml-auto">{form.motivations.length}/500</span>
                     </div>
                   </motion.div>
 

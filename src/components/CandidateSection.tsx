@@ -65,7 +65,7 @@ const CandidateSection = () => {
           <img src={candidatImg} alt="Mathieu Morateur" className="w-full h-full object-cover object-top" />
         </motion.div>
         <motion.div className="absolute inset-0 gradient-premium" style={{ opacity: overlayOpacity }} />
-        <div className="absolute bottom-0 left-0 right-0 h-72 bg-gradient-to-t from-background via-background/90 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-72 bg-gradient-to-t from-campaign-warm via-campaign-warm/90 to-transparent" />
 
         <div className="absolute bottom-20 left-0 right-0 z-10">
           <div className="container mx-auto px-6">
@@ -85,8 +85,8 @@ const CandidateSection = () => {
         </div>
       </div>
 
-      {/* ─── Content on LIGHT background ─── */}
-      <div className="bg-background relative overflow-hidden">
+      {/* ─── Content on LIGHT / WARM background ─── */}
+      <div className="bg-campaign-warm relative overflow-hidden">
         <div className="absolute top-0 left-[15%] w-[500px] h-[500px] bg-campaign-green/[0.04] rounded-full blur-[180px] pointer-events-none" />
         <div className="absolute bottom-0 right-[10%] w-[400px] h-[400px] bg-campaign-gold/[0.03] rounded-full blur-[150px] pointer-events-none" />
 
@@ -128,21 +128,21 @@ const CandidateSection = () => {
             </motion.p>
           </div>
 
-          {/* Highlight cards */}
+          {/* Highlight cards — white cards with soft shadow */}
           <div className="max-w-3xl mx-auto space-y-5">
             {highlights.map((h, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60, scale: 0.95 }}
-                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               >
                 <motion.div
-                  className="flex items-start gap-5 p-7 rounded-2xl bg-card border border-border card-glow group cursor-default"
-                  whileHover={{ y: -4, scale: 1.02 }}
+                  className="flex items-start gap-5 p-7 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-shadow duration-300 group cursor-default"
+                  whileHover={{ y: -4 }}
                 >
-                  <div className="w-14 h-14 rounded-2xl gradient-green flex items-center justify-center flex-shrink-0 glow-green-sm group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-campaign-green/30 transition-all duration-300">
+                  <div className="w-14 h-14 rounded-2xl gradient-green flex items-center justify-center flex-shrink-0 glow-green-sm group-hover:scale-110 transition-all duration-300">
                     <h.icon className="w-6 h-6 text-primary-foreground" />
                   </div>
                   <div>
@@ -155,7 +155,7 @@ const CandidateSection = () => {
           </div>
         </div>
 
-        <div className="section-divider" />
+        <div className="section-divider-green" />
       </div>
     </section>
   );
