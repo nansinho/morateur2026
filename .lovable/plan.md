@@ -1,48 +1,21 @@
 
-# Refonte des cartes : Carrousel de cartes TikTok (3.5 visibles)
+# Plan de centrage des titres dans les cartes du programme
 
-## Probleme actuel
-Les cartes Programme (grille 5 colonnes) et Engagement (grille 6 colonnes) sont trop petites et peu attractives sur desktop. Le format grille ecrase les cartes et rend le design monotone.
+L'objectif est de déplacer les titres et descriptions des cartes du programme (et par extension celles de la section engagement pour garder une cohérence) vers le centre vertical de chaque carte. Cela permet d'équilibrer le design "TikTok" en plaçant le message principal au cœur du visuel.
 
-## Solution
-Remplacer les grilles statiques par des **carrousels Embla** (composant `Carousel` deja present dans le projet) affichant **3.5 cartes visibles** sur desktop, avec un scroll fluide. Les cartes gardent le format vertical TikTok mais deviennent plus grandes et plus soignees.
+## Modifications proposées
+
+### 1. Section Programme (`src/components/ProgrammeSection.tsx`)
+- **Centrage vertical** : Dans la boucle d'affichage des piliers, le conteneur `div` qui enveloppe le titre (`h3`) et la description (`p`) passera d'un alignement `justify-end` à un alignement `justify-center`.
+- **Rendu** : Le bloc de texte sera désormais positionné au milieu de la carte, entre l'icône (en haut) et l'indicateur "En savoir plus" (en bas).
+
+### 2. Section Rejoignez la campagne (`src/components/EngagezVousSection.tsx`)
+- **Cohérence visuelle** : Comme demandé précédemment pour que toutes les cartes soient similaires, j'appliquerai le même centrage vertical (`justify-center`) aux cartes d'action de cette section.
+- **Rendu** : Les titres comme "Instagram", "Facebook" ou "Newsletter" seront centrés au milieu de leurs cartes respectives.
+
+## Détails techniques
+- Utilisation des classes utilitaires Tailwind CSS : remplacement de `justify-end` par `justify-center` sur les conteneurs `flex flex-col` qui portent la propriété `flex-1`.
+- Conservation de la structure globale `justify-between` de la carte pour maintenir l'espacement entre les éléments fixes (icône en haut, indicateur en bas).
 
 ---
-
-## Section Programme (`ProgrammeSection.tsx`)
-
-- Remplacer la grille `sm:grid-cols-5` par un `Carousel` avec `basis-[28%]` sur desktop (= 3.5 cartes visibles) et `basis-[70%]` sur mobile
-- Cartes plus grandes avec :
-  - Fond sombre semi-transparent avec un gradient colore en haut
-  - Icone plus imposante (w-20 h-20) dans un cercle avec glow subtil
-  - Numero du pilier affiche en grand (style editorial "01", "02"...)
-  - Titre et description plus lisibles
-  - Fleche ou indicateur "en savoir plus" en bas
-- Boutons precedent/suivant stylises en lime (comme dans ActualitesSection)
-- Dots indicateurs optionnels
-
-## Section Rejoignez la campagne (`EngagezVousSection.tsx`)
-
-- Meme principe : remplacer la grille `lg:grid-cols-6` par un `Carousel` avec `basis-[28%]` sur desktop
-- Cartes verticales TikTok avec :
-  - Fond colore par theme (rose/Instagram, bleu/Facebook, lime/terrain, teal/newsletter)
-  - Icone centree plus grande avec un halo de couleur
-  - Texte plus lisible (tailles de police augmentees)
-  - Indicateur d'action en bas (fleche externe pour les liens sortants, chevron pour les internes)
-- Boutons de navigation carrousel identiques au style lime
-
-## Details techniques
-
-1. **Import du composant Carousel** dans les deux fichiers (deja disponible dans `@/components/ui/carousel`)
-2. **Options Embla** : `{ align: "start", loop: true }` pour un defilement en boucle
-3. **Breakpoints** :
-   - Mobile : `basis-[75%]` (1.3 cartes visibles)
-   - Tablette : `basis-[40%]` (2.5 cartes)
-   - Desktop : `basis-[28%]` (3.5 cartes)
-4. **Espacement** : gap de 20px (`-ml-5` / `pl-5`) comme dans ActualitesSection
-5. **Animations** : conserver les `motion.div` avec `whileInView` et `whileHover` existants
-6. **Navigation** : boutons prev/next centres sous le carrousel, style `border-2 border-campaign-lime` identique a ActualitesSection
-
-## Fichiers modifies
-- `src/components/ProgrammeSection.tsx` : refonte complete du layout en carrousel
-- `src/components/EngagezVousSection.tsx` : refonte complete du layout en carrousel
+*Ce changement simple améliorera grandement la lisibilité en plaçant l'information textuelle là où l'œil se pose naturellement : au centre de la carte.*
