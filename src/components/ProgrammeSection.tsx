@@ -10,7 +10,6 @@ const pillars = [
     desc: "Protéger notre cadre de vie face à l'avalanche de permis de construire.",
     stat: "1000+",
     statLabel: "logements menacés",
-    bg: "from-[hsl(222,47%,12%)] to-[hsl(222,47%,18%)]",
     items: [
       "Refus permanent des permis de construire des promoteurs",
       "Utilisation systématique du droit de préemption urbain",
@@ -24,7 +23,6 @@ const pillars = [
     desc: "Rénover nos bâtiments publics et moderniser nos voiries.",
     stat: "30°C",
     statLabel: "dans nos écoles en mai",
-    bg: "from-[hsl(222,47%,14%)] to-[hsl(222,35%,22%)]",
     items: [
       "Rénovation complète des bâtiments municipaux",
       "Climatisation réversible dans toutes les écoles",
@@ -38,7 +36,6 @@ const pillars = [
     desc: "Redonner vie à notre centre ancien et attirer de nouveaux commerces.",
     stat: "100%",
     statLabel: "centre-ville à revitaliser",
-    bg: "from-[hsl(222,35%,16%)] to-[hsl(222,47%,20%)]",
     items: [
       "Centre ancien attractif et vivant",
       "Commerces et artisanat de proximité",
@@ -50,73 +47,98 @@ const pillars = [
 
 const PillarCard = ({ pillar, index }: { pillar: typeof pillars[0]; index: number }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-15%" });
 
   return (
-    <div ref={ref} className="sticky-card h-screen flex items-center justify-center px-6" style={{ zIndex: index + 1 }}>
+    <div
+      ref={ref}
+      className="h-screen flex items-center justify-center px-6 sticky top-0"
+      style={{ zIndex: index + 1 }}
+    >
       <motion.div
-        className={`w-full max-w-5xl mx-auto rounded-3xl overflow-hidden bg-gradient-to-br ${pillar.bg} relative`}
-        initial={{ scale: 0.85, opacity: 0, y: 80 }}
+        className="w-full max-w-5xl mx-auto rounded-3xl overflow-hidden relative border border-primary-foreground/[0.08]"
+        style={{
+          background: `linear-gradient(160deg, hsl(222 47% ${11 + index * 3}%), hsl(222 47% ${16 + index * 2}%))`,
+        }}
+        initial={{ scale: 0.8, opacity: 0, y: 100 }}
         animate={isInView ? { scale: 1, opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* Noise */}
         <div className="absolute inset-0 noise-overlay" />
 
-        {/* Ambient glow */}
-        <div className="absolute -top-20 -right-20 w-[300px] h-[300px] bg-campaign-green/[0.06] rounded-full blur-[120px]" />
+        {/* Ambient glows */}
+        <div className="absolute -top-20 -right-20 w-[400px] h-[400px] bg-campaign-green/[0.06] rounded-full blur-[150px]" />
+        <div className="absolute -bottom-20 -left-20 w-[300px] h-[300px] bg-campaign-gold/[0.04] rounded-full blur-[120px]" />
 
-        <div className="relative z-10 p-10 md:p-16 grid md:grid-cols-2 gap-12 items-center">
-          {/* Left: Content */}
-          <div>
-            <motion.div
-              className="w-16 h-16 rounded-2xl gradient-green flex items-center justify-center mb-8 glow-green-sm"
-              initial={{ scale: 0 }}
-              animate={isInView ? { scale: 1 } : {}}
-              transition={{ type: "spring", delay: 0.3 }}
-            >
-              <pillar.icon className="w-8 h-8 text-primary-foreground" />
-            </motion.div>
+        {/* Top accent */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-campaign-green/30 to-transparent" />
 
-            <h3 className="font-heading text-3xl md:text-4xl font-extrabold text-primary-foreground mb-4 leading-tight">
-              {pillar.title}
-            </h3>
-            <p className="text-primary-foreground/50 text-lg leading-relaxed mb-8">{pillar.desc}</p>
+        <div className="relative z-10 p-10 md:p-16">
+          <div className="grid md:grid-cols-[1.2fr_0.8fr] gap-12 items-center">
+            {/* Content */}
+            <div>
+              <motion.div
+                className="w-16 h-16 rounded-2xl gradient-green flex items-center justify-center mb-8 glow-green"
+                initial={{ scale: 0, rotate: -20 }}
+                animate={isInView ? { scale: 1, rotate: 0 } : {}}
+                transition={{ type: "spring", delay: 0.3, stiffness: 150 }}
+              >
+                <pillar.icon className="w-8 h-8 text-primary-foreground" />
+              </motion.div>
 
-            <ul className="space-y-3">
-              {pillar.items.map((item, j) => (
-                <motion.li
-                  key={j}
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.5 + j * 0.12, duration: 0.5 }}
-                  className="flex items-start gap-3 text-primary-foreground/60 text-sm leading-relaxed"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full gradient-green mt-2 flex-shrink-0" />
-                  {item}
-                </motion.li>
-              ))}
-            </ul>
-          </div>
+              <motion.h3
+                className="font-heading text-3xl md:text-5xl font-extrabold text-primary-foreground mb-5 leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.2, duration: 0.6 }}
+              >
+                {pillar.title}
+              </motion.h3>
 
-          {/* Right: Stat */}
-          <div className="flex flex-col items-center justify-center text-center">
-            <motion.p
-              className="font-heading text-7xl md:text-8xl font-extrabold text-campaign-green tracking-tight"
-              initial={{ scale: 0.3, opacity: 0 }}
-              animate={isInView ? { scale: 1, opacity: 1 } : {}}
-              transition={{ type: "spring", delay: 0.4, stiffness: 120 }}
-            >
-              {pillar.stat}
-            </motion.p>
-            <motion.p
-              className="text-primary-foreground/40 text-sm mt-3 uppercase tracking-wider"
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.7 }}
-            >
-              {pillar.statLabel}
-            </motion.p>
+              <motion.p
+                className="text-primary-foreground/40 text-lg leading-relaxed mb-10"
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.35 }}
+              >
+                {pillar.desc}
+              </motion.p>
+
+              <ul className="space-y-4">
+                {pillar.items.map((item, j) => (
+                  <motion.li
+                    key={j}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ delay: 0.5 + j * 0.1, duration: 0.5 }}
+                    className="flex items-start gap-3 text-primary-foreground/50 text-base leading-relaxed"
+                  >
+                    <span className="w-2 h-2 rounded-full gradient-green mt-2 flex-shrink-0 shadow-[0_0_8px_hsl(160,84%,39%,0.4)]" />
+                    {item}
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Big stat */}
+            <div className="flex flex-col items-center justify-center text-center">
+              <motion.p
+                className="font-heading text-8xl md:text-9xl font-extrabold text-campaign-green tracking-tighter drop-shadow-[0_0_60px_hsl(160,84%,39%,0.25)]"
+                initial={{ scale: 0.2, opacity: 0 }}
+                animate={isInView ? { scale: 1, opacity: 1 } : {}}
+                transition={{ type: "spring", delay: 0.4, stiffness: 80, damping: 12 }}
+              >
+                {pillar.stat}
+              </motion.p>
+              <motion.p
+                className="text-primary-foreground/30 text-xs mt-4 uppercase tracking-[0.25em] font-semibold"
+                initial={{ opacity: 0, y: 10 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.7 }}
+              >
+                {pillar.statLabel}
+              </motion.p>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -126,14 +148,15 @@ const PillarCard = ({ pillar, index }: { pillar: typeof pillars[0]; index: numbe
 
 const ProgrammeSection = () => {
   const navigate = useNavigate();
-  const sectionRef = useRef<HTMLElement>(null);
 
   return (
-    <section ref={sectionRef} id="programme" className="relative">
+    <section id="programme" className="relative">
       {/* Header */}
       <div className="gradient-premium relative overflow-hidden">
         <div className="absolute inset-0 noise-overlay" />
-        <div className="container mx-auto px-6 py-32 relative z-10 text-center">
+        <div className="absolute top-20 left-[10%] w-[400px] h-[400px] bg-campaign-green/[0.05] rounded-full blur-[150px] pointer-events-none" />
+
+        <div className="container mx-auto px-6 pt-32 pb-20 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -153,7 +176,8 @@ const ProgrammeSection = () => {
       </div>
 
       {/* Sticky scroll cards */}
-      <div className="sticky-cards-container">
+      <div className="relative bg-primary">
+        <div className="absolute inset-0 noise-overlay" />
         {pillars.map((pillar, i) => (
           <PillarCard key={i} pillar={pillar} index={i} />
         ))}
@@ -162,11 +186,11 @@ const ProgrammeSection = () => {
       {/* CTA */}
       <div className="gradient-premium relative overflow-hidden">
         <div className="absolute inset-0 noise-overlay" />
-        <div className="container mx-auto px-6 py-24 relative z-10 text-center">
+        <div className="container mx-auto px-6 py-28 relative z-10 text-center">
           <motion.button
             onClick={() => navigate("/programme")}
             className="inline-flex items-center gap-3 gradient-green text-primary-foreground px-12 py-5 rounded-full font-semibold text-base glow-green shimmer"
-            whileHover={{ scale: 1.05, y: -3 }}
+            whileHover={{ scale: 1.05, y: -4 }}
             whileTap={{ scale: 0.97 }}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -177,6 +201,7 @@ const ProgrammeSection = () => {
             <ArrowRight className="w-5 h-5" />
           </motion.button>
         </div>
+        <div className="section-divider-wide" />
       </div>
     </section>
   );
