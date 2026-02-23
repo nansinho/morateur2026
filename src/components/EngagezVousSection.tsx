@@ -106,9 +106,9 @@ const EngagezVousSection = () => {
           </motion.div>
         </div>
 
-        {/* Grid */}
+        {/* Grid / Horizontal scroll on mobile */}
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:overflow-visible sm:snap-none sm:pb-0">
             {actions.map((action, i) => (
               <motion.a
                 key={i}
@@ -120,7 +120,7 @@ const EngagezVousSection = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06, duration: 0.3 }}
                 whileHover={{ y: -8 }}
-                className="block cursor-pointer group"
+                className="block cursor-pointer group min-w-[75vw] snap-center sm:min-w-0"
               >
                 <div
                   className={`relative rounded-[1.25rem] aspect-[4/5] ${action.bg}
