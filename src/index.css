@@ -249,4 +249,19 @@
     @apply absolute rounded-full pointer-events-none;
     background: radial-gradient(circle, hsl(160 84% 39% / 0.15), transparent);
   }
+
+  /* Sticky cards for programme scrollytelling */
+  .sticky-cards-container {
+    position: relative;
+  }
+
+  .sticky-card {
+    position: sticky;
+    top: 0;
+  }
+
+  /* Perspective utility */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
 }
