@@ -1,85 +1,70 @@
 import { motion } from "framer-motion";
-import { HandHeart, FileText, Instagram, Facebook, Mail, BookOpen } from "lucide-react";
+import { HandHeart, FileText, Instagram, Facebook, Mail, BookOpen, Megaphone } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-const actions = [
+const actions: { Icon: LucideIcon; title: string; desc: string; bg: string; textColor: string; descColor: string; href: string; external?: boolean }[] = [
   {
-    icon: HandHeart,
+    Icon: HandHeart,
     title: "J'agis sur le terrain",
-    desc: "Rejoignez nos équipes de bénévoles !",
+    desc: "Rejoignez nos équipes de bénévoles pour le porte-à-porte et les distributions.",
     bg: "bg-primary",
     textColor: "text-primary-foreground",
     descColor: "text-primary-foreground/60",
-    emoji: "💪",
     href: "#procuration",
-    rotate: -2,
   },
   {
-    icon: FileText,
+    Icon: FileText,
     title: "Je fais une procuration",
-    desc: "Confiez votre voix à un proche.",
+    desc: "Confiez votre voix à un proche le jour du vote.",
     bg: "bg-campaign-gold",
     textColor: "text-primary",
     descColor: "text-primary/70",
-    emoji: "📝",
     href: "https://www.maprocuration.gouv.fr/",
     external: true,
-    rotate: 1,
   },
   {
-    icon: Instagram,
+    Icon: Instagram,
     title: "Sur Instagram",
-    desc: "Les coulisses de la campagne !",
-    bg: "bg-gradient-to-br from-purple-500 to-pink-500",
+    desc: "Suivez les coulisses de la campagne au quotidien.",
+    bg: "bg-gradient-to-br from-purple-600 to-pink-500",
     textColor: "text-white",
-    descColor: "text-white/80",
-    emoji: "📸",
+    descColor: "text-white/75",
     href: "https://www.instagram.com/morateur2026/",
     external: true,
-    rotate: -1,
   },
   {
-    icon: Facebook,
+    Icon: Facebook,
     title: "Sur Facebook",
-    desc: "Rejoignez la communauté !",
+    desc: "Rejoignez notre communauté et partagez nos publications.",
     bg: "bg-[hsl(220,46%,48%)]",
     textColor: "text-white",
-    descColor: "text-white/80",
-    emoji: "👍",
+    descColor: "text-white/75",
     href: "https://www.facebook.com/profile.php?id=61571627498498",
     external: true,
-    rotate: 2,
   },
   {
-    icon: Mail,
+    Icon: Mail,
     title: "Newsletter",
-    desc: "Toutes les infos dans votre boîte mail.",
+    desc: "Recevez toutes les infos de la campagne directement.",
     bg: "bg-campaign-green",
     textColor: "text-primary-foreground",
     descColor: "text-primary-foreground/70",
-    emoji: "✉️",
     href: "#procuration",
-    rotate: -1,
   },
   {
-    icon: BookOpen,
+    Icon: BookOpen,
     title: "Le programme",
-    desc: "Nos 3 piliers pour l'avenir.",
+    desc: "Découvrez nos 3 piliers pour l'avenir de Bouc-Bel-Air.",
     bg: "bg-campaign-coral",
     textColor: "text-primary-foreground",
     descColor: "text-primary-foreground/70",
-    emoji: "📖",
     href: "/programme",
-    rotate: 1,
   },
 ];
 
 const EngagezVousSection = () => {
   return (
-    <section className="py-24 bg-campaign-mint/30 relative overflow-hidden">
-      {/* Decorative */}
-      <div className="absolute top-10 right-10 w-60 h-60 rounded-full bg-campaign-gold/20 blur-3xl" />
-      <div className="absolute bottom-10 left-10 w-72 h-72 rounded-full bg-campaign-green/10 blur-3xl" />
-
+    <section className="py-24 bg-background relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -88,52 +73,46 @@ const EngagezVousSection = () => {
           transition={{ duration: 0.6 }}
           className="mb-14 text-center"
         >
-          <motion.span
-            className="inline-block text-5xl mb-4"
-            animate={{ rotate: [0, 10, -10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            🙌
-          </motion.span>
+          <span className="inline-flex items-center gap-2 bg-campaign-coral/15 border border-campaign-coral/25 text-campaign-coral font-bold text-xs uppercase tracking-wider px-4 py-2 rounded-full mb-6">
+            <Megaphone className="w-3.5 h-3.5" />
+            Engagez-vous
+          </span>
           <h2 className="font-heading text-5xl md:text-8xl font-extrabold leading-[1]">
             <span className="text-foreground">Rejoignez </span>
             <br className="hidden md:block" />
             <span className="text-campaign-green">la </span>
-            <span className="text-campaign-gold">cam</span>
-            <span className="text-campaign-coral">pagne</span>
-            <span className="text-foreground"> !</span>
+            <span className="text-campaign-gold">campagne</span>
           </h2>
           <p className="text-muted-foreground text-lg mt-6 max-w-xl mx-auto font-medium">
-            Chaque geste compte. Choisissez comment vous engager à nos côtés 👇
+            Chaque geste compte. Choisissez comment vous engager à nos côtés.
           </p>
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {actions.map((action, i) => (
-            <motion.div
+            <motion.a
               key={i}
-              initial={{ opacity: 0, y: 40, rotate: 0 }}
-              whileInView={{ opacity: 1, y: 0, rotate: action.rotate }}
+              href={action.href}
+              target={action.external ? "_blank" : undefined}
+              rel={action.external ? "noopener noreferrer" : undefined}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ delay: i * 0.08, duration: 0.5, type: "spring" }}
+              transition={{ delay: i * 0.07, duration: 0.5 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className={`block rounded-2xl p-8 ${action.bg} shadow-lg h-full group`}
             >
-              <motion.a
-                href={action.href}
-                target={action.external ? "_blank" : undefined}
-                rel={action.external ? "noopener noreferrer" : undefined}
-                className={`block rounded-3xl p-8 ${action.bg} transition-all duration-300 shadow-xl h-full`}
-                whileHover={{ scale: 1.06, rotate: 0, y: -6 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                <span className="text-4xl mb-4 block">{action.emoji}</span>
-                <h3 className={`font-heading font-extrabold text-xl mb-2 ${action.textColor}`}>
-                  {action.title}
-                </h3>
-                <p className={`text-sm leading-relaxed font-medium ${action.descColor}`}>
-                  {action.desc}
-                </p>
-              </motion.a>
-            </motion.div>
+              <div className="w-14 h-14 rounded-xl bg-primary-foreground/20 flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110">
+                <action.Icon className={`w-7 h-7 ${action.textColor}`} />
+              </div>
+              <h3 className={`font-heading font-extrabold text-xl mb-2 ${action.textColor}`}>
+                {action.title}
+              </h3>
+              <p className={`text-sm leading-relaxed font-medium ${action.descColor}`}>
+                {action.desc}
+              </p>
+            </motion.a>
           ))}
         </div>
       </div>
