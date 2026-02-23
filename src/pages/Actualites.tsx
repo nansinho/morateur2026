@@ -44,22 +44,22 @@ const actualites = [
 
 const tagStyles: Record<string, { bg: string; text: string; accent: string; tagBg: string }> = {
   "Événement": {
-    bg: "bg-gradient-to-br from-campaign-lime to-campaign-lime-light",
+    bg: "bg-campaign-lime-light",
     text: "text-accent-foreground",
     accent: "text-accent-foreground/60",
     tagBg: "bg-accent-foreground/15",
   },
   "Terrain": {
-    bg: "gradient-teal",
-    text: "text-primary-foreground",
-    accent: "text-primary-foreground/60",
-    tagBg: "bg-primary-foreground/15",
-  },
-  "Programme": {
     bg: "bg-primary",
     text: "text-primary-foreground",
-    accent: "text-primary-foreground/50",
+    accent: "text-primary-foreground/60",
     tagBg: "bg-campaign-lime/20",
+  },
+  "Programme": {
+    bg: "bg-campaign-olive",
+    text: "text-primary-foreground",
+    accent: "text-primary-foreground/50",
+    tagBg: "bg-primary-foreground/15",
   },
   "Tribune": {
     bg: "bg-campaign-steel",
