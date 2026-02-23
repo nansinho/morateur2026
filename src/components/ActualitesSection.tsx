@@ -42,10 +42,10 @@ const actualites = [
 ];
 
 const tagColors: Record<string, string> = {
-  "Événement": "gradient-lime text-accent-foreground",
-  "Terrain": "gradient-teal text-primary-foreground",
-  "Programme": "bg-primary text-primary-foreground",
-  "Tribune": "bg-foreground text-background",
+  "Événement": "bg-campaign-lime-light text-accent-foreground",
+  "Terrain": "bg-primary text-primary-foreground",
+  "Programme": "bg-campaign-olive text-primary-foreground",
+  "Tribune": "bg-campaign-steel text-primary-foreground",
 };
 
 const ActualitesSection = () => {
