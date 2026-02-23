@@ -17,7 +17,7 @@ const VillageBanner = () => {
           className="w-full h-full object-cover"
         />
       </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-8 md:p-14">
         <div className="container mx-auto">
           <motion.div
@@ -26,10 +26,16 @@ const VillageBanner = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h3 className="font-heading text-4xl md:text-6xl font-extrabold text-primary-foreground leading-tight">
+            <motion.span
+              className="inline-block bg-campaign-gold text-primary font-extrabold text-sm px-5 py-2 rounded-full mb-4 shadow-lg"
+              whileHover={{ scale: 1.05, rotate: -2 }}
+            >
+              📍 Bouc-Bel-Air
+            </motion.span>
+            <h3 className="font-heading text-4xl md:text-7xl font-extrabold text-primary-foreground leading-tight">
               Notre <span className="text-campaign-green">village</span>,
               <br />
-              notre <span className="text-campaign-gold">avenir</span>
+              notre <span className="text-campaign-gold">avenir</span> 🌿
             </h3>
           </motion.div>
         </div>

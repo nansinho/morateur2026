@@ -2,9 +2,9 @@ import { Facebook, Instagram, Twitter, Heart, ArrowUp } from "lucide-react";
 import { motion } from "framer-motion";
 
 const socials = [
-  { icon: Instagram, href: "https://www.instagram.com/morateur2026/", label: "Instagram", color: "hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500" },
-  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61571627498498", label: "Facebook", color: "hover:bg-[hsl(220,46%,48%)]" },
-  { icon: Twitter, href: "#", label: "Twitter", color: "hover:bg-campaign-sky" },
+  { icon: Instagram, href: "https://www.instagram.com/morateur2026/", label: "Instagram", color: "bg-gradient-to-br from-purple-500 to-pink-500", emoji: "📸" },
+  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61571627498498", label: "Facebook", color: "bg-[hsl(220,46%,48%)]", emoji: "👍" },
+  { icon: Twitter, href: "#", label: "Twitter", color: "bg-campaign-sky", emoji: "🐦" },
 ];
 
 const Footer = () => {
@@ -14,23 +14,34 @@ const Footer = () => {
     <footer className="bg-primary">
       {/* Social banner */}
       <div className="border-b border-primary-foreground/[0.06]">
-        <div className="container mx-auto px-6 py-10 text-center">
-          <p className="text-primary-foreground/40 text-sm uppercase tracking-[0.2em] font-semibold mb-6">
-            Suivez la campagne
+        <div className="container mx-auto px-6 py-12 text-center">
+          <motion.span
+            className="inline-block text-4xl mb-4"
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            📱
+          </motion.span>
+          <p className="text-primary-foreground font-heading font-extrabold text-2xl mb-8">
+            Suivez la <span className="text-campaign-green">campagne</span> !
           </p>
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-5">
             {socials.map((s, i) => (
               <motion.a
                 key={i}
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`w-14 h-14 rounded-2xl border border-primary-foreground/[0.08] flex items-center justify-center text-primary-foreground/50 hover:text-primary-foreground hover:border-transparent transition-all duration-300 ${s.color}`}
+                className={`w-16 h-16 rounded-2xl ${s.color} flex items-center justify-center text-white shadow-xl`}
                 aria-label={s.label}
-                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileHover={{ scale: 1.15, rotate: 5, y: -4 }}
                 whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
               >
-                <s.icon className="w-6 h-6" />
+                <s.icon className="w-7 h-7" />
               </motion.a>
             ))}
           </div>
@@ -41,23 +52,23 @@ const Footer = () => {
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
-              <p className="font-heading text-2xl font-bold">
-                Morateur <span className="text-campaign-green">20</span><span className="text-campaign-gold">26</span>
+              <p className="font-heading text-2xl font-extrabold">
+                Morateur <span className="text-campaign-green">20</span><span className="text-campaign-gold">26</span> 🌿
               </p>
-              <p className="text-primary-foreground/25 text-sm mt-1">Bouc Bel Air a de l'Avenir</p>
+              <p className="text-primary-foreground/30 text-sm mt-1 font-medium">Bouc Bel Air a de l'Avenir</p>
             </div>
 
             <motion.button
               onClick={scrollToTop}
-              className="w-10 h-10 rounded-full border border-primary-foreground/10 flex items-center justify-center hover:border-campaign-green hover:bg-campaign-green/10 transition-all duration-300"
-              whileHover={{ y: -3 }}
+              className="w-12 h-12 rounded-full bg-campaign-green/20 flex items-center justify-center hover:bg-campaign-green transition-all duration-300"
+              whileHover={{ y: -4, scale: 1.1 }}
             >
-              <ArrowUp className="w-4 h-4 text-primary-foreground/40" />
+              <ArrowUp className="w-5 h-5 text-campaign-green" />
             </motion.button>
           </div>
 
           <div className="border-t border-primary-foreground/[0.06] mt-6 pt-4 text-center">
-            <p className="text-primary-foreground/20 text-xs flex items-center justify-center gap-1.5">
+            <p className="text-primary-foreground/25 text-xs flex items-center justify-center gap-1.5 font-medium">
               © 2026 Morateur 2026 — Fait avec <Heart className="w-3 h-3 text-campaign-green" /> pour Bouc-Bel-Air
             </p>
           </div>
