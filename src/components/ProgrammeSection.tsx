@@ -15,7 +15,7 @@ const pillars: {
   title: string;
   desc: string;
   number: string;
-  bg: string;
+  bgColor: string;
   iconColor: string;
   textColor: string;
   subtextColor: string;
@@ -25,50 +25,50 @@ const pillars: {
     title: "Faire barrage aux promoteurs",
     desc: "Moratoire sur les grands projets, révision du PLU, consultation citoyenne systématique.",
     number: "01",
-    bg: "bg-gradient-to-br from-campaign-lime to-campaign-lime-light",
-    iconColor: "text-accent-foreground",
-    textColor: "text-accent-foreground",
-    subtextColor: "text-accent-foreground/70",
+    bgColor: "#1B9476",
+    iconColor: "text-white",
+    textColor: "text-white",
+    subtextColor: "text-white/70",
   },
   {
     icon: Building2,
     title: "Des infrastructures à la hauteur",
     desc: "Plan d'investissement pluriannuel, rénovation énergétique, mise aux normes d'accessibilité.",
     number: "02",
-    bg: "gradient-teal",
-    iconColor: "text-primary-foreground",
-    textColor: "text-primary-foreground",
-    subtextColor: "text-primary-foreground/70",
+    bgColor: "#0B162C",
+    iconColor: "text-white",
+    textColor: "text-white",
+    subtextColor: "text-white/70",
   },
   {
     icon: Store,
     title: "Revitaliser le village",
     desc: "Aide aux commerces de proximité, embellissement des façades, marchés thématiques.",
     number: "03",
-    bg: "bg-campaign-steel",
-    iconColor: "text-primary-foreground",
-    textColor: "text-primary-foreground",
-    subtextColor: "text-primary-foreground/70",
+    bgColor: "#8BD59E",
+    iconColor: "text-[#0B162C]",
+    textColor: "text-[#0B162C]",
+    subtextColor: "text-[#0B162C]/70",
   },
   {
     icon: Leaf,
     title: "Environnement & cadre de vie",
     desc: "Corridors verts, lutte contre les nuisances, protection des collines et espaces boisés.",
     number: "04",
-    bg: "bg-campaign-olive",
-    iconColor: "text-primary-foreground",
-    textColor: "text-primary-foreground",
-    subtextColor: "text-primary-foreground/70",
+    bgColor: "#C7DBC2",
+    iconColor: "text-[#0B162C]",
+    textColor: "text-[#0B162C]",
+    subtextColor: "text-[#0B162C]/70",
   },
   {
     icon: GraduationCap,
     title: "Écoles & jeunesse",
     desc: "Rénovation des cantines, espaces périscolaires modernes, soutien aux associations.",
     number: "05",
-    bg: "gradient-teal-deep",
-    iconColor: "text-campaign-lime",
-    textColor: "text-primary-foreground",
-    subtextColor: "text-primary-foreground/60",
+    bgColor: "#F4EBD6",
+    iconColor: "text-[#0B162C]",
+    textColor: "text-[#0B162C]",
+    subtextColor: "text-[#0B162C]/70",
   },
 ];
 
@@ -112,7 +112,8 @@ const ProgrammeSection = () => {
                   className="cursor-pointer group"
                 >
                   <div
-                    className={`relative rounded-[1.25rem] aspect-[9/16] ${pillar.bg}
+                    style={{ background: pillar.bgColor }}
+                    className={`relative rounded-[1.25rem] aspect-[9/16]
                       flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
                       transition-all duration-300 shadow-lg
                       group-hover:shadow-2xl group-hover:shadow-black/20`}
