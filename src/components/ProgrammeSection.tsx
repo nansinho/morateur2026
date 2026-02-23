@@ -131,7 +131,7 @@ const ProgrammeSection = () => {
 
                     {/* Content */}
                     <div className="relative z-10 flex-1 flex flex-col justify-center py-4">
-                      <h3 className={`font-accent text-base sm:text-lg lg:text-xl font-extrabold ${pillar.textColor} uppercase tracking-wide leading-tight mb-3 break-words`}>
+                      <h3 className={`font-accent text-base sm:text-lg lg:text-xl font-extrabold ${pillar.textColor} uppercase tracking-wide leading-tight mb-3 break-words -rotate-3`}>
                         {pillar.title}
                       </h3>
                       <p className={`${pillar.subtextColor} text-sm sm:text-base leading-relaxed`}>
