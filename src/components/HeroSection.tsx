@@ -77,34 +77,36 @@ const HeroSection = () => {
           </motion.h1>
         </div>
 
-        <motion.span
-          className="inline-block font-accent font-extrabold uppercase text-primary text-base sm:text-xl md:text-2xl tracking-[0.3em] px-5 py-1 bg-campaign-lime rounded-md my-2 shadow-lg"
-          style={{ rotate: "-2deg" }}
-          initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
-          animate={{ opacity: 1, scale: 1, rotate: -2 }}
-          transition={{ duration: 0.7, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        >
-          SERA
-        </motion.span>
+        <div className="flex items-center justify-center gap-3 sm:gap-5 mb-6" style={{ minHeight: "clamp(5rem, 12vw, 10rem)" }}>
+          <motion.span
+            className="inline-block font-accent font-extrabold uppercase text-primary text-base sm:text-xl md:text-2xl tracking-[0.3em] px-4 sm:px-5 py-1 bg-campaign-lime rounded-md shadow-lg shrink-0"
+            style={{ rotate: "-2deg" }}
+            initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
+            animate={{ opacity: 1, scale: 1, rotate: -2 }}
+            transition={{ duration: 0.7, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            SERA
+          </motion.span>
 
-        <div className="mb-6" style={{ height: "clamp(5rem, 12vw, 10rem)", overflow: "visible" }}>
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={rotatingWords[wordIndex].word}
-              className="font-accent font-extrabold uppercase tracking-tight"
-              style={{
-                fontSize: "clamp(3rem, 9vw, 7rem)",
-                color: rotatingWords[wordIndex].color,
-                lineHeight: 1.15,
-              }}
-              initial={{ y: "100%", opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: "-100%", opacity: 0 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {rotatingWords[wordIndex].word}
-            </motion.p>
-          </AnimatePresence>
+          <div style={{ overflow: "visible" }}>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={rotatingWords[wordIndex].word}
+                className="font-accent font-extrabold uppercase tracking-tight"
+                style={{
+                  fontSize: "clamp(3rem, 9vw, 7rem)",
+                  color: rotatingWords[wordIndex].color,
+                  lineHeight: 1.15,
+                }}
+                initial={{ y: "100%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: "-100%", opacity: 0 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {rotatingWords[wordIndex].word}
+              </motion.p>
+            </AnimatePresence>
+          </div>
         </div>
 
         <motion.p
