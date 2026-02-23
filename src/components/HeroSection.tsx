@@ -5,11 +5,11 @@ import { ArrowRight, ArrowDown } from "lucide-react";
 import candidatImg from "@/assets/header_candidat_portrait.png";
 
 const rotatingWords = [
-  { word: "SÉCURISÉE", color: "hsl(var(--campaign-lime))" },
-  { word: "PROPRE", color: "hsl(var(--campaign-teal-light))" },
-  { word: "APAISÉE", color: "hsl(var(--campaign-ice))" },
-  { word: "RESPIRABLE", color: "hsl(var(--campaign-lime-light))" },
-  { word: "SÛRE", color: "hsl(var(--campaign-lime))" },
+  "SÉCURISÉE",
+  "PROPRE",
+  "APAISÉE",
+  "RESPIRABLE",
+  "SÛRE",
 ];
 
 const HeroSection = () => {
@@ -92,11 +92,10 @@ const HeroSection = () => {
 
             <AnimatePresence mode="wait">
               <motion.p
-                key={rotatingWords[wordIndex].word}
-                className="font-accent font-extrabold uppercase tracking-tight text-center"
+                key={rotatingWords[wordIndex]}
+                className="font-accent font-extrabold uppercase tracking-tight text-center text-campaign-lime"
                 style={{
                   fontSize: "clamp(3rem, 9vw, 7rem)",
-                  color: rotatingWords[wordIndex].color,
                   lineHeight: 1.15,
                 }}
                 initial={{ y: "60%", opacity: 0 }}
@@ -104,7 +103,7 @@ const HeroSection = () => {
                 exit={{ y: "-60%", opacity: 0 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
-                {rotatingWords[wordIndex].word}
+                {rotatingWords[wordIndex]}
               </motion.p>
             </AnimatePresence>
           </div>
