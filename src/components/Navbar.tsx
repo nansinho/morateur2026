@@ -9,6 +9,7 @@ const navItems = [
   { label: "Programme", to: "/programme" },
   { label: "L'Équipe", to: "/equipe" },
   { label: "Actualités", to: "/actualites" },
+  { label: "Presse", to: "/presse" },
 ];
 
 const Navbar = () => {
