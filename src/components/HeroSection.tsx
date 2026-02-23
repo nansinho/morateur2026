@@ -50,14 +50,8 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary/85 to-primary/95" />
       </div>
 
-      {/* Subtle grid pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: "linear-gradient(hsl(0 0% 100%) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 100%) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+      {/* Subtle ambient glow */}
+      <div className="absolute top-1/3 left-[15%] w-[400px] h-[400px] rounded-full bg-campaign-green/[0.04] blur-[120px] pointer-events-none" />
 
       {/* Animated accent line */}
       <motion.div
@@ -69,7 +63,7 @@ const HeroSection = () => {
 
       {/* Text content */}
       <motion.div className="relative container mx-auto px-6" style={{ y: textY, opacity }}>
-        <div className="max-w-lg">
+        <div className="max-w-2xl">
           <motion.span
             className="inline-flex items-center gap-2.5 text-campaign-green font-semibold text-[11px] uppercase tracking-[0.35em] mb-10"
             initial={{ opacity: 0, x: -30 }}
@@ -86,7 +80,7 @@ const HeroSection = () => {
 
           <div className="overflow-hidden mb-1">
             <motion.h1
-              className="text-primary-foreground font-heading text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-extrabold leading-[0.95] tracking-tight"
+              className="text-primary-foreground font-heading text-[clamp(2.5rem,6.5vw,5rem)] font-extrabold leading-[1] tracking-tight"
               initial={{ y: "110%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -96,7 +90,7 @@ const HeroSection = () => {
           </div>
           <div className="overflow-hidden mb-10">
             <motion.h1
-              className="text-gradient font-heading text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-extrabold leading-[0.95] tracking-tight"
+              className="text-gradient font-heading text-[clamp(2.5rem,6.5vw,5rem)] font-extrabold leading-[1] tracking-tight"
               initial={{ y: "110%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
