@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
-import { FileText, CheckCircle, Send, ExternalLink, AlertCircle, User, Mail, Phone, MessageSquare, Heart, Users, MapPin } from "lucide-react";
-import candidatMarche from "@/assets/candidat-marche.jpg";
+import { FileText, CheckCircle, Send, ExternalLink, AlertCircle, User, Mail, Phone, MessageSquare } from "lucide-react";
 
 type FormData = { prenom: string; nom: string; email: string; tel: string; motivations: string };
 type FormErrors = Partial<Record<keyof FormData, string>>;
@@ -21,12 +20,6 @@ const fieldMeta = [
   { key: "nom" as const, label: "Nom", icon: User, type: "text", half: true },
   { key: "email" as const, label: "Adresse email", icon: Mail, type: "email", half: false },
   { key: "tel" as const, label: "Téléphone", icon: Phone, type: "tel", half: false },
-];
-
-const reasons = [
-  { icon: Heart, text: "Soutenir la campagne" },
-  { icon: Users, text: "Rejoindre l'équipe terrain" },
-  { icon: MapPin, text: "Agir dans mon quartier" },
 ];
 
 const ProcurationSection = () => {
@@ -76,72 +69,50 @@ const ProcurationSection = () => {
   return (
     <section id="procuration" className="gradient-teal-deep relative overflow-hidden min-h-screen flex items-center">
       <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-28 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* Left — Visual + Text */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="section-label">Agissez</span>
-            <h2
-              className="font-accent font-extrabold uppercase leading-[0.95] tracking-tight text-primary-foreground mb-5 break-words"
-              style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          {/* Left */}
+          <div className="lg:sticky lg:top-32">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
-              REJOIGNEZ-<br />
-              <span className="text-campaign-lime">NOUS</span>
-            </h2>
-            <p className="text-primary-foreground/50 text-lg leading-relaxed mb-8">
-              Vous souhaitez soutenir notre projet pour Bouc-Bel-Air ? Remplissez ce formulaire et nous vous recontacterons rapidement.
-            </p>
-
-            {/* Photo with overlay */}
-            <div className="relative rounded-2xl overflow-hidden mb-8 shadow-xl">
-              <img
-                src={candidatMarche}
-                alt="Le candidat sur le terrain"
-                className="w-full aspect-[16/9] object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <div className="flex flex-wrap gap-2">
-                  {reasons.map((r, i) => (
-                    <span
-                      key={i}
-                      className="inline-flex items-center gap-2 bg-primary-foreground/15 backdrop-blur-sm border border-primary-foreground/20 text-primary-foreground px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wide"
-                    >
-                      <r.icon className="w-3.5 h-3.5 text-campaign-lime" />
-                      {r.text}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Procuration card */}
-            <div className="rounded-2xl p-6 bg-primary-foreground/[0.06] border border-primary-foreground/10">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl gradient-lime flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-accent-foreground" />
-                </div>
-                <h3 className="font-accent font-bold uppercase tracking-wide text-primary-foreground">Procuration</h3>
-              </div>
-              <p className="text-primary-foreground/40 text-sm leading-relaxed mb-4">
-                Vous ne pouvez pas vous déplacer le jour du vote ? Donnez procuration à un électeur de votre commune.
-              </p>
-              <a
-                href="https://www.maprocuration.gouv.fr/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 gradient-lime text-accent-foreground px-5 py-2.5 rounded-lg text-sm font-bold hover:brightness-110 transition-all"
+              <span className="section-label">Agissez</span>
+              <h2
+                className="font-accent font-extrabold uppercase leading-[0.95] tracking-tight text-primary-foreground mb-5 break-words"
+                style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
               >
-                maprocuration.gouv.fr
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </motion.div>
+                REJOIGNEZ-<br />
+                <span className="text-campaign-lime">NOUS</span>
+              </h2>
+              <p className="text-primary-foreground/50 text-lg leading-relaxed mb-10">
+                Vous souhaitez soutenir notre projet pour Bouc-Bel-Air ? Remplissez ce formulaire et nous vous recontacterons rapidement.
+              </p>
+
+              {/* Procuration card */}
+              <div className="rounded-2xl p-6 bg-primary-foreground/[0.06] border border-primary-foreground/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl gradient-lime flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-accent-foreground" />
+                  </div>
+                  <h3 className="font-accent font-bold uppercase tracking-wide text-primary-foreground">Procuration</h3>
+                </div>
+                <p className="text-primary-foreground/40 text-sm leading-relaxed mb-4">
+                  Vous ne pouvez pas vous déplacer le jour du vote ? Donnez procuration à un électeur de votre commune.
+                </p>
+                <a
+                  href="https://www.maprocuration.gouv.fr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 gradient-lime text-accent-foreground px-5 py-2.5 rounded-lg text-sm font-bold hover:brightness-110 transition-all"
+                >
+                  maprocuration.gouv.fr
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </motion.div>
+          </div>
 
           {/* Right — Form */}
           <motion.div
