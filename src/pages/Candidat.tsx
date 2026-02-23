@@ -124,10 +124,7 @@ const Candidat = () => {
           </p>
 
           <p className={prose}>
-            <span className="float-left font-accent text-campaign-lime text-5xl md:text-6xl font-extrabold leading-none mr-3 mt-1">
-              L
-            </span>
-            e 15 mars prochain, vous élirez votre nouveau maire. Je m'appelle{" "}
+            Le 15 mars prochain, vous élirez votre nouveau maire. Je m'appelle{" "}
             <strong className="text-primary-foreground font-bold">Mathieu Morateur</strong>, j'ai 36 ans et je me présente à vos
             suffrages pour le devenir.
           </p>
