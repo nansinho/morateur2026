@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { ChevronRight } from "lucide-react";
-import candidatImg from "@/assets/candidat-banner.png";
+import candidatImg from "@/assets/header_candidat_portrait.png";
 
 const HeroSection = () => {
   const navigate = useNavigate();
