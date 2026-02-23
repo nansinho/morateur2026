@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Calendar, Newspaper } from "lucide-react";
+import { Calendar, ChevronRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -41,12 +41,34 @@ const actualites = [
   },
 ];
 
-const tagColors: Record<string, string> = {
-  "Événement": "gradient-lime text-accent-foreground",
-  "Terrain": "gradient-teal text-primary-foreground",
-  "Programme": "bg-primary text-primary-foreground",
-  "Tribune": "bg-foreground text-background",
+const tagStyles: Record<string, { bg: string; text: string; accent: string; tagBg: string }> = {
+  "Événement": {
+    bg: "bg-gradient-to-br from-campaign-lime to-campaign-lime-light",
+    text: "text-accent-foreground",
+    accent: "text-accent-foreground/60",
+    tagBg: "bg-accent-foreground/15",
+  },
+  "Terrain": {
+    bg: "gradient-teal",
+    text: "text-primary-foreground",
+    accent: "text-primary-foreground/60",
+    tagBg: "bg-primary-foreground/15",
+  },
+  "Programme": {
+    bg: "bg-primary",
+    text: "text-primary-foreground",
+    accent: "text-primary-foreground/50",
+    tagBg: "bg-campaign-lime/20",
+  },
+  "Tribune": {
+    bg: "bg-campaign-steel",
+    text: "text-primary-foreground",
+    accent: "text-primary-foreground/60",
+    tagBg: "bg-primary-foreground/15",
+  },
 };
+
+const defaultStyle = { bg: "bg-muted", text: "text-foreground", accent: "text-muted-foreground", tagBg: "bg-foreground/10" };
 
 const Actualites = () => {
   return (
@@ -79,46 +101,58 @@ const Actualites = () => {
       <section className="pb-24">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {actualites.map((actu, i) => (
-              <motion.article
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.5 }}
-                whileHover={{ y: -6 }}
-                className="group cursor-pointer"
-              >
-                <div className="relative rounded-2xl overflow-hidden shadow-lg bg-background">
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img
-                      src={actu.image}
-                      alt={actu.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
-                    <div className="absolute top-4 left-4">
-                      <span className={`px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider ${tagColors[actu.tag] || "bg-muted text-foreground"}`}>
-                        {actu.tag}
-                      </span>
+            {actualites.map((actu, i) => {
+              const style = tagStyles[actu.tag] || defaultStyle;
+              return (
+                <motion.article
+                  key={i}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08, duration: 0.5 }}
+                  whileHover={{ y: -8 }}
+                  className="group cursor-pointer"
+                >
+                  <div className={`relative rounded-[1.25rem] overflow-hidden shadow-lg ${style.bg} flex flex-col h-full transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/20`}>
+                    {/* Image */}
+                    <div className="aspect-[16/9] overflow-hidden relative">
+                      <img
+                        src={actu.image}
+                        alt={actu.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                      <div className={`absolute inset-0 bg-gradient-to-t from-black/40 to-transparent`} />
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6 sm:p-7 flex flex-col flex-1">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className={`${style.tagBg} ${style.text} px-3 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider`}>
+                          {actu.tag}
+                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <Calendar className={`w-3 h-3 ${style.accent}`} />
+                          <span className={`${style.accent} text-[11px] font-bold`}>{actu.date}</span>
+                        </div>
+                      </div>
+
+                      <h2 className={`font-accent font-extrabold ${style.text} text-lg sm:text-xl leading-snug mb-3 uppercase tracking-wide -rotate-1`}>
+                        {actu.title}
+                      </h2>
+                      <p className={`${style.accent} text-sm leading-relaxed flex-1`}>
+                        {actu.desc}
+                      </p>
+
+                      <div className={`flex items-center gap-1.5 mt-5 ${style.text} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
+                        <span className="text-xs font-bold uppercase tracking-wider">Lire la suite</span>
+                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
+                      </div>
                     </div>
                   </div>
-                  <div className="p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Calendar className="w-3.5 h-3.5 text-campaign-lime" />
-                      <span className="text-muted-foreground text-xs font-bold">{actu.date}</span>
-                    </div>
-                    <h2 className="font-accent font-extrabold text-foreground text-lg leading-snug mb-2 group-hover:text-primary transition-colors duration-300 uppercase">
-                      {actu.title}
-                    </h2>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {actu.desc}
-                    </p>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
+                </motion.article>
+              );
+            })}
           </div>
         </div>
       </section>
