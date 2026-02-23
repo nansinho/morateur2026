@@ -34,7 +34,7 @@ const EngagezVousSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {actions.map((action, i) => (
             <motion.a
               key={i}
@@ -44,10 +44,10 @@ const EngagezVousSection = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
-              whileHover={{ y: -8, scale: 1.03 }}
+              transition={{ delay: i * 0.06, duration: 0.2 }}
+              whileHover={{ y: -12, scale: 1.06 }}
               whileTap={{ scale: 0.96 }}
-              className={`${action.cardBg} rounded-2xl p-6 flex flex-col items-center text-center gap-4 group cursor-pointer transition-shadow duration-300 hover:shadow-2xl aspect-[3/4] justify-center`}
+              className={`${action.cardBg} rounded-2xl p-6 flex flex-col items-center text-center gap-4 group cursor-pointer transition-all duration-200 hover:shadow-2xl hover:brightness-110 justify-center`}
             >
               <div className={`w-16 h-16 rounded-full ring-2 ${action.iconRingColor} bg-white/10 flex items-center justify-center`}>
                 <action.Icon className="w-7 h-7 text-white" strokeWidth={1.5} />
