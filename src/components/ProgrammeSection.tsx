@@ -164,9 +164,9 @@ const ProgrammeSection = () => {
         >
           <motion.button
             onClick={() => navigate("/programme")}
-            className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-10 py-4 rounded-xl font-bold text-sm shadow-xl uppercase tracking-wide -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.4)] transition-all duration-300"
-            whileHover={{ scale: 1.07 }}
-            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-12 py-5 rounded-2xl font-extrabold text-base shadow-xl uppercase tracking-wide -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.94, rotate: -3 }}
           >
             Voir le programme complet
             <ArrowRight className="w-5 h-5" />

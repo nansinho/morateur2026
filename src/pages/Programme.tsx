@@ -153,9 +153,9 @@ const ProgrammePage = () => {
           </p>
           <motion.button
             onClick={() => navigate("/#procuration")}
-            className="gradient-green text-primary-foreground px-8 py-3.5 rounded-full font-semibold uppercase tracking-wider text-sm shadow-lg shadow-campaign-green/20 hover:shadow-xl hover:shadow-campaign-green/30 transition-shadow duration-300"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            className="gradient-lime text-accent-foreground px-10 py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base shadow-lg -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
+            whileHover={{ scale: 1.08, y: -3 }}
+            whileTap={{ scale: 0.94, rotate: -4 }}
           >
             Rejoignez-nous
           </motion.button>

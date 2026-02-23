@@ -93,18 +93,18 @@ const HeroSection = () => {
         >
           <motion.button
             onClick={() => navigate("/programme")}
-            className="gradient-lime text-accent-foreground px-8 py-4 rounded-xl font-bold text-sm flex items-center gap-3 shadow-2xl uppercase tracking-wide -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.4)] transition-all duration-300"
-            whileHover={{ scale: 1.07 }}
-            whileTap={{ scale: 0.95 }}
+            className="gradient-lime text-accent-foreground px-10 py-5 rounded-2xl font-extrabold text-base flex items-center gap-3 shadow-2xl uppercase tracking-wide -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.94, rotate: -4 }}
           >
             Découvrir le programme
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-5 h-5" />
           </motion.button>
           <motion.button
             onClick={() => scrollTo("#procuration")}
-            className="bg-primary-foreground/10 backdrop-blur-sm border-2 border-primary-foreground/30 text-primary-foreground px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-wide hover:bg-primary-foreground/20 rotate-1 hover:rotate-0 transition-all duration-300"
-            whileHover={{ scale: 1.07 }}
-            whileTap={{ scale: 0.95 }}
+            className="bg-primary-foreground/10 backdrop-blur-sm border-2 border-primary-foreground/30 text-primary-foreground px-10 py-5 rounded-2xl font-extrabold text-base uppercase tracking-wide hover:bg-primary-foreground/20 rotate-1 hover:rotate-0 transition-all duration-300"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.94, rotate: 3 }}
           >
             Rejoignez-nous
           </motion.button>
