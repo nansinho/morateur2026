@@ -1,32 +1,45 @@
 
 
-## Attribuer une couleur unique a chaque carte du Programme
+## Refonte du Footer + Bloc SEO
 
-Actuellement, les 5 cartes du carrousel Programme utilisent des couleurs generiques (gradient-lime, gradient-teal, campaign-steel, campaign-olive, gradient-teal-deep). Tu avais fourni 5 couleurs distinctes :
+Le footer actuel est fonctionnel mais basique (3 colonnes simples). Voici le plan pour le rendre plus original et ajouter un bloc de texte SEO en dessous.
 
-1. **#0B162C** - Bleu nuit profond
-2. **#1B9476** - Vert teal
-3. **#8BD59E** - Vert menthe
-4. **#C7DBC2** - Sauge pale
-5. **#F4EBD6** - Creme
+### 1. Redesign du Footer (`src/components/Footer.tsx`)
 
-### Plan
+**Structure revisitee :**
 
-**Fichier : `src/components/ProgrammeSection.tsx`**
+- **Partie haute** : un grand bloc d'appel a l'action avec le slogan "Bouc Bel Air a de l'Avenir" en typographie imposante, avec un bouton CTA "Rejoignez-nous" stylise comme dans la Navbar (gradient-lime, leger tilt)
+- **Partie centrale** : la grille 3 colonnes existante (Logo, Navigation, Reseaux sociaux) est conservee mais amelioree :
+  - Logo : plus grand, avec le slogan en dessous
+  - Navigation : liens avec un petit indicateur au hover (trait lime qui apparait a gauche)
+  - Reseaux sociaux : icones dans des cercles avec effet hover plus marque (fond lime au hover)
+- **Partie basse (copyright)** : conservee telle quelle avec le bouton retour en haut
+- **Decoration** : ajout d'un element graphique subtil (un trait diagonal ou un motif de points) pour casser la monotonie du bloc gradient
 
-Remplacer le `bg` de chaque pilier par un fond inline utilisant directement les couleurs hex :
+### 2. Nouveau bloc SEO sous le footer
 
-| Carte | Titre | Couleur fond | Texte |
-|-------|-------|-------------|-------|
-| 01 | Faire barrage aux promoteurs | `#1B9476` (teal) | Blanc |
-| 02 | Des infrastructures a la hauteur | `#0B162C` (bleu nuit) | Blanc |
-| 03 | Revitaliser le village | `#8BD59E` (menthe) | Bleu nuit |
-| 04 | Environnement & cadre de vie | `#C7DBC2` (sauge) | Bleu nuit |
-| 05 | Ecoles & jeunesse | `#F4EBD6` (creme) | Bleu nuit |
+**Nouveau composant : `src/components/FooterSEO.tsx`**
+
+Un bloc separee, en dessous du footer principal, avec un fond plus sombre (bg-foreground ou noir profond) contenant :
+
+- Un titre discret en petites majuscules ("A propos de Bouc-Bel-Air et des elections municipales 2026")
+- 2-3 paragraphes de texte riche en mots-cles SEO, ecrit en petit (text-xs), couleur attenuee (opacity faible), couvrant :
+  - Presentation de la commune de Bouc-Bel-Air (Bouches-du-Rhone, Provence)
+  - Les elections municipales 2026 et la candidature de Mathieu Morateur
+  - Les enjeux : urbanisme, ecoles, village, environnement, infrastructures
+- Ce texte est present pour le SEO mais visuellement discret pour ne pas distraire les visiteurs
+
+### 3. Integration
+
+- Ajouter `<FooterSEO />` juste apres `<Footer />` dans toutes les pages qui utilisent le footer (Index, Candidat, Programme, Equipe, Actualites)
+- Ou bien l'integrer directement dans `Footer.tsx` pour centraliser
 
 ### Details techniques
 
-- Remplacer les classes `bg` par des styles inline `style={{ background: '#...' }}` pour chaque carte, car ces couleurs exactes ne sont pas toutes dans le systeme Tailwind.
-- Adapter `textColor`, `subtextColor` et `iconColor` pour assurer le contraste : texte blanc sur fonds sombres (01, 02), texte bleu nuit sur fonds clairs (03, 04, 05).
-- Conserver la structure du carrousel et les animations existantes.
+**Fichiers modifies :**
+- `src/components/Footer.tsx` : refonte du design avec bloc CTA en haut, amelioration des hovers, ajout de decorations
+- Creation de `src/components/FooterSEO.tsx` : bloc texte SEO avec fond sombre
+- `src/pages/Index.tsx`, `src/pages/Candidat.tsx`, `src/pages/Programme.tsx`, `src/pages/Equipe.tsx`, `src/pages/Actualites.tsx` : ajout de `<FooterSEO />` apres `<Footer />`
+
+**Approche alternative (plus simple)** : integrer le bloc SEO directement dans `Footer.tsx` pour eviter de modifier toutes les pages. C'est l'approche retenue.
 
