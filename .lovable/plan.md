@@ -1,31 +1,24 @@
 
 
-# Refonte des cards "Rejoignez la campagne"
+# Amelioration des cards "Rejoignez la campagne"
 
-## Probleme
-Les cards actuelles sont fades : gradients trop legers, icones petites, manque de personnalite et de couleur par theme.
+## Problemes
+1. Le hover n'est pas assez reactif (animations trop lentes ou subtiles)
+2. La grille en 1 ligne de 6 est trop comprimee -- passer a 2 lignes de 3
 
-## Solution
-Redesign complet des 6 cards avec des couleurs vives et distinctes par theme, des icones plus grosses dans des cercles colores, des fonds plus marques et un effet hover plus dynamique.
+## Changements
 
-## Details techniques
+**Fichier** : `src/components/EngagezVousSection.tsx`
 
-**Fichier modifie** : `src/components/EngagezVousSection.tsx`
+### Grille : 2 lignes de 3
+- Changer `lg:grid-cols-6` en `lg:grid-cols-3`
+- Garder `sm:grid-cols-3` et `grid-cols-2` pour mobile
+- Supprimer `aspect-[3/4]` pour laisser les cards respirer en hauteur
 
-### Nouveaux styles par card :
-1. **J'agis sur le terrain** : fond lime/vert vif, bordure lime marquee, icone lime pleine
-2. **Procuration** : fond teal/bleu profond, bordure teal, icone teal pleine
-3. **Instagram** : fond rose/violet degrade, bordure pink, icone gradient pink-to-purple
-4. **Facebook** : fond bleu Facebook, bordure bleue, icone bleue pleine
-5. **Newsletter** : fond steel/bleu acier, bordure steel, icone steel pleine
-6. **Le programme** : fond olive/vert, bordure olive, icone olive pleine
-
-### Changements concrets :
-- Fonds de cards avec des gradients plus satures (passer de `/15` a `/30-40`)
-- Icones dans des cercles plus grands (w-14 h-14 au lieu de w-12 h-12) avec des couleurs plus vives
-- Bordure gauche epaisse coloree par theme (border-l-4) pour un effet visuel fort
-- Texte du titre en couleur du theme (pas juste foreground generique)
-- Hover : shadow plus prononcee + scale plus fort + changement de fond
-- Padding plus genereux et espacement ameliore
-- Fond de section reste `campaign-ice` mais les cards ressortent bien plus
+### Hover plus reactif
+- Reduire la `transition.duration` de framer-motion de 0.5s a 0.2s
+- Augmenter le scale hover de 1.03 a 1.06
+- Augmenter le lift de `y: -8` a `y: -12`
+- Ajouter `transition-all duration-200` au className pour un CSS hover instantane
+- Ajouter un changement de luminosite au hover (`brightness-110` ou fond plus clair)
 
