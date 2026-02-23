@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['"Plus Jakarta Sans"', '"Sora"', 'system-ui', 'sans-serif'],
-        body: ['"Plus Jakarta Sans"', '"Inter"', 'system-ui', 'sans-serif'],
+        heading: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        editorial: ['"Playfair Display"', 'Georgia', '"Times New Roman"', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -63,6 +64,7 @@ export default {
           coral: "hsl(var(--campaign-coral))",
           lavender: "hsl(var(--campaign-lavender))",
           mint: "hsl(var(--campaign-mint))",
+          cream: "hsl(var(--campaign-cream))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -89,40 +91,10 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "float": {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-20px)" },
-        },
-        "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(155 55% 42% / 0.2)" },
-          "50%": { boxShadow: "0 0 40px hsl(155 55% 42% / 0.4)" },
-        },
-        "slide-up": {
-          "0%": { transform: "translateY(100px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
-        },
-        "reveal-left": {
-          "0%": { transform: "translateX(-80px)", opacity: "0" },
-          "100%": { transform: "translateX(0)", opacity: "1" },
-        },
-        "reveal-right": {
-          "0%": { transform: "translateX(80px)", opacity: "0" },
-          "100%": { transform: "translateX(0)", opacity: "1" },
-        },
-        "count-up": {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "float": "float 6s ease-in-out infinite",
-        "pulse-glow": "pulse-glow 3s ease-in-out infinite",
-        "slide-up": "slide-up 0.8s ease-out forwards",
-        "reveal-left": "reveal-left 0.8s ease-out forwards",
-        "reveal-right": "reveal-right 0.8s ease-out forwards",
-        "count-up": "count-up 0.6s ease-out forwards",
       },
     },
   },
