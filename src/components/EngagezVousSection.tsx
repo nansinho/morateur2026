@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
-import { HandHeart, FileText, Instagram, Facebook, Mail, BookOpen, ArrowRight } from "lucide-react";
+import { HandHeart, FileText, Instagram, Facebook, Mail, BookOpen } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-const actions: { Icon: LucideIcon; title: string; desc: string; href: string; external: boolean; bg: string; borderColor: string; iconBg: string; titleColor: string; hoverShadow: string }[] = [
-  { Icon: HandHeart, title: "J'agis sur le terrain", desc: "Tractage, porte-à-porte, événements", href: "#procuration", external: false, bg: "bg-gradient-to-br from-campaign-lime/35 to-campaign-lime/10", borderColor: "border-l-4 border-campaign-lime", iconBg: "gradient-lime", titleColor: "text-campaign-lime", hoverShadow: "hover:shadow-[0_8px_30px_hsl(70_80%_43%/0.3)]" },
-  { Icon: FileText, title: "Procuration", desc: "Donnez procuration en ligne", href: "https://www.maprocuration.gouv.fr/", external: true, bg: "bg-gradient-to-br from-primary/35 to-primary/10", borderColor: "border-l-4 border-primary", iconBg: "gradient-teal", titleColor: "text-primary", hoverShadow: "hover:shadow-[0_8px_30px_hsl(192_82%_29%/0.3)]" },
-  { Icon: Instagram, title: "Instagram", desc: "Suivez notre actualité", href: "https://www.instagram.com/morateur2026/", external: true, bg: "bg-gradient-to-br from-pink-500/35 to-purple-500/15", borderColor: "border-l-4 border-pink-500", iconBg: "bg-gradient-to-br from-pink-500 to-purple-600", titleColor: "text-pink-600", hoverShadow: "hover:shadow-[0_8px_30px_rgba(236,72,153,0.3)]" },
-  { Icon: Facebook, title: "Facebook", desc: "Rejoignez la communauté", href: "https://www.facebook.com/profile.php?id=61571627498498", external: true, bg: "bg-gradient-to-br from-blue-500/35 to-blue-600/10", borderColor: "border-l-4 border-blue-600", iconBg: "bg-blue-600", titleColor: "text-blue-600", hoverShadow: "hover:shadow-[0_8px_30px_rgba(37,99,235,0.3)]" },
-  { Icon: Mail, title: "Newsletter", desc: "Restez informé chaque semaine", href: "#procuration", external: false, bg: "bg-gradient-to-br from-campaign-steel/35 to-campaign-steel/10", borderColor: "border-l-4 border-campaign-steel", iconBg: "bg-campaign-steel", titleColor: "text-campaign-steel", hoverShadow: "hover:shadow-[0_8px_30px_hsl(210_30%_47%/0.3)]" },
-  { Icon: BookOpen, title: "Le programme", desc: "Découvrez nos engagements", href: "/programme", external: false, bg: "bg-gradient-to-br from-campaign-olive/35 to-campaign-olive/10", borderColor: "border-l-4 border-campaign-olive", iconBg: "bg-campaign-olive", titleColor: "text-campaign-olive", hoverShadow: "hover:shadow-[0_8px_30px_hsl(96_55%_35%/0.3)]" },
+const actions: { Icon: LucideIcon; title: string; desc: string; href: string; external: boolean; cardBg: string; iconRingColor: string; special?: boolean }[] = [
+  { Icon: HandHeart, title: "J'agis sur le terrain", desc: "Tractage, porte-à-porte, événements locaux", href: "#procuration", external: false, cardBg: "gradient-teal-deep", iconRingColor: "ring-white/20" },
+  { Icon: FileText, title: "Je fais une procuration", desc: "Donnez procuration en ligne facilement", href: "https://www.maprocuration.gouv.fr/", external: true, cardBg: "bg-campaign-lime", iconRingColor: "ring-white/25", special: true },
+  { Icon: Instagram, title: "Suivez-nous sur Instagram", desc: "Rejoignez notre communauté en ligne", href: "https://www.instagram.com/morateur2026/", external: true, cardBg: "gradient-teal-deep", iconRingColor: "ring-white/20" },
+  { Icon: Facebook, title: "Rejoignez-nous sur Facebook", desc: "Partagez et échangez avec nous", href: "https://www.facebook.com/profile.php?id=61571627498498", external: true, cardBg: "gradient-teal-deep", iconRingColor: "ring-white/20" },
+  { Icon: Mail, title: "Je m'abonne à la newsletter", desc: "Restez informé chaque semaine", href: "#procuration", external: false, cardBg: "gradient-teal-deep", iconRingColor: "ring-white/20" },
+  { Icon: BookOpen, title: "Le programme", desc: "Découvrez nos engagements pour la ville", href: "/programme", external: false, cardBg: "gradient-teal-deep", iconRingColor: "ring-white/20" },
 ];
 
 const EngagezVousSection = () => {
@@ -34,7 +34,7 @@ const EngagezVousSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
           {actions.map((action, i) => (
             <motion.a
               key={i}
@@ -45,19 +45,18 @@ const EngagezVousSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.5 }}
-              whileHover={{ y: -8, scale: 1.04 }}
+              whileHover={{ y: -8, scale: 1.03 }}
               whileTap={{ scale: 0.96 }}
-              className={`${action.bg} ${action.borderColor} rounded-2xl p-7 flex items-start gap-5 group cursor-pointer transition-all duration-300 ${action.hoverShadow} hover:brightness-105`}
+              className={`${action.cardBg} rounded-2xl p-6 flex flex-col items-center text-center gap-4 group cursor-pointer transition-shadow duration-300 hover:shadow-2xl aspect-[3/4] justify-center`}
             >
-              <div className={`w-14 h-14 rounded-2xl ${action.iconBg} flex items-center justify-center flex-shrink-0 shadow-lg`}>
-                <action.Icon className="w-7 h-7 text-primary-foreground" />
+              <div className={`w-16 h-16 rounded-full ring-2 ${action.iconRingColor} bg-white/10 flex items-center justify-center`}>
+                <action.Icon className="w-7 h-7 text-white" strokeWidth={1.5} />
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className={`font-accent font-bold text-sm uppercase tracking-wide ${action.titleColor} mb-1.5 flex items-center gap-2`}>
+              <div>
+                <h3 className="font-accent font-extrabold text-sm uppercase tracking-wide text-white leading-tight mb-2">
                   {action.title}
-                  <ArrowRight className="w-4 h-4 opacity-60 group-hover:translate-x-1.5 group-hover:opacity-100 transition-all" />
                 </h3>
-                <p className="text-muted-foreground text-sm font-medium">{action.desc}</p>
+                <p className="text-white/70 text-xs leading-relaxed">{action.desc}</p>
               </div>
             </motion.a>
           ))}
