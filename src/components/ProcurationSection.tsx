@@ -1,126 +1,178 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { FileText, CheckCircle } from "lucide-react";
+import { FileText, CheckCircle, Send, ExternalLink } from "lucide-react";
 
 const ProcurationSection = () => {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ prenom: "", nom: "", email: "", tel: "", motivations: "" });
+  const [focused, setFocused] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
   };
 
+  const inputClass = (field: string) =>
+    `w-full px-4 py-3 rounded-xl border-2 bg-background text-foreground text-sm transition-all duration-300 outline-none ${
+      focused === field
+        ? "border-campaign-green shadow-lg shadow-campaign-green/10"
+        : "border-border hover:border-campaign-green/30"
+    }`;
+
   return (
-    <section id="procuration" className="py-24 bg-background">
-      <div className="container mx-auto px-6">
+    <section id="procuration" className="py-32 bg-background relative overflow-hidden">
+      {/* Bg decorations */}
+      <div className="absolute top-20 right-0 w-96 h-96 bg-campaign-green/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 left-0 w-80 h-80 bg-campaign-gold/5 rounded-full blur-3xl" />
+
+      <div className="container mx-auto px-6 relative">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
           >
-            <span className="text-campaign-green font-semibold text-sm uppercase tracking-[0.2em]">
+            <span className="inline-flex items-center gap-2 text-campaign-green font-semibold text-sm uppercase tracking-[0.2em] mb-4">
+              <span className="w-8 h-[2px] gradient-green inline-block" />
               Agissez
             </span>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground mt-2 mb-6">
-              Rejoignez-nous
+            <h2 className="font-heading text-5xl md:text-6xl font-black text-foreground mt-2 mb-6 leading-tight">
+              Rejoignez-<br />
+              <span className="text-gradient">nous</span>
             </h2>
-            <p className="text-muted-foreground leading-relaxed mb-8">
+            <p className="text-muted-foreground text-lg leading-relaxed mb-10">
               Vous souhaitez soutenir notre projet pour Bouc-Bel-Air ? Remplissez ce formulaire et nous vous recontacterons rapidement.
             </p>
 
-            <div className="bg-muted/50 rounded-sm p-6 border border-border">
-              <div className="flex items-center gap-3 mb-3">
-                <FileText className="w-5 h-5 text-campaign-green" />
-                <h3 className="font-heading font-bold text-foreground">Procuration</h3>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="bg-card rounded-2xl p-7 border border-border shadow-sm hover-lift"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl gradient-green flex items-center justify-center">
+                  <FileText className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <h3 className="font-heading font-bold text-foreground text-lg">Procuration</h3>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                Vous ne pouvez pas vous déplacer le jour du vote ? Donnez procuration à un électeur de votre commune. La démarche est simple et peut se faire en ligne sur :
+              <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+                Vous ne pouvez pas vous déplacer le jour du vote ? Donnez procuration à un électeur de votre commune.
               </p>
-              <a
+              <motion.a
                 href="https://www.maprocuration.gouv.fr/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-sm text-sm font-semibold hover:brightness-110 transition"
+                className="inline-flex items-center gap-2 gradient-navy text-primary-foreground px-6 py-3 rounded-xl text-sm font-semibold hover:shadow-lg transition-shadow duration-300"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
               >
                 maprocuration.gouv.fr
-              </a>
-            </div>
+                <ExternalLink className="w-4 h-4" />
+              </motion.a>
+            </motion.div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
           >
             {submitted ? (
-              <div className="bg-card rounded-sm p-12 shadow-lg border border-border text-center">
-                <CheckCircle className="w-16 h-16 text-campaign-green mx-auto mb-4" />
-                <h3 className="font-heading text-2xl font-bold text-foreground mb-2">Merci !</h3>
-                <p className="text-muted-foreground">Nous vous recontacterons très vite.</p>
-              </div>
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", duration: 0.6 }}
+                className="bg-card rounded-2xl p-14 shadow-xl border border-border text-center"
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", delay: 0.2 }}
+                >
+                  <CheckCircle className="w-20 h-20 text-campaign-green mx-auto mb-6" />
+                </motion.div>
+                <h3 className="font-heading text-3xl font-bold text-foreground mb-3">Merci !</h3>
+                <p className="text-muted-foreground text-lg">Nous vous recontacterons très vite.</p>
+              </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="bg-card rounded-sm p-8 shadow-lg border border-border space-y-5">
+              <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 md:p-10 shadow-xl border border-border space-y-6">
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-1.5 block">Prénom *</label>
+                    <label className="text-sm font-medium text-foreground mb-2 block">Prénom *</label>
                     <input
                       required
                       value={form.prenom}
+                      onFocus={() => setFocused("prenom")}
+                      onBlur={() => setFocused(null)}
                       onChange={e => setForm({ ...form, prenom: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-sm border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-campaign-green/40"
+                      className={inputClass("prenom")}
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-1.5 block">Nom *</label>
+                    <label className="text-sm font-medium text-foreground mb-2 block">Nom *</label>
                     <input
                       required
                       value={form.nom}
+                      onFocus={() => setFocused("nom")}
+                      onBlur={() => setFocused(null)}
                       onChange={e => setForm({ ...form, nom: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-sm border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-campaign-green/40"
+                      className={inputClass("nom")}
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">Adresse email *</label>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Adresse email *</label>
                   <input
                     type="email"
                     required
                     value={form.email}
+                    onFocus={() => setFocused("email")}
+                    onBlur={() => setFocused(null)}
                     onChange={e => setForm({ ...form, email: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-sm border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-campaign-green/40"
+                    className={inputClass("email")}
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">Téléphone *</label>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Téléphone *</label>
                   <input
                     type="tel"
                     required
                     value={form.tel}
+                    onFocus={() => setFocused("tel")}
+                    onBlur={() => setFocused(null)}
                     onChange={e => setForm({ ...form, tel: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-sm border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-campaign-green/40"
+                    className={inputClass("tel")}
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">Vos motivations *</label>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Vos motivations *</label>
                   <textarea
                     required
                     maxLength={500}
                     rows={4}
                     value={form.motivations}
+                    onFocus={() => setFocused("motivations")}
+                    onBlur={() => setFocused(null)}
                     onChange={e => setForm({ ...form, motivations: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-sm border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-campaign-green/40 resize-none"
+                    className={`${inputClass("motivations")} resize-none`}
                   />
-                  <p className="text-muted-foreground text-xs mt-1">{form.motivations.length}/500 caractères</p>
+                  <div className="flex justify-between mt-1.5">
+                    <span className="text-muted-foreground text-xs">{form.motivations.length}/500</span>
+                  </div>
                 </div>
-                <button
+                <motion.button
                   type="submit"
-                  className="w-full bg-campaign-green text-primary-foreground py-3 rounded-sm font-semibold uppercase tracking-wider text-sm hover:brightness-110 transition"
+                  className="w-full gradient-green text-primary-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 hover:shadow-xl hover:shadow-campaign-green/25 transition-shadow duration-300"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                 >
+                  <Send className="w-4 h-4" />
                   Envoyer
-                </button>
+                </motion.button>
               </form>
             )}
           </motion.div>
