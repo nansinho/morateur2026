@@ -20,8 +20,8 @@ const RoadmapSection = () => {
   }, []);
 
   return (
-    <section id="roadmap" className="py-28 bg-background relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="roadmap" className="py-16 sm:py-28 bg-background relative overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -53,7 +53,7 @@ const RoadmapSection = () => {
           </div>
         </motion.div>
 
-        <div ref={scrollRef} className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 -mx-6 px-6">
+        <div ref={scrollRef} className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6">
           {milestones.map((m, i) => {
             const MilestoneCard = () => {
               const ref = useRef<HTMLDivElement>(null);
@@ -65,7 +65,7 @@ const RoadmapSection = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className={`flex-shrink-0 w-[300px] md:w-[320px] rounded-2xl border-2 p-8 flex flex-col relative overflow-hidden ${
+                  className={`flex-shrink-0 w-[260px] sm:w-[300px] md:w-[320px] rounded-2xl border-2 p-5 sm:p-8 flex flex-col relative overflow-hidden ${
                     m.done ? "bg-campaign-ice border-campaign-lime/30" : "bg-muted border-transparent opacity-70"
                   }`}
                 >

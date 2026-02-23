@@ -68,7 +68,7 @@ const ProcurationSection = () => {
 
   return (
     <section id="procuration" className="bg-background relative overflow-hidden">
-      <div className="container mx-auto px-6 py-28 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-28 relative z-10">
         <div className="grid lg:grid-cols-2 gap-14 items-start">
           {/* Left */}
           <div className="lg:sticky lg:top-32">

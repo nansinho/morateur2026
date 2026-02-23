@@ -46,7 +46,7 @@ const ProgrammeSection = () => {
 
   return (
     <section id="programme" className="gradient-teal-deep relative overflow-hidden">
-      <div className="container mx-auto px-6 py-28 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-28 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -67,7 +67,7 @@ const ProgrammeSection = () => {
         </motion.div>
 
         {/* Visual grid — large icons, short text, bold layout */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-5 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 mb-12 sm:mb-16">
           {pillars.map((pillar, i) => (
             <motion.div
               key={i}

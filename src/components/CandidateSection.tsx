@@ -48,8 +48,8 @@ const CandidateSection = () => {
   return (
     <section id="candidat" className="relative overflow-hidden">
       {/* Main content on teal background - unified */}
-      <div className="gradient-teal-deep py-24">
-        <div className="container mx-auto px-6">
+      <div className="gradient-teal-deep py-16 sm:py-24">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
             {/* Photo */}
             <motion.div
@@ -92,7 +92,7 @@ const CandidateSection = () => {
               </p>
 
               {/* Stats inline */}
-              <div className="grid grid-cols-3 gap-4 mb-8 p-6 rounded-2xl bg-primary-foreground/[0.05] border border-primary-foreground/10">
+              <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-8 p-4 sm:p-6 rounded-2xl bg-primary-foreground/[0.05] border border-primary-foreground/10">
                 {stats.map((s, i) => (
                   <motion.div
                     key={i}
