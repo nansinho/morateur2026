@@ -8,15 +8,11 @@ const socials = [
 ];
 
 const Footer = () => (
-  <footer className="relative overflow-hidden">
-    {/* Top wave separator */}
-    <div className="bg-background">
-      <svg viewBox="0 0 1440 60" className="w-full text-primary fill-current">
-        <path d="M0,60 L0,30 Q360,0 720,30 Q1080,60 1440,30 L1440,60 Z" />
-      </svg>
-    </div>
+  <footer className="bg-primary relative overflow-hidden">
+    {/* Top divider */}
+    <div className="section-divider-green" />
 
-    <div className="gradient-navy text-primary-foreground py-16">
+    <div className="text-primary-foreground py-16">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <motion.div
@@ -39,7 +35,7 @@ const Footer = () => (
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-xl glass flex items-center justify-center hover:bg-campaign-green/20 transition-all duration-300"
+                className="w-12 h-12 rounded-xl bg-primary-foreground/[0.06] border border-primary-foreground/[0.08] flex items-center justify-center hover:bg-campaign-green/20 hover:border-campaign-green/30 transition-all duration-300"
                 aria-label={s.label}
                 whileHover={{ scale: 1.1, y: -3 }}
                 whileTap={{ scale: 0.95 }}
@@ -50,7 +46,7 @@ const Footer = () => (
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/10 mt-10 pt-6 text-center">
+        <div className="border-t border-primary-foreground/[0.08] mt-10 pt-6 text-center">
           <p className="text-primary-foreground/30 text-xs flex items-center justify-center gap-1">
             © 2026 Morateur 2026 — Fait avec <Heart className="w-3 h-3 text-campaign-green" /> pour Bouc-Bel-Air
           </p>
