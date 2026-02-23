@@ -1,44 +1,55 @@
 
 
-# Remplacement des badges par le trait + refonte des boutons
+# Refonte de la page Equipe
 
-## 1. Remplacer les badges par le style "trait + texte" (section-label)
+## Problemes identifies
 
-Le site utilise deja un style `section-label` (trait horizontal lime + texte en majuscules) dans les sections Candidat, Roadmap et Procuration. Mais certaines sections utilisent encore des badges (pilules arrondies) peu lisibles. On va les uniformiser.
+1. Il manque la section "Etapes de la campagne" (RoadmapSection) qui existait mais n'est pas incluse dans la page Equipe
+2. Le header est trop simple -- il faut y integrer la photo d'equipe complete (image-41.png)
+3. La structure generale des sections est a ameliorer
 
-**Sections a modifier :**
+## Modifications prevues
 
-- **HeroSection** : le badge "MUNICIPALES 2026" (pilule arrondie avec fond vert transparent) sera remplace par le style section-label (trait + texte), en version claire adaptee au fond sombre.
-- **ActualitesSection** : le badge "SUR LE TERRAIN" (pilule gradient-teal) sera remplace par un `section-label`.
-- **ProgrammeSection** : le label "Notre vision" est deja en texte simple mais sans le trait. On ajoutera la classe `section-label` pour y ajouter le trait lime.
-- **EngagezVousSection** : le label "Passez a l'action" utilise deja `section-label` -- aucun changement.
+### 1. Ajouter la photo d'equipe dans le header
 
-## 2. Boutons plus fun et dynamiques
+La photo de groupe (image-41.png) sera copiee dans `src/assets/equipe-groupe.png` puis integree dans le hero de la page Equipe :
+- Grande image panoramique sous le titre, avec un effet de gradient sombre par-dessus pour fondre dans le fond teal
+- Format large (aspect-ratio ~3:1) avec `object-cover`
+- Coins arrondis et ombre portee
 
-Les boutons CTA principaux seront rendus plus expressifs :
+### 2. Ajouter la RoadmapSection
 
-- **Legere rotation** : ajout d'un `rotate` de -1 a -2 degres sur les boutons principaux (lime) pour casser la rigidite.
-- **Effets hover ameliores** : au survol, le bouton se redresse (`rotate-0`), grossit legerement (`scale(1.05)`), et gagne une ombre portee plus marquee.
-- **Transition fluide** : animation CSS douce sur la rotation, l'echelle et l'ombre.
+Le composant `RoadmapSection` (etapes de la campagne) sera importe et insere entre la grille des membres et le CTA "Rejoignez l'aventure". C'est le meme composant deja utilise sur la page Programme.
 
-**Boutons concernes :**
-- Hero : "Decouvrir le programme" et "Rejoignez-nous"
-- Programme : "Voir le programme complet"
-- Procuration : "Envoyer" et lien procuration
+### 3. Structure finale de la page
+
+```text
++----------------------------------+
+|  Navbar                          |
++----------------------------------+
+|  Hero : titre + photo groupe     |
++----------------------------------+
+|  Grille des 4 membres            |
++----------------------------------+
+|  RoadmapSection (etapes)         |
++----------------------------------+
+|  CTA "Rejoignez l'aventure"     |
++----------------------------------+
+|  Footer                          |
++----------------------------------+
+```
 
 ## Details techniques
 
-### HeroSection.tsx
-- Lignes 41-50 : remplacer le `div` badge par un `span` avec la classe `section-label` adaptee au fond sombre (texte campaign-lime, trait lime).
-- Lignes 95-112 : ajouter `-rotate-1 hover:rotate-0` + `hover:shadow-2xl` sur les boutons, avec `transition-all duration-300`.
+### Fichiers modifies
 
-### ActualitesSection.tsx
-- Lignes 62-65 : remplacer la pilule "Sur le terrain" par un `<span className="section-label">Sur le terrain</span>`.
+**`src/pages/Equipe.tsx`** :
+- Import de `equipeGroupe` depuis `@/assets/equipe-groupe.png`
+- Import de `RoadmapSection` depuis `@/components/RoadmapSection`
+- Dans le hero (section lignes 26-46) : ajout d'un bloc image panoramique apres le paragraphe de description, avec gradient overlay et coins arrondis
+- Insertion de `<RoadmapSection />` entre la section team grid et la section CTA (entre lignes 99 et 101)
 
-### ProgrammeSection.tsx
-- Le label "Notre vision" (ligne avec `text-campaign-lime`) sera remplace par un `section-label` adapte au fond sombre.
-- Le bouton "Voir le programme complet" recevra la rotation et les effets hover.
+### Asset a copier
 
-### ProcurationSection.tsx
-- Le bouton "Envoyer" recevra les memes effets de rotation et hover.
+- `user-uploads://image-41.png` vers `src/assets/equipe-groupe.png`
 
