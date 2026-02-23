@@ -18,13 +18,13 @@ const Footer = () => {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="bg-primary">
+    <footer className="gradient-premium">
       <div className="container mx-auto px-6 py-16">
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Logo */}
           <div>
-            <p className="font-editorial italic text-3xl text-primary-foreground mb-2">
-              Morateur <span className="text-campaign-gold">2026</span>
+            <p className="font-accent text-xl font-extrabold text-primary-foreground uppercase tracking-widest mb-2">
+              MORATEUR <span className="text-campaign-gold">2026</span>
             </p>
             <p className="text-primary-foreground/30 text-sm font-medium">Bouc Bel Air a de l'Avenir</p>
           </div>
@@ -55,7 +55,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-primary-foreground/60 hover:text-campaign-green transition-colors text-sm font-medium"
                 >
-                  <div className="w-9 h-9 rounded-full border border-primary-foreground/10 flex items-center justify-center">
+                  <div className="w-9 h-9 rounded-xl border border-primary-foreground/10 flex items-center justify-center">
                     <s.icon className="w-4 h-4" />
                   </div>
                   {s.label}
@@ -72,7 +72,7 @@ const Footer = () => {
           </p>
           <motion.button
             onClick={scrollToTop}
-            className="w-10 h-10 rounded-full border border-primary-foreground/10 flex items-center justify-center hover:border-campaign-green/30 transition-all"
+            className="w-10 h-10 rounded-xl border border-primary-foreground/10 flex items-center justify-center hover:border-campaign-green/30 transition-all"
             whileHover={{ y: -3 }}
           >
             <ArrowUp className="w-4 h-4 text-primary-foreground/40" />

@@ -79,9 +79,9 @@ const ProcurationSection = () => {
               transition={{ duration: 0.6 }}
             >
               <p className="section-label">Agissez</p>
-              <h2 className="font-editorial italic text-5xl md:text-6xl text-foreground mb-5 leading-[0.95]">
+              <h2 className="font-heading font-extrabold text-5xl md:text-6xl text-foreground mb-5 leading-[0.95] tracking-tight">
                 Rejoignez-<br />
-                <span className="text-campaign-green">nous</span>
+                <span className="text-gradient">nous</span>
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-10">
                 Vous souhaitez soutenir notre projet pour Bouc-Bel-Air ? Remplissez ce formulaire et nous vous recontacterons rapidement.
@@ -90,7 +90,7 @@ const ProcurationSection = () => {
               {/* Procuration card */}
               <div className="rounded-2xl p-6 bg-card border border-border">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-lg gradient-green flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl gradient-green flex items-center justify-center">
                     <FileText className="w-5 h-5 text-primary-foreground" />
                   </div>
                   <h3 className="font-heading font-bold text-foreground">Procuration</h3>
@@ -102,7 +102,7 @@ const ProcurationSection = () => {
                   href="https://www.maprocuration.gouv.fr/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 gradient-green text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold"
+                  className="inline-flex items-center gap-2 gradient-green text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-bold"
                 >
                   maprocuration.gouv.fr
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -128,7 +128,7 @@ const ProcurationSection = () => {
                   className="bg-card rounded-2xl p-12 text-center border border-border"
                 >
                   <CheckCircle className="w-16 h-16 text-campaign-green mx-auto mb-5" />
-                  <h3 className="font-editorial italic text-2xl text-foreground mb-2">Merci !</h3>
+                  <h3 className="font-heading font-extrabold text-2xl text-foreground mb-2">Merci !</h3>
                   <p className="text-muted-foreground">Nous vous recontacterons très vite.</p>
                 </motion.div>
               ) : (

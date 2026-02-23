@@ -1,15 +1,14 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { Flag, Users, Vote, CalendarCheck, Megaphone, PartyPopper, Check, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState, useCallback } from "react";
 
 const milestones = [
   { icon: Megaphone, date: "Janvier 2026", title: "Lancement de la campagne", desc: "Présentation officielle de la liste et du programme.", done: true, color: "bg-campaign-green" },
   { icon: Users, date: "Février 2026", title: "Rencontres de terrain", desc: "Porte-à-porte, réunions publiques dans tous les quartiers.", done: true, color: "bg-campaign-gold" },
-  { icon: Flag, date: "Mars 2026", title: "Meetings publics", desc: "Grands rassemblements thématiques sur les 3 piliers du programme.", done: false, color: "bg-campaign-coral" },
-  { icon: CalendarCheck, date: "Mars 2026", title: "1ᵉʳ tour", desc: "Jour de vote – chaque voix compte pour l'avenir de notre commune.", done: false, color: "bg-campaign-green" },
-  { icon: Vote, date: "Mars 2026", title: "2ᵉ tour", desc: "Mobilisation générale pour confirmer le choix du renouveau.", done: false, color: "bg-campaign-gold" },
-  { icon: PartyPopper, date: "Avril 2026", title: "Installation du conseil", desc: "Mise en œuvre immédiate des premières mesures du programme.", done: false, color: "bg-campaign-green" },
+  { icon: Flag, date: "Mars 2026", title: "Meetings publics", desc: "Grands rassemblements thématiques sur les 3 piliers du programme.", done: false, color: "bg-muted" },
+  { icon: CalendarCheck, date: "Mars 2026", title: "1ᵉʳ tour", desc: "Jour de vote – chaque voix compte pour l'avenir de notre commune.", done: false, color: "bg-muted" },
+  { icon: Vote, date: "Mars 2026", title: "2ᵉ tour", desc: "Mobilisation générale pour confirmer le choix du renouveau.", done: false, color: "bg-muted" },
+  { icon: PartyPopper, date: "Avril 2026", title: "Installation du conseil", desc: "Mise en œuvre immédiate des premières mesures du programme.", done: false, color: "bg-muted" },
 ];
 
 const RoadmapSection = () => {
@@ -31,20 +30,20 @@ const RoadmapSection = () => {
         >
           <div>
             <p className="text-campaign-gold font-heading font-bold text-xs uppercase tracking-[0.3em] mb-4">Notre feuille de route</p>
-            <h2 className="font-editorial italic text-5xl md:text-7xl text-foreground leading-[0.9]">
-              Les grandes <span className="text-campaign-green">étapes</span>
+            <h2 className="font-heading font-extrabold text-5xl md:text-7xl text-foreground leading-[0.9] tracking-tight">
+              Les grandes <span className="text-gradient">étapes</span>
             </h2>
           </div>
           <div className="flex items-center gap-3">
             <button
               onClick={() => scroll(-1)}
-              className="w-12 h-12 rounded-full border-2 border-border flex items-center justify-center hover:border-campaign-green hover:text-campaign-green transition-colors"
+              className="w-12 h-12 rounded-xl border-2 border-border flex items-center justify-center hover:border-campaign-green hover:text-campaign-green transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={() => scroll(1)}
-              className="w-12 h-12 rounded-full border-2 border-border flex items-center justify-center hover:border-campaign-green hover:text-campaign-green transition-colors"
+              className="w-12 h-12 rounded-xl border-2 border-border flex items-center justify-center hover:border-campaign-green hover:text-campaign-green transition-colors"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -64,16 +63,16 @@ const RoadmapSection = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className={`flex-shrink-0 w-[300px] md:w-[320px] rounded-3xl border p-8 flex flex-col ${
+                  className={`flex-shrink-0 w-[300px] md:w-[320px] rounded-2xl border p-8 flex flex-col ${
                     m.done ? "bg-card border-campaign-green/20" : "bg-card border-border opacity-70"
                   }`}
                 >
                   {/* Number */}
-                  <span className="font-editorial italic text-6xl font-bold text-campaign-gold/15 leading-none mb-4">
+                  <span className="font-accent text-5xl font-extrabold text-foreground/[0.06] leading-none mb-4 tracking-tight">
                     {String(i + 1).padStart(2, "0")}
                   </span>
 
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-5 ${m.done ? m.color : "bg-muted"}`}>
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${m.done ? m.color : "bg-muted"}`}>
                     <m.icon className={`w-6 h-6 ${m.done ? "text-primary-foreground" : "text-muted-foreground"}`} />
                   </div>
 
