@@ -67,10 +67,10 @@ const Navbar = () => {
             <button
               key={item.to}
               onClick={() => handleNav(item.to)}
-              className={`text-[13px] font-semibold tracking-wide uppercase transition-colors duration-300 ${
+              className={`relative text-[13px] font-semibold tracking-wide uppercase transition-all duration-300 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:transition-all after:duration-300 hover:after:w-full ${
                 isScrolled
-                  ? "text-foreground/60 hover:text-foreground"
-                  : "text-primary-foreground/70 hover:text-primary-foreground"
+                  ? "text-foreground/60 hover:text-foreground after:bg-campaign-lime"
+                  : "text-primary-foreground/70 hover:text-primary-foreground after:bg-campaign-lime"
               }`}
             >
               {item.label}
