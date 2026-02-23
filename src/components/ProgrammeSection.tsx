@@ -14,49 +14,61 @@ const pillars: {
   icon: LucideIcon;
   title: string;
   desc: string;
-  iconBg: string;
-  gradient: string;
   number: string;
+  bg: string;
+  iconColor: string;
+  textColor: string;
+  subtextColor: string;
 }[] = [
   {
     icon: ShieldCheck,
     title: "Faire barrage aux promoteurs",
     desc: "Moratoire sur les grands projets, révision du PLU, consultation citoyenne systématique.",
-    iconBg: "gradient-lime",
-    gradient: "from-campaign-lime/30 via-campaign-lime/10 to-transparent",
     number: "01",
+    bg: "bg-gradient-to-br from-campaign-lime to-campaign-lime-light",
+    iconColor: "text-accent-foreground",
+    textColor: "text-accent-foreground",
+    subtextColor: "text-accent-foreground/70",
   },
   {
     icon: Building2,
     title: "Des infrastructures à la hauteur",
     desc: "Plan d'investissement pluriannuel, rénovation énergétique, mise aux normes d'accessibilité.",
-    iconBg: "gradient-teal",
-    gradient: "from-primary/30 via-primary/10 to-transparent",
     number: "02",
+    bg: "gradient-teal",
+    iconColor: "text-primary-foreground",
+    textColor: "text-primary-foreground",
+    subtextColor: "text-primary-foreground/70",
   },
   {
     icon: Store,
     title: "Revitaliser le village",
     desc: "Aide aux commerces de proximité, embellissement des façades, marchés thématiques.",
-    iconBg: "bg-campaign-steel",
-    gradient: "from-campaign-steel/30 via-campaign-steel/10 to-transparent",
     number: "03",
+    bg: "bg-campaign-steel",
+    iconColor: "text-primary-foreground",
+    textColor: "text-primary-foreground",
+    subtextColor: "text-primary-foreground/70",
   },
   {
     icon: Leaf,
     title: "Environnement & cadre de vie",
     desc: "Corridors verts, lutte contre les nuisances, protection des collines et espaces boisés.",
-    iconBg: "bg-campaign-olive",
-    gradient: "from-campaign-olive/30 via-campaign-olive/10 to-transparent",
     number: "04",
+    bg: "bg-campaign-olive",
+    iconColor: "text-primary-foreground",
+    textColor: "text-primary-foreground",
+    subtextColor: "text-primary-foreground/70",
   },
   {
     icon: GraduationCap,
     title: "Écoles & jeunesse",
     desc: "Rénovation des cantines, espaces périscolaires modernes, soutien aux associations.",
-    iconBg: "gradient-lime",
-    gradient: "from-campaign-lime/30 via-campaign-lime/10 to-transparent",
     number: "05",
+    bg: "gradient-teal-deep",
+    iconColor: "text-campaign-lime",
+    textColor: "text-primary-foreground",
+    subtextColor: "text-primary-foreground/60",
   },
 ];
 
@@ -100,46 +112,35 @@ const ProgrammeSection = () => {
                   className="cursor-pointer group"
                 >
                   <div
-                    className="relative rounded-[1.25rem] aspect-[9/16] bg-background/95 backdrop-blur-sm border border-primary-foreground/10
+                    className={`relative rounded-[1.25rem] aspect-[9/16] ${pillar.bg}
                       flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
-                      transition-all duration-300
-                      group-hover:shadow-2xl group-hover:shadow-campaign-lime/10 group-hover:border-campaign-lime/30"
+                      transition-all duration-300 shadow-lg
+                      group-hover:shadow-2xl group-hover:shadow-black/20`}
                   >
-                    {/* Gradient accent at top */}
-                    <div className={`absolute top-0 left-0 right-0 h-36 bg-gradient-to-b ${pillar.gradient} opacity-60 group-hover:opacity-100 transition-opacity duration-300`} />
-
-                    {/* Number */}
-                    <div className="relative z-10 self-start">
-                      <span className="font-accent text-5xl sm:text-6xl font-black text-primary-foreground/[0.07] group-hover:text-campaign-lime/20 transition-colors duration-300 leading-none">
-                        {pillar.number}
-                      </span>
-                    </div>
+                    {/* Number watermark */}
+                    <span className={`absolute top-4 right-6 font-accent text-7xl sm:text-8xl font-black ${pillar.textColor} opacity-[0.12] leading-none select-none`}>
+                      {pillar.number}
+                    </span>
 
                     {/* Icon */}
-                    <div className="relative z-10">
-                      <motion.div
-                        className={`w-20 h-20 rounded-2xl ${pillar.iconBg} flex items-center justify-center shadow-lg mx-auto`}
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <pillar.icon className="w-10 h-10 text-primary-foreground" strokeWidth={1.5} />
-                      </motion.div>
-                      {/* Glow */}
-                      <div className={`absolute inset-0 w-20 h-20 mx-auto rounded-2xl ${pillar.iconBg} opacity-30 blur-xl`} />
+                    <div className="relative z-10 mt-8">
+                      <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto">
+                        <pillar.icon className={`w-10 h-10 ${pillar.iconColor}`} strokeWidth={1.5} />
+                      </div>
                     </div>
 
                     {/* Content */}
                     <div className="relative z-10 flex-1 flex flex-col justify-end py-4">
-                      <h3 className="font-accent text-sm sm:text-base font-extrabold text-foreground uppercase tracking-wide leading-tight mb-3 break-words">
+                      <h3 className={`font-accent text-sm sm:text-base font-extrabold ${pillar.textColor} uppercase tracking-wide leading-tight mb-3 break-words`}>
                         {pillar.title}
                       </h3>
-                      <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
+                      <p className={`${pillar.subtextColor} text-xs sm:text-sm leading-relaxed`}>
                         {pillar.desc}
                       </p>
                     </div>
 
                     {/* Bottom indicator */}
-                    <div className="relative z-10 flex items-center gap-2 text-campaign-lime/50 group-hover:text-campaign-lime transition-colors duration-300">
+                    <div className={`relative z-10 flex items-center gap-2 ${pillar.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
                       <span className="text-xs font-bold uppercase tracking-wider">En savoir plus</span>
                       <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                     </div>
