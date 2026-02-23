@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const navItems = [
-  { label: "Le Candidat", to: "/#candidat" },
+  { label: "Le Candidat", to: "/candidat" },
   { label: "Programme", to: "/programme" },
   { label: "L'Équipe", to: "/equipe" },
   { label: "Actualités", to: "/actualites" },
