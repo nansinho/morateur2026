@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -15,16 +15,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 40% 13%;
 
-    --primary: 220 65% 18%;
+    --primary: 222 47% 14%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 155 55% 42%;
+    --secondary: 160 84% 39%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 210 20% 93%;
     --muted-foreground: 220 15% 46%;
 
-    --accent: 155 55% 42%;
+    --accent: 160 84% 39%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -32,18 +32,18 @@
 
     --border: 210 20% 90%;
     --input: 210 20% 90%;
-    --ring: 220 65% 18%;
+    --ring: 222 47% 14%;
 
     --radius: 0.75rem;
 
-    --campaign-navy: 220 65% 18%;
-    --campaign-navy-light: 220 50% 28%;
-    --campaign-green: 155 55% 42%;
-    --campaign-green-light: 155 50% 55%;
+    --campaign-navy: 222 47% 14%;
+    --campaign-navy-light: 222 35% 24%;
+    --campaign-green: 160 84% 39%;
+    --campaign-green-light: 160 70% 50%;
     --campaign-gold: 42 85% 58%;
     --campaign-sky: 200 75% 94%;
-    --campaign-warm: 35 35% 96%;
-    --campaign-glow: 155 60% 65%;
+    --campaign-warm: 40 30% 96%;
+    --campaign-glow: 160 80% 60%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -56,24 +56,24 @@
   }
 
   .dark {
-    --background: 220 40% 7%;
+    --background: 222 40% 7%;
     --foreground: 210 20% 95%;
-    --card: 220 40% 10%;
+    --card: 222 40% 10%;
     --card-foreground: 210 20% 95%;
-    --popover: 220 40% 10%;
+    --popover: 222 40% 10%;
     --popover-foreground: 210 20% 95%;
     --primary: 210 50% 75%;
-    --primary-foreground: 220 40% 7%;
-    --secondary: 155 45% 48%;
+    --primary-foreground: 222 40% 7%;
+    --secondary: 160 65% 48%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 220 30% 15%;
-    --muted-foreground: 220 15% 60%;
-    --accent: 155 45% 48%;
+    --muted: 222 30% 15%;
+    --muted-foreground: 222 15% 60%;
+    --accent: 160 65% 48%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 220 30% 18%;
-    --input: 220 30% 18%;
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
     --ring: 210 50% 75%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -101,7 +101,7 @@
   }
 
   ::selection {
-    background: hsl(155 55% 42% / 0.3);
+    background: hsl(160 84% 39% / 0.3);
   }
 }
 
@@ -111,26 +111,26 @@
   }
 
   .glass-dark {
-    @apply bg-black/10 backdrop-blur-xl border border-white/10;
+    @apply bg-black/20 backdrop-blur-xl border border-white/10;
   }
 
   .gradient-green {
-    background: linear-gradient(135deg, hsl(155 55% 42%), hsl(155 60% 55%));
+    background: linear-gradient(135deg, hsl(160 84% 39%), hsl(160 70% 50%));
   }
 
   .gradient-navy {
-    background: linear-gradient(135deg, hsl(220 65% 18%), hsl(220 50% 28%));
+    background: linear-gradient(135deg, hsl(222 47% 14%), hsl(222 35% 24%));
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, hsl(155 55% 42%), hsl(155 60% 65%));
+    background: linear-gradient(135deg, hsl(160 84% 39%), hsl(160 80% 60%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .glow-green {
-    box-shadow: 0 0 40px hsl(155 55% 42% / 0.3), 0 0 80px hsl(155 55% 42% / 0.1);
+    box-shadow: 0 0 40px hsl(160 84% 39% / 0.3), 0 0 80px hsl(160 84% 39% / 0.1);
   }
 
   .hover-lift {
@@ -138,6 +138,15 @@
   }
   .hover-lift:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 60px hsl(220 65% 18% / 0.15);
+    box-shadow: 0 20px 60px hsl(222 47% 14% / 0.15);
+  }
+
+  /* Diagonal clip for hero */
+  .clip-diagonal {
+    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+
+  .clip-diagonal-mobile {
+    clip-path: polygon(0 15%, 100% 0, 100% 100%, 0% 100%);
   }
 }

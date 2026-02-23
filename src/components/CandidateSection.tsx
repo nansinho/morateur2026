@@ -50,32 +50,37 @@ const CounterStat = ({ value, label }: { value: string; label: string }) => {
 
   return (
     <div ref={ref} className="text-center">
-      <p className="text-campaign-green font-heading text-4xl md:text-5xl font-black">{count}+</p>
+      <p className="text-campaign-green font-heading text-4xl md:text-5xl font-extrabold">{count}+</p>
       <p className="text-muted-foreground text-sm mt-1">{label}</p>
     </div>
   );
 };
 
 const CandidateSection = () => {
-  const ref = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: sectionRef,
     offset: ["start end", "end start"],
   });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["10%", "-10%"]);
+  const imgY = useTransform(scrollYProgress, [0, 1], ["8%", "-8%"]);
+  const imgScale = useTransform(scrollYProgress, [0, 0.5], [0.95, 1.05]);
+  const contentX = useTransform(scrollYProgress, [0, 0.4], [60, 0]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
 
   return (
-    <section ref={ref} id="candidat" className="py-32 bg-background relative overflow-hidden">
-      {/* Subtle bg pattern */}
-      <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, hsl(220 65% 18%) 1px, transparent 0)", backgroundSize: "40px 40px" }} />
+    <section ref={sectionRef} id="candidat" className="py-32 bg-background relative overflow-hidden">
+      {/* Subtle dot grid */}
+      <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, hsl(222 47% 14%) 1px, transparent 0)", backgroundSize: "40px 40px" }} />
 
       <div className="container mx-auto px-6 relative">
         {/* Stats banner */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
-          className="grid grid-cols-3 gap-8 max-w-lg mx-auto mb-20 p-8 rounded-2xl glass-dark bg-primary/5 border border-border"
+          transition={{ duration: 0.7 }}
+          className="grid grid-cols-3 gap-8 max-w-lg mx-auto mb-24 p-8 rounded-3xl bg-primary/[0.03] border border-border"
         >
           <CounterStat value="6" label="ans adjoint" />
           <CounterStat value="36" label="ans" />
@@ -83,21 +88,17 @@ const CandidateSection = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            <div className="relative overflow-hidden rounded-2xl">
-              <motion.img
+          <div className="relative" ref={imgRef}>
+            <motion.div
+              className="relative overflow-hidden rounded-3xl"
+              style={{ y: imgY, scale: imgScale }}
+            >
+              <img
                 src={candidatImg}
                 alt="Mathieu Morateur"
-                className="w-full object-cover max-h-[550px]"
-                style={{ y: imgY }}
+                className="w-full object-cover max-h-[600px]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -113,19 +114,14 @@ const CandidateSection = () => {
                   </p>
                 </motion.div>
               </div>
-            </div>
-            {/* Decorative element */}
-            <div className="absolute -z-10 -bottom-6 -right-6 w-full h-full rounded-2xl gradient-green opacity-10" />
-          </motion.div>
+            </motion.div>
+            {/* Green accent behind */}
+            <div className="absolute -z-10 -bottom-4 -right-4 w-full h-full rounded-3xl gradient-green opacity-10" />
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <span className="inline-flex items-center gap-2 text-campaign-green font-semibold text-sm uppercase tracking-[0.2em] mb-4">
-              <span className="w-8 h-[2px] gradient-green inline-block" />
+          <motion.div style={{ x: contentX, opacity: contentOpacity }}>
+            <span className="inline-flex items-center gap-2 text-campaign-green font-semibold text-xs uppercase tracking-[0.25em] mb-4">
+              <span className="w-10 h-[2px] gradient-green inline-block" />
               Le Candidat
             </span>
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground mt-2 mb-6 leading-tight">
@@ -143,13 +139,14 @@ const CandidateSection = () => {
               {highlights.map((h, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: 30 }}
+                  initial={{ opacity: 0, x: 40 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.3 + i * 0.15 }}
-                  className="flex items-start gap-4 p-5 rounded-xl bg-card border border-border hover-lift cursor-default"
+                  transition={{ delay: 0.2 + i * 0.12, duration: 0.5 }}
+                  whileHover={{ x: 8, transition: { duration: 0.25 } }}
+                  className="flex items-start gap-4 p-5 rounded-2xl bg-card border border-border cursor-default group hover:shadow-lg hover:shadow-campaign-green/5 transition-shadow duration-500"
                 >
-                  <div className="w-12 h-12 rounded-xl gradient-green flex items-center justify-center flex-shrink-0 shadow-lg shadow-campaign-green/20">
+                  <div className="w-12 h-12 rounded-xl gradient-green flex items-center justify-center flex-shrink-0 shadow-lg shadow-campaign-green/20 group-hover:scale-110 transition-transform duration-300">
                     <h.icon className="w-5 h-5 text-primary-foreground" />
                   </div>
                   <div>
