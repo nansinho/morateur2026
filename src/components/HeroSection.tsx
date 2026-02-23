@@ -77,15 +77,14 @@ const HeroSection = () => {
           </motion.h1>
         </div>
 
-        <div className="overflow-hidden mb-12" style={{ height: "clamp(3.5rem, 10vw, 8rem)", lineHeight: "0.9" }}>
+        <div className="overflow-hidden mb-12" style={{ height: "clamp(4.5rem, 12vw, 10rem)" }}>
           <AnimatePresence mode="wait">
             <motion.p
               key={rotatingWords[wordIndex].word}
-              className="font-accent font-extrabold uppercase tracking-tight"
+              className="font-accent font-extrabold uppercase tracking-tight leading-none py-1"
               style={{
                 fontSize: "clamp(3.5rem, 10vw, 8rem)",
                 color: rotatingWords[wordIndex].color,
-                lineHeight: "0.9",
               }}
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
