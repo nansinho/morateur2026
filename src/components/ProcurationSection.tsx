@@ -1,27 +1,78 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { FileText, CheckCircle, Send, ExternalLink } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useCallback } from "react";
+import { FileText, CheckCircle, Send, ExternalLink, AlertCircle, User, Mail, Phone, MessageSquare } from "lucide-react";
+
+type FormData = { prenom: string; nom: string; email: string; tel: string; motivations: string };
+type FormErrors = Partial<Record<keyof FormData, string>>;
+
+const validate = (form: FormData): FormErrors => {
+  const errors: FormErrors = {};
+  if (form.prenom.trim().length < 2) errors.prenom = "Minimum 2 caractères";
+  if (form.nom.trim().length < 2) errors.nom = "Minimum 2 caractères";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = "Email invalide";
+  if (!/^(\+33|0)[1-9]\d{8}$/.test(form.tel.replace(/\s/g, ""))) errors.tel = "Numéro invalide (ex: 06 12 34 56 78)";
+  if (form.motivations.trim().length < 10) errors.motivations = "Minimum 10 caractères";
+  return errors;
+};
+
+const fieldMeta = [
+  { key: "prenom" as const, label: "Prénom", icon: User, type: "text", half: true },
+  { key: "nom" as const, label: "Nom", icon: User, type: "text", half: true },
+  { key: "email" as const, label: "Adresse email", icon: Mail, type: "email", half: false },
+  { key: "tel" as const, label: "Téléphone", icon: Phone, type: "tel", half: false },
+];
 
 const ProcurationSection = () => {
   const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({ prenom: "", nom: "", email: "", tel: "", motivations: "" });
+  const [form, setForm] = useState<FormData>({ prenom: "", nom: "", email: "", tel: "", motivations: "" });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Set<string>>(new Set());
   const [focused, setFocused] = useState<string | null>(null);
+
+  const handleChange = useCallback((field: keyof FormData, value: string) => {
+    setForm(prev => {
+      const next = { ...prev, [field]: value };
+      if (touched.has(field)) {
+        const fieldErrors = validate(next);
+        setErrors(prev => ({ ...prev, [field]: fieldErrors[field] }));
+      }
+      return next;
+    });
+  }, [touched]);
+
+  const handleBlur = useCallback((field: keyof FormData) => {
+    setFocused(null);
+    setTouched(prev => new Set(prev).add(field));
+    const fieldErrors = validate(form);
+    setErrors(prev => ({ ...prev, [field]: fieldErrors[field] }));
+  }, [form]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    const allErrors = validate(form);
+    setErrors(allErrors);
+    setTouched(new Set(Object.keys(form)));
+    if (Object.keys(allErrors).length === 0) setSubmitted(true);
   };
 
-  const inputClass = (field: string) =>
-    `w-full px-4 py-3 rounded-xl border-2 bg-background text-foreground text-sm transition-all duration-300 outline-none ${
-      focused === field
-        ? "border-campaign-green shadow-lg shadow-campaign-green/10"
-        : "border-border hover:border-campaign-green/30"
-    }`;
+  const getInputState = (field: string) => {
+    if (focused === field) return "focused";
+    if (touched.has(field) && errors[field as keyof FormData]) return "error";
+    if (touched.has(field) && !errors[field as keyof FormData]) return "valid";
+    return "default";
+  };
+
+  const inputClass = (field: string) => {
+    const state = getInputState(field);
+    const base = "w-full pl-11 pr-4 py-3.5 rounded-xl border-2 bg-background text-foreground text-sm transition-all duration-300 outline-none";
+    if (state === "focused") return `${base} border-campaign-green shadow-lg shadow-campaign-green/10`;
+    if (state === "error") return `${base} border-destructive shadow-lg shadow-destructive/10`;
+    if (state === "valid") return `${base} border-campaign-green/40`;
+    return `${base} border-border hover:border-campaign-green/30`;
+  };
 
   return (
     <section id="procuration" className="py-32 bg-background relative overflow-hidden">
-      {/* Bg decorations */}
       <div className="absolute top-20 right-0 w-96 h-96 bg-campaign-green/5 rounded-full blur-3xl" />
       <div className="absolute bottom-20 left-0 w-80 h-80 bg-campaign-gold/5 rounded-full blur-3xl" />
 
@@ -81,100 +132,181 @@ const ProcurationSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            {submitted ? (
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: "spring", duration: 0.6 }}
-                className="bg-card rounded-2xl p-14 shadow-xl border border-border text-center"
-              >
+            <AnimatePresence mode="wait">
+              {submitted ? (
                 <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", delay: 0.2 }}
+                  key="success"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: "spring", duration: 0.6 }}
+                  className="bg-card rounded-2xl p-14 shadow-xl border border-border text-center"
                 >
-                  <CheckCircle className="w-20 h-20 text-campaign-green mx-auto mb-6" />
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", delay: 0.2 }}
+                  >
+                    <CheckCircle className="w-20 h-20 text-campaign-green mx-auto mb-6" />
+                  </motion.div>
+                  <h3 className="font-heading text-3xl font-bold text-foreground mb-3">Merci !</h3>
+                  <p className="text-muted-foreground text-lg">Nous vous recontacterons très vite.</p>
                 </motion.div>
-                <h3 className="font-heading text-3xl font-bold text-foreground mb-3">Merci !</h3>
-                <p className="text-muted-foreground text-lg">Nous vous recontacterons très vite.</p>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 md:p-10 shadow-xl border border-border space-y-6">
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">Prénom *</label>
-                    <input
-                      required
-                      value={form.prenom}
-                      onFocus={() => setFocused("prenom")}
-                      onBlur={() => setFocused(null)}
-                      onChange={e => setForm({ ...form, prenom: e.target.value })}
-                      className={inputClass("prenom")}
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">Nom *</label>
-                    <input
-                      required
-                      value={form.nom}
-                      onFocus={() => setFocused("nom")}
-                      onBlur={() => setFocused(null)}
-                      onChange={e => setForm({ ...form, nom: e.target.value })}
-                      className={inputClass("nom")}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">Adresse email *</label>
-                  <input
-                    type="email"
-                    required
-                    value={form.email}
-                    onFocus={() => setFocused("email")}
-                    onBlur={() => setFocused(null)}
-                    onChange={e => setForm({ ...form, email: e.target.value })}
-                    className={inputClass("email")}
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">Téléphone *</label>
-                  <input
-                    type="tel"
-                    required
-                    value={form.tel}
-                    onFocus={() => setFocused("tel")}
-                    onBlur={() => setFocused(null)}
-                    onChange={e => setForm({ ...form, tel: e.target.value })}
-                    className={inputClass("tel")}
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">Vos motivations *</label>
-                  <textarea
-                    required
-                    maxLength={500}
-                    rows={4}
-                    value={form.motivations}
-                    onFocus={() => setFocused("motivations")}
-                    onBlur={() => setFocused(null)}
-                    onChange={e => setForm({ ...form, motivations: e.target.value })}
-                    className={`${inputClass("motivations")} resize-none`}
-                  />
-                  <div className="flex justify-between mt-1.5">
-                    <span className="text-muted-foreground text-xs">{form.motivations.length}/500</span>
-                  </div>
-                </div>
-                <motion.button
-                  type="submit"
-                  className="w-full gradient-green text-primary-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 hover:shadow-xl hover:shadow-campaign-green/25 transition-shadow duration-300"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+              ) : (
+                <motion.form
+                  key="form"
+                  onSubmit={handleSubmit}
+                  noValidate
+                  className="bg-card rounded-2xl p-8 md:p-10 shadow-xl border border-border space-y-5"
+                  role="form"
+                  aria-label="Formulaire de contact campagne"
                 >
-                  <Send className="w-4 h-4" />
-                  Envoyer
-                </motion.button>
-              </form>
-            )}
+                  {/* Progress indicator */}
+                  <div className="flex gap-1.5 mb-2">
+                    {Object.keys(form).map((field) => (
+                      <motion.div
+                        key={field}
+                        className="h-1 flex-1 rounded-full"
+                        animate={{
+                          backgroundColor: touched.has(field) && !errors[field as keyof FormData]
+                            ? "hsl(155 55% 42%)"
+                            : touched.has(field) && errors[field as keyof FormData]
+                            ? "hsl(0 84.2% 60.2%)"
+                            : "hsl(210 20% 90%)",
+                        }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    ))}
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    {fieldMeta.filter(f => f.half).map(({ key, label, icon: Icon, type }) => (
+                      <div key={key}>
+                        <label htmlFor={key} className="text-sm font-medium text-foreground mb-2 block">
+                          {label} <span className="text-destructive">*</span>
+                        </label>
+                        <div className="relative">
+                          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                          <input
+                            id={key}
+                            type={type}
+                            required
+                            aria-invalid={!!errors[key]}
+                            aria-describedby={errors[key] ? `${key}-error` : undefined}
+                            value={form[key]}
+                            onFocus={() => setFocused(key)}
+                            onBlur={() => handleBlur(key)}
+                            onChange={e => handleChange(key, e.target.value)}
+                            className={inputClass(key)}
+                          />
+                        </div>
+                        <AnimatePresence>
+                          {touched.has(key) && errors[key] && (
+                            <motion.p
+                              id={`${key}-error`}
+                              role="alert"
+                              initial={{ opacity: 0, y: -5, height: 0 }}
+                              animate={{ opacity: 1, y: 0, height: "auto" }}
+                              exit={{ opacity: 0, y: -5, height: 0 }}
+                              className="text-destructive text-xs mt-1.5 flex items-center gap-1"
+                            >
+                              <AlertCircle className="w-3 h-3" /> {errors[key]}
+                            </motion.p>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ))}
+                  </div>
+
+                  {fieldMeta.filter(f => !f.half).map(({ key, label, icon: Icon, type }) => (
+                    <div key={key}>
+                      <label htmlFor={key} className="text-sm font-medium text-foreground mb-2 block">
+                        {label} <span className="text-destructive">*</span>
+                      </label>
+                      <div className="relative">
+                        <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                        <input
+                          id={key}
+                          type={type}
+                          required
+                          aria-invalid={!!errors[key]}
+                          aria-describedby={errors[key] ? `${key}-error` : undefined}
+                          value={form[key]}
+                          onFocus={() => setFocused(key)}
+                          onBlur={() => handleBlur(key)}
+                          onChange={e => handleChange(key, e.target.value)}
+                          className={inputClass(key)}
+                        />
+                      </div>
+                      <AnimatePresence>
+                        {touched.has(key) && errors[key] && (
+                          <motion.p
+                            id={`${key}-error`}
+                            role="alert"
+                            initial={{ opacity: 0, y: -5, height: 0 }}
+                            animate={{ opacity: 1, y: 0, height: "auto" }}
+                            exit={{ opacity: 0, y: -5, height: 0 }}
+                            className="text-destructive text-xs mt-1.5 flex items-center gap-1"
+                          >
+                            <AlertCircle className="w-3 h-3" /> {errors[key]}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+
+                  <div>
+                    <label htmlFor="motivations" className="text-sm font-medium text-foreground mb-2 block">
+                      Vos motivations <span className="text-destructive">*</span>
+                    </label>
+                    <div className="relative">
+                      <MessageSquare className="absolute left-3.5 top-4 w-4 h-4 text-muted-foreground pointer-events-none" />
+                      <textarea
+                        id="motivations"
+                        required
+                        maxLength={500}
+                        rows={4}
+                        aria-invalid={!!errors.motivations}
+                        aria-describedby="motivations-error motivations-count"
+                        value={form.motivations}
+                        onFocus={() => setFocused("motivations")}
+                        onBlur={() => handleBlur("motivations")}
+                        onChange={e => handleChange("motivations", e.target.value)}
+                        className={`${inputClass("motivations")} resize-none pt-3.5`}
+                      />
+                    </div>
+                    <div className="flex justify-between mt-1.5">
+                      <AnimatePresence>
+                        {touched.has("motivations") && errors.motivations && (
+                          <motion.p
+                            id="motivations-error"
+                            role="alert"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="text-destructive text-xs flex items-center gap-1"
+                          >
+                            <AlertCircle className="w-3 h-3" /> {errors.motivations}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                      <span id="motivations-count" className="text-muted-foreground text-xs ml-auto">
+                        {form.motivations.length}/500
+                      </span>
+                    </div>
+                  </div>
+
+                  <motion.button
+                    type="submit"
+                    className="w-full gradient-green text-primary-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 hover:shadow-xl hover:shadow-campaign-green/25 transition-shadow duration-300"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Send className="w-4 h-4" />
+                    Envoyer
+                  </motion.button>
+                </motion.form>
+              )}
+            </AnimatePresence>
           </motion.div>
         </div>
       </div>
