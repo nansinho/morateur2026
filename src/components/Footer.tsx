@@ -39,7 +39,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="relative bg-[#0B162C] overflow-hidden">
+      <footer className="relative gradient-teal-deep overflow-hidden">
         {/* Top lime border */}
         <div className="h-1 w-full gradient-lime" />
 
@@ -56,13 +56,13 @@ const Footer = () => {
             transition={{ duration: 0.6 }}
           >
             <h2
-              className="font-accent font-extrabold text-white uppercase tracking-tight leading-[0.85] mb-6"
+              className="font-accent font-extrabold text-primary-foreground uppercase tracking-tight leading-[0.85] mb-6"
               style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)" }}
             >
               Bouc Bel Air a<br />
               de l'<span className="text-campaign-lime">Avenir</span>
             </h2>
-            <p className="text-white/70 text-lg max-w-md mx-auto mb-8 font-medium">
+            <p className="text-primary-foreground/70 text-lg max-w-md mx-auto mb-8 font-medium">
               Ensemble, construisons la ville de demain. Chaque voix compte.
             </p>
             <motion.button
@@ -79,7 +79,7 @@ const Footer = () => {
 
         {/* Separator */}
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="border-t border-white/[0.15]" />
+          <div className="border-t border-primary-foreground/[0.15]" />
         </div>
 
         {/* Main grid */}
@@ -87,10 +87,10 @@ const Footer = () => {
           <div className="grid md:grid-cols-3 gap-12 mb-12">
             {/* Logo */}
             <div>
-              <p className="font-accent text-2xl font-extrabold text-white uppercase tracking-widest mb-2">
+              <p className="font-accent text-2xl font-extrabold text-primary-foreground uppercase tracking-widest mb-2">
                 MORATEUR <span className="text-campaign-lime">2026</span>
               </p>
-              <p className="text-white/50 text-sm font-medium mb-4">Bouc Bel Air a de l'Avenir</p>
+              <p className="text-primary-foreground/50 text-sm font-medium mb-4">Bouc Bel Air a de l'Avenir</p>
               <div className="w-12 h-1 rounded-full bg-campaign-lime/40" />
             </div>
 
@@ -101,7 +101,7 @@ const Footer = () => {
                 <button
                   key={i}
                   onClick={() => handleNav(link.to)}
-                  className="group text-left text-white/70 hover:text-campaign-lime transition-colors text-sm font-medium flex items-center gap-2"
+                  className="group text-left text-primary-foreground/70 hover:text-campaign-lime transition-colors text-sm font-medium flex items-center gap-2"
                 >
                   <span className="w-0 group-hover:w-3 h-px bg-campaign-lime transition-all duration-300" />
                   {link.label}
@@ -119,9 +119,9 @@ const Footer = () => {
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-3 text-white/70 hover:text-campaign-lime transition-colors text-sm font-medium"
+                    className="group flex items-center gap-3 text-primary-foreground/70 hover:text-campaign-lime transition-colors text-sm font-medium"
                   >
-                    <div className="w-10 h-10 rounded-xl border border-white/20 group-hover:border-campaign-lime/40 group-hover:bg-campaign-lime/10 flex items-center justify-center transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl border border-primary-foreground/20 group-hover:border-campaign-lime/40 group-hover:bg-campaign-lime/10 flex items-center justify-center transition-all duration-300">
                       <s.icon className="w-4 h-4" />
                     </div>
                     {s.label}
@@ -132,29 +132,29 @@ const Footer = () => {
           </div>
 
           {/* Bottom */}
-          <div className="border-t border-white/[0.15] pt-6 flex items-center justify-between">
-            <p className="text-white/50 text-xs flex items-center gap-1.5 font-medium">
+          <div className="border-t border-primary-foreground/[0.15] pt-6 flex items-center justify-between">
+            <p className="text-primary-foreground/50 text-xs flex items-center gap-1.5 font-medium">
               © 2026 Morateur 2026 — Fait avec <Heart className="w-3 h-3 text-campaign-lime" /> pour Bouc-Bel-Air
             </p>
             <motion.button
               onClick={scrollToTop}
               aria-label="Retour en haut de page"
-              className="w-10 h-10 rounded-xl border border-white/20 flex items-center justify-center hover:border-campaign-lime/30 hover:bg-campaign-lime/10 transition-all"
+              className="w-10 h-10 rounded-xl border border-primary-foreground/20 flex items-center justify-center hover:border-campaign-lime/30 hover:bg-campaign-lime/10 transition-all"
               whileHover={{ y: -3 }}
             >
-              <ArrowUp className="w-4 h-4 text-white/50" />
+              <ArrowUp className="w-4 h-4 text-primary-foreground/50" />
             </motion.button>
           </div>
         </div>
       </footer>
 
       {/* SEO Block */}
-      <section className="bg-[#060E1E] py-8 sm:py-10">
+      <section className="bg-foreground py-8 sm:py-10">
         <div className="container mx-auto px-4 sm:px-6">
-          <p className="text-white/30 text-[10px] uppercase tracking-[0.25em] font-bold mb-4">
+          <p className="text-background/30 text-[10px] uppercase tracking-[0.25em] font-bold mb-4">
             À propos de Bouc-Bel-Air et des élections municipales 2026
           </p>
-          <div className="space-y-3 text-white/20 text-xs leading-relaxed max-w-4xl">
+          <div className="space-y-3 text-background/20 text-xs leading-relaxed max-w-4xl">
             <p>
               Bouc-Bel-Air est une commune française située dans le département des Bouches-du-Rhône, en région Provence-Alpes-Côte d'Azur.
               Nichée entre Aix-en-Provence et Marseille, cette ville provençale d'environ 15 000 habitants allie cadre de vie naturel
