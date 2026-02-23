@@ -141,7 +141,7 @@ const EngagezVousSection = () => {
                     </div>
 
                     {/* Content */}
-                    <div className="relative z-10 flex-1 flex flex-col justify-end py-4">
+                    <div className="relative z-10 flex-1 flex flex-col justify-center py-4">
                       <h3 className={`font-accent text-base sm:text-lg lg:text-xl font-extrabold ${action.textColor} uppercase tracking-wide leading-tight mb-3 break-words`}>
                         {action.title}
                       </h3>
