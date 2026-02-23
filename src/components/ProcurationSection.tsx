@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
-import { FileText, CheckCircle, Send, ExternalLink, AlertCircle, User, Mail, Phone, MessageSquare } from "lucide-react";
+import { FileText, CheckCircle, Send, ExternalLink, AlertCircle, User, Mail, Phone, MessageSquare, Heart, Users, MapPin } from "lucide-react";
+import candidatReunion from "@/assets/candidat-reunion.jpg";
 
 type FormData = { prenom: string; nom: string; email: string; tel: string; motivations: string };
 type FormErrors = Partial<Record<keyof FormData, string>>;
@@ -20,6 +21,12 @@ const fieldMeta = [
   { key: "nom" as const, label: "Nom", icon: User, type: "text", half: true },
   { key: "email" as const, label: "Adresse email", icon: Mail, type: "email", half: false },
   { key: "tel" as const, label: "Téléphone", icon: Phone, type: "tel", half: false },
+];
+
+const engagements = [
+  { icon: Heart, label: "Soutenir la campagne" },
+  { icon: Users, label: "Rejoindre l'équipe" },
+  { icon: MapPin, label: "Agir sur le terrain" },
 ];
 
 const ProcurationSection = () => {
@@ -67,50 +74,91 @@ const ProcurationSection = () => {
   };
 
   return (
-    <section id="procuration" className="bg-background relative overflow-hidden min-h-screen flex items-center">
+    <section id="procuration" className="relative overflow-hidden min-h-screen flex items-center">
+      {/* Background image with overlay */}
+      <div className="absolute inset-0">
+        <img
+          src={candidatReunion}
+          alt=""
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/85 to-primary/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent" />
+      </div>
+
       <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-28 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-14 items-start">
-          {/* Left */}
-          <div className="lg:sticky lg:top-32">
+        <div className="grid lg:grid-cols-2 gap-14 items-center">
+          {/* Left — CTA + engagement cards */}
+          <div>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="section-label">Agissez</span>
+              <span className="inline-flex items-center gap-2 font-accent font-bold text-xs uppercase tracking-[0.3em] mb-4 text-campaign-lime">
+                <span className="w-10 h-[2px] inline-block gradient-lime" />
+                Agissez
+              </span>
               <h2
-                className="font-accent font-extrabold uppercase leading-[0.95] tracking-tight text-primary mb-5 break-words"
+                className="font-accent font-extrabold uppercase leading-[0.95] tracking-tight text-primary-foreground mb-5 break-words"
                 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
               >
                 REJOIGNEZ-<br />
                 <span className="text-campaign-lime">NOUS</span>
               </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-10">
+              <p className="text-primary-foreground/60 text-lg leading-relaxed mb-10">
                 Vous souhaitez soutenir notre projet pour Bouc-Bel-Air ? Remplissez ce formulaire et nous vous recontacterons rapidement.
               </p>
 
+              {/* Engagement mini-cards */}
+              <div className="grid grid-cols-3 gap-3 mb-10">
+                {engagements.map((e, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 + i * 0.1 }}
+                    className="bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/15 rounded-xl p-4 text-center
+                      hover:bg-primary-foreground/15 hover:border-campaign-lime/40 transition-all duration-300 group cursor-pointer"
+                  >
+                    <div className="w-10 h-10 rounded-lg gradient-lime flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                      <e.icon className="w-5 h-5 text-accent-foreground" strokeWidth={1.5} />
+                    </div>
+                    <p className="text-primary-foreground/80 text-xs font-bold uppercase tracking-wide">{e.label}</p>
+                  </motion.div>
+                ))}
+              </div>
+
               {/* Procuration card */}
-              <div className="rounded-2xl p-6 gradient-teal text-primary-foreground">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="rounded-2xl p-6 bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/15"
+              >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 rounded-xl gradient-lime flex items-center justify-center">
                     <FileText className="w-5 h-5 text-accent-foreground" />
                   </div>
-                  <h3 className="font-accent font-bold uppercase tracking-wide">Procuration</h3>
+                  <h3 className="font-accent font-bold uppercase tracking-wide text-primary-foreground">Procuration</h3>
                 </div>
-                <p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
+                <p className="text-primary-foreground/50 text-sm leading-relaxed mb-4">
                   Vous ne pouvez pas vous déplacer le jour du vote ? Donnez procuration à un électeur de votre commune.
                 </p>
                 <a
                   href="https://www.maprocuration.gouv.fr/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 gradient-lime text-accent-foreground px-5 py-2.5 rounded-lg text-sm font-bold"
+                  className="inline-flex items-center gap-2 gradient-lime text-accent-foreground px-5 py-2.5 rounded-lg text-sm font-bold hover:brightness-110 transition-all"
                 >
                   maprocuration.gouv.fr
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
 
@@ -128,7 +176,7 @@ const ProcurationSection = () => {
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", duration: 0.5 }}
-                  className="bg-campaign-ice rounded-2xl p-12 text-center border border-border"
+                  className="bg-background/95 backdrop-blur-xl rounded-2xl p-12 text-center border border-border shadow-2xl"
                 >
                   <CheckCircle className="w-16 h-16 text-campaign-lime mx-auto mb-5" />
                   <h3 className="font-accent font-extrabold text-2xl text-foreground mb-2 uppercase">Merci !</h3>
@@ -139,7 +187,7 @@ const ProcurationSection = () => {
                   key="form"
                   onSubmit={handleSubmit}
                   noValidate
-                  className="bg-campaign-ice rounded-2xl p-8 space-y-5 border border-border"
+                  className="bg-background/95 backdrop-blur-xl rounded-2xl p-8 space-y-5 border border-border shadow-2xl"
                   role="form"
                   aria-label="Formulaire de contact campagne"
                 >
@@ -206,13 +254,15 @@ const ProcurationSection = () => {
                     </div>
                   </div>
 
-                  <button
+                  <motion.button
                     type="submit"
-                    className="w-full gradient-lime text-accent-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2"
+                    className="w-full gradient-lime text-accent-foreground py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 shadow-lg"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
                   >
                     <Send className="w-4 h-4" />
                     Envoyer
-                  </button>
+                  </motion.button>
                 </form>
               )}
             </AnimatePresence>
