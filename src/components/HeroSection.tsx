@@ -65,42 +65,43 @@ const HeroSection = () => {
           Municipales 2026
         </motion.span>
 
-        <div className="overflow-hidden mb-0">
-          <motion.h1
-            className="font-accent text-primary-foreground font-extrabold uppercase leading-[0.85] tracking-tight"
-            style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
-            initial={{ y: "120%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          >
-            BOUC BEL AIR
-          </motion.h1>
-        </div>
+        <div className="relative">
+          <div className="overflow-hidden">
+            <motion.h1
+              className="font-accent text-primary-foreground font-extrabold uppercase leading-[0.85] tracking-tight"
+              style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
+              initial={{ y: "120%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            >
+              BOUC BEL AIR
+            </motion.h1>
+          </div>
 
-        <div className="flex items-center justify-center gap-3 sm:gap-5 mb-6" style={{ minHeight: "clamp(5rem, 12vw, 10rem)" }}>
-          <motion.span
-            className="inline-block font-accent font-extrabold uppercase text-primary text-base sm:text-xl md:text-2xl tracking-[0.3em] px-4 sm:px-5 py-1 bg-campaign-lime rounded-md shadow-lg shrink-0"
-            style={{ rotate: "-2deg" }}
-            initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
-            animate={{ opacity: 1, scale: 1, rotate: -2 }}
-            transition={{ duration: 0.7, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          >
-            SERA
-          </motion.span>
+          <div className="relative" style={{ minHeight: "clamp(4.5rem, 11vw, 9rem)" }}>
+            {/* SERA badge - absolute, tucked between the two lines */}
+            <motion.span
+              className="absolute left-0 sm:left-4 md:left-8 top-0 -translate-y-1/2 font-accent font-extrabold uppercase text-primary text-xs sm:text-lg md:text-xl tracking-[0.3em] px-3 sm:px-4 py-0.5 sm:py-1 bg-campaign-lime rounded-md shadow-lg z-10"
+              style={{ rotate: "-3deg" }}
+              initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
+              animate={{ opacity: 1, scale: 1, rotate: -3 }}
+              transition={{ duration: 0.7, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              SERA
+            </motion.span>
 
-          <div style={{ overflow: "visible" }}>
             <AnimatePresence mode="wait">
               <motion.p
                 key={rotatingWords[wordIndex].word}
-                className="font-accent font-extrabold uppercase tracking-tight"
+                className="font-accent font-extrabold uppercase tracking-tight text-center"
                 style={{
                   fontSize: "clamp(3rem, 9vw, 7rem)",
                   color: rotatingWords[wordIndex].color,
                   lineHeight: 1.15,
                 }}
-                initial={{ y: "100%", opacity: 0 }}
+                initial={{ y: "60%", opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                exit={{ y: "-100%", opacity: 0 }}
+                exit={{ y: "-60%", opacity: 0 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
                 {rotatingWords[wordIndex].word}
@@ -108,6 +109,8 @@ const HeroSection = () => {
             </AnimatePresence>
           </div>
         </div>
+
+        <div className="mb-6" />
 
         <motion.p
           className="text-primary-foreground/70 text-lg sm:text-xl leading-relaxed max-w-lg mx-auto mb-10"
