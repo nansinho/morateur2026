@@ -46,9 +46,9 @@ const CounterStat = ({ value, label, suffix = "" }: { value: number; label: stri
 
 const CandidateSection = () => {
   return (
-    <section id="candidat" className="relative overflow-hidden">
+    <section id="candidat" className="relative overflow-hidden min-h-screen flex items-center">
       {/* Main content on teal background - unified */}
-      <div className="gradient-teal-deep py-16 sm:py-24">
+      <div className="gradient-teal-deep py-16 sm:py-24 w-full">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
             {/* Photo */}

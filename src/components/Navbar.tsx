@@ -1,27 +1,42 @@
 import { useState } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const navItems = [
-  { label: "Le Candidat", href: "#candidat" },
-  { label: "Programme", href: "#programme" },
-  { label: "L'Équipe", href: "#equipe" },
-  { label: "Procuration", href: "#procuration" },
+  { label: "Le Candidat", to: "/#candidat" },
+  { label: "Programme", to: "/programme" },
+  { label: "L'Équipe", to: "/equipe" },
+  { label: "Actualités", to: "/actualites" },
 ];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
   });
 
-  const scrollTo = (href: string) => {
+  const handleNav = (to: string) => {
     setIsOpen(false);
-    const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
+    if (to.startsWith("/#")) {
+      const hash = to.slice(1); // e.g. "#candidat"
+      if (location.pathname === "/") {
+        document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        navigate("/");
+        setTimeout(() => {
+          document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    } else {
+      navigate(to);
+      window.scrollTo({ top: 0 });
+    }
   };
 
   return (
@@ -34,7 +49,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         <button
-          onClick={() => scrollTo("#hero")}
+          onClick={() => handleNav("/#hero")}
           className={`font-accent text-base font-extrabold tracking-widest uppercase transition-colors ${
             isScrolled ? "text-primary" : "text-primary-foreground"
           }`}
@@ -46,8 +61,8 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-10">
           {navItems.map((item) => (
             <button
-              key={item.href}
-              onClick={() => scrollTo(item.href)}
+              key={item.to}
+              onClick={() => handleNav(item.to)}
               className={`text-[13px] font-semibold tracking-wide uppercase transition-colors duration-300 ${
                 isScrolled
                   ? "text-foreground/60 hover:text-foreground"
@@ -58,7 +73,7 @@ const Navbar = () => {
             </button>
           ))}
           <button
-            onClick={() => scrollTo("#procuration")}
+            onClick={() => handleNav("/#procuration")}
             className="gradient-lime text-accent-foreground px-6 py-2.5 rounded-lg text-[13px] font-bold tracking-wide shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-px"
           >
             Rejoignez-nous
@@ -85,8 +100,8 @@ const Navbar = () => {
             <div className="px-6 pb-6 pt-2 flex flex-col gap-4">
               {navItems.map((item, i) => (
                 <motion.button
-                  key={item.href}
-                  onClick={() => scrollTo(item.href)}
+                  key={item.to}
+                  onClick={() => handleNav(item.to)}
                   className={`text-left text-sm font-semibold uppercase tracking-wide ${
                     isScrolled ? "text-foreground/70 hover:text-foreground" : "text-primary-foreground/70 hover:text-primary-foreground"
                   }`}
@@ -98,7 +113,7 @@ const Navbar = () => {
                 </motion.button>
               ))}
               <button
-                onClick={() => scrollTo("#procuration")}
+                onClick={() => handleNav("/#procuration")}
                 className="gradient-lime text-accent-foreground py-3 rounded-lg text-sm font-bold mt-2"
               >
                 Rejoignez-nous

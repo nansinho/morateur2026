@@ -2,6 +2,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShieldCheck, Building2, Store, ChevronDown, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "@/components/Navbar";
+import RoadmapSection from "@/components/RoadmapSection";
+import Footer from "@/components/Footer";
 
 const pillars = [
   {
@@ -80,25 +83,10 @@ const ProgrammePage = () => {
 
   return (
     <main className="min-h-screen bg-primary">
-      {/* Header bar */}
-      <nav className="bg-primary border-b border-primary-foreground/[0.08] py-4 px-6">
-        <div className="container mx-auto flex items-center justify-between">
-          <button onClick={() => navigate("/")} className="text-primary-foreground font-heading text-lg font-bold tracking-wide">
-            Morateur <span className="text-gradient">2026</span>
-          </button>
-          <motion.button
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2 text-primary-foreground/60 text-sm hover:text-primary-foreground transition-colors"
-            whileHover={{ x: -3 }}
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Retour à l'accueil
-          </motion.button>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero */}
-      <section className="py-24">
+      <section className="pt-32 pb-16">
         <div className="container mx-auto px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="section-label justify-center">
@@ -154,6 +142,8 @@ const ProgrammePage = () => {
         </div>
       </section>
 
+      <RoadmapSection />
+
       {/* CTA */}
       <section className="border-t border-primary-foreground/[0.08] py-16 text-primary-foreground text-center">
         <div className="container mx-auto px-6">
@@ -162,7 +152,7 @@ const ProgrammePage = () => {
             Rejoignez notre équipe et participez à construire l'avenir de Bouc-Bel-Air.
           </p>
           <motion.button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/#procuration")}
             className="gradient-green text-primary-foreground px-8 py-3.5 rounded-full font-semibold uppercase tracking-wider text-sm shadow-lg shadow-campaign-green/20 hover:shadow-xl hover:shadow-campaign-green/30 transition-shadow duration-300"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
@@ -171,6 +161,8 @@ const ProgrammePage = () => {
           </motion.button>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 };

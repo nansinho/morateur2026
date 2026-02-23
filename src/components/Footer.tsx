@@ -1,5 +1,6 @@
 import { Facebook, Instagram, ArrowUp, Heart } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const socials = [
   { icon: Instagram, href: "https://www.instagram.com/morateur2026/", label: "Instagram" },
@@ -7,15 +8,34 @@ const socials = [
 ];
 
 const navLinks = [
-  { label: "Candidat", href: "#candidat" },
-  { label: "Programme", href: "#programme" },
-  { label: "Actualités", href: "#actualites" },
-  { label: "Équipe", href: "#equipe" },
-  { label: "Contact", href: "#procuration" },
+  { label: "Candidat", to: "/#candidat" },
+  { label: "Programme", to: "/programme" },
+  { label: "Actualités", to: "/actualites" },
+  { label: "Équipe", to: "/equipe" },
+  { label: "Contact", to: "/#procuration" },
 ];
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const handleNav = (to: string) => {
+    if (to.startsWith("/#")) {
+      const hash = to.slice(1);
+      if (location.pathname === "/") {
+        document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        navigate("/");
+        setTimeout(() => {
+          document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    } else {
+      navigate(to);
+      window.scrollTo({ top: 0 });
+    }
+  };
 
   return (
     <footer className="gradient-teal-deep">
@@ -33,13 +53,13 @@ const Footer = () => {
           <nav className="flex flex-col gap-3">
             <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-1">Navigation</p>
             {navLinks.map((link, i) => (
-              <a
+              <button
                 key={i}
-                href={link.href}
-                className="text-primary-foreground/60 hover:text-campaign-lime transition-colors text-sm font-medium"
+                onClick={() => handleNav(link.to)}
+                className="text-left text-primary-foreground/60 hover:text-campaign-lime transition-colors text-sm font-medium"
               >
                 {link.label}
-              </a>
+              </button>
             ))}
           </nav>
 
