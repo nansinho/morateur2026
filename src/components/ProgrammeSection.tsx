@@ -10,6 +10,7 @@ const pillars = [
     desc: "Protéger notre cadre de vie face à l'avalanche de permis de construire.",
     stat: "1000+",
     statLabel: "logements menacés",
+    accent: "bg-campaign-green",
     items: [
       "Refus permanent des permis de construire des promoteurs",
       "Utilisation systématique du droit de préemption urbain",
@@ -23,6 +24,7 @@ const pillars = [
     desc: "Rénover nos bâtiments publics et moderniser nos voiries.",
     stat: "30°C",
     statLabel: "dans nos écoles en mai",
+    accent: "bg-campaign-gold",
     items: [
       "Rénovation complète des bâtiments municipaux",
       "Climatisation réversible dans toutes les écoles",
@@ -36,6 +38,7 @@ const pillars = [
     desc: "Redonner vie à notre centre ancien et attirer de nouveaux commerces.",
     stat: "100%",
     statLabel: "centre-ville à revitaliser",
+    accent: "bg-campaign-sky",
     items: [
       "Centre ancien attractif et vivant",
       "Commerces et artisanat de proximité",
@@ -52,22 +55,23 @@ const PillarCard = ({ pillar, index }: { pillar: typeof pillars[0]; index: numbe
   return (
     <motion.div
       ref={ref}
-      className="rounded-2xl overflow-hidden relative border border-primary-foreground/[0.06] h-full bg-primary-foreground/[0.04]"
-      initial={{ opacity: 0, y: 50 }}
+      className="rounded-2xl overflow-hidden relative border border-primary-foreground/[0.08] h-full bg-primary-foreground/[0.04] group"
+      initial={{ opacity: 0, y: 60 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.7, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -8, transition: { duration: 0.3 } }}
     >
       <div className="relative z-10 p-8 md:p-10 flex flex-col h-full">
-        {/* Icon */}
-        <div className="w-12 h-12 rounded-xl gradient-green flex items-center justify-center mb-6">
-          <pillar.icon className="w-6 h-6 text-primary-foreground" />
+        {/* Icon with colored bg */}
+        <div className={`w-14 h-14 rounded-2xl ${pillar.accent} flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+          <pillar.icon className="w-7 h-7 text-primary-foreground" />
         </div>
 
         {/* Stat */}
-        <p className="font-heading text-4xl md:text-5xl font-extrabold text-campaign-green tracking-tighter mb-1">
+        <p className="font-heading text-5xl md:text-6xl font-extrabold text-campaign-green tracking-tighter mb-1">
           {pillar.stat}
         </p>
-        <p className="text-primary-foreground/25 text-xs uppercase tracking-[0.2em] font-medium mb-6">
+        <p className="text-primary-foreground/30 text-xs uppercase tracking-[0.2em] font-semibold mb-6">
           {pillar.statLabel}
         </p>
 
@@ -75,20 +79,29 @@ const PillarCard = ({ pillar, index }: { pillar: typeof pillars[0]; index: numbe
         <h3 className="font-heading text-xl md:text-2xl font-bold text-primary-foreground mb-3 leading-tight">
           {pillar.title}
         </h3>
-        <p className="text-primary-foreground/35 text-sm leading-relaxed mb-8">
+        <p className="text-primary-foreground/40 text-sm leading-relaxed mb-8">
           {pillar.desc}
         </p>
 
         {/* Items */}
         <ul className="space-y-3 mt-auto">
           {pillar.items.map((item, j) => (
-            <li key={j} className="flex items-start gap-3 text-primary-foreground/55 text-sm leading-relaxed">
-              <span className="w-1.5 h-1.5 rounded-full bg-campaign-green mt-2 flex-shrink-0" />
+            <motion.li
+              key={j}
+              className="flex items-start gap-3 text-primary-foreground/60 text-sm leading-relaxed"
+              initial={{ opacity: 0, x: -15 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ delay: index * 0.15 + j * 0.08 + 0.3, duration: 0.4 }}
+            >
+              <span className={`w-2 h-2 rounded-full ${pillar.accent} mt-1.5 flex-shrink-0`} />
               {item}
-            </li>
+            </motion.li>
           ))}
         </ul>
       </div>
+
+      {/* Hover glow */}
+      <div className={`absolute -bottom-20 -right-20 w-40 h-40 rounded-full ${pillar.accent} opacity-0 blur-3xl group-hover:opacity-10 transition-opacity duration-500`} />
     </motion.div>
   );
 };
@@ -107,11 +120,10 @@ const ProgrammeSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <p className="text-campaign-green font-semibold text-xs uppercase tracking-[0.3em] mb-4">Notre vision</p>
-          <h2 className="font-heading text-5xl md:text-6xl font-extrabold text-primary-foreground mb-4">
-            Le <span className="text-campaign-green">Programme</span>
+          <p className="text-campaign-green font-bold text-xs uppercase tracking-[0.3em] mb-4">Notre vision</p>
+          <h2 className="font-heading text-5xl md:text-7xl font-extrabold text-primary-foreground mb-4 leading-tight">
+            Le <span className="text-campaign-green">Pro</span><span className="text-campaign-gold">gramme</span>
           </h2>
-          <div className="w-16 h-[2px] mx-auto bg-campaign-green/40 rounded-full" />
           <p className="text-primary-foreground/35 max-w-2xl mx-auto text-lg mt-6">
             Trois piliers concrets pour redonner à Bouc-Bel-Air le cadre de vie qu'elle mérite.
           </p>
@@ -133,8 +145,8 @@ const ProgrammeSection = () => {
         >
           <motion.button
             onClick={() => navigate("/programme")}
-            className="inline-flex items-center gap-3 gradient-green text-primary-foreground px-10 py-4 rounded-full font-semibold text-sm shadow-lg shadow-campaign-green/20"
-            whileHover={{ scale: 1.03, y: -2 }}
+            className="inline-flex items-center gap-3 gradient-green text-primary-foreground px-10 py-4 rounded-full font-bold text-sm shadow-lg shadow-campaign-green/20"
+            whileHover={{ scale: 1.05, y: -3 }}
             whileTap={{ scale: 0.97 }}
           >
             Voir le programme complet
@@ -142,8 +154,6 @@ const ProgrammeSection = () => {
           </motion.button>
         </motion.div>
       </div>
-
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-campaign-green/15 to-transparent" />
     </section>
   );
 };

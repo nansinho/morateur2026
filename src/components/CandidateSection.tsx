@@ -1,12 +1,12 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import candidatImg from "@/assets/candidat-banner.png";
-import { Briefcase, GraduationCap, Users, Quote } from "lucide-react";
+import { Briefcase, GraduationCap, Users } from "lucide-react";
 
 const highlights = [
-  { icon: Briefcase, title: "Ancien adjoint au maire", desc: "De 2014 à 2020, engagé pour Bouc-Bel-Air" },
-  { icon: GraduationCap, title: "Analyste financier expert", desc: "Diplômé de Sciences Po Aix et de l'INSP (ex-ÉNA)" },
-  { icon: Users, title: "Spécialiste du service public", desc: "Expert des délégations de service public et mutualisations" },
+  { icon: Briefcase, title: "Ancien adjoint au maire", desc: "De 2014 à 2020, engagé pour Bouc-Bel-Air", color: "bg-campaign-green" },
+  { icon: GraduationCap, title: "Analyste financier expert", desc: "Diplômé de Sciences Po Aix et de l'INSP (ex-ÉNA)", color: "bg-campaign-gold" },
+  { icon: Users, title: "Spécialiste du service public", desc: "Expert des délégations de service public et mutualisations", color: "bg-campaign-sky" },
 ];
 
 const stats = [
@@ -34,13 +34,18 @@ const CounterStat = ({ value, label, suffix = "" }: { value: number; label: stri
   }, [inView, value]);
 
   return (
-    <div ref={ref} className="text-center">
-      <p className="text-campaign-green font-heading text-5xl md:text-6xl font-extrabold tracking-tight">
+    <motion.div
+      ref={ref}
+      className="text-center"
+      whileHover={{ scale: 1.08 }}
+      transition={{ type: "spring", stiffness: 300 }}
+    >
+      <p className="text-campaign-green font-heading text-5xl md:text-7xl font-extrabold tracking-tight">
         {count}{suffix}
       </p>
-      <div className="w-8 h-px mx-auto mt-3 mb-2 bg-campaign-green/30" />
-      <p className="text-muted-foreground text-xs uppercase tracking-[0.2em] font-medium">{label}</p>
-    </div>
+      <div className="w-10 h-1 mx-auto mt-3 mb-2 rounded-full bg-campaign-gold" />
+      <p className="text-muted-foreground text-xs uppercase tracking-[0.2em] font-semibold">{label}</p>
+    </motion.div>
   );
 };
 
@@ -68,10 +73,10 @@ const CandidateSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <p className="text-campaign-green font-semibold text-xs uppercase tracking-[0.3em] mb-3">Le Candidat</p>
-              <h2 className="font-heading text-5xl md:text-7xl font-extrabold text-foreground leading-[0.9]">
+              <p className="text-campaign-green font-bold text-xs uppercase tracking-[0.3em] mb-3">Le Candidat</p>
+              <h2 className="font-heading text-5xl md:text-8xl font-extrabold text-foreground leading-[0.9]">
                 Mathieu<br />
-                <span className="text-campaign-green">Morateur</span>
+                <span className="text-campaign-green">Mora</span><span className="text-campaign-gold">teur</span>
               </h2>
             </motion.div>
           </div>
@@ -96,13 +101,13 @@ const CandidateSection = () => {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8 }}
           >
-            <blockquote className="relative pl-8 border-l-[3px] border-campaign-green/30">
-              <p className="text-foreground/60 italic text-2xl md:text-3xl leading-snug font-heading font-light">
-                Ma motivation est de permettre à mes enfants de grandir avec les mêmes chances que j'ai eues.
+            <blockquote className="relative pl-8 border-l-4 border-campaign-gold">
+              <p className="text-foreground/70 italic text-2xl md:text-3xl leading-snug font-heading font-light">
+                Ma motivation est de permettre à mes enfants de grandir avec les <span className="text-campaign-green font-medium not-italic">mêmes chances</span> que j'ai eues.
               </p>
               <footer className="mt-6 flex items-center gap-3">
-                <div className="w-12 h-px bg-campaign-green/40" />
-                <p className="text-campaign-green text-sm font-semibold tracking-wider uppercase">Mathieu Morateur</p>
+                <div className="w-12 h-1 bg-campaign-green rounded-full" />
+                <p className="text-campaign-green text-sm font-bold tracking-wider uppercase">Mathieu Morateur</p>
               </footer>
             </blockquote>
           </motion.div>
@@ -122,17 +127,18 @@ const CandidateSection = () => {
             {highlights.map((h, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: i * 0.08 }}
-                className="flex items-start gap-5 p-6 rounded-xl bg-card border border-border shadow-sm hover:shadow-md transition-shadow duration-300"
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                whileHover={{ scale: 1.02, x: 8 }}
+                className="flex items-start gap-5 p-6 rounded-2xl bg-card border border-border shadow-sm cursor-pointer group"
               >
-                <div className="w-12 h-12 rounded-xl gradient-green flex items-center justify-center flex-shrink-0">
-                  <h.icon className="w-5 h-5 text-primary-foreground" />
+                <div className={`w-14 h-14 rounded-2xl ${h.color} flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+                  <h.icon className="w-6 h-6 text-primary-foreground" />
                 </div>
                 <div>
-                  <p className="font-heading font-bold text-foreground">{h.title}</p>
+                  <p className="font-heading font-bold text-foreground text-lg">{h.title}</p>
                   <p className="text-muted-foreground text-sm mt-1">{h.desc}</p>
                 </div>
               </motion.div>
