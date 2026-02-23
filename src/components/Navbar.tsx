@@ -74,7 +74,7 @@ const Navbar = () => {
           ))}
           <button
             onClick={() => handleNav("/#procuration")}
-            className="gradient-lime text-accent-foreground px-6 py-2.5 rounded-lg text-[13px] font-bold tracking-wide shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-px"
+            className="gradient-lime text-accent-foreground px-6 py-2.5 rounded-xl text-[13px] font-extrabold tracking-wide shadow-md -rotate-1 hover:rotate-0 hover:shadow-[0_10px_30px_-8px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 transition-all duration-300"
           >
             Rejoignez-nous
           </button>
@@ -114,7 +114,7 @@ const Navbar = () => {
               ))}
               <button
                 onClick={() => handleNav("/#procuration")}
-                className="gradient-lime text-accent-foreground py-3 rounded-lg text-sm font-bold mt-2"
+                className="gradient-lime text-accent-foreground py-3 rounded-xl text-sm font-extrabold mt-2 -rotate-1"
               >
                 Rejoignez-nous
               </button>
