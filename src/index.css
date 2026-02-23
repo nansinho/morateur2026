@@ -114,12 +114,22 @@
     @apply bg-black/20 backdrop-blur-xl border border-white/10;
   }
 
+  .glass-card {
+    background: linear-gradient(135deg, hsl(0 0% 100% / 0.06), hsl(0 0% 100% / 0.02));
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(0 0% 100% / 0.08);
+  }
+
   .gradient-green {
     background: linear-gradient(135deg, hsl(160 84% 39%), hsl(160 70% 50%));
   }
 
   .gradient-navy {
     background: linear-gradient(135deg, hsl(222 47% 14%), hsl(222 35% 24%));
+  }
+
+  .gradient-premium {
+    background: linear-gradient(160deg, hsl(222 47% 11%), hsl(222 47% 16%), hsl(222 35% 20%));
   }
 
   .text-gradient {
@@ -140,12 +150,46 @@
     box-shadow: 0 0 40px hsl(160 84% 39% / 0.3), 0 0 80px hsl(160 84% 39% / 0.1);
   }
 
+  .glow-green-sm {
+    box-shadow: 0 0 20px hsl(160 84% 39% / 0.2), 0 0 40px hsl(160 84% 39% / 0.08);
+  }
+
   .hover-lift {
     @apply transition-all duration-500;
   }
   .hover-lift:hover {
     transform: translateY(-8px);
     box-shadow: 0 20px 60px hsl(222 47% 14% / 0.15);
+  }
+
+  /* Shimmer effect */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.05), transparent);
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
   }
 
   /* Section divider — smooth wave */
@@ -155,6 +199,11 @@
 
   .section-divider-green {
     @apply w-full h-px bg-gradient-to-r from-transparent via-campaign-green/20 to-transparent;
+  }
+
+  .section-divider-wide {
+    @apply w-full h-px;
+    background: linear-gradient(90deg, transparent 5%, hsl(160 84% 39% / 0.15) 30%, hsl(160 84% 39% / 0.3) 50%, hsl(160 84% 39% / 0.15) 70%, transparent 95%);
   }
 
   /* Diagonal clip for hero */
@@ -176,5 +225,28 @@
     content: '';
     @apply w-10 h-[2px] inline-block;
     background: linear-gradient(135deg, hsl(160 84% 39%), hsl(160 70% 50%));
+  }
+
+  /* Ornamental line */
+  .ornament-line {
+    @apply w-20 h-[3px] rounded-full mx-auto;
+    background: linear-gradient(90deg, hsl(160 84% 39%), hsl(160 80% 60%), hsl(42 85% 58%));
+  }
+
+  /* Card hover glow */
+  .card-glow {
+    @apply transition-all duration-700;
+  }
+  .card-glow:hover {
+    box-shadow:
+      0 0 0 1px hsl(160 84% 39% / 0.15),
+      0 10px 40px -10px hsl(160 84% 39% / 0.12),
+      0 20px 60px -20px hsl(222 47% 14% / 0.1);
+  }
+
+  /* Floating particles */
+  .particle {
+    @apply absolute rounded-full pointer-events-none;
+    background: radial-gradient(circle, hsl(160 84% 39% / 0.15), transparent);
   }
 }
