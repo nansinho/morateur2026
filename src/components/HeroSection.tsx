@@ -57,7 +57,7 @@ const HeroSection = () => {
         style={{ y: textY, opacity }}
       >
         <motion.span
-          className="section-label justify-center mb-10"
+          className="section-label justify-center mb-6"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -65,10 +65,10 @@ const HeroSection = () => {
           Municipales 2026
         </motion.span>
 
-        <div className="overflow-hidden mb-2">
+        <div className="overflow-hidden mb-0">
           <motion.h1
-            className="font-accent text-primary-foreground font-extrabold uppercase leading-[0.9] tracking-tight"
-            style={{ fontSize: "clamp(3.5rem, 10vw, 8rem)" }}
+            className="font-accent text-primary-foreground font-extrabold uppercase leading-[0.85] tracking-tight"
+            style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
             initial={{ y: "120%" }}
             animate={{ y: 0 }}
             transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
@@ -78,7 +78,7 @@ const HeroSection = () => {
         </div>
 
         <motion.span
-          className="inline-block font-accent font-extrabold uppercase text-primary text-xl sm:text-2xl md:text-4xl tracking-[0.25em] px-6 py-1.5 bg-campaign-lime rounded-md mb-4 shadow-lg"
+          className="inline-block font-accent font-extrabold uppercase text-primary text-base sm:text-xl md:text-2xl tracking-[0.3em] px-5 py-1 bg-campaign-lime rounded-md my-2 shadow-lg"
           style={{ rotate: "-2deg" }}
           initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
           animate={{ opacity: 1, scale: 1, rotate: -2 }}
@@ -87,13 +87,13 @@ const HeroSection = () => {
           SERA
         </motion.span>
 
-        <div className="overflow-hidden mb-12" style={{ height: "clamp(5rem, 13vw, 11rem)", paddingTop: "0.15em" }}>
+        <div className="overflow-hidden mb-6" style={{ height: "clamp(4rem, 11vw, 9rem)", paddingTop: "0.1em" }}>
           <AnimatePresence mode="wait">
             <motion.p
               key={rotatingWords[wordIndex].word}
               className="font-accent font-extrabold uppercase tracking-tight"
               style={{
-                fontSize: "clamp(3.5rem, 10vw, 8rem)",
+                fontSize: "clamp(3rem, 9vw, 7rem)",
                 color: rotatingWords[wordIndex].color,
                 lineHeight: 1.15,
               }}
