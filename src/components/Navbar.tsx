@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
-import { Menu, X, Palette } from "lucide-react";
+import { Menu, X, Sun, TreePine } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -91,7 +91,7 @@ const Navbar = () => {
             }`}
             title={theme === "default" ? "Passer au thème Sapin" : "Passer au thème par défaut"}
           >
-            <Palette className="w-4 h-4" />
+            {theme === "default" ? <TreePine className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
           </button>
         </div>
 
