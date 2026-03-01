@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
 
 interface ContactFormData {
   prenom: string
@@ -27,7 +28,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, errors }, { status: 400 })
     }
 
-    // Log the contact submission (always active)
+    // Log the contact submission
     console.log('[CONTACT]', new Date().toISOString(), {
       prenom: body.prenom,
       nom: body.nom,
@@ -36,13 +37,30 @@ export async function POST(request: Request) {
       motivations: body.motivations.substring(0, 100) + (body.motivations.length > 100 ? '...' : ''),
     })
 
+    // Save to Supabase
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (supabaseUrl && supabaseAnonKey) {
+      const supabase = createClient(supabaseUrl, supabaseAnonKey)
+      const { error: dbError } = await supabase.from('messages').insert({
+        prenom: body.prenom.trim(),
+        nom: body.nom.trim(),
+        email: body.email.trim(),
+        tel: body.tel.trim(),
+        motivations: body.motivations.trim(),
+      })
+
+      if (dbError) {
+        console.error('[CONTACT] Supabase error:', dbError)
+      }
+    }
+
     // Send email if SMTP is configured
     const smtpHost = process.env.SMTP_HOST
     const contactEmail = process.env.CONTACT_EMAIL_TO
 
     if (smtpHost && contactEmail) {
-      // SMTP sending would go here when configured
-      // For now, the log above ensures data is captured
       console.log(`[CONTACT] Email would be sent to ${contactEmail} via ${smtpHost}`)
     }
 
