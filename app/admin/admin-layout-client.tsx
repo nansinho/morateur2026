@@ -6,6 +6,7 @@ import Link from 'next/link'
 import {
   LayoutDashboard, Mail, Newspaper, BookOpen, CalendarDays,
   Users, FileText, Search, LogOut, ExternalLink, ChevronLeft, ChevronRight, Menu,
+  MessageSquareText, MapPin, Download,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -17,6 +18,9 @@ import { useState } from 'react'
 const navItems = [
   { href: '/admin', icon: LayoutDashboard, label: 'Tableau de bord' },
   { href: '/admin/messages', icon: Mail, label: 'Messages' },
+  { href: '/admin/consultations', icon: MessageSquareText, label: 'Consultations' },
+  { href: '/admin/quartiers', icon: MapPin, label: 'Quartiers' },
+  { href: '/admin/export', icon: Download, label: 'Export' },
   { href: '/admin/articles', icon: Newspaper, label: 'Articles' },
   { href: '/admin/programme', icon: BookOpen, label: 'Programme' },
   { href: '/admin/events', icon: CalendarDays, label: 'Événements' },

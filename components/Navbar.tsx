@@ -9,6 +9,7 @@ import { scrollToHash } from "@/lib/scroll-to-hash";
 const navItems = [
   { label: "Le Candidat", to: "/candidat" },
   { label: "Programme", to: "/programme" },
+  { label: "Quartiers", to: "/quartiers" },
   { label: "L'Équipe", to: "/equipe" },
   { label: "Actualités", to: "/actualites" },
   { label: "Presse", to: "/presse" },
