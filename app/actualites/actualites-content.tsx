@@ -115,13 +115,13 @@ export default function ActualitesContent() {
                   whileHover={{ y: -8 }}
                   className="group cursor-pointer"
                 >
-                  <div className={`relative rounded-[1.25rem] overflow-hidden shadow-lg ${style.bg} flex flex-col h-full transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/20`}>
+                  <div className={`relative rounded-[1.25rem] overflow-hidden shadow-lg ${style.bg} flex flex-col h-full transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/20`}>
                     {/* Image */}
                     <div className="aspect-[16/9] overflow-hidden relative">
                       <img
                         src={actu.image}
                         alt={actu.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110"
                         loading="lazy"
                       />
                       <div className={`absolute inset-0 bg-gradient-to-t from-black/40 to-transparent`} />
@@ -146,9 +146,9 @@ export default function ActualitesContent() {
                         {actu.desc}
                       </p>
 
-                      <div className={`flex items-center gap-1.5 mt-5 ${style.text} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
+                      <div className={`flex items-center gap-1.5 mt-5 ${style.text} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
                         <span className="text-xs font-bold uppercase tracking-wider">Lire la suite</span>
-                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
+                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
                       </div>
                     </div>
                   </div>

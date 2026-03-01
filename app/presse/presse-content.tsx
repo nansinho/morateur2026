@@ -90,7 +90,7 @@ export default function PresseContent() {
                 whileHover={{ y: -8 }}
                 className="group block cursor-pointer"
               >
-                <div className={`relative rounded-[1.25rem] overflow-hidden ${article.bg} shadow-lg flex flex-col h-full transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/20`}>
+                <div className={`relative rounded-[1.25rem] overflow-hidden ${article.bg} shadow-lg flex flex-col h-full transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/20`}>
                   {/* Header with logo */}
                   <div className="p-6 sm:p-7 pb-0 sm:pb-0 flex items-center justify-between">
                     <Image
@@ -126,11 +126,11 @@ export default function PresseContent() {
                       {article.excerpt}
                     </p>
 
-                    <div className={`flex items-center gap-1.5 mt-5 ${article.linkColor} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
+                    <div className={`flex items-center gap-1.5 mt-5 ${article.linkColor} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
                       <span className="text-xs font-bold uppercase tracking-wider">
                         Lire l&apos;article
                       </span>
-                      <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
+                      <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
                     </div>
                   </div>
                 </div>
