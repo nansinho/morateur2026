@@ -44,17 +44,17 @@ const Navbar = () => {
   return (
     <motion.nav
       aria-label="Navigation principale"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-primary py-4 ${
         isScrolled
-          ? "bg-background backdrop-blur-xl shadow-lg shadow-foreground/5 py-3"
-          : "bg-primary py-5"
+          ? "md:bg-background md:backdrop-blur-xl md:shadow-lg md:shadow-foreground/5 md:py-3"
+          : "md:py-5"
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between">
         <button
           onClick={() => handleNav("/#hero")}
-          className={`font-accent text-base font-extrabold tracking-widest uppercase transition-colors ${
-            isScrolled ? "text-primary" : "text-primary-foreground"
+          className={`font-accent text-base font-extrabold tracking-widest uppercase transition-colors text-primary-foreground ${
+            isScrolled ? "md:text-primary" : ""
           }`}
         >
           MORATEUR <span className="text-campaign-lime">2026</span>
@@ -66,10 +66,10 @@ const Navbar = () => {
             <button
               key={item.to}
               onClick={() => handleNav(item.to)}
-              className={`relative text-[13px] font-semibold tracking-wide uppercase transition-all duration-200 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:transition-all after:duration-200 hover:after:w-full ${
+              className={`relative text-[13px] font-semibold tracking-wide uppercase transition-all duration-200 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:transition-all after:duration-200 hover:after:w-full after:bg-campaign-lime ${
                 isScrolled
-                  ? "text-foreground/60 hover:text-foreground after:bg-campaign-lime"
-                  : "text-primary-foreground/70 hover:text-primary-foreground after:bg-campaign-lime"
+                  ? "text-foreground/60 hover:text-foreground"
+                  : "text-primary-foreground/70 hover:text-primary-foreground"
               }`}
             >
               {item.label}
@@ -85,7 +85,7 @@ const Navbar = () => {
 
         {/* Mobile toggle */}
         <button
-          className={`md:hidden ${isScrolled ? "text-foreground" : "text-primary-foreground"}`}
+          className="md:hidden text-primary-foreground"
           onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen}
           aria-label="Menu de navigation"
