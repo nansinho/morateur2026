@@ -1,40 +1,43 @@
 
-## Page Presse
 
-### Ce qui sera fait
+## Mise a jour du theme Sapin avec la nouvelle palette
 
-1. **Nouvelle page `/presse`** (`src/pages/Presse.tsx`)
-   - Hero en haut (meme style que la page Actualites)
-   - Grille de cards representant les articles de presse
-   - Deux cards initiales :
-     - **La Marseillaise** : "Mathieu Morateur revient comme candidat" (24/12/2025, par Eva Bonnet-Gonnet) -- lien vers l'article original
-     - **La Provence** : "Municipales 2026 a Bouc-Bel-Air : Mathieu Morateur veut faire barrage aux promoteurs" (25/10/2025, par Carole Barletta) -- lien vers l'article original
-   - Chaque card affiche : logo du media, nom du media, titre de l'article, date, court extrait, et un lien "Lire l'article" qui ouvre dans un nouvel onglet
+Palette demandee :
+- `#174895` → HSL ~220 73% 34% (bleu profond) — couleur principale
+- `#43BB83` → HSL ~152 48% 50% (vert) — accent
+- `#FFFFFF` → blanc — texte principal
+- `#EFEFEF` → gris clair — texte secondaire
 
-2. **Logo La Marseillaise** : le SVG uploade sera copie dans `src/assets/logo-lamarseillaise.svg` et importe dans le composant
+### Fichier modifie : `src/index.css`
 
-3. **Logo La Provence** : un SVG simple sera cree dans `src/assets/logo-laprovence.svg` (texte "La Provence" stylise en bleu marine, identifiable)
+**Theme `.theme-sapin`** — remapper toutes les variables :
 
-4. **Mise a jour du routeur** (`src/App.tsx`) : ajout de la route `/presse`
+| Variable | Ancienne valeur | Nouvelle valeur |
+|---|---|---|
+| `--background` | 221 60% 7% | 220 73% 10% (bleu tres sombre) |
+| `--foreground` | 42 52% 90% (creme) | 0 0% 100% (blanc) |
+| `--card` | 221 55% 11% | 220 70% 15% |
+| `--card-foreground` | creme | blanc |
+| `--primary` | 221 60% 15% | 220 73% 34% (#174895) |
+| `--primary-foreground` | creme | blanc |
+| `--secondary` | 221 50% 13% | 220 60% 25% |
+| `--secondary-foreground` | creme | blanc |
+| `--muted` | 221 45% 12% | 220 50% 18% |
+| `--muted-foreground` | 150 15% 65% | 0 0% 94% (#EFEFEF) |
+| `--accent` | 165 69% 34% | 152 48% 50% (#43BB83) |
+| `--accent-foreground` | blanc | blanc |
+| `--border` | 221 40% 18% | 220 50% 22% |
+| `--input` | idem | idem |
+| `--ring` | 165 69% 34% | 152 48% 50% |
+| `--campaign-teal` | 221 60% 15% | 220 73% 34% |
+| `--campaign-teal-light` | 165 69% 34% | 220 60% 45% |
+| `--campaign-steel` | 221 50% 13% | 220 60% 25% |
+| `--campaign-ice` | 42 52% 90% | 0 0% 94% |
+| `--campaign-olive` | 165 45% 30% | 152 40% 35% |
+| `--campaign-lime` | 165 69% 34% | 152 48% 50% (#43BB83) |
+| `--campaign-lime-light` | 140 45% 69% | 152 55% 62% |
+| Sidebar vars | anciens bleu nuit/creme | memes tokens bleu/vert/blanc |
+| `::selection` | lime ancien | 152 48% 50% / 0.3 |
 
-5. **Mise a jour de la navbar** (`src/components/Navbar.tsx`) : ajout de "Presse" dans le tableau `navItems`
+Aussi mettre a jour la memoire style/theming pour refleter la nouvelle palette.
 
-### Details techniques
-
-**Fichiers crees** :
-- `src/pages/Presse.tsx` -- page complete avec Navbar, hero, grille de cards, Footer
-- `src/assets/logo-laprovence.svg` -- logo simplifie La Provence
-- Copie de `user-uploads://5616c7c1-...svg` vers `src/assets/logo-lamarseillaise.svg`
-
-**Fichiers modifies** :
-- `src/App.tsx` : import Presse + route `/presse`
-- `src/components/Navbar.tsx` : ajout `{ label: "Presse", to: "/presse" }` dans `navItems`
-
-**Design des cards** :
-- Fond blanc avec bordure subtile, coins arrondis (`rounded-2xl`)
-- En haut : logo du media (hauteur ~40px) + badge "Presse" style lime
-- Titre en `font-accent font-extrabold uppercase`
-- Date et auteur en texte secondaire
-- Court extrait de l'article
-- Lien "Lire l'article" avec icone `ExternalLink` ouvrant dans un nouvel onglet
-- Hover : elevation + legere translation vers le haut (comme les cards Actualites)
