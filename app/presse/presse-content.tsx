@@ -32,7 +32,7 @@ export default function PresseContent({ articles }: PresseContentProps) {
             >
               REVUE DE <span className="text-campaign-lime">PRESSE</span>
             </h1>
-            <p className="text-muted-foreground max-w-xl text-lg mt-6 font-medium">
+            <p className="text-primary/60 max-w-xl text-lg mt-6 font-medium">
               Retrouvez les articles de presse consacrés à notre campagne et à notre projet pour Bouc-Bel-Air.
             </p>
           </motion.div>
@@ -56,6 +56,7 @@ export default function PresseContent({ articles }: PresseContentProps) {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
                 whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
+                whileTap={{ scale: 0.97 }}
                 className="group block cursor-pointer"
               >
                 <div className={`relative rounded-[1.25rem] overflow-hidden ${style.bg} shadow-lg flex flex-col h-full transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/20`}>

@@ -6,6 +6,7 @@ import {
   SITE_LOCALE, THEME_COLOR, DEFAULT_OG_IMAGE, CANDIDATE, ORGANIZATION
 } from '@/lib/site-config'
 import AnalyticsScripts from '@/components/analytics'
+import AccessibilityButton from '@/components/AccessibilityButton'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -132,6 +133,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Providers>
           {children}
+          <AccessibilityButton />
         </Providers>
         <AnalyticsScripts />
       </body>

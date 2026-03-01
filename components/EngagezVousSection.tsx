@@ -102,7 +102,7 @@ const EngagezVousSection = () => {
             >
               REJOIGNEZ <span className="text-campaign-lime">LA CAMPAGNE</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto font-medium">
+            <p className="text-primary/60 text-lg max-w-xl mx-auto font-medium">
               Chaque geste compte. Choisissez comment vous engager à nos côtés.
             </p>
           </motion.div>
@@ -122,6 +122,7 @@ const EngagezVousSection = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06, duration: 0.3 }}
                 whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
+                whileTap={{ scale: 0.97 }}
                 className="block cursor-pointer group min-w-[75vw] snap-center sm:min-w-0"
               >
                 <div
