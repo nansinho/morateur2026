@@ -221,8 +221,8 @@ const ProcurationSection = () => {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                  className="relative rounded-3xl p-10 sm:p-14 text-center border-2 border-white/20 overflow-hidden backdrop-blur-sm"
-                  style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03))" }}
+                  className="relative rounded-3xl p-10 sm:p-14 text-center border-2 border-white/30 overflow-hidden backdrop-blur-md shadow-[0_0_80px_-20px_rgba(255,255,255,0.08)]"
+                  style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))" }}
                 >
                   <Confetti />
                   <motion.div
@@ -258,8 +258,8 @@ const ProcurationSection = () => {
                   key="form"
                   onSubmit={handleSubmit}
                   noValidate
-                  className="rounded-3xl border-2 border-white/20 overflow-hidden backdrop-blur-sm"
-                  style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03))" }}
+                  className="rounded-3xl border-2 border-white/30 overflow-hidden backdrop-blur-md shadow-[0_0_80px_-20px_rgba(255,255,255,0.08)]"
+                  style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))" }}
                   role="form"
                   aria-label="Formulaire de contact campagne"
                 >
@@ -347,7 +347,7 @@ const ProcurationSection = () => {
                                       value={form[key]}
                                       onBlur={() => handleBlur(key)}
                                       onChange={e => handleChange(key, e.target.value)}
-                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.06] border border-white/15 text-white text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
+                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
                                     />
                                   </div>
                                   {touched.has(key) && errors[key] && (
@@ -386,7 +386,7 @@ const ProcurationSection = () => {
                                       value={form[key]}
                                       onBlur={() => handleBlur(key)}
                                       onChange={e => handleChange(key, e.target.value)}
-                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.06] border border-white/15 text-white text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
+                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
                                     />
                                   </div>
                                   {touched.has(key) && errors[key] && (
@@ -421,7 +421,7 @@ const ProcurationSection = () => {
                                 value={form.motivations}
                                 onBlur={() => handleBlur("motivations")}
                                 onChange={e => handleChange("motivations", e.target.value)}
-                                className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.06] border border-white/15 text-white text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200 resize-none"
+                                className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200 resize-none"
                               />
                             </div>
                             <div className="flex justify-between mt-1.5">
