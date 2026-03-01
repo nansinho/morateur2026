@@ -78,7 +78,7 @@ const ProgrammeSection = () => {
   const router = useRouter();
 
   return (
-    <section id="programme" aria-label="Programme de campagne" className="gradient-teal-deep relative overflow-hidden">
+    <section id="programme" aria-label="Programme de campagne" className="gradient-teal-deep relative overflow-x-clip">
       <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-28 relative z-10">
         {/* Header */}
         <motion.div
@@ -110,7 +110,7 @@ const ProgrammeSection = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08, duration: 0.4 }}
-                  whileHover={{ y: -8 }}
+                  whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
                   className="cursor-pointer group"
                 >
                     <div

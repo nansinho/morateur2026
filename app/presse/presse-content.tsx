@@ -76,7 +76,7 @@ export default function PresseContent() {
       {/* Articles */}
       <section className="pb-24">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 pt-2">
             {articles.map((article, i) => (
               <motion.a
                 key={i}
@@ -87,7 +87,7 @@ export default function PresseContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ y: -8 }}
+                whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
                 className="group block cursor-pointer"
               >
                 <div className={`relative rounded-[1.25rem] overflow-hidden ${article.bg} shadow-lg flex flex-col h-full transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/20`}>
