@@ -171,10 +171,10 @@ export default function AccessibiliteContent() {
                     <h2 className="font-accent font-extrabold text-primary text-2xl uppercase tracking-wide">
                       Notre engagement
                     </h2>
-                    <p className="text-muted-foreground text-sm font-medium">Mathieu Morateur &amp; son équipe</p>
+                    <p className="text-primary/60 text-sm font-medium">Mathieu Morateur &amp; son équipe</p>
                   </div>
                 </div>
-                <div className="space-y-5 text-foreground/80 text-base leading-relaxed">
+                <div className="space-y-5 text-primary/80 text-base leading-relaxed">
                   <p>
                     Trop souvent, les personnes en situation de handicap sont les grandes absentes
                     des projets municipaux. Des trottoirs impraticables en fauteuil, des bâtiments
@@ -202,7 +202,7 @@ export default function AccessibiliteContent() {
                     Nous ne vous<br />
                     <span className="text-campaign-lime">oublierons pas.</span>
                   </blockquote>
-                  <p className="mt-4 text-muted-foreground text-sm font-bold uppercase tracking-wider">
+                  <p className="mt-4 text-primary/60 text-sm font-bold uppercase tracking-wider">
                     — Mathieu Morateur
                   </p>
                 </div>
@@ -279,7 +279,7 @@ export default function AccessibiliteContent() {
               </h2>
             </div>
 
-            <p className="text-foreground/70 text-sm leading-relaxed max-w-2xl mb-8">
+            <p className="text-primary/70 text-sm leading-relaxed max-w-2xl mb-8">
               Ce site a été conçu en tenant compte des recommandations du RGAA
               (Référentiel Général d&apos;Amélioration de l&apos;Accessibilité) et des
               standards internationaux WCAG 2.1.
@@ -294,12 +294,12 @@ export default function AccessibiliteContent() {
                 >
                   <div className="w-2 h-2 rounded-full bg-campaign-lime flex-shrink-0" />
                   <badge.icon className="w-4 h-4 text-primary/50 flex-shrink-0" />
-                  <span className="text-sm font-medium text-foreground/80">{badge.label}</span>
+                  <span className="text-sm font-medium text-primary/80">{badge.label}</span>
                 </div>
               ))}
             </div>
 
-            <p className="text-foreground/50 text-sm leading-relaxed max-w-2xl">
+            <p className="text-primary/60 text-sm leading-relaxed max-w-2xl">
               Si vous rencontrez des difficultés d&apos;accès à notre site, n&apos;hésitez
               pas à nous contacter. Nous ferons le maximum pour corriger tout problème signalé.
             </p>

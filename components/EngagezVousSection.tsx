@@ -102,7 +102,7 @@ const EngagezVousSection = () => {
             >
               REJOIGNEZ <span className="text-campaign-lime">LA CAMPAGNE</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto font-medium">
+            <p className="text-primary/60 text-lg max-w-xl mx-auto font-medium">
               Chaque geste compte. Choisissez comment vous engager à nos côtés.
             </p>
           </motion.div>
