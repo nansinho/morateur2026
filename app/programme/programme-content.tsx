@@ -2,62 +2,31 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShieldCheck, Building2, Store, ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronDown, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import type { LucideIcon } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import RoadmapSection from "@/components/RoadmapSection";
 import Footer from "@/components/Footer";
 import { scrollToHash } from "@/lib/scroll-to-hash";
+import { getIcon } from "@/lib/icon-map";
 
-const pillars: {
-  icon: LucideIcon;
-  title: string;
-  intro: string;
-  color: string;
-  iconBg: string;
-  items: { title: string; detail: string }[];
-}[] = [
-  {
-    icon: ShieldCheck,
-    title: "Faire barrage aux promoteurs",
-    intro: "Notre commune se trouve à un tournant. En moins d'un an, des permis pour plus de 1000 logements ont été déposés. Il est temps d'agir.",
-    color: "border-campaign-lime/30",
-    iconBg: "gradient-lime",
-    items: [
-      { title: "Refus systématique des permis de construire des promoteurs", detail: "Nous refuserons systématiquement les permis de construire demandés par les promoteurs immobiliers afin de les forcer à la négociation et protéger le cadre de vie des Boucains." },
-      { title: "Droit de préemption urbain", detail: "Utilisation systématique du droit de préemption urbain pour permettre la création de logements sociaux adaptés à notre commune, sans laisser le champ libre aux promoteurs." },
-      { title: "Soutien aux recours des riverains", detail: "Nous soutiendrons activement les recours intentés par les riverains sur les permis existants, en leur apportant un accompagnement juridique et technique." },
-      { title: "Bail réel solidaire", detail: "Recours au bail réel solidaire pour l'intégralité des projets collectifs afin de limiter les constructions spéculatives et de privilégier les parcours résidentiels des Boucains." },
-    ],
-  },
-  {
-    icon: Building2,
-    title: "Des infrastructures à la hauteur",
-    intro: "La vétusté de nos bâtiments publics est indigne de notre commune. Écoles, crèches, voiries : tout doit être remis à niveau.",
-    color: "border-campaign-steel/30",
-    iconBg: "gradient-teal",
-    items: [
-      { title: "Rénovation des bâtiments municipaux", detail: "Réaliser la rénovation complète de l'ensemble des bâtiments municipaux, y compris le foyer des Anciens, pour offrir des conditions dignes à tous les usagers." },
-      { title: "Climatisation dans les écoles et crèches", detail: "Installer la climatisation réversible dans toutes les crèches, toutes les écoles et au foyer des anciens. Il est inacceptable que le thermomètre dépasse 30°C dès mai dans certaines écoles." },
-      { title: "Requalification des axes routiers", detail: "Requalifier et renouveler les principaux axes de notre commune : avenue Thiers, avenue de la Mounine, avenue Beausoleil, chemin de Sauvecanne… et la RD8n." },
-      { title: "Échangeurs autoroutiers", detail: "Lancer les études sur l'aménagement des échangeurs autoroutiers des Trois Pigeons et des Chabauds, afin de présenter un projet solide à l'État." },
-    ],
-  },
-  {
-    icon: Store,
-    title: "Revitaliser le village",
-    intro: "Notre centre ancien a tant à offrir. Retrouver son âme, ramener la vie dans ses ruelles pittoresques : c'est notre priorité.",
-    color: "border-campaign-olive/30",
-    iconBg: "bg-campaign-olive",
-    items: [
-      { title: "Centre ancien attractif", detail: "Faire de notre centre ancien un lieu attractif pour l'ensemble des habitants, en s'appuyant sur son caractère unique, son histoire et son patrimoine architectural." },
-      { title: "Animations et vie culturelle", detail: "Étendre les animations au-delà de la place principale, dans les ruelles pittoresques du centre ancien. Retrouver l'esprit des retraites aux flambeaux et des fêtes de village." },
-      { title: "Incubateur commercial et artisanal", detail: "Créer un incubateur d'entreprises de restauration et de savoir-faire artisanaux pour redonner vie au commerce local et attirer de nouveaux talents." },
-      { title: "Offre commerciale renouvelée", detail: "Développer une offre commerciale de proximité diversifiée, en accompagnant les porteurs de projets et en facilitant l'installation de nouveaux commerces dans le centre-ville." },
-    ],
-  },
-];
+interface ProgrammeContentProps {
+  pillars: {
+    id: string;
+    title: string;
+    intro: string;
+    icon: string;
+    color: string;
+    icon_bg: string;
+    sort_order: number;
+    measures: {
+      id: string;
+      title: string;
+      detail: string;
+      sort_order: number;
+    }[];
+  }[];
+}
 
 const AccordionItem = ({ item, isOpen, toggle, index }: { item: { title: string; detail: string }; isOpen: boolean; toggle: () => void; index: number }) => (
   <div className="border-b border-primary-foreground/[0.08] last:border-b-0">
@@ -95,7 +64,7 @@ const AccordionItem = ({ item, isOpen, toggle, index }: { item: { title: string;
   </div>
 );
 
-export default function ProgrammeContent() {
+export default function ProgrammeContent({ pillars }: ProgrammeContentProps) {
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
   const router = useRouter();
 
@@ -135,44 +104,50 @@ export default function ProgrammeContent() {
       {/* Pillars */}
       <section className="pb-24">
         <div className="container mx-auto px-4 sm:px-6 space-y-16">
-          {pillars.map((pillar, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="grid lg:grid-cols-[1fr_2fr] gap-10 items-start"
-            >
-              {/* Pillar header */}
-              <div className="lg:sticky lg:top-24">
-                <div className={`w-14 h-14 rounded-2xl ${pillar.iconBg} flex items-center justify-center mb-4 shadow-lg`}>
-                  <pillar.icon className="w-7 h-7 text-accent-foreground" />
-                </div>
-                <h2
-                  className="font-accent font-extrabold text-primary-foreground uppercase tracking-tight leading-[0.95] mb-3 break-words"
-                  style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
-                >
-                  {pillar.title}
-                </h2>
-                <p className="text-primary-foreground/50 leading-relaxed text-sm sm:text-base">{pillar.intro}</p>
-                <div className="mt-4 h-[2px] w-16 bg-campaign-lime rounded-full" />
-              </div>
+          {pillars.map((pillar, i) => {
+            const Icon = getIcon(pillar.icon);
+            const iconBg = pillar.icon_bg;
+            const color = pillar.color;
 
-              {/* Accordion */}
-              <div className={`rounded-2xl border ${pillar.color} bg-primary-foreground/[0.03] p-6 md:p-8`}>
-                {pillar.items.map((item, j) => (
-                  <AccordionItem
-                    key={j}
-                    item={item}
-                    index={j}
-                    isOpen={!!openItems[`${i}-${j}`]}
-                    toggle={() => toggleItem(`${i}-${j}`)}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          ))}
+            return (
+              <motion.div
+                key={pillar.id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="grid lg:grid-cols-[1fr_2fr] gap-10 items-start"
+              >
+                {/* Pillar header */}
+                <div className="lg:sticky lg:top-24">
+                  <div className={`w-14 h-14 rounded-2xl ${iconBg} flex items-center justify-center mb-4 shadow-lg`}>
+                    <Icon className="w-7 h-7 text-accent-foreground" />
+                  </div>
+                  <h2
+                    className="font-accent font-extrabold text-primary-foreground uppercase tracking-tight leading-[0.95] mb-3 break-words"
+                    style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
+                  >
+                    {pillar.title}
+                  </h2>
+                  <p className="text-primary-foreground/50 leading-relaxed text-sm sm:text-base">{pillar.intro}</p>
+                  <div className="mt-4 h-[2px] w-16 bg-campaign-lime rounded-full" />
+                </div>
+
+                {/* Accordion */}
+                <div className={`rounded-2xl border ${color} bg-primary-foreground/[0.03] p-6 md:p-8`}>
+                  {pillar.measures.map((measure, j) => (
+                    <AccordionItem
+                      key={measure.id}
+                      item={{ title: measure.title, detail: measure.detail }}
+                      index={j}
+                      isOpen={!!openItems[`${pillar.id}-${measure.id}`]}
+                      toggle={() => toggleItem(`${pillar.id}-${measure.id}`)}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
 

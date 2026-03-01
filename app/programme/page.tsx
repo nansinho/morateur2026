@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import ProgrammeContent from './programme-content'
 import { SITE_URL } from '@/lib/site-config'
+import { createClient } from '@/lib/supabase/server'
+import type { ProgrammePillar, ProgrammeMeasure } from '@/lib/types/database'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Programme',
@@ -73,7 +77,26 @@ const faqSchema = {
   ],
 }
 
-export default function ProgrammePage() {
+export default async function ProgrammePage() {
+  const supabase = await createClient()
+
+  const { data: pillarsData } = await supabase
+    .from('programme_pillars')
+    .select('*')
+    .order('sort_order')
+
+  const { data: measuresData } = await supabase
+    .from('programme_measures')
+    .select('*')
+    .order('sort_order')
+
+  const pillars = (pillarsData as ProgrammePillar[] ?? []).map((pillar) => ({
+    ...pillar,
+    measures: (measuresData as ProgrammeMeasure[] ?? []).filter(
+      (m) => m.pillar_id === pillar.id
+    ),
+  }))
+
   return (
     <>
       <script
@@ -84,7 +107,7 @@ export default function ProgrammePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <ProgrammeContent />
+      <ProgrammeContent pillars={pillars} />
     </>
   )
 }

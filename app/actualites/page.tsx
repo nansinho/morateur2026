@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import ActualitesContent from './actualites-content'
 import { SITE_URL, CANDIDATE } from '@/lib/site-config'
+import { createClient } from '@/lib/supabase/server'
+import type { Article } from '@/lib/types/database'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Actualités',
@@ -85,7 +89,11 @@ const articleSchema = {
   inLanguage: 'fr',
 }
 
-export default function ActualitesPage() {
+export default async function ActualitesPage() {
+  const supabase = await createClient()
+  const { data } = await supabase.from('articles').select('*').order('sort_order')
+  const articles: Article[] = data ?? []
+
   return (
     <>
       <script
@@ -103,7 +111,7 @@ export default function ActualitesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
-      <ActualitesContent />
+      <ActualitesContent articles={articles} />
     </>
   )
 }
