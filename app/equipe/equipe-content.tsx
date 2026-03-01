@@ -103,14 +103,14 @@ export default function EquipeContent() {
               whileHover={{ y: -10 }}
               className="group cursor-pointer"
             >
-              <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/40">
+              <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/40">
                 {/* Photo 9:16 */}
                 <div className="aspect-[9/16] overflow-hidden relative">
                   <Image
                     src={m.img}
                     alt={m.name}
                     fill
-                    className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover object-top transition-transform duration-200 group-hover:scale-110"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent" />
@@ -125,7 +125,7 @@ export default function EquipeContent() {
                   {/* Bottom content */}
                   <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 flex flex-col justify-end">
                     <h3
-                      className="font-accent font-extrabold text-primary-foreground text-2xl sm:text-3xl leading-[0.95] group-hover:text-campaign-lime transition-colors duration-300 uppercase tracking-wide -rotate-3 mb-3 break-words overflow-hidden"
+                      className="font-accent font-extrabold text-primary-foreground text-2xl sm:text-3xl leading-[0.95] group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide -rotate-3 mb-3 break-words overflow-hidden"
                     >
                       {m.name}
                     </h3>
@@ -159,7 +159,7 @@ export default function EquipeContent() {
           </p>
           <motion.button
             onClick={handleCTA}
-            className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-10 py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base shadow-lg -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
+            className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-10 py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base shadow-lg -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-200"
             whileHover={{ scale: 1.08, y: -3 }}
             whileTap={{ scale: 0.94, rotate: -4 }}
           >

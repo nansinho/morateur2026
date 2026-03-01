@@ -68,7 +68,7 @@ const Footer = () => {
             </p>
             <motion.button
               onClick={() => handleNav("/#procuration")}
-              className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-10 py-4 rounded-2xl font-extrabold uppercase tracking-wider text-sm shadow-lg -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(70_80%_43%/0.5)] transition-all duration-300"
+              className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-10 py-4 rounded-2xl font-extrabold uppercase tracking-wider text-sm shadow-lg -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(70_80%_43%/0.5)] transition-all duration-200"
               whileHover={{ scale: 1.08, y: -3 }}
               whileTap={{ scale: 0.94, rotate: -4 }}
             >
@@ -104,7 +104,7 @@ const Footer = () => {
                   onClick={() => handleNav(link.to)}
                   className="group text-left text-primary-foreground/70 hover:text-campaign-lime transition-colors text-sm font-medium flex items-center gap-2"
                 >
-                  <span className="w-0 group-hover:w-3 h-px bg-campaign-lime transition-all duration-300" />
+                  <span className="w-0 group-hover:w-3 h-px bg-campaign-lime transition-all duration-200" />
                   {link.label}
                 </button>
               ))}
@@ -123,7 +123,7 @@ const Footer = () => {
                   onClick={() => handleNav(link.to)}
                   className="group text-left text-primary-foreground/70 hover:text-campaign-lime transition-colors text-sm font-medium flex items-center gap-2"
                 >
-                  <span className="w-0 group-hover:w-3 h-px bg-campaign-lime transition-all duration-300" />
+                  <span className="w-0 group-hover:w-3 h-px bg-campaign-lime transition-all duration-200" />
                   {link.label}
                 </button>
               ))}
@@ -141,7 +141,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     className="group flex items-center gap-3 text-primary-foreground/70 hover:text-campaign-lime transition-colors text-sm font-medium"
                   >
-                    <div className="w-10 h-10 rounded-xl border border-primary-foreground/20 group-hover:border-campaign-lime/40 group-hover:bg-campaign-lime/10 flex items-center justify-center transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl border border-primary-foreground/20 group-hover:border-campaign-lime/40 group-hover:bg-campaign-lime/10 flex items-center justify-center transition-all duration-200">
                       <s.icon className="w-4 h-4" />
                     </div>
                     {s.label}

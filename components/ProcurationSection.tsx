@@ -82,7 +82,7 @@ const ProcurationSection = () => {
     const isFocused = focused === field;
     const hasError = touched.has(field) && errors[field as keyof FormData];
     const isValid = touched.has(field) && !errors[field as keyof FormData];
-    const base = "w-full pl-11 pr-4 py-3.5 rounded-xl border bg-background text-foreground text-sm transition-all duration-300 outline-none placeholder:text-muted-foreground/50";
+    const base = "w-full pl-11 pr-4 py-3.5 rounded-xl border bg-background text-foreground text-sm transition-all duration-200 outline-none placeholder:text-muted-foreground/50";
     if (isFocused) return `${base} border-campaign-lime ring-1 ring-campaign-lime/20`;
     if (hasError) return `${base} border-destructive`;
     if (isValid) return `${base} border-campaign-lime/30`;
@@ -128,7 +128,7 @@ const ProcurationSection = () => {
                   href="https://www.maprocuration.gouv.fr/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 gradient-lime text-accent-foreground px-6 py-3 rounded-xl text-sm font-extrabold -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 transition-all duration-300"
+                  className="inline-flex items-center gap-2 gradient-lime text-accent-foreground px-6 py-3 rounded-xl text-sm font-extrabold -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 transition-all duration-200"
                 >
                   maprocuration.gouv.fr
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -170,7 +170,7 @@ const ProcurationSection = () => {
                     {Object.keys(form).map((field) => (
                       <div
                         key={field}
-                        className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
+                        className={`h-1 flex-1 rounded-full transition-colors duration-200 ${
                           touched.has(field) && !errors[field as keyof FormData]
                             ? "bg-campaign-lime"
                             : touched.has(field) && errors[field as keyof FormData]
@@ -238,7 +238,7 @@ const ProcurationSection = () => {
                   <motion.button
                     type="submit"
                     disabled={submitting}
-                    className="w-full gradient-lime text-accent-foreground py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base flex items-center justify-center gap-2 shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full gradient-lime text-accent-foreground py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base flex items-center justify-center gap-2 shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
                     whileHover={submitting ? {} : { scale: 1.04 }}
                     whileTap={submitting ? {} : { scale: 0.95, rotate: -3 }}
                   >

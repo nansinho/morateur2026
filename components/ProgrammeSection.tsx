@@ -116,7 +116,7 @@ const ProgrammeSection = () => {
                     <div
                       className={`relative rounded-[1.25rem] aspect-[9/16] ${pillar.bg}
                       flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
-                      transition-all duration-300 shadow-lg
+                      transition-all duration-200 shadow-lg
                       group-hover:shadow-2xl group-hover:shadow-black/20`}
                   >
                     {/* Number watermark */}
@@ -142,9 +142,9 @@ const ProgrammeSection = () => {
                     </div>
 
                     {/* Bottom indicator */}
-                    <div className={`relative z-10 flex items-center gap-2 ${pillar.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
+                    <div className={`relative z-10 flex items-center gap-2 ${pillar.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
                       <span className="text-sm font-bold uppercase tracking-wider">En savoir plus</span>
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                     </div>
                   </div>
                 </motion.div>
@@ -152,8 +152,8 @@ const ProgrammeSection = () => {
             ))}
           </CarouselContent>
           <div className="flex items-center justify-center gap-4 mt-10">
-            <CarouselPrevious className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-300" />
-            <CarouselNext className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-300" />
+            <CarouselPrevious className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-200" />
+            <CarouselNext className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-200" />
           </div>
         </Carousel>
 
@@ -166,7 +166,7 @@ const ProgrammeSection = () => {
         >
           <motion.button
             onClick={() => router.push("/programme")}
-            className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-12 py-5 rounded-2xl font-extrabold text-base shadow-xl uppercase tracking-wide -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
+            className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-12 py-5 rounded-2xl font-extrabold text-base shadow-xl uppercase tracking-wide -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-200"
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.94, rotate: -3 }}
           >

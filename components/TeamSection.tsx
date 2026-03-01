@@ -62,7 +62,7 @@ const TeamSection = () => {
                       src={m.img}
                       alt={m.name}
                       fill
-                      className="object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                      className="object-cover object-center transition-transform duration-200 group-hover:scale-110"
                       sizes="(max-width: 640px) 75vw, (max-width: 1024px) 50vw, 25vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
@@ -72,7 +72,7 @@ const TeamSection = () => {
                       </span>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-                      <h3 className="font-accent font-extrabold text-primary-foreground text-base sm:text-lg leading-snug group-hover:text-campaign-lime transition-colors duration-300">
+                      <h3 className="font-accent font-extrabold text-primary-foreground text-base sm:text-lg leading-snug group-hover:text-campaign-lime transition-colors duration-200">
                         {m.name}
                       </h3>
                     </div>
@@ -82,8 +82,8 @@ const TeamSection = () => {
             ))}
           </CarouselContent>
           <div className="flex items-center justify-center gap-4 mt-8 sm:mt-10">
-            <CarouselPrevious className="static translate-y-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-300" />
-            <CarouselNext className="static translate-y-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-300" />
+            <CarouselPrevious className="static translate-y-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-200" />
+            <CarouselNext className="static translate-y-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-200" />
           </div>
         </Carousel>
       </div>

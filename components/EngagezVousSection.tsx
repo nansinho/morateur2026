@@ -127,7 +127,7 @@ const EngagezVousSection = () => {
                 <div
                   className={`relative rounded-[1.25rem] aspect-[4/5] ${action.bg}
                     flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
-                    transition-all duration-300 shadow-lg
+                    transition-all duration-200 shadow-lg
                     group-hover:shadow-2xl group-hover:shadow-black/20`}
                 >
                   <div className="relative z-10 mt-8">
@@ -143,7 +143,7 @@ const EngagezVousSection = () => {
                       {action.desc}
                     </p>
                   </div>
-                  <div className={`relative z-10 flex items-center gap-2 ${action.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
+                  <div className={`relative z-10 flex items-center gap-2 ${action.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
                     {action.external ? (
                       <>
                         <span className="text-xs font-bold uppercase tracking-wider">Visiter</span>
@@ -152,7 +152,7 @@ const EngagezVousSection = () => {
                     ) : (
                       <>
                         <span className="text-xs font-bold uppercase tracking-wider">Découvrir</span>
-                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                       </>
                     )}
                   </div>

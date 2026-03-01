@@ -44,7 +44,7 @@ const Navbar = () => {
   return (
     <motion.nav
       aria-label="Navigation principale"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-background/95 backdrop-blur-xl shadow-lg shadow-foreground/5 py-3"
           : "bg-primary py-5"
@@ -66,7 +66,7 @@ const Navbar = () => {
             <button
               key={item.to}
               onClick={() => handleNav(item.to)}
-              className={`relative text-[13px] font-semibold tracking-wide uppercase transition-all duration-300 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:transition-all after:duration-300 hover:after:w-full ${
+              className={`relative text-[13px] font-semibold tracking-wide uppercase transition-all duration-200 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:transition-all after:duration-200 hover:after:w-full ${
                 isScrolled
                   ? "text-foreground/60 hover:text-foreground after:bg-campaign-lime"
                   : "text-primary-foreground/70 hover:text-primary-foreground after:bg-campaign-lime"
@@ -77,7 +77,7 @@ const Navbar = () => {
           ))}
           <button
             onClick={() => handleNav("/#procuration")}
-            className="gradient-lime text-accent-foreground px-6 py-2.5 rounded-xl text-[13px] font-extrabold tracking-wide shadow-md -rotate-1 hover:rotate-0 hover:shadow-[0_10px_30px_-8px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 transition-all duration-300"
+            className="gradient-lime text-accent-foreground px-6 py-2.5 rounded-xl text-[13px] font-extrabold tracking-wide shadow-md -rotate-1 hover:rotate-0 hover:shadow-[0_10px_30px_-8px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 transition-all duration-200"
           >
             Rejoignez-nous
           </button>
@@ -129,7 +129,7 @@ const Navbar = () => {
                 <motion.button
                   key={item.to}
                   onClick={() => handleNav(item.to)}
-                  className="text-left text-primary-foreground/80 hover:text-campaign-lime text-3xl font-accent font-extrabold uppercase tracking-wide py-3 border-b border-primary-foreground/10 transition-colors duration-300"
+                  className="text-left text-primary-foreground/80 hover:text-campaign-lime text-3xl font-accent font-extrabold uppercase tracking-wide py-3 border-b border-primary-foreground/10 transition-colors duration-200"
                   initial={{ x: -30, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.1 + i * 0.06 }}
