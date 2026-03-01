@@ -3,6 +3,7 @@
 import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Briefcase, GraduationCap, Users } from "lucide-react";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -83,12 +84,16 @@ export default function CandidatContent() {
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-end">
             <div className="relative max-w-md mx-auto lg:mx-0">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  src={candidatImg}
-                  alt="Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air"
-                  className="w-full aspect-[3/4] object-cover object-top"
-                  loading="eager"
-                />
+                <div className="relative aspect-[3/4]">
+                  <Image
+                    src={candidatImg}
+                    alt="Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority
+                  />
+                </div>
                 <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-primary/60 to-transparent" />
               </div>
               <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-xl gradient-lime opacity-40 -z-10" aria-hidden="true" />
@@ -256,12 +261,13 @@ export default function CandidatContent() {
 
           {/* Signature */}
           <div className="pt-8 flex flex-col items-center gap-4">
-            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-campaign-lime/40 shadow-lg">
-              <img
+            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-campaign-lime/40 shadow-lg relative">
+              <Image
                 src={candidatImg}
                 alt="Mathieu Morateur"
-                className="w-full h-full object-cover object-top"
-                loading="lazy"
+                fill
+                className="object-cover object-top"
+                sizes="80px"
               />
             </div>
             <div className="text-center">

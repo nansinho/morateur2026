@@ -114,9 +114,9 @@ const Footer = () => {
             <nav aria-label="Mentions légales" className="flex flex-col gap-3">
               <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-1">Légales</p>
               {[
-                { label: "Mentions légales", to: "#" },
-                { label: "Cookies", to: "#" },
-                { label: "Politique de confidentialité", to: "#" },
+                { label: "Mentions légales", to: "/mentions-legales" },
+                { label: "Cookies", to: "/cookies" },
+                { label: "Politique de confidentialité", to: "/politique-de-confidentialite" },
               ].map((link, i) => (
                 <button
                   key={i}

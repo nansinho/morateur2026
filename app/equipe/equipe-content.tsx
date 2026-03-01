@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RoadmapSection from "@/components/RoadmapSection";
@@ -62,11 +63,14 @@ export default function EquipeContent() {
             className="mt-10"
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30">
-              <div className="aspect-[3/1]">
-                <img
+              <div className="aspect-[3/1] relative">
+                <Image
                   src={equipeGroupe}
                   alt="L'équipe au complet"
-                  className="w-full h-full object-cover object-top"
+                  fill
+                  className="object-cover object-top"
+                  sizes="100vw"
+                  priority
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent" />
@@ -102,11 +106,12 @@ export default function EquipeContent() {
               <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/40">
                 {/* Photo 9:16 */}
                 <div className="aspect-[9/16] overflow-hidden relative">
-                  <img
+                  <Image
                     src={m.img}
                     alt={m.name}
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
-                    loading="lazy"
+                    fill
+                    className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent" />
 

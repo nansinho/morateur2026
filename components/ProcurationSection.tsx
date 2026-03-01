@@ -26,6 +26,8 @@ const fieldMeta = [
 
 const ProcurationSection = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [form, setForm] = useState<FormData>({ prenom: "", nom: "", email: "", tel: "", motivations: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Set<string>>(new Set());
@@ -49,12 +51,31 @@ const ProcurationSection = () => {
     setErrors(prev => ({ ...prev, [field]: fieldErrors[field] }));
   }, [form]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const allErrors = validate(form);
     setErrors(allErrors);
     setTouched(new Set(Object.keys(form)));
-    if (Object.keys(allErrors).length === 0) setSubmitted(true);
+    if (Object.keys(allErrors).length > 0) return;
+
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || 'Erreur lors de l\'envoi');
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Une erreur est survenue. Veuillez réessayer.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputClass = (field: string) => {
@@ -208,15 +229,29 @@ const ProcurationSection = () => {
                     </div>
                   </div>
 
+                  {submitError && (
+                    <p role="alert" className="text-destructive text-sm text-center flex items-center justify-center gap-1.5">
+                      <AlertCircle className="w-4 h-4" /> {submitError}
+                    </p>
+                  )}
+
                   <motion.button
                     type="submit"
-                    className="w-full gradient-lime text-accent-foreground py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base flex items-center justify-center gap-2 shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300"
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.95, rotate: -3 }}
+                    disabled={submitting}
+                    className="w-full gradient-lime text-accent-foreground py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base flex items-center justify-center gap-2 shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+                    whileHover={submitting ? {} : { scale: 1.04 }}
+                    whileTap={submitting ? {} : { scale: 0.95, rotate: -3 }}
                   >
                     <Send className="w-4 h-4" />
-                    Envoyer
+                    {submitting ? 'Envoi en cours...' : 'Envoyer'}
                   </motion.button>
+
+                  <p className="text-muted-foreground/50 text-xs text-center">
+                    En soumettant ce formulaire, vous acceptez notre{' '}
+                    <a href="/politique-de-confidentialite" className="text-campaign-lime/70 hover:text-campaign-lime underline">
+                      politique de confidentialité
+                    </a>.
+                  </p>
                 </form>
               )}
             </AnimatePresence>

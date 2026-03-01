@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Calendar, ExternalLink, User } from "lucide-react";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -92,9 +93,11 @@ export default function PresseContent() {
                 <div className={`relative rounded-[1.25rem] overflow-hidden ${article.bg} shadow-lg flex flex-col h-full transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/20`}>
                   {/* Header with logo */}
                   <div className="p-6 sm:p-7 pb-0 sm:pb-0 flex items-center justify-between">
-                    <img
+                    <Image
                       src={article.logo}
                       alt={`Logo ${article.media}`}
+                      width={160}
+                      height={40}
                       className={`h-8 sm:h-10 w-auto object-contain ${article.logoBrightness}`}
                     />
                     <span className={`${article.tagBg} ${article.tagText} px-3 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider`}>
