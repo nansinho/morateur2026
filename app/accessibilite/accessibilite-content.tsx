@@ -1,7 +1,25 @@
 'use client'
 
 import { motion } from "framer-motion";
-import { Accessibility, Eye, Ear, Brain, Heart, ArrowRight, Monitor, BookOpen, Users, Keyboard, Contrast, ImageIcon, Layout, Smartphone } from "lucide-react";
+import { Eye, Ear, Brain, Heart, ArrowRight, Monitor, BookOpen, Users, Keyboard, Contrast, ImageIcon, Layout, Smartphone } from "lucide-react";
+
+const UniversalAccessIcon = ({ className }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <circle cx="12" cy="4.5" r="2" />
+    <path d="M4 10h16" />
+    <path d="M12 10v5" />
+    <path d="M12 15l-4 6" />
+    <path d="M12 15l4 6" />
+  </svg>
+);
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
@@ -254,7 +272,7 @@ export default function AccessibiliteContent() {
           >
             <div className="flex items-center gap-4 mb-8">
               <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
-                <Accessibility className="w-6 h-6 text-primary-foreground" />
+                <UniversalAccessIcon className="w-6 h-6 text-primary-foreground" />
               </div>
               <h2 className="font-accent font-extrabold text-primary text-xl sm:text-2xl uppercase tracking-wide">
                 Accessibilité de ce site
