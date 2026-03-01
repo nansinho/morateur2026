@@ -48,7 +48,7 @@ const TeamSection = () => {
         <Carousel opts={{ align: "start", loop: true }} className="w-full">
           <CarouselContent className="-ml-4">
             {members.map((m, i) => (
-              <CarouselItem key={i} className="pl-4 basis-[75%] sm:basis-1/2 lg:basis-1/4">
+              <CarouselItem key={i} className="pl-4 basis-1/2 lg:basis-1/4">
                 <motion.div
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -63,9 +63,9 @@ const TeamSection = () => {
                       alt={m.name}
                       fill
                       className="object-cover object-center transition-transform duration-200 group-hover:scale-110"
-                      sizes="(max-width: 640px) 75vw, (max-width: 1024px) 50vw, 25vw"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent" />
                     <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
                       <span className="gradient-lime text-accent-foreground px-3 py-1 sm:px-4 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider">
                         {m.role}
