@@ -66,7 +66,7 @@ export default function PresseContent() {
             >
               REVUE DE <span className="text-campaign-lime">PRESSE</span>
             </h1>
-            <p className="text-muted-foreground max-w-xl text-lg mt-6 font-medium">
+            <p className="text-primary/60 max-w-xl text-lg mt-6 font-medium">
               Retrouvez les articles de presse consacrés à notre campagne et à notre projet pour Bouc-Bel-Air.
             </p>
           </motion.div>

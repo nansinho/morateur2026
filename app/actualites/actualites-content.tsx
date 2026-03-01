@@ -92,7 +92,7 @@ export default function ActualitesContent() {
             >
               ACTU<span className="text-campaign-lime">ALITÉS</span>
             </h1>
-            <p className="text-muted-foreground max-w-xl text-lg mt-6 font-medium">
+            <p className="text-primary/60 max-w-xl text-lg mt-6 font-medium">
               Suivez notre campagne au quotidien, sur le terrain et auprès des Boucains.
             </p>
           </motion.div>
