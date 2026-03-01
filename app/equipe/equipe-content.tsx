@@ -101,6 +101,7 @@ export default function EquipeContent() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
               whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
+              whileTap={{ scale: 0.97 }}
               className="group cursor-pointer"
             >
               <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/40">
@@ -159,7 +160,7 @@ export default function EquipeContent() {
           </p>
           <motion.button
             onClick={handleCTA}
-            className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-10 py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base shadow-lg -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-200"
+            className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-10 py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base shadow-lg -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] active:scale-95 transition-all duration-200"
             whileHover={{ scale: 1.08, y: -3 }}
             whileTap={{ scale: 0.94, rotate: -4 }}
           >

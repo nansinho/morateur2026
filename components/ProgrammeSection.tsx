@@ -111,6 +111,7 @@ const ProgrammeSection = () => {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08, duration: 0.4 }}
                   whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
+                  whileTap={{ scale: 0.97 }}
                   className="cursor-pointer group"
                 >
                     <div
