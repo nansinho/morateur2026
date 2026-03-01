@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Calendar, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 const actualites = [
   {
@@ -106,11 +107,12 @@ const ActualitesSection = () => {
                 <div className={`relative rounded-[1.25rem] overflow-hidden shadow-lg ${style.bg} flex flex-col h-full transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-black/20`}>
                   {/* Image */}
                   <div className="aspect-[16/9] overflow-hidden relative">
-                    <img
+                    <Image
                       src={actu.image}
                       alt={actu.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      loading="lazy"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   </div>

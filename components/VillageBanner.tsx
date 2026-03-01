@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 const villageBanner = "/images/projet-banner.png";
 
@@ -14,7 +15,7 @@ const VillageBanner = () => {
   return (
     <div ref={ref} className="relative h-[50vh] md:h-[70vh] overflow-hidden">
       <motion.div className="absolute inset-0" style={{ y: imgY, scale }}>
-        <img src={villageBanner} alt="Vue panoramique de Bouc-Bel-Air, commune des Bouches-du-Rhône" className="w-full h-full object-cover" loading="lazy" />
+        <Image src={villageBanner} alt="Vue panoramique de Bouc-Bel-Air, commune des Bouches-du-Rhône" fill className="object-cover" sizes="100vw" />
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">

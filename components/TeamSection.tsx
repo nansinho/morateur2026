@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const equipe1 = "/images/equipe-1.png";
 const equipe2 = "/images/equipe-2.png";
@@ -57,11 +58,12 @@ const TeamSection = () => {
                   className="group cursor-pointer"
                 >
                   <div className="relative rounded-2xl overflow-hidden aspect-[3/4] shadow-lg">
-                    <img
+                    <Image
                       src={m.img}
                       alt={m.name}
-                      className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                      loading="lazy"
+                      fill
+                      className="object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                      sizes="(max-width: 640px) 75vw, (max-width: 1024px) 50vw, 25vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
                     <div className="absolute top-3 left-3 sm:top-4 sm:left-4">

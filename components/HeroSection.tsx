@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useRouter } from "next/navigation";
 import { useRef, useState, useEffect } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
+import Image from "next/image";
 
 const candidatImg = "/images/header_candidat_portrait.png";
 
@@ -41,12 +42,13 @@ const HeroSection = () => {
     <section ref={ref} id="hero" className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Fullscreen parallax photo */}
       <motion.div className="absolute inset-0" style={{ scale: imgScale, y: imgY }}>
-        <img
+        <Image
           src={candidatImg}
           alt="Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air"
-          className="w-full h-full object-cover object-top"
-          loading="eager"
-          fetchPriority="high"
+          fill
+          className="object-cover object-top"
+          priority
+          sizes="100vw"
         />
       </motion.div>
 
