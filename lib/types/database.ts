@@ -78,3 +78,75 @@ export interface SeoPage {
   keywords: string
   og_image: string
 }
+
+// Consultations citoyennes par quartier
+
+export interface Quartier {
+  id: string
+  slug: string
+  name: string
+  description: string
+  is_active: boolean
+  display_order: number
+  created_at: string
+  updated_at: string
+}
+
+export interface QuartierQuestion {
+  id: string
+  quartier_id: string
+  question_number: number
+  question_text: string
+  question_image_url: string
+  is_active: boolean
+  created_at: string
+}
+
+export interface ConsultationSubmission {
+  id: string
+  quartier_id: string
+  first_name: string
+  last_name: string
+  email: string
+  phone: string
+  wants_personal_response: boolean
+  wants_callback: boolean
+  status: 'new' | 'read' | 'replied' | 'archived'
+  admin_notes: string
+  replied_at: string | null
+  replied_by: string | null
+  created_at: string
+  updated_at: string
+  quartiers?: { name: string }
+}
+
+export interface ConsultationAnswer {
+  id: string
+  submission_id: string
+  question_id: string
+  answer_text: string
+  created_at: string
+  quartier_questions?: { question_text: string; question_number: number }
+}
+
+export interface AdminReply {
+  id: string
+  submission_id: string
+  reply_text: string
+  sent_at: string
+  sent_by: string
+}
+
+export interface QuartierStats {
+  quartier_id: string
+  slug: string
+  quartier_name: string
+  total_submissions: number
+  new_count: number
+  read_count: number
+  replied_count: number
+  archived_count: number
+  wants_response_count: number
+  wants_callback_count: number
+  last_submission_at: string | null
+}

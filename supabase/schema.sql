@@ -151,3 +151,146 @@ CREATE POLICY "Lecture publique du SEO" ON seo_pages FOR SELECT TO anon, authent
 CREATE POLICY "Admin : insertion SEO" ON seo_pages FOR INSERT TO authenticated WITH CHECK (true);
 CREATE POLICY "Admin : modification SEO" ON seo_pages FOR UPDATE TO authenticated USING (true);
 CREATE POLICY "Admin : suppression SEO" ON seo_pages FOR DELETE TO authenticated USING (true);
+
+-- ============================================
+-- Consultations citoyennes par quartier
+-- ============================================
+
+-- Quartiers
+CREATE TABLE IF NOT EXISTS quartiers (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL DEFAULT '',
+  is_active BOOLEAN DEFAULT true,
+  display_order INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Questions par quartier
+CREATE TABLE IF NOT EXISTS quartier_questions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  quartier_id UUID NOT NULL REFERENCES quartiers(id) ON DELETE CASCADE,
+  question_number INTEGER NOT NULL,
+  question_text TEXT NOT NULL,
+  question_image_url TEXT NOT NULL DEFAULT '',
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  UNIQUE(quartier_id, question_number)
+);
+
+-- Soumissions de consultation (1 ligne = 1 citoyen qui soumet le formulaire)
+CREATE TABLE IF NOT EXISTS consultation_submissions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  quartier_id UUID NOT NULL REFERENCES quartiers(id) ON DELETE RESTRICT,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT NOT NULL DEFAULT '',
+  wants_personal_response BOOLEAN DEFAULT false,
+  wants_callback BOOLEAN DEFAULT false,
+  status TEXT NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'read', 'replied', 'archived')),
+  admin_notes TEXT NOT NULL DEFAULT '',
+  replied_at TIMESTAMPTZ,
+  replied_by TEXT,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Réponses aux questions (1 ligne = 1 réponse à 1 question)
+CREATE TABLE IF NOT EXISTS consultation_answers (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  submission_id UUID NOT NULL REFERENCES consultation_submissions(id) ON DELETE CASCADE,
+  question_id UUID NOT NULL REFERENCES quartier_questions(id) ON DELETE CASCADE,
+  answer_text TEXT NOT NULL DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT now(),
+  UNIQUE(submission_id, question_id)
+);
+
+-- Réponses admin envoyées aux citoyens (piste d'audit)
+CREATE TABLE IF NOT EXISTS admin_replies (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  submission_id UUID NOT NULL REFERENCES consultation_submissions(id) ON DELETE CASCADE,
+  reply_text TEXT NOT NULL,
+  sent_at TIMESTAMPTZ DEFAULT now(),
+  sent_by TEXT NOT NULL DEFAULT ''
+);
+
+-- Index pour les performances
+CREATE INDEX IF NOT EXISTS idx_quartier_questions_quartier ON quartier_questions(quartier_id);
+CREATE INDEX IF NOT EXISTS idx_consultation_submissions_quartier ON consultation_submissions(quartier_id);
+CREATE INDEX IF NOT EXISTS idx_consultation_submissions_status ON consultation_submissions(status);
+CREATE INDEX IF NOT EXISTS idx_consultation_submissions_created ON consultation_submissions(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_consultation_submissions_email ON consultation_submissions(email);
+CREATE INDEX IF NOT EXISTS idx_consultation_answers_submission ON consultation_answers(submission_id);
+CREATE INDEX IF NOT EXISTS idx_admin_replies_submission ON admin_replies(submission_id);
+
+-- Trigger updated_at
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = now();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_quartiers_updated_at
+  BEFORE UPDATE ON quartiers
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER set_consultation_submissions_updated_at
+  BEFORE UPDATE ON consultation_submissions
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Vue stats pour le dashboard admin
+CREATE OR REPLACE VIEW quartier_stats AS
+SELECT
+  q.id AS quartier_id,
+  q.slug,
+  q.name AS quartier_name,
+  COUNT(DISTINCT cs.id) AS total_submissions,
+  COUNT(DISTINCT cs.id) FILTER (WHERE cs.status = 'new') AS new_count,
+  COUNT(DISTINCT cs.id) FILTER (WHERE cs.status = 'read') AS read_count,
+  COUNT(DISTINCT cs.id) FILTER (WHERE cs.status = 'replied') AS replied_count,
+  COUNT(DISTINCT cs.id) FILTER (WHERE cs.status = 'archived') AS archived_count,
+  COUNT(DISTINCT cs.id) FILTER (WHERE cs.wants_personal_response = true) AS wants_response_count,
+  COUNT(DISTINCT cs.id) FILTER (WHERE cs.wants_callback = true) AS wants_callback_count,
+  MAX(cs.created_at) AS last_submission_at
+FROM quartiers q
+LEFT JOIN consultation_submissions cs ON cs.quartier_id = q.id
+GROUP BY q.id, q.slug, q.name;
+
+-- RLS : Quartiers & Consultations
+ALTER TABLE quartiers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE quartier_questions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE consultation_submissions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE consultation_answers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE admin_replies ENABLE ROW LEVEL SECURITY;
+
+-- Quartiers : lecture publique, écriture admin
+CREATE POLICY "Lecture publique des quartiers" ON quartiers FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "Admin : insertion de quartiers" ON quartiers FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Admin : modification de quartiers" ON quartiers FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Admin : suppression de quartiers" ON quartiers FOR DELETE TO authenticated USING (true);
+
+-- Questions : lecture publique, écriture admin
+CREATE POLICY "Lecture publique des questions" ON quartier_questions FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "Admin : insertion de questions" ON quartier_questions FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Admin : modification de questions" ON quartier_questions FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Admin : suppression de questions" ON quartier_questions FOR DELETE TO authenticated USING (true);
+
+-- Soumissions : insertion publique (formulaire), lecture/modification admin
+CREATE POLICY "Insertion publique de consultations" ON consultation_submissions FOR INSERT TO anon WITH CHECK (true);
+CREATE POLICY "Admin : lecture des consultations" ON consultation_submissions FOR SELECT TO authenticated USING (true);
+CREATE POLICY "Admin : modification des consultations" ON consultation_submissions FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Admin : suppression des consultations" ON consultation_submissions FOR DELETE TO authenticated USING (true);
+
+-- Réponses aux questions : insertion publique, lecture admin
+CREATE POLICY "Insertion publique de reponses consultation" ON consultation_answers FOR INSERT TO anon WITH CHECK (true);
+CREATE POLICY "Admin : lecture des reponses consultation" ON consultation_answers FOR SELECT TO authenticated USING (true);
+CREATE POLICY "Admin : suppression des reponses consultation" ON consultation_answers FOR DELETE TO authenticated USING (true);
+
+-- Réponses admin : authentifié uniquement
+CREATE POLICY "Admin : lecture des reponses admin" ON admin_replies FOR SELECT TO authenticated USING (true);
+CREATE POLICY "Admin : insertion de reponses admin" ON admin_replies FOR INSERT TO authenticated WITH CHECK (true);
