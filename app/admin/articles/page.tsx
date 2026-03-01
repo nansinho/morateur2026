@@ -27,10 +27,10 @@ import { toast } from 'sonner'
 const TAGS = ['Événement', 'Terrain', 'Programme', 'Tribune']
 
 const tagColors: Record<string, string> = {
-  'Événement': 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-  'Terrain': 'bg-teal-500/20 text-teal-400 border-teal-500/30',
-  'Programme': 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-  'Tribune': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+  'Événement': 'bg-campaign-lime/15 text-campaign-lime border-campaign-lime/30',
+  'Terrain': 'bg-primary/30 text-foreground border-primary/40',
+  'Programme': 'bg-campaign-olive/20 text-campaign-olive border-campaign-olive/30',
+  'Tribune': 'bg-campaign-steel/30 text-campaign-teal-light border-campaign-steel/40',
 }
 
 const emptyArticle: Omit<Article, 'id' | 'created_at'> = {
@@ -101,53 +101,53 @@ export default function ArticlesPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white">Articles & Actualités</h2>
-        <Button onClick={openCreate} className="bg-teal-600 hover:bg-teal-500 text-white">
+        <h2 className="text-2xl font-bold text-foreground font-accent uppercase tracking-wide">Articles & Actualités</h2>
+        <Button onClick={openCreate} className="gradient-lime text-accent-foreground">
           <Plus className="w-4 h-4 mr-2" /> Nouvel article
         </Button>
       </div>
 
-      <div className="rounded-xl border border-slate-700/50 bg-slate-800/30 overflow-hidden">
+      <div className="rounded-2xl border border-border/50 bg-card/30 overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow className="border-slate-700/50 hover:bg-transparent">
-              <TableHead className="text-slate-400 w-12">#</TableHead>
-              <TableHead className="text-slate-400">Titre</TableHead>
-              <TableHead className="text-slate-400 hidden sm:table-cell">Date</TableHead>
-              <TableHead className="text-slate-400 hidden md:table-cell">Tag</TableHead>
-              <TableHead className="text-slate-400 text-right">Actions</TableHead>
+            <TableRow className="border-border/50 hover:bg-transparent">
+              <TableHead className="text-muted-foreground w-12">#</TableHead>
+              <TableHead className="text-muted-foreground">Titre</TableHead>
+              <TableHead className="text-muted-foreground hidden sm:table-cell">Date</TableHead>
+              <TableHead className="text-muted-foreground hidden md:table-cell">Tag</TableHead>
+              <TableHead className="text-muted-foreground text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
               Array.from({ length: 3 }).map((_, i) => (
-                <TableRow key={i} className="border-slate-700/50">
-                  <TableCell colSpan={5}><div className="h-8 bg-slate-700/30 rounded animate-pulse" /></TableCell>
+                <TableRow key={i} className="border-border/50">
+                  <TableCell colSpan={5}><div className="h-8 bg-secondary/30 rounded animate-pulse" /></TableCell>
                 </TableRow>
               ))
             ) : articles.length === 0 ? (
-              <TableRow className="border-slate-700/50">
-                <TableCell colSpan={5} className="text-center text-slate-500 py-8">
+              <TableRow className="border-border/50">
+                <TableCell colSpan={5} className="text-center text-muted-foreground/60 py-8">
                   Aucun article
                 </TableCell>
               </TableRow>
             ) : (
               articles.map((article) => (
-                <TableRow key={article.id} className="border-slate-700/50 hover:bg-slate-700/20">
-                  <TableCell className="text-slate-500 text-sm">{article.sort_order}</TableCell>
-                  <TableCell className="text-white font-medium">{article.title}</TableCell>
-                  <TableCell className="text-slate-400 text-sm hidden sm:table-cell">{article.date}</TableCell>
+                <TableRow key={article.id} className="border-border/50 hover:bg-secondary/20">
+                  <TableCell className="text-muted-foreground/60 text-sm">{article.sort_order}</TableCell>
+                  <TableCell className="text-foreground font-medium">{article.title}</TableCell>
+                  <TableCell className="text-muted-foreground text-sm hidden sm:table-cell">{article.date}</TableCell>
                   <TableCell className="hidden md:table-cell">
-                    <Badge variant="outline" className={tagColors[article.tag] || 'text-slate-400'}>
+                    <Badge variant="outline" className={tagColors[article.tag] || 'text-muted-foreground'}>
                       {article.tag}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-1">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white" onClick={() => openEdit(article)}>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => openEdit(article)}>
                         <Pencil className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-red-400 hover:text-red-300" onClick={() => setDeleteId(article.id)}>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive" onClick={() => setDeleteId(article.id)}>
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
@@ -161,77 +161,77 @@ export default function ArticlesPage() {
 
       {/* Edit/Create dialog */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
-        <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-lg">
+        <DialogContent className="bg-card border-border text-foreground max-w-lg">
           <DialogHeader>
             <DialogTitle>{editId ? 'Modifier l\'article' : 'Nouvel article'}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 mt-2">
             <div className="space-y-2">
-              <Label className="text-slate-300">Titre</Label>
+              <Label className="text-foreground/80">Titre</Label>
               <Input
                 value={editData.title}
                 onChange={(e) => setEditData({ ...editData, title: e.target.value })}
-                className="bg-slate-700/50 border-slate-600 text-white"
+                className="bg-secondary/50 border-border text-foreground"
                 placeholder="Titre de l'article"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-slate-300">Date</Label>
+                <Label className="text-foreground/80">Date</Label>
                 <Input
                   value={editData.date}
                   onChange={(e) => setEditData({ ...editData, date: e.target.value })}
-                  className="bg-slate-700/50 border-slate-600 text-white"
+                  className="bg-secondary/50 border-border text-foreground"
                   placeholder="15 Janvier 2026"
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-slate-300">Tag</Label>
+                <Label className="text-foreground/80">Tag</Label>
                 <Select value={editData.tag} onValueChange={(v) => setEditData({ ...editData, tag: v })}>
-                  <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white">
+                  <SelectTrigger className="bg-secondary/50 border-border text-foreground">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-800 border-slate-700">
+                  <SelectContent className="bg-card border-border">
                     {TAGS.map((t) => (
-                      <SelectItem key={t} value={t} className="text-white">{t}</SelectItem>
+                      <SelectItem key={t} value={t} className="text-foreground">{t}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300">URL Image</Label>
+              <Label className="text-foreground/80">URL Image</Label>
               <Input
                 value={editData.image}
                 onChange={(e) => setEditData({ ...editData, image: e.target.value })}
-                className="bg-slate-700/50 border-slate-600 text-white"
+                className="bg-secondary/50 border-border text-foreground"
                 placeholder="https://..."
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300">Description</Label>
+              <Label className="text-foreground/80">Description</Label>
               <Textarea
                 value={editData.description}
                 onChange={(e) => setEditData({ ...editData, description: e.target.value })}
-                className="bg-slate-700/50 border-slate-600 text-white min-h-[100px]"
+                className="bg-secondary/50 border-border text-foreground min-h-[100px]"
                 placeholder="Description de l'article..."
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300">Ordre d&apos;affichage</Label>
+              <Label className="text-foreground/80">Ordre d&apos;affichage</Label>
               <Input
                 type="number"
                 value={editData.sort_order}
                 onChange={(e) => setEditData({ ...editData, sort_order: parseInt(e.target.value) || 0 })}
-                className="bg-slate-700/50 border-slate-600 text-white w-24"
+                className="bg-secondary/50 border-border text-foreground w-24"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setEditOpen(false)} className="border-slate-600 text-slate-300 hover:bg-slate-700">
+            <Button variant="outline" onClick={() => setEditOpen(false)} className="border-border text-foreground/80 hover:bg-secondary">
               Annuler
             </Button>
-            <Button onClick={handleSave} disabled={saving} className="bg-teal-600 hover:bg-teal-500 text-white">
+            <Button onClick={handleSave} disabled={saving} className="gradient-lime text-accent-foreground">
               {saving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               {editId ? 'Modifier' : 'Créer'}
             </Button>
@@ -241,16 +241,16 @@ export default function ArticlesPage() {
 
       {/* Delete confirmation */}
       <AlertDialog open={!!deleteId} onOpenChange={(open) => !open && setDeleteId(null)}>
-        <AlertDialogContent className="bg-slate-800 border-slate-700">
+        <AlertDialogContent className="bg-card border-border">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Supprimer cet article ?</AlertDialogTitle>
-            <AlertDialogDescription className="text-slate-400">
+            <AlertDialogTitle className="text-foreground">Supprimer cet article ?</AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground">
               Cette action est irréversible.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-slate-700 text-white border-slate-600 hover:bg-slate-600">Annuler</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-500 text-white">Supprimer</AlertDialogAction>
+            <AlertDialogCancel className="bg-secondary text-foreground border-border hover:bg-secondary">Annuler</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90 text-foreground">Supprimer</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

@@ -86,50 +86,50 @@ export default function EventsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white">Événements / Roadmap</h2>
-        <Button onClick={openCreate} className="bg-teal-600 hover:bg-teal-500 text-white">
+        <h2 className="text-2xl font-accent font-bold text-foreground uppercase tracking-wide">Événements / Roadmap</h2>
+        <Button onClick={openCreate} className="gradient-lime text-accent-foreground font-accent font-bold">
           <Plus className="w-4 h-4 mr-2" /> Nouvel événement
         </Button>
       </div>
 
-      <div className="rounded-xl border border-slate-700/50 bg-slate-800/30 overflow-hidden">
+      <div className="rounded-2xl border border-border/50 bg-card/30 overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow className="border-slate-700/50 hover:bg-transparent">
-              <TableHead className="text-slate-400 w-12">#</TableHead>
-              <TableHead className="text-slate-400">Titre</TableHead>
-              <TableHead className="text-slate-400 hidden sm:table-cell">Date</TableHead>
-              <TableHead className="text-slate-400 hidden md:table-cell">Icône</TableHead>
-              <TableHead className="text-slate-400">Statut</TableHead>
-              <TableHead className="text-slate-400 text-right">Actions</TableHead>
+            <TableRow className="border-border/50 hover:bg-transparent">
+              <TableHead className="text-muted-foreground w-12">#</TableHead>
+              <TableHead className="text-muted-foreground">Titre</TableHead>
+              <TableHead className="text-muted-foreground hidden sm:table-cell">Date</TableHead>
+              <TableHead className="text-muted-foreground hidden md:table-cell">Icône</TableHead>
+              <TableHead className="text-muted-foreground">Statut</TableHead>
+              <TableHead className="text-muted-foreground text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
               Array.from({ length: 4 }).map((_, i) => (
-                <TableRow key={i} className="border-slate-700/50">
-                  <TableCell colSpan={6}><div className="h-8 bg-slate-700/30 rounded animate-pulse" /></TableCell>
+                <TableRow key={i} className="border-border/50">
+                  <TableCell colSpan={6}><div className="h-8 bg-secondary/30 rounded animate-pulse" /></TableCell>
                 </TableRow>
               ))
             ) : events.length === 0 ? (
-              <TableRow className="border-slate-700/50">
-                <TableCell colSpan={6} className="text-center text-slate-500 py-8">Aucun événement</TableCell>
+              <TableRow className="border-border/50">
+                <TableCell colSpan={6} className="text-center text-muted-foreground/60 py-8">Aucun événement</TableCell>
               </TableRow>
             ) : (
               events.map((event) => (
-                <TableRow key={event.id} className="border-slate-700/50 hover:bg-slate-700/20">
-                  <TableCell className="text-slate-500 text-sm">{event.sort_order}</TableCell>
-                  <TableCell className="text-white font-medium">{event.title}</TableCell>
-                  <TableCell className="text-slate-400 text-sm hidden sm:table-cell">{event.date}</TableCell>
-                  <TableCell className="text-slate-500 text-sm hidden md:table-cell">{event.icon}</TableCell>
+                <TableRow key={event.id} className="border-border/50 hover:bg-secondary/20">
+                  <TableCell className="text-muted-foreground/60 text-sm">{event.sort_order}</TableCell>
+                  <TableCell className="text-foreground font-medium">{event.title}</TableCell>
+                  <TableCell className="text-muted-foreground text-sm hidden sm:table-cell">{event.date}</TableCell>
+                  <TableCell className="text-muted-foreground/60 text-sm hidden md:table-cell">{event.icon}</TableCell>
                   <TableCell>
                     <button onClick={() => toggleDone(event)}>
                       {event.is_done ? (
-                        <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 cursor-pointer">
+                        <Badge className="bg-campaign-lime/20 text-campaign-lime border-campaign-lime/30 cursor-pointer">
                           <Check className="w-3 h-3 mr-1" /> Terminé
                         </Badge>
                       ) : (
-                        <Badge variant="outline" className="text-slate-400 border-slate-600 cursor-pointer">
+                        <Badge variant="outline" className="text-muted-foreground border-border cursor-pointer">
                           À venir
                         </Badge>
                       )}
@@ -137,10 +137,10 @@ export default function EventsPage() {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-1">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white" onClick={() => openEdit(event)}>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => openEdit(event)}>
                         <Pencil className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-red-400 hover:text-red-300" onClick={() => setDeleteId(event.id)}>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive" onClick={() => setDeleteId(event.id)}>
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
@@ -154,43 +154,43 @@ export default function EventsPage() {
 
       {/* Edit dialog */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
-        <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-lg">
+        <DialogContent className="bg-card border-border text-foreground max-w-lg">
           <DialogHeader>
             <DialogTitle>{editId ? 'Modifier l\'événement' : 'Nouvel événement'}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 mt-2">
             <div className="space-y-2">
-              <Label className="text-slate-300">Titre</Label>
-              <Input value={editData.title} onChange={(e) => setEditData({ ...editData, title: e.target.value })} className="bg-slate-700/50 border-slate-600 text-white" />
+              <Label className="text-foreground/80">Titre</Label>
+              <Input value={editData.title} onChange={(e) => setEditData({ ...editData, title: e.target.value })} className="bg-secondary/50 border-border text-foreground" />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-slate-300">Date</Label>
-                <Input value={editData.date} onChange={(e) => setEditData({ ...editData, date: e.target.value })} className="bg-slate-700/50 border-slate-600 text-white" placeholder="Mars 2026" />
+                <Label className="text-foreground/80">Date</Label>
+                <Input value={editData.date} onChange={(e) => setEditData({ ...editData, date: e.target.value })} className="bg-secondary/50 border-border text-foreground" placeholder="Mars 2026" />
               </div>
               <div className="space-y-2">
-                <Label className="text-slate-300">Icône (Lucide)</Label>
-                <Input value={editData.icon} onChange={(e) => setEditData({ ...editData, icon: e.target.value })} className="bg-slate-700/50 border-slate-600 text-white" placeholder="Flag" />
+                <Label className="text-foreground/80">Icône (Lucide)</Label>
+                <Input value={editData.icon} onChange={(e) => setEditData({ ...editData, icon: e.target.value })} className="bg-secondary/50 border-border text-foreground" placeholder="Flag" />
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300">Description</Label>
-              <Textarea value={editData.description} onChange={(e) => setEditData({ ...editData, description: e.target.value })} className="bg-slate-700/50 border-slate-600 text-white min-h-[80px]" />
+              <Label className="text-foreground/80">Description</Label>
+              <Textarea value={editData.description} onChange={(e) => setEditData({ ...editData, description: e.target.value })} className="bg-secondary/50 border-border text-foreground min-h-[80px]" />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-slate-300">Ordre</Label>
-                <Input type="number" value={editData.sort_order} onChange={(e) => setEditData({ ...editData, sort_order: parseInt(e.target.value) || 0 })} className="bg-slate-700/50 border-slate-600 text-white" />
+                <Label className="text-foreground/80">Ordre</Label>
+                <Input type="number" value={editData.sort_order} onChange={(e) => setEditData({ ...editData, sort_order: parseInt(e.target.value) || 0 })} className="bg-secondary/50 border-border text-foreground" />
               </div>
               <div className="flex items-center gap-3 pt-7">
                 <Switch checked={editData.is_done} onCheckedChange={(v) => setEditData({ ...editData, is_done: v })} />
-                <Label className="text-slate-300">Terminé</Label>
+                <Label className="text-foreground/80">Terminé</Label>
               </div>
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setEditOpen(false)} className="border-slate-600 text-slate-300 hover:bg-slate-700">Annuler</Button>
-            <Button onClick={handleSave} disabled={saving} className="bg-teal-600 hover:bg-teal-500 text-white">
+            <Button variant="outline" onClick={() => setEditOpen(false)} className="border-border text-foreground/80 hover:bg-secondary">Annuler</Button>
+            <Button onClick={handleSave} disabled={saving} className="gradient-lime text-accent-foreground font-accent font-bold">
               {saving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               {editId ? 'Modifier' : 'Créer'}
             </Button>
@@ -200,14 +200,14 @@ export default function EventsPage() {
 
       {/* Delete confirmation */}
       <AlertDialog open={!!deleteId} onOpenChange={(open) => !open && setDeleteId(null)}>
-        <AlertDialogContent className="bg-slate-800 border-slate-700">
+        <AlertDialogContent className="bg-card border-border">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Supprimer cet événement ?</AlertDialogTitle>
-            <AlertDialogDescription className="text-slate-400">Cette action est irréversible.</AlertDialogDescription>
+            <AlertDialogTitle className="text-foreground">Supprimer cet événement ?</AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground">Cette action est irréversible.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-slate-700 text-white border-slate-600 hover:bg-slate-600">Annuler</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-500 text-white">Supprimer</AlertDialogAction>
+            <AlertDialogCancel className="bg-secondary text-foreground border-border hover:bg-secondary/80">Annuler</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90 text-foreground">Supprimer</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

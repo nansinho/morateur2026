@@ -63,10 +63,10 @@ export default function SeoPage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-white">SEO & Meta</h2>
+        <h2 className="text-2xl font-accent font-bold text-foreground uppercase tracking-wide">SEO & Meta</h2>
         <div className="space-y-4">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-24 bg-slate-800/50 rounded-xl animate-pulse" />
+            <div key={i} className="h-24 bg-card/50 rounded-2xl animate-pulse" />
           ))}
         </div>
       </div>
@@ -77,44 +77,44 @@ export default function SeoPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">SEO & Meta</h2>
-          <p className="text-sm text-slate-400 mt-1">Gérez les balises meta de chaque page du site</p>
+          <h2 className="text-2xl font-accent font-bold text-foreground uppercase tracking-wide">SEO & Meta</h2>
+          <p className="text-sm text-muted-foreground mt-1">Gérez les balises meta de chaque page du site</p>
         </div>
         <div className="flex items-center gap-2">
-          <Search className="w-5 h-5 text-teal-400" />
-          <span className="text-sm text-slate-400">{pages.length} pages</span>
+          <Search className="w-5 h-5 text-campaign-lime" />
+          <span className="text-sm text-muted-foreground">{pages.length} pages</span>
         </div>
       </div>
 
       <div className="space-y-3">
         {pages.map((page) => (
-          <Card key={page.id} className="bg-slate-800/50 border-slate-700/50 hover:bg-slate-800/80 transition-colors group">
+          <Card key={page.id} className="bg-card/50 border-border/50 hover:bg-card/80 transition-colors group">
             <CardContent className="p-5">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-start gap-4 flex-1 min-w-0">
-                  <div className="w-10 h-10 rounded-lg bg-slate-700/50 flex items-center justify-center flex-shrink-0">
-                    <Globe className="w-5 h-5 text-teal-400" />
+                  <div className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center flex-shrink-0">
+                    <Globe className="w-5 h-5 text-campaign-lime" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <p className="font-semibold text-white text-sm">{pageLabels[page.path] || page.path}</p>
-                      <Badge variant="outline" className="text-[10px] text-slate-500 border-slate-700">{page.path}</Badge>
+                      <p className="font-semibold text-foreground text-sm">{pageLabels[page.path] || page.path}</p>
+                      <Badge variant="outline" className="text-[10px] text-muted-foreground/60 border-border">{page.path}</Badge>
                     </div>
-                    <p className="text-sm text-teal-400 font-medium truncate">{page.title || '(pas de titre)'}</p>
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2">{page.description || '(pas de description)'}</p>
+                    <p className="text-sm text-campaign-lime font-medium truncate">{page.title || '(pas de titre)'}</p>
+                    <p className="text-xs text-muted-foreground/60 mt-1 line-clamp-2">{page.description || '(pas de description)'}</p>
                     {page.keywords && (
                       <div className="flex flex-wrap gap-1 mt-2">
                         {page.keywords.split(',').slice(0, 4).map((kw, i) => (
-                          <span key={i} className="text-[10px] bg-slate-700/50 text-slate-400 px-1.5 py-0.5 rounded">{kw.trim()}</span>
+                          <span key={i} className="text-[10px] bg-secondary/50 text-muted-foreground px-1.5 py-0.5 rounded">{kw.trim()}</span>
                         ))}
                         {page.keywords.split(',').length > 4 && (
-                          <span className="text-[10px] text-slate-600">+{page.keywords.split(',').length - 4}</span>
+                          <span className="text-[10px] text-muted-foreground/40">+{page.keywords.split(',').length - 4}</span>
                         )}
                       </div>
                     )}
                   </div>
                 </div>
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => openEdit(page)}>
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => openEdit(page)}>
                   <Pencil className="w-4 h-4" />
                 </Button>
               </div>
@@ -125,64 +125,64 @@ export default function SeoPage() {
 
       {/* Edit dialog */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
-        <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-lg">
+        <DialogContent className="bg-card border-border text-foreground max-w-lg">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <FileText className="w-5 h-5 text-teal-400" />
+              <FileText className="w-5 h-5 text-campaign-lime" />
               SEO — {editData && (pageLabels[editData.path] || editData.path)}
             </DialogTitle>
           </DialogHeader>
           {editData && (
             <div className="space-y-4 mt-2">
               <div className="space-y-2">
-                <Label className="text-slate-300">Meta Title</Label>
+                <Label className="text-foreground/80">Meta Title</Label>
                 <Input
                   value={editData.title}
                   onChange={(e) => setEditData({ ...editData, title: e.target.value })}
-                  className="bg-slate-700/50 border-slate-600 text-white"
+                  className="bg-secondary/50 border-border text-foreground"
                 />
-                <p className="text-[10px] text-slate-600">{editData.title.length}/60 caractères (recommandé: 50-60)</p>
+                <p className="text-[10px] text-muted-foreground/40">{editData.title.length}/60 caractères (recommandé: 50-60)</p>
               </div>
               <div className="space-y-2">
-                <Label className="text-slate-300">Meta Description</Label>
+                <Label className="text-foreground/80">Meta Description</Label>
                 <Textarea
                   value={editData.description}
                   onChange={(e) => setEditData({ ...editData, description: e.target.value })}
-                  className="bg-slate-700/50 border-slate-600 text-white min-h-[80px]"
+                  className="bg-secondary/50 border-border text-foreground min-h-[80px]"
                 />
-                <p className="text-[10px] text-slate-600">{editData.description.length}/160 caractères (recommandé: 120-160)</p>
+                <p className="text-[10px] text-muted-foreground/40">{editData.description.length}/160 caractères (recommandé: 120-160)</p>
               </div>
               <div className="space-y-2">
-                <Label className="text-slate-300">Mots-clés (séparés par des virgules)</Label>
+                <Label className="text-foreground/80">Mots-clés (séparés par des virgules)</Label>
                 <Textarea
                   value={editData.keywords}
                   onChange={(e) => setEditData({ ...editData, keywords: e.target.value })}
-                  className="bg-slate-700/50 border-slate-600 text-white min-h-[60px]"
+                  className="bg-secondary/50 border-border text-foreground min-h-[60px]"
                   placeholder="mot-clé 1, mot-clé 2, mot-clé 3"
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-slate-300">Image OpenGraph</Label>
+                <Label className="text-foreground/80">Image OpenGraph</Label>
                 <Input
                   value={editData.og_image}
                   onChange={(e) => setEditData({ ...editData, og_image: e.target.value })}
-                  className="bg-slate-700/50 border-slate-600 text-white"
+                  className="bg-secondary/50 border-border text-foreground"
                   placeholder="/images/candidat-banner.png"
                 />
               </div>
 
               {/* Preview */}
-              <div className="p-4 rounded-lg bg-slate-900/50 border border-slate-700/50 space-y-1">
-                <p className="text-xs text-slate-600 mb-2 font-medium">Aperçu Google</p>
-                <p className="text-blue-400 text-sm font-medium truncate">{editData.title || 'Titre de la page'}</p>
-                <p className="text-xs text-emerald-400 truncate">morateur2026.fr{editData.path}</p>
-                <p className="text-xs text-slate-400 line-clamp-2">{editData.description || 'Description de la page...'}</p>
+              <div className="p-4 rounded-lg bg-background/50 border border-border/50 space-y-1">
+                <p className="text-xs text-muted-foreground/40 mb-2 font-medium">Aperçu Google</p>
+                <p className="text-campaign-lime text-sm font-medium truncate">{editData.title || 'Titre de la page'}</p>
+                <p className="text-xs text-campaign-lime truncate">morateur2026.fr{editData.path}</p>
+                <p className="text-xs text-muted-foreground line-clamp-2">{editData.description || 'Description de la page...'}</p>
               </div>
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setEditOpen(false)} className="border-slate-600 text-slate-300 hover:bg-slate-700">Annuler</Button>
-            <Button onClick={handleSave} disabled={saving} className="bg-teal-600 hover:bg-teal-500 text-white">
+            <Button variant="outline" onClick={() => setEditOpen(false)} className="border-border text-foreground/80 hover:bg-secondary">Annuler</Button>
+            <Button onClick={handleSave} disabled={saving} className="gradient-lime text-accent-foreground font-accent font-bold">
               {saving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               Enregistrer
             </Button>
