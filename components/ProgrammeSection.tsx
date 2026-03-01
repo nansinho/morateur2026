@@ -1,9 +1,9 @@
 'use client'
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ShieldCheck, Building2, Store, Leaf, GraduationCap, ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import type { LucideIcon } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -11,62 +11,36 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import { getIcon } from "@/lib/icon-map";
+import { createClient } from '@/lib/supabase/client';
+import type { ProgrammePillar } from '@/lib/types/database';
 
-const pillars: {
-  icon: LucideIcon;
-  title: string;
-  desc: string;
-  number: string;
-  bg: string;
-  iconColor: string;
-  textColor: string;
-  subtextColor: string;
-}[] = [
+const cardStyles = [
   {
-    icon: ShieldCheck,
-    title: "Faire barrage aux promoteurs",
-    desc: "Moratoire sur les grands projets, révision du PLU, consultation citoyenne systématique.",
-    number: "01",
     bg: "bg-gradient-to-br from-campaign-lime to-campaign-lime-light",
     iconColor: "text-accent-foreground",
     textColor: "text-accent-foreground",
     subtextColor: "text-accent-foreground/70",
   },
   {
-    icon: Building2,
-    title: "Des infrastructures à la hauteur",
-    desc: "Plan d'investissement pluriannuel, rénovation énergétique, mise aux normes d'accessibilité.",
-    number: "02",
     bg: "gradient-teal",
     iconColor: "text-primary-foreground",
     textColor: "text-primary-foreground",
     subtextColor: "text-primary-foreground/70",
   },
   {
-    icon: Store,
-    title: "Revitaliser le village",
-    desc: "Aide aux commerces de proximité, embellissement des façades, marchés thématiques.",
-    number: "03",
     bg: "bg-campaign-steel",
     iconColor: "text-primary-foreground",
     textColor: "text-primary-foreground",
     subtextColor: "text-primary-foreground/70",
   },
   {
-    icon: Leaf,
-    title: "Environnement & cadre de vie",
-    desc: "Corridors verts, lutte contre les nuisances, protection des collines et espaces boisés.",
-    number: "04",
     bg: "bg-campaign-olive",
     iconColor: "text-primary-foreground",
     textColor: "text-primary-foreground",
     subtextColor: "text-primary-foreground/70",
   },
   {
-    icon: GraduationCap,
-    title: "Écoles & jeunesse",
-    desc: "Rénovation des cantines, espaces périscolaires modernes, soutien aux associations.",
-    number: "05",
     bg: "gradient-teal-deep",
     iconColor: "text-campaign-lime",
     textColor: "text-primary-foreground",
@@ -76,6 +50,14 @@ const pillars: {
 
 const ProgrammeSection = () => {
   const router = useRouter();
+  const [pillars, setPillars] = useState<ProgrammePillar[]>([]);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.from('programme_pillars').select('*').order('sort_order').then(({ data }) => {
+      if (data) setPillars(data as ProgrammePillar[]);
+    });
+  }, []);
 
   return (
     <section id="programme" aria-label="Programme de campagne" className="gradient-teal-deep relative overflow-x-clip">
@@ -96,60 +78,65 @@ const ProgrammeSection = () => {
             LE <span className="text-campaign-lime">PROGRAMME</span>
           </h2>
           <p className="text-primary-foreground/40 max-w-2xl mx-auto text-lg mt-8 font-medium">
-            Cinq piliers concrets pour redonner à Bouc-Bel-Air le cadre de vie qu'elle mérite.
+            {pillars.length} piliers concrets pour redonner à Bouc-Bel-Air le cadre de vie qu&apos;elle mérite.
           </p>
         </motion.div>
 
         {/* Carousel */}
         <Carousel opts={{ align: "start", loop: true, dragFree: true }} className="w-full">
           <CarouselContent className="-ml-5">
-            {pillars.map((pillar, i) => (
-              <CarouselItem key={i} className="pl-5 basis-[75%] sm:basis-[40%] lg:basis-[28%]">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08, duration: 0.4 }}
-                  whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
-                  className="cursor-pointer group"
-                >
-                    <div
-                      className={`relative rounded-[1.25rem] aspect-[9/16] ${pillar.bg}
-                      flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
-                      transition-all duration-200 shadow-lg
-                      group-hover:shadow-2xl group-hover:shadow-black/20`}
+            {pillars.map((pillar, i) => {
+              const style = cardStyles[i % cardStyles.length];
+              const Icon = getIcon(pillar.icon);
+              const number = String(i + 1).padStart(2, "0");
+              return (
+                <CarouselItem key={pillar.id} className="pl-5 basis-[75%] sm:basis-[40%] lg:basis-[28%]">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08, duration: 0.4 }}
+                    whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
+                    className="cursor-pointer group"
                   >
-                    {/* Number watermark */}
-                    <span className={`absolute top-4 right-6 font-accent text-7xl sm:text-8xl font-black ${pillar.textColor} opacity-[0.12] leading-none select-none`}>
-                      {pillar.number}
-                    </span>
+                      <div
+                        className={`relative rounded-[1.25rem] aspect-[9/16] ${style.bg}
+                        flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
+                        transition-all duration-200 shadow-lg
+                        group-hover:shadow-2xl group-hover:shadow-black/20`}
+                    >
+                      {/* Number watermark */}
+                      <span className={`absolute top-4 right-6 font-accent text-7xl sm:text-8xl font-black ${style.textColor} opacity-[0.12] leading-none select-none`}>
+                        {number}
+                      </span>
 
-                    {/* Icon */}
-                    <div className="relative z-10 mt-8">
-                      <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto">
-                        <pillar.icon className={`w-10 h-10 ${pillar.iconColor}`} strokeWidth={1.5} />
+                      {/* Icon */}
+                      <div className="relative z-10 mt-8">
+                        <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto">
+                          <Icon className={`w-10 h-10 ${style.iconColor}`} strokeWidth={1.5} />
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="relative z-10 flex-1 flex flex-col justify-center py-4">
+                        <h3 className={`font-accent text-xl sm:text-2xl lg:text-3xl font-extrabold ${style.textColor} uppercase tracking-wide leading-tight mb-3 break-words -rotate-3`}>
+                          {pillar.title}
+                        </h3>
+                        <p className={`${style.subtextColor} text-sm sm:text-base leading-relaxed`}>
+                          {pillar.intro}
+                        </p>
+                      </div>
+
+                      {/* Bottom indicator */}
+                      <div className={`relative z-10 flex items-center gap-2 ${style.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
+                        <span className="text-sm font-bold uppercase tracking-wider">En savoir plus</span>
+                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                       </div>
                     </div>
-
-                    {/* Content */}
-                    <div className="relative z-10 flex-1 flex flex-col justify-center py-4">
-                      <h3 className={`font-accent text-xl sm:text-2xl lg:text-3xl font-extrabold ${pillar.textColor} uppercase tracking-wide leading-tight mb-3 break-words -rotate-3`}>
-                        {pillar.title}
-                      </h3>
-                      <p className={`${pillar.subtextColor} text-sm sm:text-base leading-relaxed`}>
-                        {pillar.desc}
-                      </p>
-                    </div>
-
-                    {/* Bottom indicator */}
-                    <div className={`relative z-10 flex items-center gap-2 ${pillar.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
-                      <span className="text-sm font-bold uppercase tracking-wider">En savoir plus</span>
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-                    </div>
-                  </div>
-                </motion.div>
-              </CarouselItem>
-            ))}
+                  </motion.div>
+                </CarouselItem>
+              );
+            })}
           </CarouselContent>
           <div className="flex items-center justify-center gap-4 mt-10">
             <CarouselPrevious className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-campaign-lime bg-transparent text-campaign-lime hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-200" />

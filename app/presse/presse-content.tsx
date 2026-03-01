@@ -5,48 +5,14 @@ import { Calendar, ExternalLink, User } from "lucide-react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { getPressStyle } from "@/lib/press-styles";
+import type { PressArticle } from "@/lib/types/database";
 
-const logoMarseillaise = "/images/logo-lamarseillaise.svg";
-const logoProvence = "/images/logo-laprovence.svg";
+interface PresseContentProps {
+  articles: PressArticle[];
+}
 
-const articles = [
-  {
-    media: "La Marseillaise",
-    logo: logoMarseillaise,
-    title: "Mathieu Morateur revient comme candidat",
-    date: "24 Décembre 2025",
-    author: "Eva Bonnet-Gonnet",
-    excerpt:
-      "Après une première expérience municipale, Mathieu Morateur annonce son retour sur la scène politique locale de Bouc-Bel-Air avec l'ambition de proposer une alternative crédible aux habitants.",
-    url: "https://www.lamarseillaise.fr/accueil/mathieu-morateur-revient-comme-candidat-ON19366109",
-    bg: "bg-primary",
-    text: "text-primary-foreground",
-    accent: "text-primary-foreground/60",
-    tagBg: "bg-campaign-lime/20",
-    tagText: "text-campaign-lime",
-    linkColor: "text-campaign-lime",
-    logoBrightness: "brightness-0 invert",
-  },
-  {
-    media: "La Provence",
-    logo: logoProvence,
-    title: "Municipales 2026 à Bouc-Bel-Air : Mathieu Morateur veut faire barrage aux promoteurs",
-    date: "25 Octobre 2025",
-    author: "Carole Barletta",
-    excerpt:
-      "Le candidat aux municipales de 2026 à Bouc-Bel-Air affirme sa volonté de protéger le cadre de vie des Boucains face à la pression immobilière et aux projets des promoteurs.",
-    url: "https://www.laprovence.com/article/elections/1485411779646614/municipales-2026-a-bouc-bel-air-mathieu-morateur-se-veut-faire-barrage-aux-promoteurs",
-    bg: "bg-campaign-lime-light",
-    text: "text-accent-foreground",
-    accent: "text-accent-foreground/60",
-    tagBg: "bg-accent-foreground/15",
-    tagText: "text-accent-foreground",
-    linkColor: "text-accent-foreground",
-    logoBrightness: "",
-  },
-];
-
-export default function PresseContent() {
+export default function PresseContent({ articles }: PresseContentProps) {
   return (
     <main className="min-h-screen bg-campaign-ice">
       <Navbar />
@@ -77,9 +43,11 @@ export default function PresseContent() {
       <section className="pb-24">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8 pt-2">
-            {articles.map((article, i) => (
+            {articles.map((article, i) => {
+              const style = getPressStyle(article.source);
+              return (
               <motion.a
-                key={i}
+                key={article.id}
                 href={article.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -90,28 +58,28 @@ export default function PresseContent() {
                 whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
                 className="group block cursor-pointer"
               >
-                <div className={`relative rounded-[1.25rem] overflow-hidden ${article.bg} shadow-lg flex flex-col h-full transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/20`}>
+                <div className={`relative rounded-[1.25rem] overflow-hidden ${style.bg} shadow-lg flex flex-col h-full transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/20`}>
                   {/* Header with logo */}
                   <div className="p-6 sm:p-7 pb-0 sm:pb-0 flex items-center justify-between">
                     <Image
                       src={article.logo}
-                      alt={`Logo ${article.media}`}
+                      alt={`Logo ${article.source}`}
                       width={160}
                       height={40}
-                      className={`h-8 sm:h-10 w-auto object-contain ${article.logoBrightness}`}
+                      className={`h-8 sm:h-10 w-auto object-contain ${style.logoBrightness}`}
                     />
-                    <span className={`${article.tagBg} ${article.tagText} px-3 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider`}>
+                    <span className={`${style.tagBg} ${style.tagText} px-3 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider`}>
                       Presse
                     </span>
                   </div>
 
                   {/* Content */}
                   <div className="p-6 sm:p-7 flex flex-col flex-1">
-                    <h2 className={`font-accent font-extrabold ${article.text} text-lg sm:text-xl leading-snug mb-4 uppercase tracking-wide -rotate-1`}>
+                    <h2 className={`font-accent font-extrabold ${style.text} text-lg sm:text-xl leading-snug mb-4 uppercase tracking-wide -rotate-1`}>
                       {article.title}
                     </h2>
 
-                    <div className={`flex flex-wrap items-center gap-3 mb-4 text-[11px] font-bold ${article.accent}`}>
+                    <div className={`flex flex-wrap items-center gap-3 mb-4 text-[11px] font-bold ${style.accent}`}>
                       <div className="flex items-center gap-1.5">
                         <Calendar className="w-3 h-3" />
                         <span>{article.date}</span>
@@ -122,11 +90,11 @@ export default function PresseContent() {
                       </div>
                     </div>
 
-                    <p className={`${article.accent} text-sm leading-relaxed flex-1`}>
+                    <p className={`${style.accent} text-sm leading-relaxed flex-1`}>
                       {article.excerpt}
                     </p>
 
-                    <div className={`flex items-center gap-1.5 mt-5 ${article.linkColor} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
+                    <div className={`flex items-center gap-1.5 mt-5 ${style.linkColor} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
                       <span className="text-xs font-bold uppercase tracking-wider">
                         Lire l&apos;article
                       </span>
@@ -135,7 +103,8 @@ export default function PresseContent() {
                   </div>
                 </div>
               </motion.a>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

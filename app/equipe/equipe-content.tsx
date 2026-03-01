@@ -8,21 +8,15 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RoadmapSection from "@/components/RoadmapSection";
 import { scrollToHash } from "@/lib/scroll-to-hash";
+import type { TeamMember } from "@/lib/types/database";
 
 const equipeGroupe = "/images/equipe-groupe.png";
-const equipe1 = "/images/equipe-1.png";
-const equipe2 = "/images/equipe-2.png";
-const equipe3 = "/images/equipe-3.png";
-const equipe4 = "/images/equipe-4.png";
 
-const members = [
-  { name: "Manon Clément-Costa", role: "Cheffe d'entreprise", img: equipe1, desc: "Entrepreneure engagée, elle met son expérience de la gestion et de l'innovation au service du territoire." },
-  { name: "Jean-Luc Berger", role: "Responsable financier", img: equipe2, desc: "Expert en finances publiques, garant d'une gestion rigoureuse et transparente des budgets communaux." },
-  { name: "Valérie Castineiras", role: "RH & Pompier volontaire", img: equipe3, desc: "Professionnelle des ressources humaines et pompier volontaire, elle incarne l'engagement citoyen au quotidien." },
-  { name: "François Deniau", role: "Dir. commercial retraité", img: equipe4, desc: "Fort de 30 ans d'expérience, il apporte sa vision stratégique et son ancrage local." },
-];
+interface EquipeContentProps {
+  members: TeamMember[];
+}
 
-export default function EquipeContent() {
+export default function EquipeContent({ members }: EquipeContentProps) {
   const router = useRouter();
 
   const handleCTA = () => {
@@ -93,9 +87,9 @@ export default function EquipeContent() {
 
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 pt-2">
-          {members.map((m, i) => (
+          {members.map((member, i) => (
             <motion.div
-              key={i}
+              key={member.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -107,8 +101,8 @@ export default function EquipeContent() {
                 {/* Photo 9:16 */}
                 <div className="aspect-[3/4] sm:aspect-[9/16] overflow-hidden relative">
                   <Image
-                    src={m.img}
-                    alt={m.name}
+                    src={member.image}
+                    alt={member.name}
                     fill
                     className="object-cover object-top transition-transform duration-200 group-hover:scale-110"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -118,7 +112,7 @@ export default function EquipeContent() {
                   {/* Role badge */}
                   <div className="absolute top-4 left-4">
                     <span className="gradient-lime text-accent-foreground px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-extrabold uppercase tracking-wider">
-                      {m.role}
+                      {member.role}
                     </span>
                   </div>
 
@@ -127,10 +121,10 @@ export default function EquipeContent() {
                     <h3
                       className="font-accent font-extrabold text-primary-foreground text-2xl sm:text-3xl leading-[0.95] group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide -rotate-3 mb-3 break-words overflow-hidden"
                     >
-                      {m.name}
+                      {member.name}
                     </h3>
                     <p className="text-primary-foreground/60 text-xs sm:text-sm leading-relaxed line-clamp-3">
-                      {m.desc}
+                      {member.description}
                     </p>
                   </div>
                 </div>

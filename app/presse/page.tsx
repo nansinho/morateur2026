@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import PresseContent from './presse-content'
 import { SITE_URL, CANDIDATE } from '@/lib/site-config'
+import { createClient } from '@/lib/supabase/server'
+import type { PressArticle } from '@/lib/types/database'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Presse',
@@ -48,7 +52,15 @@ const newsArticleSchemas = [
   },
 ]
 
-export default function PressePage() {
+export default async function PressePage() {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('press_articles')
+    .select('*')
+    .order('sort_order')
+
+  const articles = (data ?? []) as PressArticle[]
+
   return (
     <>
       <script
@@ -62,7 +74,7 @@ export default function PressePage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-      <PresseContent />
+      <PresseContent articles={articles} />
     </>
   )
 }

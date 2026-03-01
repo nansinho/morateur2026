@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import EquipeContent from './equipe-content'
 import { SITE_URL } from '@/lib/site-config'
+import { createClient } from '@/lib/supabase/server'
+import type { TeamMember } from '@/lib/types/database'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: "L'Équipe",
@@ -25,14 +29,22 @@ const breadcrumbSchema = {
   ],
 }
 
-export default function EquipePage() {
+export default async function EquipePage() {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('team_members')
+    .select('*')
+    .order('sort_order')
+
+  const members: TeamMember[] = data ?? []
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <EquipeContent />
+      <EquipeContent members={members} />
     </>
   )
 }

@@ -3,44 +3,7 @@
 import { motion } from "framer-motion";
 import { Calendar, ChevronRight } from "lucide-react";
 import Image from "next/image";
-
-const actualites = [
-  {
-    title: "Lancement officiel de la campagne",
-    date: "15 Janvier 2026",
-    image: "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=800&h=500&fit=crop",
-    tag: "Événement",
-    desc: "Le coup d'envoi de notre aventure collective pour redonner à Bouc-Bel-Air le dynamisme qu'elle mérite.",
-  },
-  {
-    title: "Rencontre avec les commerçants du centre-ville",
-    date: "28 Janvier 2026",
-    image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=800&h=500&fit=crop",
-    tag: "Terrain",
-    desc: "Échanges concrets avec les commerçants sur la revitalisation du centre ancien et les aides à l'installation.",
-  },
-  {
-    title: "Réunion publique : urbanisme et cadre de vie",
-    date: "5 Février 2026",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=500&fit=crop",
-    tag: "Programme",
-    desc: "Présentation de nos mesures contre les promoteurs et pour un urbanisme maîtrisé.",
-  },
-  {
-    title: "Porte-à-porte dans le quartier des Music",
-    date: "12 Février 2026",
-    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=500&fit=crop",
-    tag: "Terrain",
-    desc: "À la rencontre des habitants, quartier par quartier, pour écouter et comprendre vos besoins.",
-  },
-  {
-    title: "Tribune : Protégeons nos espaces naturels",
-    date: "20 Février 2026",
-    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=500&fit=crop",
-    tag: "Tribune",
-    desc: "Un appel à la préservation des collines et espaces boisés face à la pression immobilière.",
-  },
-];
+import type { Article } from '@/lib/types/database';
 
 const tagStyles: Record<string, { bg: string; text: string; accent: string; tagBg: string }> = {
   "Événement": {
@@ -71,7 +34,7 @@ const tagStyles: Record<string, { bg: string; text: string; accent: string; tagB
 
 const defaultStyle = { bg: "bg-muted", text: "text-foreground", accent: "text-muted-foreground", tagBg: "bg-foreground/10" };
 
-const ActualitesSection = () => {
+const ActualitesSection = ({ articles }: { articles: Article[] }) => {
   return (
     <section aria-label="Actualités de la campagne" className="py-16 sm:py-24 bg-campaign-ice relative overflow-x-clip">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -92,11 +55,11 @@ const ActualitesSection = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pt-2">
-          {actualites.map((actu, i) => {
-            const style = tagStyles[actu.tag] || defaultStyle;
+          {articles.map((article, i) => {
+            const style = tagStyles[article.tag] || defaultStyle;
             return (
               <motion.article
-                key={i}
+                key={article.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -108,8 +71,8 @@ const ActualitesSection = () => {
                   {/* Image */}
                   <div className="aspect-[16/9] overflow-hidden relative">
                     <Image
-                      src={actu.image}
-                      alt={actu.title}
+                      src={article.image}
+                      alt={article.title}
                       fill
                       className="object-cover transition-transform duration-200 group-hover:scale-110"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -121,19 +84,19 @@ const ActualitesSection = () => {
                   <div className="p-6 sm:p-7 flex flex-col flex-1">
                     <div className="flex items-center justify-between mb-4">
                       <span className={`${style.tagBg} ${style.text} px-3 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider`}>
-                        {actu.tag}
+                        {article.tag}
                       </span>
                       <div className="flex items-center gap-1.5">
                         <Calendar className={`w-3 h-3 ${style.accent}`} />
-                        <span className={`${style.accent} text-[11px] font-bold`}>{actu.date}</span>
+                        <span className={`${style.accent} text-[11px] font-bold`}>{article.date}</span>
                       </div>
                     </div>
 
                     <h3 className={`font-accent font-extrabold ${style.text} text-lg sm:text-xl leading-snug mb-3 uppercase tracking-wide -rotate-1`}>
-                      {actu.title}
+                      {article.title}
                     </h3>
                     <p className={`${style.accent} text-sm leading-relaxed flex-1`}>
-                      {actu.desc}
+                      {article.description}
                     </p>
 
                     <div className={`flex items-center gap-1.5 mt-5 ${style.text} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
