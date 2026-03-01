@@ -78,58 +78,58 @@ export default function PressPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white">Articles de presse</h2>
-        <Button onClick={openCreate} className="bg-teal-600 hover:bg-teal-500 text-white">
+        <h2 className="text-2xl font-accent font-bold text-foreground uppercase tracking-wide">Articles de presse</h2>
+        <Button onClick={openCreate} className="gradient-lime text-accent-foreground font-accent font-bold">
           <Plus className="w-4 h-4 mr-2" /> Nouvel article
         </Button>
       </div>
 
-      <div className="rounded-xl border border-slate-700/50 bg-slate-800/30 overflow-hidden">
+      <div className="rounded-2xl border border-border/50 bg-card/30 overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow className="border-slate-700/50 hover:bg-transparent">
-              <TableHead className="text-slate-400 w-12">#</TableHead>
-              <TableHead className="text-slate-400">Source</TableHead>
-              <TableHead className="text-slate-400">Titre</TableHead>
-              <TableHead className="text-slate-400 hidden md:table-cell">Auteur</TableHead>
-              <TableHead className="text-slate-400 hidden sm:table-cell">Date</TableHead>
-              <TableHead className="text-slate-400 text-right">Actions</TableHead>
+            <TableRow className="border-border/50 hover:bg-transparent">
+              <TableHead className="text-muted-foreground w-12">#</TableHead>
+              <TableHead className="text-muted-foreground">Source</TableHead>
+              <TableHead className="text-muted-foreground">Titre</TableHead>
+              <TableHead className="text-muted-foreground hidden md:table-cell">Auteur</TableHead>
+              <TableHead className="text-muted-foreground hidden sm:table-cell">Date</TableHead>
+              <TableHead className="text-muted-foreground text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
               Array.from({ length: 2 }).map((_, i) => (
-                <TableRow key={i} className="border-slate-700/50">
-                  <TableCell colSpan={6}><div className="h-8 bg-slate-700/30 rounded animate-pulse" /></TableCell>
+                <TableRow key={i} className="border-border/50">
+                  <TableCell colSpan={6}><div className="h-8 bg-secondary/30 rounded animate-pulse" /></TableCell>
                 </TableRow>
               ))
             ) : articles.length === 0 ? (
-              <TableRow className="border-slate-700/50">
-                <TableCell colSpan={6} className="text-center text-slate-500 py-8">Aucun article de presse</TableCell>
+              <TableRow className="border-border/50">
+                <TableCell colSpan={6} className="text-center text-muted-foreground/60 py-8">Aucun article de presse</TableCell>
               </TableRow>
             ) : (
               articles.map((article) => (
-                <TableRow key={article.id} className="border-slate-700/50 hover:bg-slate-700/20">
-                  <TableCell className="text-slate-500 text-sm">{article.sort_order}</TableCell>
-                  <TableCell className="text-teal-400 font-medium text-sm">{article.source}</TableCell>
-                  <TableCell className="text-white font-medium">
+                <TableRow key={article.id} className="border-border/50 hover:bg-secondary/20">
+                  <TableCell className="text-muted-foreground/60 text-sm">{article.sort_order}</TableCell>
+                  <TableCell className="text-campaign-lime font-medium text-sm">{article.source}</TableCell>
+                  <TableCell className="text-foreground font-medium">
                     <div className="flex items-center gap-2">
                       <span className="truncate max-w-[200px]">{article.title}</span>
                       {article.url && (
-                        <a href={article.url} target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-teal-400" onClick={(e) => e.stopPropagation()}>
+                        <a href={article.url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground/60 hover:text-campaign-lime" onClick={(e) => e.stopPropagation()}>
                           <ExternalLink className="w-3.5 h-3.5" />
                         </a>
                       )}
                     </div>
                   </TableCell>
-                  <TableCell className="text-slate-400 text-sm hidden md:table-cell">{article.author}</TableCell>
-                  <TableCell className="text-slate-400 text-sm hidden sm:table-cell">{article.date}</TableCell>
+                  <TableCell className="text-muted-foreground text-sm hidden md:table-cell">{article.author}</TableCell>
+                  <TableCell className="text-muted-foreground text-sm hidden sm:table-cell">{article.date}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-1">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white" onClick={() => openEdit(article)}>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => openEdit(article)}>
                         <Pencil className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-red-400 hover:text-red-300" onClick={() => setDeleteId(article.id)}>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive" onClick={() => setDeleteId(article.id)}>
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
@@ -143,51 +143,51 @@ export default function PressPage() {
 
       {/* Edit dialog */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
-        <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-lg">
+        <DialogContent className="bg-card border-border text-foreground max-w-lg">
           <DialogHeader>
             <DialogTitle>{editId ? 'Modifier l\'article presse' : 'Nouvel article presse'}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 mt-2">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-slate-300">Source (média)</Label>
-                <Input value={editData.source} onChange={(e) => setEditData({ ...editData, source: e.target.value })} className="bg-slate-700/50 border-slate-600 text-white" placeholder="La Provence" />
+                <Label className="text-foreground/80">Source (média)</Label>
+                <Input value={editData.source} onChange={(e) => setEditData({ ...editData, source: e.target.value })} className="bg-secondary/50 border-border text-foreground" placeholder="La Provence" />
               </div>
               <div className="space-y-2">
-                <Label className="text-slate-300">Auteur</Label>
-                <Input value={editData.author} onChange={(e) => setEditData({ ...editData, author: e.target.value })} className="bg-slate-700/50 border-slate-600 text-white" />
+                <Label className="text-foreground/80">Auteur</Label>
+                <Input value={editData.author} onChange={(e) => setEditData({ ...editData, author: e.target.value })} className="bg-secondary/50 border-border text-foreground" />
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300">Titre</Label>
-              <Input value={editData.title} onChange={(e) => setEditData({ ...editData, title: e.target.value })} className="bg-slate-700/50 border-slate-600 text-white" />
+              <Label className="text-foreground/80">Titre</Label>
+              <Input value={editData.title} onChange={(e) => setEditData({ ...editData, title: e.target.value })} className="bg-secondary/50 border-border text-foreground" />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-slate-300">Date</Label>
-                <Input value={editData.date} onChange={(e) => setEditData({ ...editData, date: e.target.value })} className="bg-slate-700/50 border-slate-600 text-white" placeholder="25 Octobre 2025" />
+                <Label className="text-foreground/80">Date</Label>
+                <Input value={editData.date} onChange={(e) => setEditData({ ...editData, date: e.target.value })} className="bg-secondary/50 border-border text-foreground" placeholder="25 Octobre 2025" />
               </div>
               <div className="space-y-2">
-                <Label className="text-slate-300">Ordre</Label>
-                <Input type="number" value={editData.sort_order} onChange={(e) => setEditData({ ...editData, sort_order: parseInt(e.target.value) || 0 })} className="bg-slate-700/50 border-slate-600 text-white" />
+                <Label className="text-foreground/80">Ordre</Label>
+                <Input type="number" value={editData.sort_order} onChange={(e) => setEditData({ ...editData, sort_order: parseInt(e.target.value) || 0 })} className="bg-secondary/50 border-border text-foreground" />
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300">Extrait</Label>
-              <Textarea value={editData.excerpt} onChange={(e) => setEditData({ ...editData, excerpt: e.target.value })} className="bg-slate-700/50 border-slate-600 text-white min-h-[80px]" />
+              <Label className="text-foreground/80">Extrait</Label>
+              <Textarea value={editData.excerpt} onChange={(e) => setEditData({ ...editData, excerpt: e.target.value })} className="bg-secondary/50 border-border text-foreground min-h-[80px]" />
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300">URL de l&apos;article</Label>
-              <Input value={editData.url} onChange={(e) => setEditData({ ...editData, url: e.target.value })} className="bg-slate-700/50 border-slate-600 text-white" placeholder="https://..." />
+              <Label className="text-foreground/80">URL de l&apos;article</Label>
+              <Input value={editData.url} onChange={(e) => setEditData({ ...editData, url: e.target.value })} className="bg-secondary/50 border-border text-foreground" placeholder="https://..." />
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300">Logo du média (chemin)</Label>
-              <Input value={editData.logo} onChange={(e) => setEditData({ ...editData, logo: e.target.value })} className="bg-slate-700/50 border-slate-600 text-white" placeholder="/images/logo-laprovence.svg" />
+              <Label className="text-foreground/80">Logo du média (chemin)</Label>
+              <Input value={editData.logo} onChange={(e) => setEditData({ ...editData, logo: e.target.value })} className="bg-secondary/50 border-border text-foreground" placeholder="/images/logo-laprovence.svg" />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setEditOpen(false)} className="border-slate-600 text-slate-300 hover:bg-slate-700">Annuler</Button>
-            <Button onClick={handleSave} disabled={saving} className="bg-teal-600 hover:bg-teal-500 text-white">
+            <Button variant="outline" onClick={() => setEditOpen(false)} className="border-border text-foreground/80 hover:bg-secondary">Annuler</Button>
+            <Button onClick={handleSave} disabled={saving} className="gradient-lime text-accent-foreground font-accent font-bold">
               {saving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               {editId ? 'Modifier' : 'Créer'}
             </Button>
@@ -197,14 +197,14 @@ export default function PressPage() {
 
       {/* Delete confirmation */}
       <AlertDialog open={!!deleteId} onOpenChange={(open) => !open && setDeleteId(null)}>
-        <AlertDialogContent className="bg-slate-800 border-slate-700">
+        <AlertDialogContent className="bg-card border-border">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Supprimer cet article presse ?</AlertDialogTitle>
-            <AlertDialogDescription className="text-slate-400">Cette action est irréversible.</AlertDialogDescription>
+            <AlertDialogTitle className="text-foreground">Supprimer cet article presse ?</AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground">Cette action est irréversible.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-slate-700 text-white border-slate-600 hover:bg-slate-600">Annuler</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-500 text-white">Supprimer</AlertDialogAction>
+            <AlertDialogCancel className="bg-secondary text-foreground border-border hover:bg-secondary/80">Annuler</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90 text-foreground">Supprimer</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

@@ -32,7 +32,6 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  // Don't show sidebar on login page
   if (pathname === '/admin/login') {
     return <>{children}</>
   }
@@ -50,22 +49,20 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
 
   const SidebarContent = () => (
     <>
-      {/* Logo */}
       <div className={cn("flex items-center gap-3 px-4 py-5", collapsed && "justify-center px-2")}>
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-500 flex items-center justify-center flex-shrink-0">
-          <span className="text-white font-bold text-sm">M</span>
+        <div className="w-9 h-9 rounded-xl gradient-lime flex items-center justify-center flex-shrink-0">
+          <span className="text-accent-foreground font-accent font-bold text-sm">M</span>
         </div>
         {!collapsed && (
           <div className="min-w-0">
-            <p className="font-bold text-white text-sm truncate">Morateur 2026</p>
-            <p className="text-[11px] text-slate-500 truncate">Administration</p>
+            <p className="font-accent font-bold text-foreground text-sm truncate">Morateur 2026</p>
+            <p className="text-[11px] text-muted-foreground/60 truncate">Administration</p>
           </div>
         )}
       </div>
 
-      <Separator className="bg-slate-700/50" />
+      <Separator className="bg-border/50" />
 
-      {/* Navigation */}
       <ScrollArea className="flex-1 px-2 py-3">
         <nav className="space-y-1">
           {navItems.map((item) => {
@@ -76,14 +73,14 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150",
+                  "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150",
                   active
-                    ? "bg-teal-500/15 text-teal-400"
-                    : "text-slate-400 hover:text-white hover:bg-slate-700/50",
+                    ? "bg-campaign-lime/15 text-campaign-lime"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary/50",
                   collapsed && "justify-center px-2"
                 )}
               >
-                <item.icon className={cn("w-5 h-5 flex-shrink-0", active && "text-teal-400")} />
+                <item.icon className={cn("w-5 h-5 flex-shrink-0", active && "text-campaign-lime")} />
                 {!collapsed && <span>{item.label}</span>}
               </Link>
             )
@@ -92,7 +89,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
               return (
                 <Tooltip key={item.href} delayDuration={0}>
                   <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
-                  <TooltipContent side="right" className="bg-slate-700 text-white border-slate-600">
+                  <TooltipContent side="right" className="bg-card text-foreground border-border">
                     {item.label}
                   </TooltipContent>
                 </Tooltip>
@@ -104,15 +101,14 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         </nav>
       </ScrollArea>
 
-      <Separator className="bg-slate-700/50" />
+      <Separator className="bg-border/50" />
 
-      {/* Footer */}
       <div className={cn("px-2 py-3 space-y-1", collapsed && "px-1")}>
         <Link
           href="/"
           target="_blank"
           className={cn(
-            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all",
+            "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all",
             collapsed && "justify-center px-2"
           )}
         >
@@ -122,7 +118,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         <button
           onClick={handleLogout}
           className={cn(
-            "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all",
+            "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-destructive hover:bg-destructive/10 transition-all",
             collapsed && "justify-center px-2"
           )}
         >
@@ -134,58 +130,49 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   )
 
   return (
-    <div className="min-h-screen bg-slate-900 flex">
-      {/* Desktop Sidebar */}
+    <div className="min-h-screen bg-background flex">
       <aside className={cn(
-        "hidden lg:flex flex-col border-r border-slate-700/50 bg-slate-800/50 backdrop-blur-sm transition-all duration-200 fixed inset-y-0 left-0 z-30",
+        "hidden lg:flex flex-col border-r border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-200 fixed inset-y-0 left-0 z-30",
         collapsed ? "w-[68px]" : "w-[250px]"
       )}>
         <SidebarContent />
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="absolute -right-3 top-7 w-6 h-6 rounded-full bg-slate-700 border border-slate-600 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
+          className="absolute -right-3 top-7 w-6 h-6 rounded-full bg-secondary border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
         >
           {collapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
         </button>
       </aside>
 
-      {/* Mobile overlay */}
       {mobileOpen && (
-        <div
-          className="lg:hidden fixed inset-0 bg-black/60 z-40"
-          onClick={() => setMobileOpen(false)}
-        />
+        <div className="lg:hidden fixed inset-0 bg-black/60 z-40" onClick={() => setMobileOpen(false)} />
       )}
 
-      {/* Mobile Sidebar */}
       <aside className={cn(
-        "lg:hidden fixed inset-y-0 left-0 z-50 w-[250px] flex flex-col border-r border-slate-700/50 bg-slate-800 transition-transform duration-200",
+        "lg:hidden fixed inset-y-0 left-0 z-50 w-[250px] flex flex-col border-r border-border/50 bg-card transition-transform duration-200",
         mobileOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <SidebarContent />
       </aside>
 
-      {/* Main content */}
       <div className={cn(
         "flex-1 flex flex-col transition-all duration-200",
         collapsed ? "lg:ml-[68px]" : "lg:ml-[250px]"
       )}>
-        {/* Top bar */}
-        <header className="h-14 border-b border-slate-700/50 bg-slate-800/30 backdrop-blur-sm flex items-center px-4 lg:px-6 sticky top-0 z-20">
+        <header className="h-14 border-b border-border/50 bg-card/30 backdrop-blur-sm flex items-center px-4 lg:px-6 sticky top-0 z-20">
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden text-slate-400 hover:text-white"
+            className="lg:hidden text-muted-foreground hover:text-foreground"
             onClick={() => setMobileOpen(true)}
           >
             <Menu className="w-5 h-5" />
           </Button>
-          <h1 className="text-sm font-semibold text-slate-300 ml-2 lg:ml-0">
+          <h1 className="text-sm font-accent font-semibold text-foreground/80 ml-2 lg:ml-0 uppercase tracking-wider">
             {navItems.find(item => isActive(item.href))?.label || 'Administration'}
           </h1>
         </header>
 
-        {/* Page content */}
         <main className="flex-1 p-4 lg:p-6 overflow-auto">
           {children}
         </main>
