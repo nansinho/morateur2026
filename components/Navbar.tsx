@@ -46,7 +46,7 @@ const Navbar = () => {
       aria-label="Navigation principale"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/95 backdrop-blur-xl shadow-lg shadow-foreground/5 py-3"
+          ? "bg-background backdrop-blur-xl shadow-lg shadow-foreground/5 py-3"
           : "bg-primary py-5"
       }`}
     >

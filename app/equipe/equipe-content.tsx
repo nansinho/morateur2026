@@ -73,7 +73,7 @@ export default function EquipeContent() {
                   priority
                 />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent" />
             </div>
           </motion.div>
         </div>
@@ -92,7 +92,7 @@ export default function EquipeContent() {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 pt-2">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 pt-2">
           {members.map((m, i) => (
             <motion.div
               key={i}
@@ -105,7 +105,7 @@ export default function EquipeContent() {
             >
               <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/40">
                 {/* Photo 9:16 */}
-                <div className="aspect-[9/16] overflow-hidden relative">
+                <div className="aspect-[3/4] sm:aspect-[9/16] overflow-hidden relative">
                   <Image
                     src={m.img}
                     alt={m.name}
@@ -113,7 +113,7 @@ export default function EquipeContent() {
                     className="object-cover object-top transition-transform duration-200 group-hover:scale-110"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/15 to-transparent" />
 
                   {/* Role badge */}
                   <div className="absolute top-4 left-4">
