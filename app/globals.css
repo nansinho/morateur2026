@@ -130,4 +130,17 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /* Mobile tap highlight */
+  @media (hover: none) {
+    .group:active {
+      transform: scale(0.97);
+      transition: transform 0.1s ease;
+    }
+  }
+
+  /* Remove default tap highlight on mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
