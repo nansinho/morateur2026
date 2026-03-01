@@ -22,7 +22,7 @@ const RoadmapSection = () => {
   }, []);
 
   return (
-    <section id="roadmap" className="py-16 sm:py-28 gradient-teal-deep relative overflow-hidden">
+    <section id="roadmap" className="py-16 sm:py-28 gradient-teal-deep relative overflow-x-clip">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-14 gap-6">
           <div>

@@ -73,7 +73,7 @@ const defaultStyle = { bg: "bg-muted", text: "text-foreground", accent: "text-mu
 
 const ActualitesSection = () => {
   return (
-    <section aria-label="Actualités de la campagne" className="py-16 sm:py-24 bg-campaign-ice relative overflow-hidden">
+    <section aria-label="Actualités de la campagne" className="py-16 sm:py-24 bg-campaign-ice relative overflow-x-clip">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -91,7 +91,7 @@ const ActualitesSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pt-2">
           {actualites.map((actu, i) => {
             const style = tagStyles[actu.tag] || defaultStyle;
             return (
@@ -101,7 +101,7 @@ const ActualitesSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.5 }}
-                whileHover={{ y: -8 }}
+                whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
                 className="group cursor-pointer"
               >
                 <div className={`relative rounded-[1.25rem] overflow-hidden shadow-lg ${style.bg} flex flex-col h-full transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/20`}>

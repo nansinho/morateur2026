@@ -102,7 +102,7 @@ export default function ActualitesContent() {
       {/* Articles grid */}
       <section className="pb-24">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pt-2">
             {actualites.map((actu, i) => {
               const style = tagStyles[actu.tag] || defaultStyle;
               return (
@@ -112,7 +112,7 @@ export default function ActualitesContent() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08, duration: 0.5 }}
-                  whileHover={{ y: -8 }}
+                  whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
                   className="group cursor-pointer"
                 >
                   <div className={`relative rounded-[1.25rem] overflow-hidden shadow-lg ${style.bg} flex flex-col h-full transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/20`}>

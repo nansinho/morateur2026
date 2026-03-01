@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
-import { FileText, CheckCircle, Send, ExternalLink, AlertCircle, User, Mail, Phone, MessageSquare } from "lucide-react";
+import { FileText, CheckCircle, Send, ExternalLink, AlertCircle, User, Mail, Phone, MessageSquare, ArrowRight, ArrowLeft, Sparkles, PartyPopper } from "lucide-react";
 
 type FormData = { prenom: string; nom: string; email: string; tel: string; motivations: string };
 type FormErrors = Partial<Record<keyof FormData, string>>;
@@ -17,21 +17,56 @@ const validate = (form: FormData): FormErrors => {
   return errors;
 };
 
-const fieldMeta = [
-  { key: "prenom" as const, label: "Prénom", icon: User, type: "text", half: true },
-  { key: "nom" as const, label: "Nom", icon: User, type: "text", half: true },
-  { key: "email" as const, label: "Adresse email", icon: Mail, type: "email", half: false },
-  { key: "tel" as const, label: "Téléphone", icon: Phone, type: "tel", half: false },
+const steps = [
+  { id: 0, title: "Qui êtes-vous ?", subtitle: "Faisons connaissance", emoji: "👋", fields: ["prenom", "nom"] as const },
+  { id: 1, title: "Comment vous joindre ?", subtitle: "Pour vous recontacter", emoji: "📬", fields: ["email", "tel"] as const },
+  { id: 2, title: "Vos motivations", subtitle: "Dites-nous tout !", emoji: "💬", fields: ["motivations"] as const },
 ];
 
+const fieldConfig: Record<keyof FormData, { label: string; icon: typeof User; type: string; placeholder: string }> = {
+  prenom: { label: "Prénom", icon: User, type: "text", placeholder: "Mathieu" },
+  nom: { label: "Nom", icon: User, type: "text", placeholder: "Dupont" },
+  email: { label: "Adresse email", icon: Mail, type: "email", placeholder: "mathieu@exemple.fr" },
+  tel: { label: "Téléphone", icon: Phone, type: "tel", placeholder: "06 12 34 56 78" },
+  motivations: { label: "Vos motivations", icon: MessageSquare, type: "textarea", placeholder: "Je souhaite m'engager parce que..." },
+};
+
+const Confetti = () => {
+  const particles = Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 300 - 150,
+    y: -(Math.random() * 200 + 100),
+    rotate: Math.random() * 720 - 360,
+    scale: Math.random() * 0.5 + 0.5,
+    color: ['hsl(152 48% 50%)', 'hsl(152 55% 62%)', 'hsl(0 0% 100%)', 'hsl(220 73% 34%)'][Math.floor(Math.random() * 4)],
+    delay: Math.random() * 0.3,
+  }));
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {particles.map(p => (
+        <motion.div
+          key={p.id}
+          className="absolute left-1/2 top-1/2 w-2.5 h-2.5 rounded-sm"
+          style={{ backgroundColor: p.color }}
+          initial={{ x: 0, y: 0, rotate: 0, scale: 0, opacity: 1 }}
+          animate={{ x: p.x, y: p.y, rotate: p.rotate, scale: p.scale, opacity: 0 }}
+          transition={{ duration: 1.2, delay: p.delay, ease: "easeOut" }}
+        />
+      ))}
+    </div>
+  );
+};
+
 const ProcurationSection = () => {
+  const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [direction, setDirection] = useState(1);
   const [form, setForm] = useState<FormData>({ prenom: "", nom: "", email: "", tel: "", motivations: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Set<string>>(new Set());
-  const [focused, setFocused] = useState<string | null>(null);
 
   const handleChange = useCallback((field: keyof FormData, value: string) => {
     setForm(prev => {
@@ -45,18 +80,48 @@ const ProcurationSection = () => {
   }, [touched]);
 
   const handleBlur = useCallback((field: keyof FormData) => {
-    setFocused(null);
     setTouched(prev => new Set(prev).add(field));
     const fieldErrors = validate(form);
     setErrors(prev => ({ ...prev, [field]: fieldErrors[field] }));
   }, [form]);
 
+  const validateStep = (stepIndex: number): boolean => {
+    const currentFields = steps[stepIndex].fields;
+    const allErrors = validate(form);
+    const stepErrors: FormErrors = {};
+    let hasError = false;
+
+    for (const field of currentFields) {
+      if (allErrors[field]) {
+        stepErrors[field] = allErrors[field];
+        hasError = true;
+      }
+    }
+
+    setErrors(prev => ({ ...prev, ...stepErrors }));
+    setTouched(prev => {
+      const next = new Set(prev);
+      for (const field of currentFields) next.add(field);
+      return next;
+    });
+
+    return !hasError;
+  };
+
+  const goNext = () => {
+    if (!validateStep(step)) return;
+    setDirection(1);
+    setStep(s => Math.min(s + 1, steps.length - 1));
+  };
+
+  const goPrev = () => {
+    setDirection(-1);
+    setStep(s => Math.max(s - 1, 0));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const allErrors = validate(form);
-    setErrors(allErrors);
-    setTouched(new Set(Object.keys(form)));
-    if (Object.keys(allErrors).length > 0) return;
+    if (!validateStep(step)) return;
 
     setSubmitting(true);
     setSubmitError(null);
@@ -78,19 +143,24 @@ const ProcurationSection = () => {
     }
   };
 
-  const inputClass = (field: string) => {
-    const isFocused = focused === field;
-    const hasError = touched.has(field) && errors[field as keyof FormData];
-    const isValid = touched.has(field) && !errors[field as keyof FormData];
-    const base = "w-full pl-11 pr-4 py-3.5 rounded-xl border bg-background text-foreground text-sm transition-all duration-200 outline-none placeholder:text-muted-foreground/50";
-    if (isFocused) return `${base} border-campaign-lime ring-1 ring-campaign-lime/20`;
-    if (hasError) return `${base} border-destructive`;
-    if (isValid) return `${base} border-campaign-lime/30`;
-    return `${base} border-border hover:border-muted-foreground/30`;
+  const isStepValid = (stepIndex: number): boolean => {
+    const currentFields = steps[stepIndex].fields;
+    const allErrors = validate(form);
+    return currentFields.every(f => !allErrors[f] && form[f].trim().length > 0);
+  };
+
+  const slideVariants = {
+    enter: (d: number) => ({ x: d > 0 ? 80 : -80, opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (d: number) => ({ x: d > 0 ? -80 : 80, opacity: 0 }),
   };
 
   return (
     <section id="procuration" aria-label="Rejoignez-nous et procuration" className="gradient-teal-deep relative overflow-hidden">
+      {/* Decorative shapes */}
+      <div className="absolute top-20 right-10 w-72 h-72 bg-campaign-lime/[0.04] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-20 left-10 w-56 h-56 bg-campaign-lime/[0.03] rounded-full blur-2xl pointer-events-none" />
+
       <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-28 relative z-10">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* Left */}
@@ -148,110 +218,307 @@ const ProcurationSection = () => {
               {submitted ? (
                 <motion.div
                   key="success"
-                  initial={{ scale: 0.9, opacity: 0 }}
+                  initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: "spring", duration: 0.5 }}
-                  className="bg-background/95 backdrop-blur-xl rounded-2xl p-12 text-center border border-border shadow-2xl"
+                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  className="relative rounded-3xl p-10 sm:p-14 text-center border border-campaign-lime/20 overflow-hidden"
+                  style={{ background: "linear-gradient(160deg, hsl(220 73% 18%), hsl(220 60% 14%))" }}
                 >
-                  <CheckCircle className="w-16 h-16 text-campaign-lime mx-auto mb-5" />
-                  <h3 className="font-accent font-extrabold text-2xl text-foreground mb-2 uppercase">Merci !</h3>
-                  <p className="text-muted-foreground">Nous vous recontacterons très vite.</p>
+                  <Confetti />
+                  <motion.div
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0.2 }}
+                    className="w-20 h-20 rounded-full gradient-lime mx-auto mb-6 flex items-center justify-center"
+                  >
+                    <CheckCircle className="w-10 h-10 text-accent-foreground" />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <PartyPopper className="w-6 h-6 text-campaign-lime" />
+                      <h3 className="font-accent font-extrabold text-3xl text-primary-foreground uppercase">
+                        Merci !
+                      </h3>
+                      <PartyPopper className="w-6 h-6 text-campaign-lime -scale-x-100" />
+                    </div>
+                    <p className="text-primary-foreground/60 text-lg mb-2">
+                      Bienvenue dans l&apos;aventure, <span className="text-campaign-lime font-bold">{form.prenom}</span> !
+                    </p>
+                    <p className="text-primary-foreground/40 text-sm">
+                      Nous vous recontacterons très vite.
+                    </p>
+                  </motion.div>
                 </motion.div>
               ) : (
                 <form
                   key="form"
                   onSubmit={handleSubmit}
                   noValidate
-                  className="bg-background/95 backdrop-blur-xl rounded-2xl p-8 space-y-5 border border-border shadow-2xl"
+                  className="rounded-3xl border border-primary-foreground/10 overflow-hidden"
+                  style={{ background: "linear-gradient(160deg, hsl(220 73% 18%), hsl(220 60% 14%))" }}
                   role="form"
                   aria-label="Formulaire de contact campagne"
                 >
-                  <div className="flex gap-1.5 mb-2">
-                    {Object.keys(form).map((field) => (
-                      <div
-                        key={field}
-                        className={`h-1 flex-1 rounded-full transition-colors duration-200 ${
-                          touched.has(field) && !errors[field as keyof FormData]
-                            ? "bg-campaign-lime"
-                            : touched.has(field) && errors[field as keyof FormData]
-                            ? "bg-destructive"
-                            : "bg-border"
-                        }`}
-                      />
-                    ))}
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    {fieldMeta.filter(f => f.half).map(({ key, label, icon: Icon, type }) => (
-                      <div key={key}>
-                        <label htmlFor={key} className="text-sm font-medium text-foreground/80 mb-2 block">{label} <span className="text-campaign-lime">*</span></label>
-                        <div className="relative">
-                          <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-                          <input id={key} type={type} required value={form[key]} onFocus={() => setFocused(key)} onBlur={() => handleBlur(key)} onChange={e => handleChange(key, e.target.value)} className={inputClass(key)} />
+                  {/* Step header */}
+                  <div className="px-7 sm:px-9 pt-7 sm:pt-9 pb-0">
+                    {/* Progress dots */}
+                    <div className="flex items-center gap-2 mb-6">
+                      {steps.map((s, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <motion.div
+                            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors duration-200 ${
+                              i < step
+                                ? "gradient-lime text-accent-foreground"
+                                : i === step
+                                ? "bg-campaign-lime/20 text-campaign-lime border-2 border-campaign-lime"
+                                : "bg-primary-foreground/[0.06] text-primary-foreground/30 border border-primary-foreground/10"
+                            }`}
+                            animate={i === step ? { scale: [1, 1.1, 1] } : {}}
+                            transition={{ duration: 0.4 }}
+                          >
+                            {i < step ? <CheckCircle className="w-4 h-4" /> : i + 1}
+                          </motion.div>
+                          {i < steps.length - 1 && (
+                            <div className={`w-8 sm:w-12 h-0.5 rounded-full transition-colors duration-200 ${
+                              i < step ? "bg-campaign-lime" : "bg-primary-foreground/10"
+                            }`} />
+                          )}
                         </div>
-                        {touched.has(key) && errors[key] && (
-                          <p role="alert" className="text-destructive text-xs mt-1.5 flex items-center gap-1">
-                            <AlertCircle className="w-3 h-3" /> {errors[key]}
-                          </p>
+                      ))}
+                    </div>
+
+                    {/* Step title */}
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={step}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="mb-6"
+                      >
+                        <div className="flex items-center gap-3 mb-1">
+                          <span className="text-2xl">{steps[step].emoji}</span>
+                          <h3 className="font-accent font-extrabold text-primary-foreground text-xl sm:text-2xl uppercase tracking-wide">
+                            {steps[step].title}
+                          </h3>
+                        </div>
+                        <p className="text-primary-foreground/40 text-sm pl-10">
+                          {steps[step].subtitle}
+                        </p>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Step content */}
+                  <div className="px-7 sm:px-9 pb-4 min-h-[220px] flex items-start">
+                    <AnimatePresence mode="wait" custom={direction}>
+                      <motion.div
+                        key={step}
+                        custom={direction}
+                        variants={slideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="w-full space-y-4"
+                      >
+                        {step === 0 && (
+                          <div className="grid sm:grid-cols-2 gap-4">
+                            {(["prenom", "nom"] as const).map(key => {
+                              const config = fieldConfig[key];
+                              const Icon = config.icon;
+                              return (
+                                <div key={key} className="group">
+                                  <label htmlFor={key} className="text-xs font-bold text-primary-foreground/50 uppercase tracking-wider mb-2 block">
+                                    {config.label}
+                                  </label>
+                                  <div className="relative">
+                                    <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-foreground/30 group-focus-within:text-campaign-lime transition-colors duration-200" />
+                                    <input
+                                      id={key}
+                                      type={config.type}
+                                      required
+                                      placeholder={config.placeholder}
+                                      value={form[key]}
+                                      onBlur={() => handleBlur(key)}
+                                      onChange={e => handleChange(key, e.target.value)}
+                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-primary-foreground/[0.06] border border-primary-foreground/10 text-primary-foreground text-sm outline-none placeholder:text-primary-foreground/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
+                                    />
+                                  </div>
+                                  {touched.has(key) && errors[key] && (
+                                    <motion.p
+                                      initial={{ opacity: 0, y: -5 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      role="alert"
+                                      className="text-red-400 text-xs mt-1.5 flex items-center gap-1"
+                                    >
+                                      <AlertCircle className="w-3 h-3" /> {errors[key]}
+                                    </motion.p>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
                         )}
-                      </div>
-                    ))}
+
+                        {step === 1 && (
+                          <div className="space-y-4">
+                            {(["email", "tel"] as const).map(key => {
+                              const config = fieldConfig[key];
+                              const Icon = config.icon;
+                              return (
+                                <div key={key} className="group">
+                                  <label htmlFor={key} className="text-xs font-bold text-primary-foreground/50 uppercase tracking-wider mb-2 block">
+                                    {config.label}
+                                  </label>
+                                  <div className="relative">
+                                    <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-foreground/30 group-focus-within:text-campaign-lime transition-colors duration-200" />
+                                    <input
+                                      id={key}
+                                      type={config.type}
+                                      required
+                                      placeholder={config.placeholder}
+                                      value={form[key]}
+                                      onBlur={() => handleBlur(key)}
+                                      onChange={e => handleChange(key, e.target.value)}
+                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-primary-foreground/[0.06] border border-primary-foreground/10 text-primary-foreground text-sm outline-none placeholder:text-primary-foreground/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
+                                    />
+                                  </div>
+                                  {touched.has(key) && errors[key] && (
+                                    <motion.p
+                                      initial={{ opacity: 0, y: -5 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      role="alert"
+                                      className="text-red-400 text-xs mt-1.5 flex items-center gap-1"
+                                    >
+                                      <AlertCircle className="w-3 h-3" /> {errors[key]}
+                                    </motion.p>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+
+                        {step === 2 && (
+                          <div className="group">
+                            <label htmlFor="motivations" className="text-xs font-bold text-primary-foreground/50 uppercase tracking-wider mb-2 block">
+                              Dites-nous en plus
+                            </label>
+                            <div className="relative">
+                              <MessageSquare className="absolute left-4 top-4 w-4 h-4 text-primary-foreground/30 group-focus-within:text-campaign-lime transition-colors duration-200" />
+                              <textarea
+                                id="motivations"
+                                required
+                                maxLength={500}
+                                rows={5}
+                                placeholder={fieldConfig.motivations.placeholder}
+                                value={form.motivations}
+                                onBlur={() => handleBlur("motivations")}
+                                onChange={e => handleChange("motivations", e.target.value)}
+                                className="w-full pl-11 pr-4 py-4 rounded-xl bg-primary-foreground/[0.06] border border-primary-foreground/10 text-primary-foreground text-sm outline-none placeholder:text-primary-foreground/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200 resize-none"
+                              />
+                            </div>
+                            <div className="flex justify-between mt-1.5">
+                              {touched.has("motivations") && errors.motivations ? (
+                                <motion.p
+                                  initial={{ opacity: 0, y: -5 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  role="alert"
+                                  className="text-red-400 text-xs flex items-center gap-1"
+                                >
+                                  <AlertCircle className="w-3 h-3" /> {errors.motivations}
+                                </motion.p>
+                              ) : <span />}
+                              <span className="text-primary-foreground/30 text-xs">{form.motivations.length}/500</span>
+                            </div>
+                          </div>
+                        )}
+                      </motion.div>
+                    </AnimatePresence>
                   </div>
 
-                  {fieldMeta.filter(f => !f.half).map(({ key, label, icon: Icon, type }) => (
-                    <div key={key}>
-                      <label htmlFor={key} className="text-sm font-medium text-foreground/80 mb-2 block">{label} <span className="text-campaign-lime">*</span></label>
-                      <div className="relative">
-                        <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-                        <input id={key} type={type} required value={form[key]} onFocus={() => setFocused(key)} onBlur={() => handleBlur(key)} onChange={e => handleChange(key, e.target.value)} className={inputClass(key)} />
-                      </div>
-                      {touched.has(key) && errors[key] && (
-                        <p role="alert" className="text-destructive text-xs mt-1.5 flex items-center gap-1">
-                          <AlertCircle className="w-3 h-3" /> {errors[key]}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-
-                  <div>
-                    <label htmlFor="motivations" className="text-sm font-medium text-foreground/80 mb-2 block">Vos motivations <span className="text-campaign-lime">*</span></label>
-                    <div className="relative">
-                      <MessageSquare className="absolute left-3.5 top-4 w-4 h-4 text-muted-foreground pointer-events-none" />
-                      <textarea id="motivations" required maxLength={500} rows={4} value={form.motivations} onFocus={() => setFocused("motivations")} onBlur={() => handleBlur("motivations")} onChange={e => handleChange("motivations", e.target.value)} className={`${inputClass("motivations")} resize-none pt-3.5`} />
-                    </div>
-                    <div className="flex justify-between mt-1.5">
-                      {touched.has("motivations") && errors.motivations && (
-                        <p role="alert" className="text-destructive text-xs flex items-center gap-1">
-                          <AlertCircle className="w-3 h-3" /> {errors.motivations}
-                        </p>
-                      )}
-                      <span className="text-muted-foreground text-xs ml-auto">{form.motivations.length}/500</span>
-                    </div>
-                  </div>
-
+                  {/* Error message */}
                   {submitError && (
-                    <p role="alert" className="text-destructive text-sm text-center flex items-center justify-center gap-1.5">
-                      <AlertCircle className="w-4 h-4" /> {submitError}
-                    </p>
+                    <div className="px-7 sm:px-9 pb-2">
+                      <p role="alert" className="text-red-400 text-sm text-center flex items-center justify-center gap-1.5">
+                        <AlertCircle className="w-4 h-4" /> {submitError}
+                      </p>
+                    </div>
                   )}
 
-                  <motion.button
-                    type="submit"
-                    disabled={submitting}
-                    className="w-full gradient-lime text-accent-foreground py-5 rounded-2xl font-extrabold uppercase tracking-wider text-base flex items-center justify-center gap-2 shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
-                    whileHover={submitting ? {} : { scale: 1.04 }}
-                    whileTap={submitting ? {} : { scale: 0.95, rotate: -3 }}
-                  >
-                    <Send className="w-4 h-4" />
-                    {submitting ? 'Envoi en cours...' : 'Envoyer'}
-                  </motion.button>
+                  {/* Navigation buttons */}
+                  <div className="px-7 sm:px-9 pb-7 sm:pb-9 pt-4">
+                    <div className="flex items-center gap-3">
+                      {step > 0 && (
+                        <motion.button
+                          type="button"
+                          onClick={goPrev}
+                          className="flex items-center gap-2 px-5 py-4 rounded-xl border border-primary-foreground/15 text-primary-foreground/60 hover:text-primary-foreground hover:border-primary-foreground/30 font-bold text-sm uppercase tracking-wider transition-all duration-200"
+                          whileHover={{ x: -3 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <ArrowLeft className="w-4 h-4" />
+                          Retour
+                        </motion.button>
+                      )}
 
-                  <p className="text-muted-foreground/50 text-xs text-center">
-                    En soumettant ce formulaire, vous acceptez notre{' '}
-                    <a href="/politique-de-confidentialite" className="text-campaign-lime/70 hover:text-campaign-lime underline">
-                      politique de confidentialité
-                    </a>.
-                  </p>
+                      {step < steps.length - 1 ? (
+                        <motion.button
+                          type="button"
+                          onClick={goNext}
+                          className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-extrabold uppercase tracking-wider text-sm transition-all duration-200 ${
+                            isStepValid(step)
+                              ? "gradient-lime text-accent-foreground shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_15px_40px_-10px_hsl(var(--campaign-lime)/0.4)]"
+                              : "bg-primary-foreground/[0.08] text-primary-foreground/40 cursor-default"
+                          }`}
+                          whileHover={isStepValid(step) ? { scale: 1.02 } : {}}
+                          whileTap={isStepValid(step) ? { scale: 0.97 } : {}}
+                        >
+                          Continuer
+                          <ArrowRight className="w-4 h-4" />
+                        </motion.button>
+                      ) : (
+                        <motion.button
+                          type="submit"
+                          disabled={submitting}
+                          className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl gradient-lime text-accent-foreground font-extrabold uppercase tracking-wider text-sm shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_15px_40px_-10px_hsl(var(--campaign-lime)/0.4)] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:rotate-0"
+                          whileHover={submitting ? {} : { scale: 1.02 }}
+                          whileTap={submitting ? {} : { scale: 0.97 }}
+                        >
+                          {submitting ? (
+                            <>
+                              <motion.div
+                                className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full"
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                              />
+                              Envoi en cours...
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles className="w-4 h-4" />
+                              Envoyer
+                              <Send className="w-4 h-4" />
+                            </>
+                          )}
+                        </motion.button>
+                      )}
+                    </div>
+
+                    {/* RGPD */}
+                    <p className="text-primary-foreground/25 text-xs text-center mt-4">
+                      En soumettant ce formulaire, vous acceptez notre{' '}
+                      <a href="/politique-de-confidentialite" className="text-campaign-lime/50 hover:text-campaign-lime underline transition-colors duration-200">
+                        politique de confidentialité
+                      </a>.
+                    </p>
+                  </div>
                 </form>
               )}
             </AnimatePresence>

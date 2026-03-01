@@ -24,7 +24,7 @@ const members = [
 
 const TeamSection = () => {
   return (
-    <section id="equipe" className="gradient-teal-deep relative overflow-hidden">
+    <section id="equipe" className="gradient-teal-deep relative overflow-x-clip">
       <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-28 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -54,7 +54,7 @@ const TeamSection = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08, duration: 0.5 }}
-                  whileHover={{ y: -6 }}
+                  whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
                   className="group cursor-pointer"
                 >
                   <div className="relative rounded-2xl overflow-hidden aspect-[3/4] shadow-lg">

@@ -92,7 +92,7 @@ export default function EquipeContent() {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 pt-2">
           {members.map((m, i) => (
             <motion.div
               key={i}
@@ -100,7 +100,7 @@ export default function EquipeContent() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
               className="group cursor-pointer"
             >
               <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/40">
