@@ -8,7 +8,7 @@ export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Programme',
-  description: 'Découvrez les 3 piliers du programme de Mathieu Morateur pour Bouc-Bel-Air : urbanisme maîtrisé, infrastructures rénovées, village revitalisé.',
+  description: 'Découvrez les 5 piliers du programme de Mathieu Morateur pour Bouc-Bel-Air : urbanisme maîtrisé, infrastructures rénovées, village revitalisé, smart city & sécurité, cadre de vie & environnement.',
   alternates: { canonical: '/programme' },
   openGraph: {
     url: `${SITE_URL}/programme`,
@@ -18,6 +18,8 @@ export const metadata: Metadata = {
     'programme municipal Bouc-Bel-Air', 'urbanisme Bouc-Bel-Air',
     'promoteurs immobiliers', 'infrastructures scolaires',
     'revitalisation village', 'programme Morateur 2026',
+    'smart city Bouc-Bel-Air', '5G municipal',
+    'lutte moustiques Bouc-Bel-Air', 'environnement cadre de vie',
   ],
 }
 
@@ -39,7 +41,7 @@ const faqSchema = {
       name: 'Quel est le programme de Mathieu Morateur pour Bouc-Bel-Air en 2026 ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Le programme de Mathieu Morateur repose sur 3 piliers : faire barrage aux promoteurs immobiliers avec le refus systématique des permis de construire excessifs, rénover les infrastructures municipales (écoles, bâtiments publics, routes), et revitaliser le centre-village avec des animations culturelles et un incubateur commercial.',
+        text: 'Le programme de Mathieu Morateur repose sur 5 piliers : faire barrage aux promoteurs immobiliers, rénover les infrastructures municipales (écoles, bâtiments publics, routes), revitaliser le centre-village, déployer une smart city sécurisée avec réseaux 5G municipaux, et améliorer le cadre de vie et l\'environnement (lutte anti-nuisibles, parcs arborés, murs anti-bruit).',
       },
     },
     {
@@ -47,7 +49,7 @@ const faqSchema = {
       name: 'Quelle est la position de Mathieu Morateur face aux promoteurs immobiliers à Bouc-Bel-Air ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Mathieu Morateur prévoit le refus systématique des permis de construire des promoteurs, l\'utilisation du droit de préemption urbain, le soutien aux recours des riverains, et le recours au bail réel solidaire pour tous les projets collectifs.',
+        text: 'Mathieu Morateur prévoit le refus systématique des permis de construire des promoteurs, l\'utilisation du droit de préemption urbain, le soutien aux recours des riverains, le recours au bail réel solidaire pour tous les projets collectifs, et la révision du PLUi pour sanctuariser les espaces naturels.',
       },
     },
     {
@@ -55,15 +57,23 @@ const faqSchema = {
       name: 'Quelles infrastructures seront rénovées à Bouc-Bel-Air avec le programme Morateur 2026 ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Le programme prévoit la rénovation complète des bâtiments municipaux, l\'installation de la climatisation dans toutes les écoles et crèches, la requalification des axes routiers majeurs (avenue Thiers, avenue de la Mounine, avenue Beausoleil), et l\'étude des échangeurs autoroutiers.',
+        text: 'Le programme prévoit la rénovation complète des bâtiments municipaux, l\'installation de la climatisation dans toutes les écoles et crèches, la requalification des axes routiers majeurs (avenue Thiers, avenue de la Mounine, avenue Beausoleil), l\'étude des échangeurs autoroutiers, et l\'extension des réseaux d\'eau potable et d\'assainissement.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Comment Morateur 2026 compte revitaliser le centre-village de Bouc-Bel-Air ?',
+      name: 'Qu\'est-ce que le projet Smart City de Morateur 2026 pour Bouc-Bel-Air ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Le projet comprend la mise en valeur du centre ancien, l\'extension des animations dans les ruelles pittoresques, la création d\'un incubateur commercial et artisanal, et le développement d\'une offre commerciale de proximité diversifiée.',
+        text: 'Le programme Smart City prévoit le déploiement de réseaux 5G municipaux permettant l\'installation de caméras de vidéosurveillance, de capteurs de bruit et de qualité de l\'air, d\'un éclairage public intelligent déclenché par capteurs de présence, et de feux de circulation intelligents, le tout pour un coût divisé par dix.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Comment Morateur 2026 améliore le cadre de vie et l\'environnement à Bouc-Bel-Air ?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Le programme comprend la lutte contre les moustiques (bornes aspirateurs, traitement des berges), la lutte contre les rats, la création de parcs arborés (vallat de Violesi), et l\'installation de murs anti-bruit le long de l\'autoroute pour protéger les quartiers exposés.',
       },
     },
     {

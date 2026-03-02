@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronDown, ArrowRight, Download } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import RoadmapSection from "@/components/RoadmapSection";
@@ -95,8 +95,16 @@ export default function ProgrammeContent({ pillars }: ProgrammeContentProps) {
               LE <span className="text-campaign-lime">PROGRAMME</span>
             </h1>
             <p className="text-primary-foreground/40 max-w-2xl mx-auto text-lg">
-              Trois piliers concrets pour redonner à notre commune le cadre de vie qu&apos;elle mérite. Cliquez sur chaque mesure pour en savoir plus.
+              {pillars.length} piliers concrets pour redonner à notre commune le cadre de vie qu&apos;elle mérite. Cliquez sur chaque mesure pour en savoir plus.
             </p>
+            <a
+              href="/programme-morateur-2026.pdf"
+              download
+              className="inline-flex items-center gap-2 mt-6 gradient-lime text-accent-foreground px-8 py-3 rounded-xl font-accent font-bold text-sm uppercase tracking-wider shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
+            >
+              <Download className="w-4 h-4" />
+              Télécharger le programme (PDF)
+            </a>
           </motion.div>
         </div>
       </section>
