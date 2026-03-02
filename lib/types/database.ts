@@ -14,6 +14,7 @@ export interface Article {
   title: string
   date: string
   image: string
+  image_alt?: string
   tag: string
   description: string
   sort_order: number
