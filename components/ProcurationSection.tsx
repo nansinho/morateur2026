@@ -38,7 +38,7 @@ const Confetti = () => {
     y: -(Math.random() * 200 + 100),
     rotate: Math.random() * 720 - 360,
     scale: Math.random() * 0.5 + 0.5,
-    color: ['hsl(152 48% 50%)', 'hsl(152 55% 62%)', 'hsl(0 0% 100%)', 'hsl(220 73% 34%)'][Math.floor(Math.random() * 4)],
+    color: ['hsl(217 91% 60%)', 'hsl(217 85% 72%)', 'hsl(0 0% 100%)', 'hsl(0 0% 20%)'][Math.floor(Math.random() * 4)],
     delay: Math.random() * 0.3,
   }));
 
