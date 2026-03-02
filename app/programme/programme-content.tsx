@@ -95,16 +95,28 @@ export default function ProgrammeContent({ pillars }: ProgrammeContentProps) {
               LE <span className="text-campaign-lime">PROGRAMME</span>
             </h1>
             <p className="text-primary-foreground/40 max-w-2xl mx-auto text-lg">
-              {pillars.length} piliers concrets pour redonner à notre commune le cadre de vie qu&apos;elle mérite. Cliquez sur chaque mesure pour en savoir plus.
+              {pillars.length} engagements concrets pour redonner à notre commune le cadre de vie qu&apos;elle mérite. Cliquez sur chaque mesure pour en savoir plus.
             </p>
-            <a
-              href="/programme-morateur-2026.pdf"
-              download
-              className="inline-flex items-center gap-2 mt-6 gradient-lime text-accent-foreground px-8 py-3 rounded-xl font-accent font-bold text-sm uppercase tracking-wider shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
-            >
-              <Download className="w-4 h-4" />
-              Télécharger le programme (PDF)
-            </a>
+            <div className="flex flex-col sm:flex-row items-center gap-3 mt-6">
+              <a
+                href="/PDF/flyer-circulaire-candidature-recto.jpg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 gradient-lime text-accent-foreground px-8 py-3 rounded-xl font-accent font-bold text-sm uppercase tracking-wider shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
+              >
+                <Download className="w-4 h-4" />
+                Voir le tract (recto)
+              </a>
+              <a
+                href="/PDF/flyer-circulaire-candidature-verso.jpg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border-2 border-campaign-lime text-campaign-lime px-8 py-3 rounded-xl font-accent font-bold text-sm uppercase tracking-wider hover:bg-campaign-lime hover:text-accent-foreground transition-all duration-200"
+              >
+                <Download className="w-4 h-4" />
+                Voir le tract (verso)
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>
