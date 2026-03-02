@@ -19,10 +19,14 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
-import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react'
+import { Plus, Pencil, Trash2, Loader2, MoreHorizontal } from 'lucide-react'
 import { toast } from 'sonner'
+import ImageUpload from '@/components/admin/image-upload'
 
 const TAGS = ['Événement', 'Terrain', 'Programme', 'Tribune']
 
@@ -115,7 +119,7 @@ export default function ArticlesPage() {
               <TableHead className="text-muted-foreground">Titre</TableHead>
               <TableHead className="text-muted-foreground hidden sm:table-cell">Date</TableHead>
               <TableHead className="text-muted-foreground hidden md:table-cell">Tag</TableHead>
-              <TableHead className="text-muted-foreground text-right">Actions</TableHead>
+              <TableHead className="text-muted-foreground text-right w-12"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -133,7 +137,11 @@ export default function ArticlesPage() {
               </TableRow>
             ) : (
               articles.map((article) => (
-                <TableRow key={article.id} className="border-border/50 hover:bg-secondary/20">
+                <TableRow
+                  key={article.id}
+                  className="border-border/50 hover:bg-secondary/20 cursor-pointer"
+                  onClick={() => openEdit(article)}
+                >
                   <TableCell className="text-muted-foreground/60 text-sm">{article.sort_order}</TableCell>
                   <TableCell className="text-foreground font-medium">{article.title}</TableCell>
                   <TableCell className="text-muted-foreground text-sm hidden sm:table-cell">{article.date}</TableCell>
@@ -142,15 +150,23 @@ export default function ArticlesPage() {
                       {article.tag}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => openEdit(article)}>
-                        <Pencil className="w-4 h-4" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive" onClick={() => setDeleteId(article.id)}>
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
+                  <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="bg-card border-border">
+                        <DropdownMenuItem onClick={() => openEdit(article)}>
+                          <Pencil className="w-4 h-4 mr-2" /> Modifier
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setDeleteId(article.id)}>
+                          <Trash2 className="w-4 h-4 mr-2" /> Supprimer
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))
@@ -200,12 +216,10 @@ export default function ArticlesPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-foreground/80">URL Image</Label>
-              <Input
+              <Label className="text-foreground/80">Image</Label>
+              <ImageUpload
                 value={editData.image}
-                onChange={(e) => setEditData({ ...editData, image: e.target.value })}
-                className="bg-secondary/50 border-border text-foreground"
-                placeholder="https://..."
+                onChange={(url) => setEditData({ ...editData, image: url })}
               />
             </div>
             <div className="space-y-2">

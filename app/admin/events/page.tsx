@@ -19,7 +19,10 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Plus, Pencil, Trash2, Loader2, Check } from 'lucide-react'
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Plus, Pencil, Trash2, Loader2, Check, MoreHorizontal } from 'lucide-react'
 import { toast } from 'sonner'
 
 const emptyEvent = { icon: 'Flag', date: '', title: '', description: '', is_done: false, sort_order: 0 }
@@ -101,7 +104,7 @@ export default function EventsPage() {
               <TableHead className="text-muted-foreground hidden sm:table-cell">Date</TableHead>
               <TableHead className="text-muted-foreground hidden md:table-cell">Icône</TableHead>
               <TableHead className="text-muted-foreground">Statut</TableHead>
-              <TableHead className="text-muted-foreground text-right">Actions</TableHead>
+              <TableHead className="text-muted-foreground text-right w-12"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -117,33 +120,46 @@ export default function EventsPage() {
               </TableRow>
             ) : (
               events.map((event) => (
-                <TableRow key={event.id} className="border-border/50 hover:bg-secondary/20">
+                <TableRow
+                  key={event.id}
+                  className="border-border/50 hover:bg-secondary/20 cursor-pointer"
+                  onClick={() => openEdit(event)}
+                >
                   <TableCell className="text-muted-foreground/60 text-sm">{event.sort_order}</TableCell>
                   <TableCell className="text-foreground font-medium">{event.title}</TableCell>
                   <TableCell className="text-muted-foreground text-sm hidden sm:table-cell">{event.date}</TableCell>
                   <TableCell className="text-muted-foreground/60 text-sm hidden md:table-cell">{event.icon}</TableCell>
                   <TableCell>
-                    <button onClick={() => toggleDone(event)}>
-                      {event.is_done ? (
-                        <Badge className="bg-campaign-lime/20 text-campaign-lime border-campaign-lime/30 cursor-pointer">
-                          <Check className="w-3 h-3 mr-1" /> Terminé
-                        </Badge>
-                      ) : (
-                        <Badge variant="outline" className="text-muted-foreground border-border cursor-pointer">
-                          À venir
-                        </Badge>
-                      )}
-                    </button>
+                    {event.is_done ? (
+                      <Badge className="bg-campaign-lime/20 text-campaign-lime border-campaign-lime/30">
+                        <Check className="w-3 h-3 mr-1" /> Terminé
+                      </Badge>
+                    ) : (
+                      <Badge variant="outline" className="text-muted-foreground border-border">
+                        À venir
+                      </Badge>
+                    )}
                   </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => openEdit(event)}>
-                        <Pencil className="w-4 h-4" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive" onClick={() => setDeleteId(event.id)}>
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
+                  <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="bg-card border-border">
+                        <DropdownMenuItem onClick={() => openEdit(event)}>
+                          <Pencil className="w-4 h-4 mr-2" /> Modifier
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toggleDone(event)}>
+                          <Check className="w-4 h-4 mr-2" /> {event.is_done ? 'Marquer à venir' : 'Marquer terminé'}
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setDeleteId(event.id)}>
+                          <Trash2 className="w-4 h-4 mr-2" /> Supprimer
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))

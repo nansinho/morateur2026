@@ -17,8 +17,12 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Plus, Pencil, Trash2, Loader2, ExternalLink } from 'lucide-react'
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Plus, Pencil, Trash2, Loader2, ExternalLink, MoreHorizontal } from 'lucide-react'
 import { toast } from 'sonner'
+import ImageUpload from '@/components/admin/image-upload'
 
 const emptyPress = { source: '', author: '', date: '', title: '', excerpt: '', url: '', logo: '', sort_order: 0 }
 
@@ -93,7 +97,7 @@ export default function PressPage() {
               <TableHead className="text-muted-foreground">Titre</TableHead>
               <TableHead className="text-muted-foreground hidden md:table-cell">Auteur</TableHead>
               <TableHead className="text-muted-foreground hidden sm:table-cell">Date</TableHead>
-              <TableHead className="text-muted-foreground text-right">Actions</TableHead>
+              <TableHead className="text-muted-foreground text-right w-12"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -109,30 +113,40 @@ export default function PressPage() {
               </TableRow>
             ) : (
               articles.map((article) => (
-                <TableRow key={article.id} className="border-border/50 hover:bg-secondary/20">
+                <TableRow
+                  key={article.id}
+                  className="border-border/50 hover:bg-secondary/20 cursor-pointer"
+                  onClick={() => openEdit(article)}
+                >
                   <TableCell className="text-muted-foreground/60 text-sm">{article.sort_order}</TableCell>
                   <TableCell className="text-campaign-lime font-medium text-sm">{article.source}</TableCell>
                   <TableCell className="text-foreground font-medium">
-                    <div className="flex items-center gap-2">
-                      <span className="truncate max-w-[200px]">{article.title}</span>
-                      {article.url && (
-                        <a href={article.url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground/60 hover:text-campaign-lime" onClick={(e) => e.stopPropagation()}>
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </a>
-                      )}
-                    </div>
+                    <span className="truncate max-w-[200px] inline-block">{article.title}</span>
                   </TableCell>
                   <TableCell className="text-muted-foreground text-sm hidden md:table-cell">{article.author}</TableCell>
                   <TableCell className="text-muted-foreground text-sm hidden sm:table-cell">{article.date}</TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => openEdit(article)}>
-                        <Pencil className="w-4 h-4" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive" onClick={() => setDeleteId(article.id)}>
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
+                  <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="bg-card border-border">
+                        <DropdownMenuItem onClick={() => openEdit(article)}>
+                          <Pencil className="w-4 h-4 mr-2" /> Modifier
+                        </DropdownMenuItem>
+                        {article.url && (
+                          <DropdownMenuItem onClick={() => window.open(article.url, '_blank')}>
+                            <ExternalLink className="w-4 h-4 mr-2" /> Ouvrir le lien
+                          </DropdownMenuItem>
+                        )}
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setDeleteId(article.id)}>
+                          <Trash2 className="w-4 h-4 mr-2" /> Supprimer
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))
@@ -181,8 +195,11 @@ export default function PressPage() {
               <Input value={editData.url} onChange={(e) => setEditData({ ...editData, url: e.target.value })} className="bg-secondary/50 border-border text-foreground" placeholder="https://..." />
             </div>
             <div className="space-y-2">
-              <Label className="text-foreground/80">Logo du média (chemin)</Label>
-              <Input value={editData.logo} onChange={(e) => setEditData({ ...editData, logo: e.target.value })} className="bg-secondary/50 border-border text-foreground" placeholder="/images/logo-laprovence.svg" />
+              <Label className="text-foreground/80">Logo du média</Label>
+              <ImageUpload
+                value={editData.logo}
+                onChange={(url) => setEditData({ ...editData, logo: url })}
+              />
             </div>
           </div>
           <DialogFooter>

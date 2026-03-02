@@ -16,7 +16,10 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Eye, MailOpen, Archive, Trash2, Search } from 'lucide-react'
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Eye, MailOpen, Archive, Trash2, Search, MoreHorizontal } from 'lucide-react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
@@ -133,7 +136,7 @@ export default function ConsultationsPage() {
               <TableHead className="text-muted-foreground hidden md:table-cell">Quartier</TableHead>
               <TableHead className="text-muted-foreground hidden lg:table-cell">Email</TableHead>
               <TableHead className="text-muted-foreground hidden sm:table-cell">Date</TableHead>
-              <TableHead className="text-muted-foreground text-right">Actions</TableHead>
+              <TableHead className="text-muted-foreground text-right w-12"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -174,25 +177,33 @@ export default function ConsultationsPage() {
                   <TableCell className="text-muted-foreground/60 text-sm hidden sm:table-cell">
                     {new Date(sub.created_at).toLocaleDateString('fr-FR')}
                   </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1" onClick={(e) => e.stopPropagation()}>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => router.push(`/admin/consultations/${sub.id}`)}>
-                        <Eye className="w-4 h-4" />
-                      </Button>
-                      {sub.status === 'new' && (
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => updateStatus(sub.id, 'read')}>
-                          <MailOpen className="w-4 h-4" />
+                  <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                          <MoreHorizontal className="w-4 h-4" />
                         </Button>
-                      )}
-                      {sub.status !== 'archived' && (
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => updateStatus(sub.id, 'archived')}>
-                          <Archive className="w-4 h-4" />
-                        </Button>
-                      )}
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive" onClick={() => setDeleteId(sub.id)}>
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="bg-card border-border">
+                        <DropdownMenuItem onClick={() => router.push(`/admin/consultations/${sub.id}`)}>
+                          <Eye className="w-4 h-4 mr-2" /> Voir
+                        </DropdownMenuItem>
+                        {sub.status === 'new' && (
+                          <DropdownMenuItem onClick={() => updateStatus(sub.id, 'read')}>
+                            <MailOpen className="w-4 h-4 mr-2" /> Marquer comme lu
+                          </DropdownMenuItem>
+                        )}
+                        {sub.status !== 'archived' && (
+                          <DropdownMenuItem onClick={() => updateStatus(sub.id, 'archived')}>
+                            <Archive className="w-4 h-4 mr-2" /> Archiver
+                          </DropdownMenuItem>
+                        )}
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setDeleteId(sub.id)}>
+                          <Trash2 className="w-4 h-4 mr-2" /> Supprimer
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))

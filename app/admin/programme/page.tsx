@@ -15,7 +15,10 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Plus, Pencil, Trash2, Loader2, GripVertical } from 'lucide-react'
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Plus, Pencil, Trash2, Loader2, GripVertical, MoreHorizontal } from 'lucide-react'
 import { toast } from 'sonner'
 
 export default function ProgrammePage() {
@@ -24,13 +27,11 @@ export default function ProgrammePage() {
   const [saving, setSaving] = useState(false)
   const supabase = createClient()
 
-  // Pillar edit state
   const [pillarEditOpen, setPillarEditOpen] = useState(false)
   const [pillarEditId, setPillarEditId] = useState<string | null>(null)
   const [pillarData, setPillarData] = useState({ title: '', intro: '', icon: 'ShieldCheck', color: 'border-campaign-lime/30', icon_bg: 'gradient-lime', sort_order: 0 })
   const [deletePillarId, setDeletePillarId] = useState<string | null>(null)
 
-  // Measure edit state
   const [measureEditOpen, setMeasureEditOpen] = useState(false)
   const [measureEditId, setMeasureEditId] = useState<string | null>(null)
   const [measurePillarId, setMeasurePillarId] = useState<string>('')
@@ -40,31 +41,26 @@ export default function ProgrammePage() {
   const fetchPillars = useCallback(async () => {
     const { data: pillarsData } = await supabase.from('programme_pillars').select('*').order('sort_order')
     const { data: measuresData } = await supabase.from('programme_measures').select('*').order('sort_order')
-
     const combined = (pillarsData || []).map((p: ProgrammePillar) => ({
       ...p,
       measures: (measuresData || []).filter((m: ProgrammeMeasure) => m.pillar_id === p.id),
     }))
-
     setPillars(combined)
     setLoading(false)
   }, [supabase])
 
   useEffect(() => { fetchPillars() }, [fetchPillars])
 
-  // Pillar CRUD
   const openPillarCreate = () => {
     setPillarEditId(null)
     setPillarData({ title: '', intro: '', icon: 'ShieldCheck', color: 'border-campaign-lime/30', icon_bg: 'gradient-lime', sort_order: pillars.length + 1 })
     setPillarEditOpen(true)
   }
-
   const openPillarEdit = (p: ProgrammePillar) => {
     setPillarEditId(p.id)
     setPillarData({ title: p.title, intro: p.intro, icon: p.icon, color: p.color, icon_bg: p.icon_bg, sort_order: p.sort_order })
     setPillarEditOpen(true)
   }
-
   const savePillar = async () => {
     if (!pillarData.title) { toast.error('Le titre est obligatoire'); return }
     setSaving(true)
@@ -75,35 +71,25 @@ export default function ProgrammePage() {
       await supabase.from('programme_pillars').insert(pillarData)
       toast.success('Pilier créé')
     }
-    setSaving(false)
-    setPillarEditOpen(false)
-    fetchPillars()
+    setSaving(false); setPillarEditOpen(false); fetchPillars()
   }
-
   const deletePillar = async () => {
     if (!deletePillarId) return
     await supabase.from('programme_pillars').delete().eq('id', deletePillarId)
-    toast.success('Pilier supprimé')
-    setDeletePillarId(null)
-    fetchPillars()
+    toast.success('Pilier supprimé'); setDeletePillarId(null); fetchPillars()
   }
 
-  // Measure CRUD
   const openMeasureCreate = (pillarId: string) => {
-    setMeasureEditId(null)
-    setMeasurePillarId(pillarId)
+    setMeasureEditId(null); setMeasurePillarId(pillarId)
     const pillar = pillars.find(p => p.id === pillarId)
     setMeasureData({ title: '', detail: '', sort_order: (pillar?.measures.length || 0) + 1 })
     setMeasureEditOpen(true)
   }
-
   const openMeasureEdit = (m: ProgrammeMeasure) => {
-    setMeasureEditId(m.id)
-    setMeasurePillarId(m.pillar_id)
+    setMeasureEditId(m.id); setMeasurePillarId(m.pillar_id)
     setMeasureData({ title: m.title, detail: m.detail, sort_order: m.sort_order })
     setMeasureEditOpen(true)
   }
-
   const saveMeasure = async () => {
     if (!measureData.title) { toast.error('Le titre est obligatoire'); return }
     setSaving(true)
@@ -114,17 +100,12 @@ export default function ProgrammePage() {
       await supabase.from('programme_measures').insert({ ...measureData, pillar_id: measurePillarId })
       toast.success('Mesure créée')
     }
-    setSaving(false)
-    setMeasureEditOpen(false)
-    fetchPillars()
+    setSaving(false); setMeasureEditOpen(false); fetchPillars()
   }
-
   const deleteMeasure = async () => {
     if (!deleteMeasureId) return
     await supabase.from('programme_measures').delete().eq('id', deleteMeasureId)
-    toast.success('Mesure supprimée')
-    setDeleteMeasureId(null)
-    fetchPillars()
+    toast.success('Mesure supprimée'); setDeleteMeasureId(null); fetchPillars()
   }
 
   if (loading) {
@@ -164,14 +145,22 @@ export default function ProgrammePage() {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-1">
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => openPillarEdit(pillar)}>
-                  <Pencil className="w-4 h-4" />
-                </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive" onClick={() => setDeletePillarId(pillar.id)}>
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                    <MoreHorizontal className="w-4 h-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-card border-border">
+                  <DropdownMenuItem onClick={() => openPillarEdit(pillar)}>
+                    <Pencil className="w-4 h-4 mr-2" /> Modifier
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setDeletePillarId(pillar.id)}>
+                    <Trash2 className="w-4 h-4 mr-2" /> Supprimer
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
@@ -182,19 +171,33 @@ export default function ProgrammePage() {
                   </Button>
                 </div>
                 {pillar.measures.map((measure) => (
-                  <div key={measure.id} className="flex items-start gap-3 p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors group">
+                  <div
+                    key={measure.id}
+                    className="flex items-start gap-3 p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors group cursor-pointer"
+                    onClick={() => openMeasureEdit(measure)}
+                  >
                     <span className="text-xs text-muted-foreground/40 font-bold mt-0.5 w-6 text-right flex-shrink-0">{measure.sort_order}.</span>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground">{measure.title}</p>
                       <p className="text-xs text-muted-foreground/60 mt-0.5 line-clamp-2">{measure.detail}</p>
                     </div>
-                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-foreground" onClick={() => openMeasureEdit(measure)}>
-                        <Pencil className="w-3 h-3" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:text-destructive" onClick={() => setDeleteMeasureId(measure.id)}>
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
+                    <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-foreground">
+                            <MoreHorizontal className="w-3.5 h-3.5" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="bg-card border-border">
+                          <DropdownMenuItem onClick={() => openMeasureEdit(measure)}>
+                            <Pencil className="w-4 h-4 mr-2" /> Modifier
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setDeleteMeasureId(measure.id)}>
+                            <Trash2 className="w-4 h-4 mr-2" /> Supprimer
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                   </div>
                 ))}
@@ -207,9 +210,7 @@ export default function ProgrammePage() {
       {/* Pillar edit dialog */}
       <Dialog open={pillarEditOpen} onOpenChange={setPillarEditOpen}>
         <DialogContent className="bg-card border-border text-foreground max-w-lg">
-          <DialogHeader>
-            <DialogTitle>{pillarEditId ? 'Modifier le pilier' : 'Nouveau pilier'}</DialogTitle>
-          </DialogHeader>
+          <DialogHeader><DialogTitle>{pillarEditId ? 'Modifier le pilier' : 'Nouveau pilier'}</DialogTitle></DialogHeader>
           <div className="space-y-4 mt-2">
             <div className="space-y-2">
               <Label className="text-foreground/80">Titre</Label>
@@ -253,9 +254,7 @@ export default function ProgrammePage() {
       {/* Measure edit dialog */}
       <Dialog open={measureEditOpen} onOpenChange={setMeasureEditOpen}>
         <DialogContent className="bg-card border-border text-foreground max-w-lg">
-          <DialogHeader>
-            <DialogTitle>{measureEditId ? 'Modifier la mesure' : 'Nouvelle mesure'}</DialogTitle>
-          </DialogHeader>
+          <DialogHeader><DialogTitle>{measureEditId ? 'Modifier la mesure' : 'Nouvelle mesure'}</DialogTitle></DialogHeader>
           <div className="space-y-4 mt-2">
             <div className="space-y-2">
               <Label className="text-foreground/80">Titre</Label>
@@ -280,7 +279,7 @@ export default function ProgrammePage() {
         </DialogContent>
       </Dialog>
 
-      {/* Delete pillar confirmation */}
+      {/* Delete pillar */}
       <AlertDialog open={!!deletePillarId} onOpenChange={(open) => !open && setDeletePillarId(null)}>
         <AlertDialogContent className="bg-card border-border">
           <AlertDialogHeader>
@@ -294,7 +293,7 @@ export default function ProgrammePage() {
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Delete measure confirmation */}
+      {/* Delete measure */}
       <AlertDialog open={!!deleteMeasureId} onOpenChange={(open) => !open && setDeleteMeasureId(null)}>
         <AlertDialogContent className="bg-card border-border">
           <AlertDialogHeader>
