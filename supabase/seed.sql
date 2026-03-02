@@ -12,9 +12,11 @@ INSERT INTO articles (title, date, image, tag, description, sort_order) VALUES
 
 -- Programme : Piliers
 INSERT INTO programme_pillars (id, title, intro, icon, color, icon_bg, sort_order) VALUES
-('a1000000-0000-0000-0000-000000000001', 'Faire barrage aux promoteurs', 'Notre commune se trouve à un tournant. En moins d''un an, des permis pour plus de 1000 logements ont été déposés. Il est temps d''agir.', 'ShieldCheck', 'border-campaign-lime/30', 'gradient-lime', 1),
-('a1000000-0000-0000-0000-000000000002', 'Des infrastructures à la hauteur', 'La vétusté de nos bâtiments publics est indigne de notre commune. Écoles, crèches, voiries : tout doit être remis à niveau.', 'Building2', 'border-campaign-steel/30', 'gradient-teal', 2),
-('a1000000-0000-0000-0000-000000000003', 'Revitaliser le village', 'Notre centre ancien a tant à offrir. Retrouver son âme, ramener la vie dans ses ruelles pittoresques : c''est notre priorité.', 'Store', 'border-campaign-olive/30', 'bg-campaign-olive', 3);
+('a1000000-0000-0000-0000-000000000001', 'Faire barrage aux promoteurs', 'En moins d''un an, des permis pour plus de 1 000 logements ont été déposés. Il est temps de reprendre en mains notre destinée et de protéger le cadre de vie des Boucains.', 'ShieldCheck', 'border-campaign-lime/30', 'gradient-lime', 1),
+('a1000000-0000-0000-0000-000000000002', 'Des infrastructures à la hauteur', 'La vétusté de nos écoles, crèches, bâtiments publics et voiries est indigne de notre commune. Tout doit être remis à niveau pour offrir des conditions dignes à tous.', 'Building2', 'border-campaign-steel/30', 'gradient-teal', 2),
+('a1000000-0000-0000-0000-000000000003', 'Revitaliser le village', 'Notre centre ancien a tant à offrir. Retrouver son âme, ramener la vie dans ses ruelles pittoresques et y installer de nouveaux commerces : c''est notre priorité.', 'Store', 'border-campaign-olive/30', 'bg-campaign-olive', 3),
+('a1000000-0000-0000-0000-000000000004', 'Smart City & Sécurité', 'Grâce aux réseaux 5G municipaux, nous pouvons déployer caméras, capteurs et éclairage intelligent pour un coût divisé par dix. La technologie au service de la tranquillité.', 'Wifi', 'border-campaign-teal/30', 'gradient-teal-deep', 4),
+('a1000000-0000-0000-0000-000000000005', 'Cadre de vie & Environnement', 'Lutter contre les nuisibles, préserver nos espaces naturels, protéger les riverains du bruit : un cadre de vie sain est un droit pour chaque Boucain.', 'Leaf', 'border-campaign-lime/30', 'bg-campaign-olive', 5);
 
 -- Programme : Mesures
 INSERT INTO programme_measures (pillar_id, title, detail, sort_order) VALUES
@@ -23,16 +25,30 @@ INSERT INTO programme_measures (pillar_id, title, detail, sort_order) VALUES
 ('a1000000-0000-0000-0000-000000000001', 'Droit de préemption urbain', 'Utilisation systématique du droit de préemption urbain pour permettre la création de logements sociaux adaptés à notre commune, sans laisser le champ libre aux promoteurs.', 2),
 ('a1000000-0000-0000-0000-000000000001', 'Soutien aux recours des riverains', 'Nous soutiendrons activement les recours intentés par les riverains sur les permis existants, en leur apportant un accompagnement juridique et technique.', 3),
 ('a1000000-0000-0000-0000-000000000001', 'Bail réel solidaire', 'Recours au bail réel solidaire pour l''intégralité des projets collectifs afin de limiter les constructions spéculatives et de privilégier les parcours résidentiels des Boucains.', 4),
+('a1000000-0000-0000-0000-000000000001', 'Révision du PLUi', 'Engager la révision du plan local d''urbanisme intercommunal pour sanctuariser les espaces naturels, réduire les zones constructibles et ramener les projets à une taille raisonnable.', 5),
 -- Pilier 2 : Des infrastructures à la hauteur
 ('a1000000-0000-0000-0000-000000000002', 'Rénovation des bâtiments municipaux', 'Réaliser la rénovation complète de l''ensemble des bâtiments municipaux, y compris le foyer des Anciens, pour offrir des conditions dignes à tous les usagers.', 1),
-('a1000000-0000-0000-0000-000000000002', 'Climatisation dans les écoles et crèches', 'Installer la climatisation réversible dans toutes les crèches, toutes les écoles et au foyer des anciens. Il est inacceptable que le thermomètre dépasse 30°C dès mai dans certaines écoles.', 2),
+('a1000000-0000-0000-0000-000000000002', 'Climatisation dans les écoles et crèches', 'Installer la climatisation réversible dans toutes les crèches, toutes les écoles et au foyer des anciens. Il est inacceptable que le thermomètre dépasse 30 °C dès mai dans certaines classes.', 2),
 ('a1000000-0000-0000-0000-000000000002', 'Requalification des axes routiers', 'Requalifier et renouveler les principaux axes de notre commune : avenue Thiers, avenue de la Mounine, avenue Beausoleil, chemin de Sauvecanne… et la RD8n.', 3),
 ('a1000000-0000-0000-0000-000000000002', 'Échangeurs autoroutiers', 'Lancer les études sur l''aménagement des échangeurs autoroutiers des Trois Pigeons et des Chabauds, afin de présenter un projet solide à l''État.', 4),
+('a1000000-0000-0000-0000-000000000002', 'Extension des réseaux d''eau', 'Raccorder au réseau d''eau potable et d''assainissement collectif les secteurs qui en sont privés : chemins de la Tuilerie et de Valabre, lotissement Rhin et Danube.', 5),
 -- Pilier 3 : Revitaliser le village
 ('a1000000-0000-0000-0000-000000000003', 'Centre ancien attractif', 'Faire de notre centre ancien un lieu attractif pour l''ensemble des habitants, en s''appuyant sur son caractère unique, son histoire et son patrimoine architectural.', 1),
 ('a1000000-0000-0000-0000-000000000003', 'Animations et vie culturelle', 'Étendre les animations au-delà de la place principale, dans les ruelles pittoresques du centre ancien. Retrouver l''esprit des retraites aux flambeaux et des fêtes de village.', 2),
-('a1000000-0000-0000-0000-000000000003', 'Incubateur commercial et artisanal', 'Créer un incubateur d''entreprises de restauration et de savoir-faire artisanaux pour redonner vie au commerce local et attirer de nouveaux talents.', 3),
-('a1000000-0000-0000-0000-000000000003', 'Offre commerciale renouvelée', 'Développer une offre commerciale de proximité diversifiée, en accompagnant les porteurs de projets et en facilitant l''installation de nouveaux commerces dans le centre-ville.', 4);
+('a1000000-0000-0000-0000-000000000003', 'Incubateur commercial et artisanal', 'Proposer à des jeunes entreprises de l''artisanat de bouche — chocolatier, glacier, salon de thés — d''être hébergées dans les locaux vides du village, avec autorisation de terrasse.', 3),
+('a1000000-0000-0000-0000-000000000003', 'Boulangerie avec fournil', 'Remodeler la place Jean Moulin en construisant à la place de l''ancien Saint-Géran un immeuble de bureaux accueillant en rez-de-chaussée un véritable boulanger, avec un fournil.', 4),
+('a1000000-0000-0000-0000-000000000003', 'Parc-relais centre-ville', 'Créer un parc-relais sur le dernier terrain libre du centre-ville, permettant le stationnement et facilitant le covoiturage, plutôt qu''une urbanisation dense en étages.', 5),
+-- Pilier 4 : Smart City & Sécurité
+('a1000000-0000-0000-0000-000000000004', 'Réseaux 5G municipaux', 'Créer des réseaux 5G propres à la mairie, permettant le déploiement de capteurs et caméras pour un coût divisé par dix par rapport à 2020, sans dépendance aux opérateurs privés.', 1),
+('a1000000-0000-0000-0000-000000000004', 'Vidéosurveillance et capteurs de bruit', 'Installer des caméras de vidéosurveillance et des capteurs de bruit dans les quartiers afin d''intervenir rapidement pour les troubles à la tranquillité publique.', 2),
+('a1000000-0000-0000-0000-000000000004', 'Capteurs de qualité de l''air', 'Déployer des capteurs de qualité de l''air pour vérifier en temps réel que les seuils réglementaires sont respectés, notamment aux abords des axes routiers et des zones industrielles.', 3),
+('a1000000-0000-0000-0000-000000000004', 'Éclairage public intelligent', 'Remplacer l''éclairage public par un éclairage déclenché par des capteurs de présence, réduisant la consommation énergétique et les nuisances lumineuses.', 4),
+('a1000000-0000-0000-0000-000000000004', 'Feux de circulation intelligents', 'Rendre les feux de circulation intelligents, activés uniquement lorsque le nombre de véhicules l''impose, et créer des voies vertes sur les axes principaux comme l''avenue de la Mounine et l''avenue Beausoleil.', 5),
+-- Pilier 5 : Cadre de vie & Environnement
+('a1000000-0000-0000-0000-000000000005', 'Lutte contre les moustiques', 'Déployer un programme actif : traitement printanier des berges des vallats, pose de bornes aspirateurs à moustiques aux points stratégiques (écoles, espaces verts), et tarifs négociés pour les dispositifs individuels.', 1),
+('a1000000-0000-0000-0000-000000000005', 'Lutte contre les rats', 'Mettre en place un programme de dératisation avec pose de pièges à rats dans l''espace public et mesures coercitives contre les troubles à la salubrité (eaux stagnantes, ordures dans les jardins).', 2),
+('a1000000-0000-0000-0000-000000000005', 'Création de parcs arborés', 'Sanctuariser le lit du vallat de Violesi pour y créer un véritable parc arboré enjambant le cours d''eau, et préserver les espaces naturels face à la pression immobilière.', 3),
+('a1000000-0000-0000-0000-000000000005', 'Murs anti-bruit autoroutiers', 'Ériger des murs anti-bruit le long de l''autoroute dans les quartiers les plus exposés, notamment du côté des Revenants, à l''image de ce qui a été fait aux Ormeaux.', 4);
 
 -- Événements / Roadmap
 INSERT INTO events (icon, date, title, description, is_done, sort_order) VALUES
