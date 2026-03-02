@@ -103,10 +103,10 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
         {statCards.map((card) => (
           <Link key={card.label} href={card.href}>
-            <Card className={`bg-card/60 border-border/40 hover:bg-card/80 transition-colors duration-150 cursor-pointer rounded-lg border-l-2 ${card.accent}`}>
+            <Card className={`bg-card border-border/40 hover:bg-card hover:shadow-sm transition-all duration-150 cursor-pointer rounded-lg border-l-2 ${card.accent}`}>
               <CardContent className="p-3">
                 <div className="flex items-center gap-2 mb-1.5">
-                  <div className="w-7 h-7 rounded-md bg-secondary/60 flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-md bg-secondary flex items-center justify-center">
                     <card.icon className="w-3.5 h-3.5 text-muted-foreground/60" />
                   </div>
                   <p className="text-[11px] text-muted-foreground/60 font-medium truncate">{card.label}</p>
@@ -124,7 +124,7 @@ export default function AdminDashboard() {
       {/* Bottom row: Messages + Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Recent messages */}
-        <Card className="bg-card/60 border-border/40 rounded-lg lg:col-span-2">
+        <Card className="bg-card border-border/40 rounded-lg lg:col-span-2">
           <CardHeader className="flex flex-row items-center justify-between py-3 px-4">
             <CardTitle className="text-[13px] font-semibold text-foreground">Derniers messages</CardTitle>
             <Link href="/admin/messages" className="text-[11px] text-campaign-lime/80 hover:text-campaign-lime font-medium flex items-center gap-1">
@@ -144,7 +144,7 @@ export default function AdminDashboard() {
                 </div>
                 {/* Rows */}
                 {recentMessages.map((msg) => (
-                  <div key={msg.id} className="grid grid-cols-[1fr_auto] sm:grid-cols-[200px_1fr_80px] gap-2 px-4 py-2.5 border-b border-border/20 last:border-0 hover:bg-secondary/15 transition-colors">
+                  <div key={msg.id} className="grid grid-cols-[1fr_auto] sm:grid-cols-[200px_1fr_80px] gap-2 px-4 py-2.5 border-b border-border/20 last:border-0 hover:bg-secondary/50 transition-colors">
                     <div className="flex items-center gap-2 min-w-0">
                       {!msg.is_read && (
                         <span className="w-1.5 h-1.5 rounded-full bg-campaign-lime flex-shrink-0" />
@@ -166,7 +166,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Quick Actions */}
-        <Card className="bg-card/60 border-border/40 rounded-lg">
+        <Card className="bg-card border-border/40 rounded-lg">
           <CardHeader className="py-3 px-4">
             <CardTitle className="text-[13px] font-semibold text-foreground">Accès rapide</CardTitle>
           </CardHeader>
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
                 target={link.external ? '_blank' : undefined}
                 className="flex items-center gap-2.5 px-2.5 py-2 rounded-md hover:bg-secondary/40 transition-colors text-[13px] text-muted-foreground/70 hover:text-foreground"
               >
-                <div className="w-7 h-7 rounded-md bg-secondary/50 flex items-center justify-center">
+                <div className="w-7 h-7 rounded-md bg-secondary flex items-center justify-center">
                   <link.icon className="w-3.5 h-3.5" />
                 </div>
                 {link.label}

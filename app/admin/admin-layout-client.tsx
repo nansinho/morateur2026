@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const navGroups = [
   {
@@ -58,6 +58,15 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
+  useEffect(() => {
+    if (pathname !== '/admin/login') {
+      document.documentElement.classList.add('admin-theme')
+    }
+    return () => {
+      document.documentElement.classList.remove('admin-theme')
+    }
+  }, [pathname])
+
   if (pathname === '/admin/login') {
     return <>{children}</>
   }
@@ -82,12 +91,12 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         className={cn(
           "flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors duration-100",
           active
-            ? "bg-campaign-lime/10 text-campaign-lime border-l-2 border-campaign-lime pl-[10px]"
-            : "text-muted-foreground/70 hover:text-foreground hover:bg-secondary/40",
+            ? "bg-sidebar-primary/15 text-sidebar-primary border-l-2 border-sidebar-primary pl-[10px]"
+            : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/40",
           collapsed && "justify-center px-2 border-l-0 pl-2"
         )}
       >
-        <item.icon className={cn("w-4 h-4 flex-shrink-0", active && "text-campaign-lime")} />
+        <item.icon className={cn("w-4 h-4 flex-shrink-0", active && "text-sidebar-primary")} />
         {!collapsed && <span>{item.label}</span>}
       </Link>
     )
@@ -115,13 +124,13 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         </div>
         {!collapsed && (
           <div className="min-w-0">
-            <p className="font-accent font-semibold text-foreground text-[13px] truncate">Morateur 2026</p>
-            <p className="text-[10px] text-muted-foreground/50 truncate">Administration</p>
+            <p className="font-accent font-semibold text-sidebar-foreground text-[13px] truncate">Morateur 2026</p>
+            <p className="text-[10px] text-sidebar-foreground/50 truncate">Administration</p>
           </div>
         )}
       </div>
 
-      <div className="h-px bg-border/40" />
+      <div className="h-px bg-sidebar-border/40" />
 
       {/* Navigation */}
       <ScrollArea className="flex-1 px-2 py-2">
@@ -129,11 +138,11 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
           {navGroups.map((group, gi) => (
             <div key={gi}>
               {group.label && !collapsed && (
-                <p className="text-[10px] uppercase tracking-widest text-muted-foreground/40 font-semibold px-3 pt-4 pb-1">
+                <p className="text-[10px] uppercase tracking-widest text-sidebar-foreground/40 font-semibold px-3 pt-4 pb-1">
                   {group.label}
                 </p>
               )}
-              {group.label && collapsed && <div className="h-px bg-border/30 mx-2 my-2" />}
+              {group.label && collapsed && <div className="h-px bg-sidebar-border/30 mx-2 my-2" />}
               <div className="space-y-0.5">
                 {group.items.map((item) => (
                   <NavLink key={item.href} item={item} />
@@ -144,7 +153,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         </nav>
       </ScrollArea>
 
-      <div className="h-px bg-border/40" />
+      <div className="h-px bg-sidebar-border/40" />
 
       {/* Footer */}
       <div className={cn("px-2 py-2 space-y-0.5", collapsed && "px-1")}>
@@ -152,7 +161,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
           href="/"
           target="_blank"
           className={cn(
-            "flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[13px] font-medium text-muted-foreground/70 hover:text-foreground hover:bg-secondary/40 transition-colors",
+            "flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[13px] font-medium text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/40 transition-colors",
             collapsed && "justify-center px-2"
           )}
         >
@@ -162,7 +171,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         <button
           onClick={handleLogout}
           className={cn(
-            "w-full flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[13px] font-medium text-red-400/80 hover:text-red-400 hover:bg-red-400/10 transition-colors",
+            "w-full flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[13px] font-medium text-red-300/90 hover:text-red-300 hover:bg-red-400/15 transition-colors",
             collapsed && "justify-center px-2"
           )}
         >
@@ -177,13 +186,13 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-background flex">
       {/* Desktop sidebar */}
       <aside className={cn(
-        "hidden lg:flex flex-col border-r border-border/40 bg-card/40 transition-all duration-200 fixed inset-y-0 left-0 z-30",
+        "hidden lg:flex flex-col border-r border-sidebar-border/40 bg-sidebar transition-all duration-200 fixed inset-y-0 left-0 z-30",
         collapsed ? "w-[60px]" : "w-[240px]"
       )}>
         <SidebarContent />
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="absolute -right-3 top-6 w-6 h-6 rounded-full bg-secondary border border-border/60 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+          className="absolute -right-3 top-6 w-6 h-6 rounded-full bg-card border border-border shadow-sm flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
         >
           {collapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
         </button>
@@ -196,7 +205,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
 
       {/* Mobile sidebar */}
       <aside className={cn(
-        "lg:hidden fixed inset-y-0 left-0 z-50 w-[240px] flex flex-col border-r border-border/40 bg-card transition-transform duration-200",
+        "lg:hidden fixed inset-y-0 left-0 z-50 w-[240px] flex flex-col border-r border-sidebar-border/40 bg-sidebar transition-transform duration-200",
         mobileOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <SidebarContent />
@@ -208,7 +217,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         collapsed ? "lg:ml-[60px]" : "lg:ml-[240px]"
       )}>
         {/* Header */}
-        <header className="h-12 border-b border-border/40 bg-card/20 flex items-center justify-between px-4 lg:px-5 sticky top-0 z-20">
+        <header className="h-12 border-b border-border/40 bg-card/80 backdrop-blur-sm flex items-center justify-between px-4 lg:px-5 sticky top-0 z-20">
           <div className="flex items-center">
             <Button
               variant="ghost"
