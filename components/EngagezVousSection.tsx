@@ -95,7 +95,7 @@ const EngagezVousSection = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-14"
           >
-            <span className="section-label justify-center">Passez à l'action</span>
+            <span className="section-label justify-center">Passez à l&#39;action</span>
             <h2
               className="font-accent font-extrabold text-primary leading-[0.9] uppercase tracking-tight break-words mb-6"
               style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}
