@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'Mathieu Morateur, candidat aux élections municipales 2026 à Bouc-Bel-Air.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#0a0f1a',
-    theme_color: '#0e6478',
+    background_color: '#f7f9fb',
+    theme_color: '#2E5EA7',
     lang: 'fr',
     icons: [
       {

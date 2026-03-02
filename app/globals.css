@@ -56,6 +56,58 @@
     background: hsl(152 48% 50% / 0.3);
   }
 
+  /* ── Admin light theme (PDF campaign colors) ── */
+  .admin-theme {
+    --background: 210 20% 98%;
+    --foreground: 215 25% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 18%;
+
+    --primary: 215 57% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 214 32% 91%;
+    --secondary-foreground: 215 25% 35%;
+
+    --muted: 214 20% 94%;
+    --muted-foreground: 215 15% 47%;
+
+    --accent: 140 45% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 20% 88%;
+    --input: 214 20% 88%;
+    --ring: 215 57% 42%;
+
+    --campaign-teal: 215 57% 42%;
+    --campaign-teal-light: 215 50% 55%;
+    --campaign-steel: 215 40% 50%;
+    --campaign-ice: 210 20% 97%;
+    --campaign-olive: 140 35% 35%;
+    --campaign-lime: 140 45% 45%;
+    --campaign-lime-light: 140 50% 55%;
+
+    --sidebar-background: 215 57% 30%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 140 45% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 50% 35%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 215 45% 38%;
+    --sidebar-ring: 140 45% 50%;
+  }
+
+  .admin-theme ::selection {
+    background: hsl(215 57% 42% / 0.2);
+  }
+
 }
 
 @layer base {
