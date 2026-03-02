@@ -4,6 +4,7 @@ import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Briefcase, GraduationCap, Users } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -280,12 +281,12 @@ export default function CandidatContent() {
 
           {/* CTA */}
           <div className="pt-6 text-center">
-            <a
+            <Link
               href="/#procuration"
               className="inline-block gradient-lime text-accent-foreground px-8 py-4 sm:px-10 sm:py-5 rounded-xl text-sm sm:text-base font-extrabold tracking-wide shadow-md -rotate-1 hover:rotate-0 hover:shadow-[0_10px_30px_-8px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 transition-all duration-200"
             >
               Rejoignez-nous
-            </a>
+            </Link>
           </div>
         </div>
       </section>
