@@ -284,6 +284,15 @@
   .prose-article ul,
   .prose-article ol {
     margin: 1.5em 0;
+    padding-left: 1.625em;
+  }
+
+  .prose-article ul {
+    list-style-type: disc;
+  }
+
+  .prose-article ol {
+    list-style-type: decimal;
   }
 
   .prose-article li {
