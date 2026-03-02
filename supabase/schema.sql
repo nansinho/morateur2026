@@ -162,6 +162,7 @@ CREATE TABLE IF NOT EXISTS quartiers (
   slug TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL,
   description TEXT NOT NULL DEFAULT '',
+  closing_image_url TEXT NOT NULL DEFAULT '',
   is_active BOOLEAN DEFAULT true,
   display_order INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT now(),

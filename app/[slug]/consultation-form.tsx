@@ -398,6 +398,25 @@ export default function ConsultationForm({ quartier, questions }: Props) {
                         </motion.div>
                       ))}
                     </div>
+
+                    {/* Closing image - project visualization */}
+                    {quartier.closing_image_url && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 * questions.length }}
+                        className="mt-10 text-center"
+                      >
+                        <p className="text-sm font-bold text-campaign-lime uppercase tracking-wider mb-4">
+                          Notre projet pour votre quartier
+                        </p>
+                        <img
+                          src={quartier.closing_image_url}
+                          alt={`Projet pour le quartier ${quartier.name}`}
+                          className="rounded-xl max-h-96 w-full object-cover border border-white/10"
+                        />
+                      </motion.div>
+                    )}
                   </div>
 
                   {/* Preferences section */}

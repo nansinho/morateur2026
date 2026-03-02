@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS quartiers (
   slug TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL,
   description TEXT NOT NULL DEFAULT '',
+  closing_image_url TEXT NOT NULL DEFAULT '',
   is_active BOOLEAN DEFAULT true,
   display_order INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT now(),
@@ -170,17 +171,23 @@ ON CONFLICT (path) DO NOTHING;
 -- PARTIE 7 : SEED — 10 QUARTIERS
 -- ============================================
 
-INSERT INTO quartiers (slug, name, description, is_active, display_order) VALUES
-  ('roumanille', 'Roumanille-Thiers', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', true, 1),
-  ('bergerie', 'La Bergerie', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', true, 2),
-  ('mounine', 'La Mounine', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', true, 3),
-  ('chabauds-malle-pin', 'Chabauds-Malle-Pin', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', true, 4),
-  ('salle', 'La Salle', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', true, 5),
-  ('violesiroussin', 'Violesi - San Baquis', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', true, 6),
-  ('centreville', 'Centre Ville', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', true, 7),
-  ('revenants', 'Les Revenants', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', true, 8),
-  ('gratiane', 'Gratiane', 'Formulaire à venir.', false, 9),
-  ('montaury', 'Montaury', 'Formulaire à venir.', false, 10);
+INSERT INTO quartiers (slug, name, description, closing_image_url, is_active, display_order) VALUES
+  ('roumanille', 'Roumanille-Thiers', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 1),
+  ('bergerie', 'La Bergerie', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 2),
+  ('mounine', 'La Mounine', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 3),
+  ('chabauds-malle-pin', 'Chabauds-Malle-Pin', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 4),
+  ('salle', 'La Salle', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 5),
+  ('violesiroussin', 'Violesi - San Baquis', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '/images/violesi.png', true, 6),
+  ('centreville', 'Centre Ville', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 7),
+  ('revenants', 'Les Revenants', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 8),
+  ('gratiane', 'Gratiane', 'Formulaire à venir.', '', false, 9),
+  ('montaury', 'Montaury', 'Formulaire à venir.', '', false, 10);
+
+-- ============================================
+-- MIGRATION: Pour les DB existantes
+-- ============================================
+ALTER TABLE quartiers ADD COLUMN IF NOT EXISTS closing_image_url TEXT NOT NULL DEFAULT '';
+UPDATE quartiers SET closing_image_url = '/images/violesi.png' WHERE slug = 'violesiroussin';
 
 -- ============================================
 -- PARTIE 8 : SEED — QUESTIONS
