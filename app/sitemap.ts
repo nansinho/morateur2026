@@ -46,5 +46,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('[SITEMAP] Error fetching quartiers:', e)
   }
 
+  // Add article pages with slug
+  try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    if (supabaseUrl && supabaseKey) {
+      const supabase2 = createClient(supabaseUrl, supabaseKey)
+      const { data: articles } = await supabase2
+        .from('articles')
+        .select('slug')
+        .not('slug', 'is', null)
+
+      if (articles) {
+        for (const a of articles) {
+          if (a.slug) {
+            staticPages.push({
+              url: `${SITE_URL}/actualites/${a.slug}`,
+              lastModified: new Date(),
+              changeFrequency: 'monthly',
+              priority: 0.7,
+            })
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.error('[SITEMAP] Error fetching articles:', e)
+  }
+
   return staticPages
 }

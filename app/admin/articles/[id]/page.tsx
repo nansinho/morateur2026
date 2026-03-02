@@ -16,11 +16,24 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { ImageUpload } from '@/components/ui/image-upload'
-import { ArrowLeft, Trash2, Loader2, Save } from 'lucide-react'
+import { RichTextEditor } from '@/components/ui/rich-text-editor'
+import { ArrowLeft, Trash2, Loader2, Save, ExternalLink } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
 
 const TAGS = ['Événement', 'Terrain', 'Programme', 'Tribune']
+
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 80)
+}
 
 export default function ArticleEditPage() {
   const params = useParams()
@@ -33,11 +46,15 @@ export default function ArticleEditPage() {
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [form, setForm] = useState({
     title: '',
+    slug: '',
     date: '',
     image: '',
     image_alt: '',
     tag: 'Événement',
     description: '',
+    content: '',
+    meta_description: '',
+    meta_keywords: '',
     sort_order: 0,
   })
 
@@ -57,17 +74,29 @@ export default function ArticleEditPage() {
     const article = data as Article
     setForm({
       title: article.title,
+      slug: article.slug || '',
       date: article.date,
       image: article.image,
       image_alt: article.image_alt || '',
       tag: article.tag,
       description: article.description,
+      content: article.content || '',
+      meta_description: article.meta_description || '',
+      meta_keywords: article.meta_keywords || '',
       sort_order: article.sort_order,
     })
     setLoading(false)
   }, [supabase, id, router])
 
   useEffect(() => { fetchArticle() }, [fetchArticle])
+
+  const handleTitleChange = useCallback((title: string) => {
+    setForm((prev) => ({
+      ...prev,
+      title,
+      slug: prev.slug === '' || prev.slug === generateSlug(prev.title) ? generateSlug(title) : prev.slug,
+    }))
+  }, [])
 
   const handleSave = async () => {
     if (!form.title || !form.date) {
@@ -114,6 +143,13 @@ export default function ArticleEditPage() {
           </h2>
         </div>
         <div className="flex items-center gap-2">
+          {form.slug && (
+            <Link href={`/actualites/${form.slug}`} target="_blank">
+              <Button variant="outline" className="border-border text-foreground hover:bg-secondary/50">
+                <ExternalLink className="w-4 h-4 mr-2" /> Voir
+              </Button>
+            </Link>
+          )}
           <Button
             variant="outline"
             onClick={() => setDeleteOpen(true)}
@@ -137,21 +173,45 @@ export default function ArticleEditPage() {
               <Label className="text-foreground/80 font-medium">Titre</Label>
               <Input
                 value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                onChange={(e) => handleTitleChange(e.target.value)}
                 className="bg-secondary/30 border-border text-foreground text-base"
                 placeholder="Titre de l'article"
               />
             </div>
 
             <div className="space-y-2">
-              <Label className="text-foreground/80 font-medium">Description</Label>
+              <Label className="text-foreground/80 font-medium">Slug (URL)</Label>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground whitespace-nowrap">/actualites/</span>
+                <Input
+                  value={form.slug}
+                  onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                  className="bg-secondary/30 border-border text-foreground text-sm"
+                  placeholder="mon-article"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-foreground/80 font-medium">Description (extrait)</Label>
               <Textarea
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
-                className="bg-secondary/30 border-border text-foreground min-h-[200px]"
-                placeholder="Description de l'article..."
+                className="bg-secondary/30 border-border text-foreground min-h-[80px]"
+                placeholder="Résumé court de l'article pour les cartes et le SEO..."
+                rows={3}
               />
             </div>
+          </div>
+
+          {/* Rich text editor */}
+          <div className="space-y-2">
+            <Label className="text-foreground/80 font-medium">Contenu de l&apos;article</Label>
+            <RichTextEditor
+              content={form.content}
+              onChange={(html) => setForm((prev) => ({ ...prev, content: html }))}
+              placeholder="Rédigez le contenu complet de votre article ici..."
+            />
           </div>
         </div>
 
@@ -201,6 +261,30 @@ export default function ArticleEditPage() {
                 value={form.sort_order}
                 onChange={(e) => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })}
                 className="bg-secondary/30 border-border text-foreground w-24"
+              />
+            </div>
+          </div>
+
+          {/* SEO */}
+          <div className="rounded-xl border border-border/40 bg-card p-5 space-y-4">
+            <h3 className="text-sm font-bold text-foreground/70 uppercase tracking-wide">SEO</h3>
+            <div className="space-y-2">
+              <Label className="text-foreground/80 font-medium text-xs">Méta-description</Label>
+              <Textarea
+                value={form.meta_description}
+                onChange={(e) => setForm({ ...form, meta_description: e.target.value })}
+                className="bg-secondary/30 border-border text-foreground text-xs min-h-[60px]"
+                placeholder="Description pour les moteurs de recherche..."
+                rows={2}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-foreground/80 font-medium text-xs">Mots-clés</Label>
+              <Input
+                value={form.meta_keywords}
+                onChange={(e) => setForm({ ...form, meta_keywords: e.target.value })}
+                className="bg-secondary/30 border-border text-foreground text-xs"
+                placeholder="mot-clé 1, mot-clé 2, ..."
               />
             </div>
           </div>

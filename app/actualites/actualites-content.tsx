@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Calendar, ChevronRight } from "lucide-react";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import type { Article } from "@/lib/types/database";
@@ -68,55 +69,57 @@ export default function ActualitesContent({ articles }: { articles: Article[] })
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pt-2">
             {articles.map((article, i) => {
               const style = tagStyles[article.tag] || defaultStyle;
+              const articleLink = article.slug ? `/actualites/${article.slug}` : '#';
               return (
-                <motion.article
-                  key={article.id}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08, duration: 0.5 }}
-                  whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
-                  whileTap={{ scale: 0.97 }}
-                  className="group cursor-pointer"
-                >
-                  <div className={`relative rounded-[1.25rem] overflow-hidden shadow-lg ${style.bg} flex flex-col h-full transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/20`}>
-                    {/* Image */}
-                    <div className="aspect-[16/9] overflow-hidden relative">
-                      <img
-                        src={article.image}
-                        alt={article.title}
-                        className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110"
-                        loading="lazy"
-                      />
-                      <div className={`absolute inset-0 bg-gradient-to-t from-black/40 to-transparent`} />
-                    </div>
+                <Link key={article.id} href={articleLink} className="block">
+                  <motion.article
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08, duration: 0.5 }}
+                    whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
+                    whileTap={{ scale: 0.97 }}
+                    className="group cursor-pointer"
+                  >
+                    <div className={`relative rounded-[1.25rem] overflow-hidden shadow-lg ${style.bg} flex flex-col h-full transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/20`}>
+                      {/* Image */}
+                      <div className="aspect-[16/9] overflow-hidden relative">
+                        <img
+                          src={article.image}
+                          alt={article.image_alt || article.title}
+                          className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110"
+                          loading="lazy"
+                        />
+                        <div className={`absolute inset-0 bg-gradient-to-t from-black/40 to-transparent`} />
+                      </div>
 
-                    {/* Content */}
-                    <div className="p-6 sm:p-7 flex flex-col flex-1">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className={`${style.tagBg} ${style.text} px-3 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider`}>
-                          {article.tag}
-                        </span>
-                        <div className="flex items-center gap-1.5">
-                          <Calendar className={`w-3 h-3 ${style.accent}`} />
-                          <span className={`${style.accent} text-[11px] font-bold`}>{article.date}</span>
+                      {/* Content */}
+                      <div className="p-6 sm:p-7 flex flex-col flex-1">
+                        <div className="flex items-center justify-between mb-4">
+                          <span className={`${style.tagBg} ${style.text} px-3 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider`}>
+                            {article.tag}
+                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <Calendar className={`w-3 h-3 ${style.accent}`} />
+                            <span className={`${style.accent} text-[11px] font-bold`}>{article.date}</span>
+                          </div>
+                        </div>
+
+                        <h2 className={`font-accent font-extrabold ${style.text} text-lg sm:text-xl leading-snug mb-3 uppercase tracking-wide -rotate-1`}>
+                          {article.title}
+                        </h2>
+                        <p className={`${style.accent} text-sm leading-relaxed flex-1`}>
+                          {article.description}
+                        </p>
+
+                        <div className={`flex items-center gap-1.5 mt-5 ${style.text} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
+                          <span className="text-xs font-bold uppercase tracking-wider">Lire la suite</span>
+                          <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
                         </div>
                       </div>
-
-                      <h2 className={`font-accent font-extrabold ${style.text} text-lg sm:text-xl leading-snug mb-3 uppercase tracking-wide -rotate-1`}>
-                        {article.title}
-                      </h2>
-                      <p className={`${style.accent} text-sm leading-relaxed flex-1`}>
-                        {article.description}
-                      </p>
-
-                      <div className={`flex items-center gap-1.5 mt-5 ${style.text} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
-                        <span className="text-xs font-bold uppercase tracking-wider">Lire la suite</span>
-                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
-                      </div>
                     </div>
-                  </div>
-                </motion.article>
+                  </motion.article>
+                </Link>
               );
             })}
           </div>
