@@ -86,12 +86,12 @@ const CandidateSection = () => {
 
               <blockquote className="border-l-4 border-campaign-lime pl-6 mb-8">
                 <p className="font-heading font-bold text-primary-foreground/80 text-lg md:text-xl leading-snug">
-                  « Ma motivation est de permettre à mes enfants de grandir avec les mêmes chances que j'ai eues. »
+                  « Ma motivation est de permettre à mes enfants de grandir avec les mêmes chances que j&#39;ai eues. »
                 </p>
               </blockquote>
 
               <p className="text-primary-foreground/50 leading-relaxed text-base mb-8">
-                J'ai 36 ans et je me présente à vos suffrages pour devenir votre nouveau maire. Enfant de Bouc-Bel-Air, je suis profondément attaché à notre commune.
+                J&#39;ai 36 ans et je me présente à vos suffrages pour devenir votre nouveau maire. Enfant de Bouc-Bel-Air, je suis profondément attaché à notre commune.
               </p>
 
               {/* Stats inline */}

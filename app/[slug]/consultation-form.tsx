@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import Link from 'next/link'
 import type { Quartier, QuartierQuestion } from '@/lib/types/database'
 
 interface Props {
@@ -227,13 +228,13 @@ export default function ConsultationForm({ quartier, questions }: Props) {
                         <> Nous vous répondrons dans les meilleurs délais.</>
                       )}
                     </p>
-                    <a
+                    <Link
                       href="/"
                       className="inline-flex items-center gap-2 mt-8 gradient-lime text-accent-foreground px-6 py-3 rounded-xl text-sm font-extrabold hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 active:scale-95 transition-all duration-200"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       Retour à l&apos;accueil
-                    </a>
+                    </Link>
                   </motion.div>
                 </motion.div>
               ) : (
@@ -398,6 +399,25 @@ export default function ConsultationForm({ quartier, questions }: Props) {
                         </motion.div>
                       ))}
                     </div>
+
+                    {/* Closing image - project visualization */}
+                    {quartier.closing_image_url && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 * questions.length }}
+                        className="mt-10 text-center"
+                      >
+                        <p className="text-sm font-bold text-campaign-lime uppercase tracking-wider mb-4">
+                          Notre projet pour votre quartier
+                        </p>
+                        <img
+                          src={quartier.closing_image_url}
+                          alt={`Projet pour le quartier ${quartier.name}`}
+                          className="rounded-xl max-h-96 w-full object-cover border border-white/10"
+                        />
+                      </motion.div>
+                    )}
                   </div>
 
                   {/* Preferences section */}
@@ -509,9 +529,9 @@ export default function ConsultationForm({ quartier, questions }: Props) {
 
                     <p className="text-white/25 text-xs text-center mt-4">
                       En soumettant ce formulaire, vous acceptez notre{' '}
-                      <a href="/politique-de-confidentialite" className="text-campaign-lime/50 hover:text-campaign-lime underline transition-colors duration-200">
+                      <Link href="/politique-de-confidentialite" className="text-campaign-lime/50 hover:text-campaign-lime underline transition-colors duration-200">
                         politique de confidentialité
-                      </a>.
+                      </Link>.
                     </p>
                   </div>
                 </motion.form>

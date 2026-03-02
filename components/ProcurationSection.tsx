@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
 import { FileText, CheckCircle, Send, ExternalLink, AlertCircle, User, Mail, Phone, MessageSquare, ArrowRight, ArrowLeft, Sparkles, PartyPopper } from "lucide-react";
+import Link from "next/link";
 
 type FormData = { prenom: string; nom: string; email: string; tel: string; motivations: string };
 type FormErrors = Partial<Record<keyof FormData, string>>;
@@ -514,9 +515,9 @@ const ProcurationSection = () => {
                     {/* RGPD */}
                     <p className="text-white/25 text-xs text-center mt-4">
                       En soumettant ce formulaire, vous acceptez notre{' '}
-                      <a href="/politique-de-confidentialite" className="text-campaign-lime/50 hover:text-campaign-lime underline transition-colors duration-200">
+                      <Link href="/politique-de-confidentialite" className="text-campaign-lime/50 hover:text-campaign-lime underline transition-colors duration-200">
                         politique de confidentialité
-                      </a>.
+                      </Link>.
                     </p>
                   </div>
                 </form>
