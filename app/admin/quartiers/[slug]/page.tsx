@@ -27,7 +27,7 @@ export default function QuartierEditPage() {
   const [questions, setQuestions] = useState<EditableQuestion[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  const [form, setForm] = useState({ name: '', slug: '', description: '', is_active: true, display_order: 0 })
+  const [form, setForm] = useState({ name: '', slug: '', description: '', closing_image_url: '', is_active: true, display_order: 0 })
   const supabase = createClient()
   const router = useRouter()
   const params = useParams()
@@ -47,6 +47,7 @@ export default function QuartierEditPage() {
         name: quartierData.name,
         slug: quartierData.slug,
         description: quartierData.description,
+        closing_image_url: quartierData.closing_image_url || '',
         is_active: quartierData.is_active,
         display_order: quartierData.display_order,
       })
@@ -131,6 +132,7 @@ export default function QuartierEditPage() {
         name: form.name.trim(),
         slug: form.slug.trim(),
         description: form.description.trim(),
+        closing_image_url: form.closing_image_url.trim(),
         is_active: form.is_active,
         display_order: form.display_order,
       })
@@ -241,6 +243,22 @@ export default function QuartierEditPage() {
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               className="bg-secondary/50 border-border text-foreground"
             />
+          </div>
+          <div>
+            <Label className="text-foreground/80">Image de clôture (URL, optionnel)</Label>
+            <Input
+              value={form.closing_image_url}
+              onChange={(e) => setForm({ ...form, closing_image_url: e.target.value })}
+              placeholder="/images/mon-projet.jpg"
+              className="bg-secondary/50 border-border text-foreground"
+            />
+            {form.closing_image_url && (
+              <img
+                src={form.closing_image_url}
+                alt="Aperçu image de clôture"
+                className="mt-2 rounded-lg max-h-40 object-cover border"
+              />
+            )}
           </div>
           <div className="flex items-center gap-4">
             <div>
