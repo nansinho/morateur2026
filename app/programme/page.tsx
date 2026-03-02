@@ -8,18 +8,19 @@ export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Programme',
-  description: 'Découvrez les 5 piliers du programme de Mathieu Morateur pour Bouc-Bel-Air : urbanisme maîtrisé, infrastructures rénovées, village revitalisé, smart city & sécurité, cadre de vie & environnement.',
+  description: 'Découvrez les 9 engagements de Mathieu Morateur pour Bouc-Bel-Air : écoles rénovées, mixité sociale choisie, référendum local, réseau 5G communal, lutte anti-nuisibles, urbanisation maîtrisée, police municipale renforcée, gouvernance métropolitaine, fast lanes boucaines.',
   alternates: { canonical: '/programme' },
   openGraph: {
     url: `${SITE_URL}/programme`,
     images: [{ url: '/images/projet-banner.png', width: 1570, height: 900, alt: 'Programme Morateur 2026 pour Bouc-Bel-Air' }],
   },
   keywords: [
-    'programme municipal Bouc-Bel-Air', 'urbanisme Bouc-Bel-Air',
-    'promoteurs immobiliers', 'infrastructures scolaires',
-    'revitalisation village', 'programme Morateur 2026',
-    'smart city Bouc-Bel-Air', '5G municipal',
-    'lutte moustiques Bouc-Bel-Air', 'environnement cadre de vie',
+    'programme municipal Bouc-Bel-Air', 'programme Morateur 2026',
+    'écoles Bouc-Bel-Air', 'bail réel solidaire BRS',
+    'référendum local', '5G communal Bouc-Bel-Air',
+    'lutte moustiques nuisibles', 'urbanisation promoteurs',
+    'police municipale', 'fast lanes boucaines',
+    'gouvernance métropolitaine',
   ],
 }
 
@@ -41,39 +42,39 @@ const faqSchema = {
       name: 'Quel est le programme de Mathieu Morateur pour Bouc-Bel-Air en 2026 ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Le programme de Mathieu Morateur repose sur 5 piliers : faire barrage aux promoteurs immobiliers, rénover les infrastructures municipales (écoles, bâtiments publics, routes), revitaliser le centre-village, déployer une smart city sécurisée avec réseaux 5G municipaux, et améliorer le cadre de vie et l\'environnement (lutte anti-nuisibles, parcs arborés, murs anti-bruit).',
+        text: 'Le programme repose sur 9 engagements concrets : rénovation des écoles et crèches, mixité sociale choisie via le bail réel solidaire (BRS), référendum local pour les grands projets, réseau 5G communal avec caméras nomades, lutte contre les moustiques et nuisibles, lutte contre l\'urbanisation galopante, 6 agents de police municipale supplémentaires, gouvernance métropolitaine indépendante, et les fast lanes boucaines pour fluidifier la circulation.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Quelle est la position de Mathieu Morateur face aux promoteurs immobiliers à Bouc-Bel-Air ?',
+      name: 'Comment Morateur 2026 lutte contre l\'urbanisation galopante à Bouc-Bel-Air ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Mathieu Morateur prévoit le refus systématique des permis de construire des promoteurs, l\'utilisation du droit de préemption urbain, le soutien aux recours des riverains, le recours au bail réel solidaire pour tous les projets collectifs, et la révision du PLUi pour sanctuariser les espaces naturels.',
+        text: 'Suppression des opérations d\'aménagement programmées, réduction des droits à construire, préemption systématique des terrains, retrait des permis récemment octroyés aux promoteurs, et création d\'un parc naturel au vallat de Violesi. Seuls les détachements familiaux seront facilités.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Quelles infrastructures seront rénovées à Bouc-Bel-Air avec le programme Morateur 2026 ?',
+      name: 'Qu\'est-ce que le bail réel solidaire (BRS) proposé par Morateur 2026 ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Le programme prévoit la rénovation complète des bâtiments municipaux, l\'installation de la climatisation dans toutes les écoles et crèches, la requalification des axes routiers majeurs (avenue Thiers, avenue de la Mounine, avenue Beausoleil), l\'étude des échangeurs autoroutiers, et l\'extension des réseaux d\'eau potable et d\'assainissement.',
+        text: 'Le BRS permet de construire uniquement le nombre de logements nécessaire pour les quotas sociaux, en accession à la propriété. Plus de grands ensembles imposés par les promoteurs : des familles propriétaires qui s\'installent durablement, respectent leur bien et veillent à la tranquillité de leur quartier.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Qu\'est-ce que le projet Smart City de Morateur 2026 pour Bouc-Bel-Air ?',
+      name: 'Comment sont financés les 6 agents de police municipale supplémentaires ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Le programme Smart City prévoit le déploiement de réseaux 5G municipaux permettant l\'installation de caméras de vidéosurveillance, de capteurs de bruit et de qualité de l\'air, d\'un éclairage public intelligent déclenché par capteurs de présence, et de feux de circulation intelligents, le tout pour un coût divisé par dix.',
+        text: 'Par des économies sur le train de vie municipal, sans augmentation d\'impôts : suppression du collaborateur de cabinet (85 000€), baisse des frais de représentation (10 500€), réduction de 5% du budget communication (200 000€), recouvrement effectif de la TLPE (50 000€), et gains de productivité. Total : 600 000€ par an.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Comment Morateur 2026 améliore le cadre de vie et l\'environnement à Bouc-Bel-Air ?',
+      name: 'Que sont les fast lanes boucaines ?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Le programme comprend la lutte contre les moustiques (bornes aspirateurs, traitement des berges), la lutte contre les rats, la création de parcs arborés (vallat de Violesi), et l\'installation de murs anti-bruit le long de l\'autoroute pour protéger les quartiers exposés.',
+        text: 'De 7h à 9h et de 16h à 19h, les chemins de Violesi, des Revenants et de Sauvecanne seront réservés aux Boucains grâce à des barrières commandées par caméras de reconnaissance de plaques. L\'objectif est aussi de forcer le Département et la Métropole à prendre leurs responsabilités pour les aménagements routiers.',
       },
     },
     {

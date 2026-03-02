@@ -46,6 +46,30 @@ const cardStyles = [
     textColor: "text-primary-foreground",
     subtextColor: "text-primary-foreground/60",
   },
+  {
+    bg: "bg-gradient-to-br from-campaign-lime/90 to-campaign-lime",
+    iconColor: "text-accent-foreground",
+    textColor: "text-accent-foreground",
+    subtextColor: "text-accent-foreground/70",
+  },
+  {
+    bg: "bg-gradient-to-br from-campaign-steel to-campaign-teal",
+    iconColor: "text-primary-foreground",
+    textColor: "text-primary-foreground",
+    subtextColor: "text-primary-foreground/70",
+  },
+  {
+    bg: "bg-gradient-to-br from-campaign-olive to-campaign-olive/80",
+    iconColor: "text-primary-foreground",
+    textColor: "text-primary-foreground",
+    subtextColor: "text-primary-foreground/70",
+  },
+  {
+    bg: "bg-gradient-to-br from-[#0a2e3d] to-campaign-teal",
+    iconColor: "text-campaign-lime",
+    textColor: "text-primary-foreground",
+    subtextColor: "text-primary-foreground/60",
+  },
 ];
 
 const ProgrammeSection = () => {
@@ -78,7 +102,7 @@ const ProgrammeSection = () => {
             LE <span className="text-campaign-lime">PROGRAMME</span>
           </h2>
           <p className="text-primary-foreground/40 max-w-2xl mx-auto text-lg mt-8 font-medium">
-            {pillars.length} piliers concrets pour redonner à Bouc-Bel-Air le cadre de vie qu&apos;elle mérite.
+            {pillars.length} engagements concrets pour redonner à Bouc-Bel-Air le cadre de vie qu&apos;elle mérite.
           </p>
         </motion.div>
 

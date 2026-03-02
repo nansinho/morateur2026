@@ -10,45 +10,60 @@ INSERT INTO articles (title, date, image, tag, description, sort_order) VALUES
 ('Porte-à-porte dans le quartier des Music', '12 Février 2026', 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=500&fit=crop', 'Terrain', 'À la rencontre des habitants, quartier par quartier, pour écouter et comprendre vos besoins.', 4),
 ('Tribune : Protégeons nos espaces naturels', '20 Février 2026', 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=500&fit=crop', 'Tribune', 'Un appel à la préservation des collines et espaces boisés face à la pression immobilière.', 5);
 
--- Programme : Piliers
+-- Programme : 9 engagements (fidèles au flyer officiel recto/verso)
 INSERT INTO programme_pillars (id, title, intro, icon, color, icon_bg, sort_order) VALUES
-('a1000000-0000-0000-0000-000000000001', 'Faire barrage aux promoteurs', 'En moins d''un an, des permis pour plus de 1 000 logements ont été déposés. Il est temps de reprendre en mains notre destinée et de protéger le cadre de vie des Boucains.', 'ShieldCheck', 'border-campaign-lime/30', 'gradient-lime', 1),
-('a1000000-0000-0000-0000-000000000002', 'Des infrastructures à la hauteur', 'La vétusté de nos écoles, crèches, bâtiments publics et voiries est indigne de notre commune. Tout doit être remis à niveau pour offrir des conditions dignes à tous.', 'Building2', 'border-campaign-steel/30', 'gradient-teal', 2),
-('a1000000-0000-0000-0000-000000000003', 'Revitaliser le village', 'Notre centre ancien a tant à offrir. Retrouver son âme, ramener la vie dans ses ruelles pittoresques et y installer de nouveaux commerces : c''est notre priorité.', 'Store', 'border-campaign-olive/30', 'bg-campaign-olive', 3),
-('a1000000-0000-0000-0000-000000000004', 'Smart City & Sécurité', 'Grâce aux réseaux 5G municipaux, nous pouvons déployer caméras, capteurs et éclairage intelligent pour un coût divisé par dix. La technologie au service de la tranquillité.', 'Wifi', 'border-campaign-teal/30', 'gradient-teal-deep', 4),
-('a1000000-0000-0000-0000-000000000005', 'Cadre de vie & Environnement', 'Lutter contre les nuisibles, préserver nos espaces naturels, protéger les riverains du bruit : un cadre de vie sain est un droit pour chaque Boucain.', 'Leaf', 'border-campaign-lime/30', 'bg-campaign-olive', 5);
+('a1000000-0000-0000-0000-000000000001', 'Écoles, crèches & centre aéré : le refus du nivellement par le bas', 'L''état de nos bâtiments municipaux dévolus à l''accueil des enfants est indigne d''une commune comme la nôtre. Miser sur l''éclairage adaptatif et le confort thermique en classe, été comme hiver.', 'GraduationCap', 'border-campaign-lime/30', 'gradient-lime', 1),
+('a1000000-0000-0000-0000-000000000002', 'Une mixité sociale choisie & non subie', 'Nous n''accepterons pas de nouveaux logements locatifs sociaux. Toute nouvelle construction collective sera commercialisée en bail réel solidaire (BRS) : nous ne construisons que le nécessaire.', 'Heart', 'border-campaign-steel/30', 'gradient-teal', 2),
+('a1000000-0000-0000-0000-000000000003', 'Vous avez, réellement, la parole !', 'Tous les projets supérieurs à 1M€ d''engagement seront soumis à référendum local, et devront dépasser 25% des électeurs inscrits les approuvant.', 'Megaphone', 'border-campaign-olive/30', 'bg-campaign-olive', 3),
+('a1000000-0000-0000-0000-000000000004', 'Un réseau 5G communal pour déployer capteurs & caméras nomades', 'Créer un réseau 5G propre à la commune pour renvoyer les images et informations captées par des caméras nomades, dont la localisation peut être modifiée de manière réactive.', 'Wifi', 'border-campaign-teal/30', 'gradient-teal-deep', 4),
+('a1000000-0000-0000-0000-000000000005', 'Lutte contre les moustiques & les nuisibles', 'Pour vaincre le moustique, nous devrons lancer une offensive savante : exemplarité totale sur l''espace public et mobilisation massive des citoyens pour assécher les gîtes privés.', 'Leaf', 'border-campaign-lime/30', 'gradient-lime', 5),
+('a1000000-0000-0000-0000-000000000006', 'Lutte contre l''urbanisation galopante', 'Nous ferons barrage aux promoteurs immobiliers avec tous les moyens à disposition de la puissance publique. Seuls les détachements familiaux seront facilités.', 'ShieldCheck', 'border-campaign-steel/30', 'gradient-teal', 6),
+('a1000000-0000-0000-0000-000000000007', '6 agents de terrains supplémentaires à la police municipale', 'Comment financer 6 agents de terrain, sans augmenter vos impôts ? Par des économies sur le train de vie municipal. Total : 600 000€ par an.', 'Target', 'border-campaign-olive/30', 'bg-campaign-olive', 7),
+('a1000000-0000-0000-0000-000000000008', 'Gouvernance métropolitaine : l''intérêt des Boucains !', 'Libres de toute allégeance partisane, nous représenterons Bouc-Bel-Air dans les instances métropolitaines et intercommunales en ayant à cœur uniquement les intérêts des Boucains.', 'Globe', 'border-campaign-teal/30', 'gradient-teal-deep', 8),
+('a1000000-0000-0000-0000-000000000009', 'Les fast lanes boucaines', 'De 7h à 9h et de 16h à 19h, des voies stratégiques seront réservées à la circulation de transit : une barrière commandée par caméra reconnaissant les plaques enregistrées en mairie.', 'Zap', 'border-campaign-lime/30', 'gradient-lime', 9);
 
 -- Programme : Mesures
 INSERT INTO programme_measures (pillar_id, title, detail, sort_order) VALUES
--- Pilier 1 : Faire barrage aux promoteurs
-('a1000000-0000-0000-0000-000000000001', 'Refus systématique des permis de construire des promoteurs', 'Nous refuserons systématiquement les permis de construire demandés par les promoteurs immobiliers afin de les forcer à la négociation et protéger le cadre de vie des Boucains.', 1),
-('a1000000-0000-0000-0000-000000000001', 'Droit de préemption urbain', 'Utilisation systématique du droit de préemption urbain pour permettre la création de logements sociaux adaptés à notre commune, sans laisser le champ libre aux promoteurs.', 2),
-('a1000000-0000-0000-0000-000000000001', 'Soutien aux recours des riverains', 'Nous soutiendrons activement les recours intentés par les riverains sur les permis existants, en leur apportant un accompagnement juridique et technique.', 3),
-('a1000000-0000-0000-0000-000000000001', 'Bail réel solidaire', 'Recours au bail réel solidaire pour l''intégralité des projets collectifs afin de limiter les constructions spéculatives et de privilégier les parcours résidentiels des Boucains.', 4),
-('a1000000-0000-0000-0000-000000000001', 'Révision du PLUi', 'Engager la révision du plan local d''urbanisme intercommunal pour sanctuariser les espaces naturels, réduire les zones constructibles et ramener les projets à une taille raisonnable.', 5),
--- Pilier 2 : Des infrastructures à la hauteur
-('a1000000-0000-0000-0000-000000000002', 'Rénovation des bâtiments municipaux', 'Réaliser la rénovation complète de l''ensemble des bâtiments municipaux, y compris le foyer des Anciens, pour offrir des conditions dignes à tous les usagers.', 1),
-('a1000000-0000-0000-0000-000000000002', 'Climatisation dans les écoles et crèches', 'Installer la climatisation réversible dans toutes les crèches, toutes les écoles et au foyer des anciens. Il est inacceptable que le thermomètre dépasse 30 °C dès mai dans certaines classes.', 2),
-('a1000000-0000-0000-0000-000000000002', 'Requalification des axes routiers', 'Requalifier et renouveler les principaux axes de notre commune : avenue Thiers, avenue de la Mounine, avenue Beausoleil, chemin de Sauvecanne… et la RD8n.', 3),
-('a1000000-0000-0000-0000-000000000002', 'Échangeurs autoroutiers', 'Lancer les études sur l''aménagement des échangeurs autoroutiers des Trois Pigeons et des Chabauds, afin de présenter un projet solide à l''État.', 4),
-('a1000000-0000-0000-0000-000000000002', 'Extension des réseaux d''eau', 'Raccorder au réseau d''eau potable et d''assainissement collectif les secteurs qui en sont privés : chemins de la Tuilerie et de Valabre, lotissement Rhin et Danube.', 5),
--- Pilier 3 : Revitaliser le village
-('a1000000-0000-0000-0000-000000000003', 'Centre ancien attractif', 'Faire de notre centre ancien un lieu attractif pour l''ensemble des habitants, en s''appuyant sur son caractère unique, son histoire et son patrimoine architectural.', 1),
-('a1000000-0000-0000-0000-000000000003', 'Animations et vie culturelle', 'Étendre les animations au-delà de la place principale, dans les ruelles pittoresques du centre ancien. Retrouver l''esprit des retraites aux flambeaux et des fêtes de village.', 2),
-('a1000000-0000-0000-0000-000000000003', 'Incubateur commercial et artisanal', 'Proposer à des jeunes entreprises de l''artisanat de bouche — chocolatier, glacier, salon de thés — d''être hébergées dans les locaux vides du village, avec autorisation de terrasse.', 3),
-('a1000000-0000-0000-0000-000000000003', 'Boulangerie avec fournil', 'Remodeler la place Jean Moulin en construisant à la place de l''ancien Saint-Géran un immeuble de bureaux accueillant en rez-de-chaussée un véritable boulanger, avec un fournil.', 4),
-('a1000000-0000-0000-0000-000000000003', 'Parc-relais centre-ville', 'Créer un parc-relais sur le dernier terrain libre du centre-ville, permettant le stationnement et facilitant le covoiturage, plutôt qu''une urbanisation dense en étages.', 5),
--- Pilier 4 : Smart City & Sécurité
-('a1000000-0000-0000-0000-000000000004', 'Réseaux 5G municipaux', 'Créer des réseaux 5G propres à la mairie, permettant le déploiement de capteurs et caméras pour un coût divisé par dix par rapport à 2020, sans dépendance aux opérateurs privés.', 1),
-('a1000000-0000-0000-0000-000000000004', 'Vidéosurveillance et capteurs de bruit', 'Installer des caméras de vidéosurveillance et des capteurs de bruit dans les quartiers afin d''intervenir rapidement pour les troubles à la tranquillité publique.', 2),
-('a1000000-0000-0000-0000-000000000004', 'Capteurs de qualité de l''air', 'Déployer des capteurs de qualité de l''air pour vérifier en temps réel que les seuils réglementaires sont respectés, notamment aux abords des axes routiers et des zones industrielles.', 3),
-('a1000000-0000-0000-0000-000000000004', 'Éclairage public intelligent', 'Remplacer l''éclairage public par un éclairage déclenché par des capteurs de présence, réduisant la consommation énergétique et les nuisances lumineuses.', 4),
-('a1000000-0000-0000-0000-000000000004', 'Feux de circulation intelligents', 'Rendre les feux de circulation intelligents, activés uniquement lorsque le nombre de véhicules l''impose, et créer des voies vertes sur les axes principaux comme l''avenue de la Mounine et l''avenue Beausoleil.', 5),
--- Pilier 5 : Cadre de vie & Environnement
-('a1000000-0000-0000-0000-000000000005', 'Lutte contre les moustiques', 'Déployer un programme actif : traitement printanier des berges des vallats, pose de bornes aspirateurs à moustiques aux points stratégiques (écoles, espaces verts), et tarifs négociés pour les dispositifs individuels.', 1),
-('a1000000-0000-0000-0000-000000000005', 'Lutte contre les rats', 'Mettre en place un programme de dératisation avec pose de pièges à rats dans l''espace public et mesures coercitives contre les troubles à la salubrité (eaux stagnantes, ordures dans les jardins).', 2),
-('a1000000-0000-0000-0000-000000000005', 'Création de parcs arborés', 'Sanctuariser le lit du vallat de Violesi pour y créer un véritable parc arboré enjambant le cours d''eau, et préserver les espaces naturels face à la pression immobilière.', 3),
-('a1000000-0000-0000-0000-000000000005', 'Murs anti-bruit autoroutiers', 'Ériger des murs anti-bruit le long de l''autoroute dans les quartiers les plus exposés, notamment du côté des Revenants, à l''image de ce qui a été fait aux Ormeaux.', 4);
+-- 1 : Écoles, crèches & centre aéré
+('a1000000-0000-0000-0000-000000000001', 'Éclairage adaptatif et confort thermique', 'Les études scientifiques recommandent de miser sur l''éclairage adaptatif et le confort thermique en classe, été comme hiver, afin d''améliorer les facultés d''apprentissage et de limiter les risques de développer des troubles de l''attention.', 1),
+('a1000000-0000-0000-0000-000000000001', 'Grand marché de rénovation énergétique', 'En intégrant ces travaux dans un grand marché global de rénovation énergétique, ce sont les économies d''énergie qui financeront ces travaux plus que jamais nécessaires.', 2),
+-- 2 : Mixité sociale choisie
+('a1000000-0000-0000-0000-000000000002', 'Bail réel solidaire (BRS)', 'Avec le BRS, nous ne construisons que le nécessaire. Si nous avons besoin de 60 logements pour nos quotas, nous construisons 60 appartements en BRS. Pas besoin d''en construire 60 de plus à côté pour rentabiliser l''opération.', 1),
+('a1000000-0000-0000-0000-000000000002', 'Fin des grands ensembles', 'C''est la fin des grands ensembles imposés par les promoteurs. Avec le BRS, nous ne faisons pas venir des locataires de passage.', 2),
+('a1000000-0000-0000-0000-000000000002', 'Des familles propriétaires', 'Nous permettons à des familles propriétaires de s''installer. Un propriétaire respecte son bien, entretient son jardin et veille à la tranquillité de son quartier car c''est son investissement.', 3),
+('a1000000-0000-0000-0000-000000000002', 'Identité de Bouc-Bel-Air préservée', 'C''est la garantie d''une mixité sociale réussie, apaisée, et respectueuse de l''identité de Bouc-Bel-Air.', 4),
+-- 3 : Vous avez la parole
+('a1000000-0000-0000-0000-000000000003', 'Référendum local obligatoire', 'Tous les projets supérieurs à 1M€ d''engagement seront soumis à référendum local.', 1),
+('a1000000-0000-0000-0000-000000000003', 'Seuil de 25% des électeurs inscrits', 'Les projets devront dépasser 25% des électeurs inscrits les approuvant pour être validés.', 2),
+-- 4 : Réseau 5G communal
+('a1000000-0000-0000-0000-000000000004', 'Caméras nomades de vidéoprotection', 'Parce que les caméras fixes sont facilement identifiées et évitées par les délinquants, nous déployons des caméras nomades dont la localisation peut être modifiée de manière extrêmement réactive.', 1),
+('a1000000-0000-0000-0000-000000000004', 'Capteurs de maintenance préventive', 'Raccorder au réseau 5G des capteurs pour la maintenance préventive des voiries et des bâtiments municipaux.', 2),
+('a1000000-0000-0000-0000-000000000004', 'Surveillance qualité de l''air et des eaux', 'Déployer des dispositifs pour surveiller la qualité de l''air et des eaux en temps réel.', 3),
+('a1000000-0000-0000-0000-000000000004', 'Éclairage public intelligent', 'Installer l''éclairage public piloté par des capteurs de présence, réduisant la consommation énergétique.', 4),
+-- 5 : Moustiques & nuisibles
+('a1000000-0000-0000-0000-000000000005', 'Piégeage et prédateurs naturels', 'Ce combat de terrain s''appuiera sur des solutions écologiques innovantes, comme le piégeage et les prédateurs naturels.', 1),
+('a1000000-0000-0000-0000-000000000005', 'Assécher les gîtes privés', 'Mobilisation massive des citoyens pour assécher les gîtes privés où prolifèrent les moustiques.', 2),
+('a1000000-0000-0000-0000-000000000005', 'Réglementation municipale stricte', 'Mesures encadrées par une réglementation municipale stricte pour garantir l''efficacité de la lutte.', 3),
+-- 6 : Urbanisation galopante
+('a1000000-0000-0000-0000-000000000006', 'Suppression des OAP', 'Suppression des opérations d''aménagement programmées et réduction des droits à construire des immeubles collectifs.', 1),
+('a1000000-0000-0000-0000-000000000006', 'Préemption systématique', 'Droit de préemption systématique sur les terrains permettant un aménagement collectif.', 2),
+('a1000000-0000-0000-0000-000000000006', 'Retrait et refus des permis promoteurs', 'Retrait des permis récemment octroyés à des promoteurs, refus des permis nouveaux quitte à aller au contentieux.', 3),
+('a1000000-0000-0000-0000-000000000006', 'Détachements familiaux facilités', 'Seuls les détachements familiaux seront facilités, pour permettre aux Boucains de transmettre leur patrimoine.', 4),
+('a1000000-0000-0000-0000-000000000006', 'Parc naturel au vallat de Violesi', 'Sanctuariser un espace naturel au plus près des quartiers bétonnés en créant un parc enjambant le vallat de Violesi.', 5),
+-- 7 : Police municipale
+('a1000000-0000-0000-0000-000000000007', 'Suppression du collaborateur de cabinet', 'Économie annuelle : 85 000€.', 1),
+('a1000000-0000-0000-0000-000000000007', 'Baisse des frais de représentation', 'Économie annuelle : 10 500€.', 2),
+('a1000000-0000-0000-0000-000000000007', 'Réduction de 5% du budget communication', 'Économie annuelle : 200 000€.', 3),
+('a1000000-0000-0000-0000-000000000007', 'Recouvrement effectif de la TLPE', 'Économie annuelle : 50 000€.', 4),
+('a1000000-0000-0000-0000-000000000007', 'Gains de productivité', 'IA et non-remplacement à l''usure pour optimiser les services municipaux.', 5),
+('a1000000-0000-0000-0000-000000000007', 'Total : 600 000€ par an', 'Financés par des économies sur le train de vie municipal, sans augmentation d''impôts.', 6),
+-- 8 : Gouvernance métropolitaine
+('a1000000-0000-0000-0000-000000000008', 'Indépendance politique', 'Libres de toute allégeance partisane, nous représenterons Bouc-Bel-Air sans inféodation à un parti.', 1),
+('a1000000-0000-0000-0000-000000000008', 'Défendre les intérêts des Boucains', 'Dans les instances métropolitaines et intercommunales, nous aurons à cœur uniquement les intérêts des Boucains.', 2),
+-- 9 : Fast lanes boucaines
+('a1000000-0000-0000-0000-000000000009', 'Voies réservées aux heures de pointe', 'Le chemin de Violesi, le chemin des Revenants et le chemin de Sauvecanne seront réservés à la circulation de transit de 7h à 9h et de 16h à 19h.', 1),
+('a1000000-0000-0000-0000-000000000009', 'Barrière par reconnaissance de plaques', 'Une barrière commandée par une caméra reconnaissant les plaques enregistrées en mairie sera installée. Seuls les Boucains passeront !', 2),
+('a1000000-0000-0000-0000-000000000009', 'Responsabiliser Département et Métropole', 'Ainsi, le Département et la Métropole devront prendre leurs responsabilités pour réaliser les aménagements jugés nécessaires : sorties des 3 Pigeons, Intersite D9 vers A51-Nord.', 3);
 
 -- Événements / Roadmap
 INSERT INTO events (icon, date, title, description, is_done, sort_order) VALUES
