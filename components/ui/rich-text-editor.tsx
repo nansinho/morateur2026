@@ -89,7 +89,7 @@ export function RichTextEditor({ content, onChange, placeholder = 'Rédigez votr
     content,
     editorProps: {
       attributes: {
-        class: 'prose prose-sm max-w-none focus:outline-none min-h-[400px] px-4 py-3 text-foreground',
+        class: 'max-w-none focus:outline-none min-h-[400px] px-4 py-3',
       },
     },
     onUpdate: ({ editor }) => {
