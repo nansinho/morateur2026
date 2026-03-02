@@ -19,8 +19,9 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Plus, Pencil, Trash2, Loader2, Check } from 'lucide-react'
+import { Plus, Pencil, Trash2, Loader2, Check, Download } from 'lucide-react'
 import { toast } from 'sonner'
+import { downloadCSV } from '@/lib/export-csv'
 
 const emptyEvent = { icon: 'Flag', date: '', title: '', description: '', is_done: false, sort_order: 0 }
 
@@ -87,9 +88,20 @@ export default function EventsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-accent font-bold text-foreground uppercase tracking-wide">Événements / Roadmap</h2>
+        <div className="flex items-center gap-2">
+        <Button variant="outline" size="sm" onClick={() => {
+          if (events.length === 0) { toast.error('Aucun événement à exporter'); return }
+          downloadCSV('evenements', ['Titre', 'Date', 'Icône', 'Description', 'Terminé', 'Ordre'], events.map(e => [
+            e.title, e.date, e.icon, e.description || '', e.is_done ? 'Oui' : 'Non', String(e.sort_order),
+          ]))
+          toast.success(`${events.length} événement(s) exporté(s)`)
+        }} className="border-border text-muted-foreground hover:text-foreground">
+          <Download className="w-4 h-4 mr-2" /> Export
+        </Button>
         <Button onClick={openCreate} className="gradient-lime text-accent-foreground font-accent font-bold">
           <Plus className="w-4 h-4 mr-2" /> Nouvel événement
         </Button>
+        </div>
       </div>
 
       <div className="rounded-2xl border border-border/50 bg-card/30 overflow-hidden">

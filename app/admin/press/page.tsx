@@ -17,8 +17,9 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Plus, Pencil, Trash2, Loader2, ExternalLink } from 'lucide-react'
+import { Plus, Pencil, Trash2, Loader2, ExternalLink, Download } from 'lucide-react'
 import { toast } from 'sonner'
+import { downloadCSV } from '@/lib/export-csv'
 
 const emptyPress = { source: '', author: '', date: '', title: '', excerpt: '', url: '', logo: '', sort_order: 0 }
 
@@ -79,9 +80,20 @@ export default function PressPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-accent font-bold text-foreground uppercase tracking-wide">Articles de presse</h2>
+        <div className="flex items-center gap-2">
+        <Button variant="outline" size="sm" onClick={() => {
+          if (articles.length === 0) { toast.error('Aucun article à exporter'); return }
+          downloadCSV('presse', ['Source', 'Titre', 'Auteur', 'Date', 'Extrait', 'URL', 'Ordre'], articles.map(a => [
+            a.source, a.title, a.author || '', a.date, a.excerpt || '', a.url || '', String(a.sort_order),
+          ]))
+          toast.success(`${articles.length} article(s) exporté(s)`)
+        }} className="border-border text-muted-foreground hover:text-foreground">
+          <Download className="w-4 h-4 mr-2" /> Export
+        </Button>
         <Button onClick={openCreate} className="gradient-lime text-accent-foreground font-accent font-bold">
           <Plus className="w-4 h-4 mr-2" /> Nouvel article
         </Button>
+        </div>
       </div>
 
       <div className="rounded-2xl border border-border/50 bg-card/30 overflow-hidden">

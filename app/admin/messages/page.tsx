@@ -19,8 +19,9 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
-import { Mail, MailOpen, Trash2, Search, Eye } from 'lucide-react'
+import { Mail, MailOpen, Trash2, Search, Eye, Download } from 'lucide-react'
 import { toast } from 'sonner'
+import { downloadCSV } from '@/lib/export-csv'
 
 export default function MessagesPage() {
   const [messages, setMessages] = useState<Message[]>([])
@@ -79,6 +80,15 @@ export default function MessagesPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h2 className="text-2xl font-bold text-foreground font-accent uppercase tracking-wide">Messages</h2>
         <div className="flex items-center gap-3">
+          <Button variant="outline" size="sm" onClick={() => {
+            if (filtered.length === 0) { toast.error('Aucun message à exporter'); return }
+            downloadCSV('messages', ['Date', 'Prénom', 'Nom', 'Email', 'Téléphone', 'Statut', 'Motivations'], filtered.map(m => [
+              new Date(m.created_at).toLocaleDateString('fr-FR'), m.prenom, m.nom, m.email, m.tel || '', m.is_read ? 'Lu' : 'Non lu', m.motivations || '',
+            ]))
+            toast.success(`${filtered.length} message(s) exporté(s)`)
+          }} className="border-border text-muted-foreground hover:text-foreground">
+            <Download className="w-4 h-4 mr-2" /> Export
+          </Button>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/60" />
             <Input

@@ -15,8 +15,9 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Plus, Pencil, Trash2, Loader2, User } from 'lucide-react'
+import { Plus, Pencil, Trash2, Loader2, User, Download } from 'lucide-react'
 import { toast } from 'sonner'
+import { downloadCSV } from '@/lib/export-csv'
 import Image from 'next/image'
 
 const emptyMember = { name: '', role: '', image: '', description: '', sort_order: 0 }
@@ -78,9 +79,20 @@ export default function TeamPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-accent font-bold text-foreground uppercase tracking-wide">Équipe</h2>
+        <div className="flex items-center gap-2">
+        <Button variant="outline" size="sm" onClick={() => {
+          if (members.length === 0) { toast.error('Aucun membre à exporter'); return }
+          downloadCSV('equipe', ['Nom', 'Rôle', 'Description', 'Image', 'Ordre'], members.map(m => [
+            m.name, m.role, m.description || '', m.image || '', String(m.sort_order),
+          ]))
+          toast.success(`${members.length} membre(s) exporté(s)`)
+        }} className="border-border text-muted-foreground hover:text-foreground">
+          <Download className="w-4 h-4 mr-2" /> Export
+        </Button>
         <Button onClick={openCreate} className="gradient-lime text-accent-foreground font-accent font-bold">
           <Plus className="w-4 h-4 mr-2" /> Nouveau membre
         </Button>
+        </div>
       </div>
 
       {loading ? (

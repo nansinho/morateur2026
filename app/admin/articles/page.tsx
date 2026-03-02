@@ -21,8 +21,9 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
-import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react'
+import { Plus, Pencil, Trash2, Loader2, Download } from 'lucide-react'
 import { toast } from 'sonner'
+import { downloadCSV } from '@/lib/export-csv'
 
 const TAGS = ['Événement', 'Terrain', 'Programme', 'Tribune']
 
@@ -102,9 +103,20 @@ export default function ArticlesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-foreground font-accent uppercase tracking-wide">Articles & Actualités</h2>
+        <div className="flex items-center gap-2">
+        <Button variant="outline" size="sm" onClick={() => {
+          if (articles.length === 0) { toast.error('Aucun article à exporter'); return }
+          downloadCSV('articles', ['Titre', 'Date', 'Tag', 'Description', 'Image', 'Ordre'], articles.map(a => [
+            a.title, a.date, a.tag, a.description || '', a.image || '', String(a.sort_order),
+          ]))
+          toast.success(`${articles.length} article(s) exporté(s)`)
+        }} className="border-border text-muted-foreground hover:text-foreground">
+          <Download className="w-4 h-4 mr-2" /> Export
+        </Button>
         <Button onClick={openCreate} className="gradient-lime text-accent-foreground">
           <Plus className="w-4 h-4 mr-2" /> Nouvel article
         </Button>
+        </div>
       </div>
 
       <div className="rounded-2xl border border-border/50 bg-card/30 overflow-hidden">

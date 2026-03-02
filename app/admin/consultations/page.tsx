@@ -16,9 +16,10 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Eye, MailOpen, Archive, Trash2, Search } from 'lucide-react'
+import { Eye, MailOpen, Archive, Trash2, Search, Download } from 'lucide-react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { downloadCSV } from '@/lib/export-csv'
 
 const statusConfig = {
   new: { label: 'Nouveau', className: 'bg-campaign-lime/20 text-campaign-lime border-campaign-lime/30' },
@@ -89,6 +90,16 @@ export default function ConsultationsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h2 className="text-2xl font-bold text-foreground font-accent uppercase tracking-wide">Consultations</h2>
         <div className="flex items-center gap-3 flex-wrap">
+          <Button variant="outline" size="sm" onClick={() => {
+            if (filtered.length === 0) { toast.error('Aucune donnée à exporter'); return }
+            downloadCSV('consultations', ['Date', 'Prénom', 'Nom', 'Email', 'Quartier', 'Statut'], filtered.map(s => [
+              new Date(s.created_at).toLocaleDateString('fr-FR'), s.first_name, s.last_name, s.email,
+              (s as unknown as { quartiers?: { name: string } }).quartiers?.name || '', s.status,
+            ]))
+            toast.success(`${filtered.length} soumission(s) exportée(s)`)
+          }} className="border-border text-muted-foreground hover:text-foreground">
+            <Download className="w-4 h-4 mr-2" /> Export
+          </Button>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/60" />
             <Input

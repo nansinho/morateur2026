@@ -6,7 +6,7 @@ import Link from 'next/link'
 import {
   LayoutDashboard, Mail, Newspaper, BookOpen, CalendarDays,
   Users, FileText, Search, LogOut, ExternalLink, ChevronLeft, ChevronRight, Menu,
-  MessageSquareText, MapPin, Download,
+  MessageSquareText, MapPin,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -20,7 +20,6 @@ const navItems = [
   { href: '/admin/messages', icon: Mail, label: 'Messages' },
   { href: '/admin/consultations', icon: MessageSquareText, label: 'Consultations' },
   { href: '/admin/quartiers', icon: MapPin, label: 'Quartiers' },
-  { href: '/admin/export', icon: Download, label: 'Export' },
   { href: '/admin/articles', icon: Newspaper, label: 'Articles' },
   { href: '/admin/programme', icon: BookOpen, label: 'Programme' },
   { href: '/admin/events', icon: CalendarDays, label: 'Événements' },
@@ -54,18 +53,18 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   const SidebarContent = () => (
     <>
       <div className={cn("flex items-center gap-3 px-4 py-5", collapsed && "justify-center px-2")}>
-        <div className="w-9 h-9 rounded-xl gradient-lime flex items-center justify-center flex-shrink-0">
-          <span className="text-accent-foreground font-accent font-bold text-sm">M</span>
+        <div className="w-9 h-9 rounded-xl bg-blue-500 flex items-center justify-center flex-shrink-0">
+          <span className="text-white font-accent font-bold text-sm">M</span>
         </div>
         {!collapsed && (
           <div className="min-w-0">
-            <p className="font-accent font-bold text-foreground text-sm truncate">Morateur 2026</p>
-            <p className="text-[11px] text-muted-foreground/60 truncate">Administration</p>
+            <p className="font-accent font-bold text-white text-sm truncate">Morateur 2026</p>
+            <p className="text-[11px] text-white/40 truncate">Administration</p>
           </div>
         )}
       </div>
 
-      <Separator className="bg-border/50" />
+      <Separator className="bg-white/10" />
 
       <ScrollArea className="flex-1 px-2 py-3">
         <nav className="space-y-1">
@@ -79,12 +78,12 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150",
                   active
-                    ? "bg-campaign-lime/15 text-campaign-lime"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary/50",
+                    ? "bg-blue-500/15 text-blue-400"
+                    : "text-white/50 hover:text-white hover:bg-white/5",
                   collapsed && "justify-center px-2"
                 )}
               >
-                <item.icon className={cn("w-5 h-5 flex-shrink-0", active && "text-campaign-lime")} />
+                <item.icon className={cn("w-5 h-5 flex-shrink-0", active && "text-blue-400")} />
                 {!collapsed && <span>{item.label}</span>}
               </Link>
             )
@@ -93,7 +92,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
               return (
                 <Tooltip key={item.href} delayDuration={0}>
                   <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
-                  <TooltipContent side="right" className="bg-card text-foreground border-border">
+                  <TooltipContent side="right" className="bg-white text-gray-900 border-gray-200">
                     {item.label}
                   </TooltipContent>
                 </Tooltip>
@@ -105,14 +104,14 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         </nav>
       </ScrollArea>
 
-      <Separator className="bg-border/50" />
+      <Separator className="bg-white/10" />
 
       <div className={cn("px-2 py-3 space-y-1", collapsed && "px-1")}>
         <Link
           href="/"
           target="_blank"
           className={cn(
-            "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all",
+            "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/50 hover:text-white hover:bg-white/5 transition-all",
             collapsed && "justify-center px-2"
           )}
         >
@@ -122,7 +121,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         <button
           onClick={handleLogout}
           className={cn(
-            "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-destructive hover:bg-destructive/10 transition-all",
+            "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 transition-all",
             collapsed && "justify-center px-2"
           )}
         >
@@ -134,15 +133,16 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   )
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen flex">
+      {/* Sidebar - matte black */}
       <aside className={cn(
-        "hidden lg:flex flex-col border-r border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-200 fixed inset-y-0 left-0 z-30",
+        "hidden lg:flex flex-col border-r border-white/5 bg-[#0a0a0a] transition-all duration-200 fixed inset-y-0 left-0 z-30",
         collapsed ? "w-[68px]" : "w-[250px]"
       )}>
         <SidebarContent />
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="absolute -right-3 top-7 w-6 h-6 rounded-full bg-secondary border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+          className="absolute -right-3 top-7 w-6 h-6 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors"
         >
           {collapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
         </button>
@@ -152,27 +152,29 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
         <div className="lg:hidden fixed inset-0 bg-black/60 z-40" onClick={() => setMobileOpen(false)} />
       )}
 
+      {/* Mobile sidebar */}
       <aside className={cn(
-        "lg:hidden fixed inset-y-0 left-0 z-50 w-[250px] flex flex-col border-r border-border/50 bg-card transition-transform duration-200",
+        "lg:hidden fixed inset-y-0 left-0 z-50 w-[250px] flex flex-col border-r border-white/5 bg-[#0a0a0a] transition-transform duration-200",
         mobileOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <SidebarContent />
       </aside>
 
+      {/* Content area - light theme */}
       <div className={cn(
-        "flex-1 flex flex-col transition-all duration-200",
+        "admin-content flex-1 flex flex-col transition-all duration-200 bg-[#f5f6f8]",
         collapsed ? "lg:ml-[68px]" : "lg:ml-[250px]"
       )}>
-        <header className="h-14 border-b border-border/50 bg-card/30 backdrop-blur-sm flex items-center px-4 lg:px-6 sticky top-0 z-20">
+        <header className="h-14 border-b border-gray-200 bg-white/80 backdrop-blur-sm flex items-center px-4 lg:px-6 sticky top-0 z-20">
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden text-muted-foreground hover:text-foreground"
+            className="lg:hidden text-gray-500 hover:text-gray-900"
             onClick={() => setMobileOpen(true)}
           >
             <Menu className="w-5 h-5" />
           </Button>
-          <h1 className="text-sm font-accent font-semibold text-foreground/80 ml-2 lg:ml-0 uppercase tracking-wider">
+          <h1 className="text-sm font-accent font-semibold text-gray-600 ml-2 lg:ml-0 uppercase tracking-wider">
             {navItems.find(item => isActive(item.href))?.label || 'Administration'}
           </h1>
         </header>
