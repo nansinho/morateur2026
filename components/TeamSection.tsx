@@ -38,7 +38,7 @@ const TeamSection = () => {
             className="font-accent font-extrabold text-primary-foreground leading-[0.9] uppercase tracking-tight break-words"
             style={{ fontSize: "clamp(2rem, 6vw, 5rem)" }}
           >
-            L'<span className="text-campaign-lime">ÉQUIPE</span>
+            L&apos;<span className="text-campaign-lime">ÉQUIPE</span>
           </h2>
           <p className="text-primary-foreground/40 max-w-xl text-base sm:text-lg mt-4 sm:mt-6 font-medium">
             Une équipe aux expériences multiples, engagée pour Bouc-Bel-Air.
