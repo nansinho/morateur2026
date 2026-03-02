@@ -152,7 +152,7 @@ const EngagezVousSection = () => {
                       </>
                     ) : (
                       <>
-                        <span className="text-xs font-bold uppercase tracking-wider">Découvrir</span>
+                        <span className="text-xs font-bold uppercase tracking-wider">Rejoignez-nous</span>
                         <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                       </>
                     )}

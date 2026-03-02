@@ -15,8 +15,8 @@ const stats = [
 
 const highlights = [
   { Icon: Briefcase, title: "Ancien adjoint au maire", desc: "De 2014 à 2020, engagé au service de Bouc-Bel-Air", color: "from-campaign-lime/20 to-campaign-lime/5 border-campaign-lime/30" },
-  { Icon: GraduationCap, title: "Analyste financier expert", desc: "Diplômé de Sciences Po Aix et de l'INSP (ex-ÉNA)", color: "from-primary/20 to-primary/5 border-primary/30" },
-  { Icon: Users, title: "Spécialiste du service public", desc: "Expert des délégations de service public", color: "from-campaign-steel/20 to-campaign-steel/5 border-campaign-steel/30" },
+  { Icon: GraduationCap, title: "Analyste financier expert", desc: "Diplômé de Sciences Po Aix et de l'INSP (ex-ÉNA)", color: "from-campaign-lime/20 to-campaign-lime/5 border-campaign-lime/30" },
+  { Icon: Users, title: "Spécialiste du service public", desc: "Expert des délégations de service public", color: "from-campaign-lime/20 to-campaign-lime/5 border-campaign-lime/30" },
 ];
 
 const CounterStat = ({ value, label, suffix = "" }: { value: number; label: string; suffix?: string }) => {
