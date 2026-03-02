@@ -15,9 +15,13 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Plus, Pencil, Trash2, Loader2, User } from 'lucide-react'
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Plus, Pencil, Trash2, Loader2, User, MoreHorizontal } from 'lucide-react'
 import { toast } from 'sonner'
 import Image from 'next/image'
+import ImageUpload from '@/components/admin/image-upload'
 
 const emptyMember = { name: '', role: '', image: '', description: '', sort_order: 0 }
 
@@ -86,7 +90,7 @@ export default function TeamPage() {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-48 bg-card/50 rounded-2xl animate-pulse" />
+            <div key={i} className="h-64 bg-card/50 rounded-2xl animate-pulse" />
           ))}
         </div>
       ) : members.length === 0 ? (
@@ -96,30 +100,50 @@ export default function TeamPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {members.map((member) => (
-            <Card key={member.id} className="bg-card/50 border-border/50 group hover:bg-card/80 transition-colors">
-              <CardContent className="p-5">
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-secondary/50 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                    {member.image ? (
-                      <Image src={member.image} alt={member.name} width={56} height={56} className="w-full h-full object-cover" />
-                    ) : (
-                      <User className="w-6 h-6 text-muted-foreground/60" />
-                    )}
+            <Card
+              key={member.id}
+              className="bg-card/50 border-border/50 group hover:bg-card/80 transition-all cursor-pointer overflow-hidden"
+              onClick={() => openEdit(member)}
+            >
+              <div className="relative aspect-[4/3] bg-secondary/30 overflow-hidden">
+                {member.image ? (
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    className="object-cover transition-transform group-hover:scale-105"
+                    unoptimized
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <User className="w-12 h-12 text-muted-foreground/20" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-foreground text-sm truncate">{member.name}</p>
-                    <p className="text-xs text-campaign-lime mt-0.5">{member.role}</p>
-                    <p className="text-xs text-muted-foreground/60 mt-2 line-clamp-2">{member.description}</p>
-                  </div>
+                )}
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="secondary" size="icon" className="h-8 w-8 bg-black/50 hover:bg-black/70 text-white border-0">
+                        <MoreHorizontal className="w-4 h-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="bg-card border-border">
+                      <DropdownMenuItem onClick={() => openEdit(member)}>
+                        <Pencil className="w-4 h-4 mr-2" /> Modifier
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setDeleteId(member.id)}>
+                        <Trash2 className="w-4 h-4 mr-2" /> Supprimer
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
-                <div className="flex items-center justify-end gap-1 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-foreground" onClick={() => openEdit(member)}>
-                    <Pencil className="w-3.5 h-3.5" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:text-destructive" onClick={() => setDeleteId(member.id)}>
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </Button>
-                </div>
+              </div>
+              <CardContent className="p-4">
+                <p className="font-semibold text-foreground truncate">{member.name}</p>
+                <p className="text-sm text-campaign-lime mt-0.5">{member.role}</p>
+                {member.description && (
+                  <p className="text-xs text-muted-foreground/60 mt-2 line-clamp-2">{member.description}</p>
+                )}
               </CardContent>
             </Card>
           ))}
@@ -144,8 +168,11 @@ export default function TeamPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-foreground/80">Chemin image</Label>
-              <Input value={editData.image} onChange={(e) => setEditData({ ...editData, image: e.target.value })} className="bg-secondary/50 border-border text-foreground" placeholder="/images/equipe-1.png" />
+              <Label className="text-foreground/80">Photo</Label>
+              <ImageUpload
+                value={editData.image}
+                onChange={(url) => setEditData({ ...editData, image: url })}
+              />
             </div>
             <div className="space-y-2">
               <Label className="text-foreground/80">Description</Label>

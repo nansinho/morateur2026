@@ -18,9 +18,12 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react'
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Plus, Pencil, Trash2, Loader2, MoreHorizontal } from 'lucide-react'
 import { toast } from 'sonner'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface QuartierWithCount extends Quartier {
   quartier_questions: { id: string }[]
@@ -43,6 +46,7 @@ export default function QuartiersAdminPage() {
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const [form, setForm] = useState({ name: '', slug: '', description: '', is_active: true, display_order: 0 })
   const supabase = createClient()
+  const router = useRouter()
 
   const fetchQuartiers = useCallback(async () => {
     const { data } = await supabase
@@ -115,7 +119,7 @@ export default function QuartiersAdminPage() {
               <TableHead className="text-muted-foreground hidden md:table-cell">Slug</TableHead>
               <TableHead className="text-muted-foreground">Actif</TableHead>
               <TableHead className="text-muted-foreground hidden sm:table-cell">Questions</TableHead>
-              <TableHead className="text-muted-foreground text-right">Actions</TableHead>
+              <TableHead className="text-muted-foreground text-right w-12"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -133,27 +137,37 @@ export default function QuartiersAdminPage() {
               </TableRow>
             ) : (
               quartiers.map((q) => (
-                <TableRow key={q.id} className="border-border/50 hover:bg-secondary/20">
+                <TableRow
+                  key={q.id}
+                  className="border-border/50 hover:bg-secondary/20 cursor-pointer"
+                  onClick={() => router.push(`/admin/quartiers/${q.slug}`)}
+                >
                   <TableCell className="text-muted-foreground">{q.display_order}</TableCell>
                   <TableCell className="font-medium text-foreground">{q.name}</TableCell>
                   <TableCell className="text-muted-foreground/60 text-sm hidden md:table-cell">{q.slug}</TableCell>
-                  <TableCell>
+                  <TableCell onClick={(e) => e.stopPropagation()}>
                     <Switch checked={q.is_active} onCheckedChange={() => toggleActive(q)} />
                   </TableCell>
                   <TableCell className="text-muted-foreground hidden sm:table-cell">
                     {q.quartier_questions.length}
                   </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Link href={`/admin/quartiers/${q.slug}`}>
+                  <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
-                          <Pencil className="w-4 h-4" />
+                          <MoreHorizontal className="w-4 h-4" />
                         </Button>
-                      </Link>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive" onClick={() => setDeleteId(q.id)}>
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="bg-card border-border">
+                        <DropdownMenuItem onClick={() => router.push(`/admin/quartiers/${q.slug}`)}>
+                          <Pencil className="w-4 h-4 mr-2" /> Modifier
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setDeleteId(q.id)}>
+                          <Trash2 className="w-4 h-4 mr-2" /> Supprimer
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))

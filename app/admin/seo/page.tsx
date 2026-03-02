@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { SeoPage } from '@/lib/types/database'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -11,9 +11,10 @@ import { Textarea } from '@/components/ui/textarea'
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from '@/components/ui/dialog'
-import { Pencil, Loader2, Search, Globe, FileText } from 'lucide-react'
+import { Loader2, Search, Globe, FileText } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
+import ImageUpload from '@/components/admin/image-upload'
 
 export default function SeoPage() {
   const [pages, setPages] = useState<SeoPage[]>([])
@@ -88,7 +89,11 @@ export default function SeoPage() {
 
       <div className="space-y-3">
         {pages.map((page) => (
-          <Card key={page.id} className="bg-card/50 border-border/50 hover:bg-card/80 transition-colors group">
+          <Card
+            key={page.id}
+            className="bg-card/50 border-border/50 hover:bg-card/80 transition-colors cursor-pointer group"
+            onClick={() => openEdit(page)}
+          >
             <CardContent className="p-5">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-start gap-4 flex-1 min-w-0">
@@ -114,9 +119,6 @@ export default function SeoPage() {
                     )}
                   </div>
                 </div>
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => openEdit(page)}>
-                  <Pencil className="w-4 h-4" />
-                </Button>
               </div>
             </CardContent>
           </Card>
@@ -163,11 +165,9 @@ export default function SeoPage() {
               </div>
               <div className="space-y-2">
                 <Label className="text-foreground/80">Image OpenGraph</Label>
-                <Input
+                <ImageUpload
                   value={editData.og_image}
-                  onChange={(e) => setEditData({ ...editData, og_image: e.target.value })}
-                  className="bg-secondary/50 border-border text-foreground"
-                  placeholder="/images/candidat-banner.png"
+                  onChange={(url) => setEditData({ ...editData, og_image: url })}
                 />
               </div>
 

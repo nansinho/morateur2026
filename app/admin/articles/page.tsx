@@ -5,8 +5,17 @@ import { createClient } from '@/lib/supabase/client'
 import type { Article } from '@/lib/types/database'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Plus, Newspaper, CalendarDays } from 'lucide-react'
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Plus, Newspaper, CalendarDays, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
+import { toast } from 'sonner'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
 const tagColors: Record<string, string> = {
@@ -19,7 +28,9 @@ const tagColors: Record<string, string> = {
 export default function ArticlesPage() {
   const [articles, setArticles] = useState<Article[]>([])
   const [loading, setLoading] = useState(true)
+  const [deleteId, setDeleteId] = useState<string | null>(null)
   const supabase = createClient()
+  const router = useRouter()
 
   const fetchArticles = useCallback(async () => {
     const { data } = await supabase.from('articles').select('*').order('sort_order')
@@ -28,6 +39,14 @@ export default function ArticlesPage() {
   }, [supabase])
 
   useEffect(() => { fetchArticles() }, [fetchArticles])
+
+  const handleDelete = async () => {
+    if (!deleteId) return
+    await supabase.from('articles').delete().eq('id', deleteId)
+    toast.success('Article supprimé')
+    setDeleteId(null)
+    fetchArticles()
+  }
 
   return (
     <div className="space-y-6">
@@ -71,10 +90,10 @@ export default function ArticlesPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {articles.map((article) => (
-            <Link
+            <div
               key={article.id}
-              href={`/admin/articles/${article.id}`}
-              className="group rounded-xl border border-border/40 bg-card overflow-hidden hover:shadow-md transition-all duration-200 hover:-translate-y-0.5"
+              className="group relative rounded-xl border border-border/40 bg-card overflow-hidden hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+              onClick={() => router.push(`/admin/articles/${article.id}`)}
             >
               {/* Image */}
               <div className="aspect-[16/10] relative overflow-hidden">
@@ -100,6 +119,25 @@ export default function ArticlesPage() {
                     {article.tag}
                   </Badge>
                 </div>
+                {/* Dropdown menu */}
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="secondary" size="icon" className="h-8 w-8 bg-black/50 hover:bg-black/70 text-white border-0">
+                        <MoreHorizontal className="w-4 h-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="bg-card border-border">
+                      <DropdownMenuItem onClick={() => router.push(`/admin/articles/${article.id}`)}>
+                        <Pencil className="w-4 h-4 mr-2" /> Modifier
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setDeleteId(article.id)}>
+                        <Trash2 className="w-4 h-4 mr-2" /> Supprimer
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </div>
 
               {/* Content */}
@@ -117,10 +155,26 @@ export default function ArticlesPage() {
                   </p>
                 )}
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}
+
+      {/* Delete confirmation */}
+      <AlertDialog open={!!deleteId} onOpenChange={(open) => !open && setDeleteId(null)}>
+        <AlertDialogContent className="bg-card border-border">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-foreground">Supprimer cet article ?</AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground">
+              Cette action est irréversible.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="bg-secondary text-foreground border-border hover:bg-secondary">Annuler</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90 text-foreground">Supprimer</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }
