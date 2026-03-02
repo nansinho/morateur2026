@@ -18,10 +18,15 @@ CREATE TABLE IF NOT EXISTS messages (
 CREATE TABLE IF NOT EXISTS articles (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   title TEXT NOT NULL,
+  slug TEXT UNIQUE,
   date TEXT NOT NULL,
   image TEXT NOT NULL DEFAULT '',
+  image_alt TEXT NOT NULL DEFAULT '',
   tag TEXT NOT NULL DEFAULT 'Événement',
   description TEXT NOT NULL DEFAULT '',
+  content TEXT NOT NULL DEFAULT '',
+  meta_description TEXT NOT NULL DEFAULT '',
+  meta_keywords TEXT NOT NULL DEFAULT '',
   sort_order INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT now()
 );

@@ -195,4 +195,120 @@
   * {
     -webkit-tap-highlight-color: transparent;
   }
+
+  /* Article prose styling (public article pages) */
+  .prose-article {
+    color: hsl(220 30% 25%);
+  }
+
+  .prose-article h1,
+  .prose-article h2,
+  .prose-article h3 {
+    font-family: var(--font-heading, 'Sora', sans-serif);
+    color: hsl(220 73% 34%);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  .prose-article h2 {
+    margin-top: 2.5em;
+    margin-bottom: 0.75em;
+    font-size: 1.5em;
+    border-bottom: 2px solid hsl(152 48% 50% / 0.3);
+    padding-bottom: 0.3em;
+  }
+
+  .prose-article h3 {
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
+  }
+
+  .prose-article a {
+    color: hsl(152 40% 35%);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 600;
+    transition: color 0.15s;
+  }
+
+  .prose-article a:hover {
+    color: hsl(152 48% 50%);
+  }
+
+  .prose-article blockquote {
+    border-left-color: hsl(152 48% 50%);
+    background: hsl(152 48% 50% / 0.05);
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 1em 1.25em;
+    font-style: italic;
+    color: hsl(220 30% 35%);
+  }
+
+  .prose-article strong {
+    color: hsl(220 73% 25%);
+  }
+
+  .prose-article ul > li::marker,
+  .prose-article ol > li::marker {
+    color: hsl(152 48% 50%);
+    font-weight: 700;
+  }
+
+  .prose-article hr {
+    border-color: hsl(152 48% 50% / 0.2);
+    margin: 2.5em 0;
+  }
+
+  /* TipTap editor prose styling (admin) */
+  .ProseMirror {
+    outline: none;
+  }
+
+  .ProseMirror p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: hsl(var(--muted-foreground) / 0.5);
+    pointer-events: none;
+    height: 0;
+  }
+
+  .ProseMirror h1 { font-size: 2em; font-weight: 800; margin: 1em 0 0.5em; }
+  .ProseMirror h2 { font-size: 1.5em; font-weight: 700; margin: 1em 0 0.4em; }
+  .ProseMirror h3 { font-size: 1.2em; font-weight: 600; margin: 0.8em 0 0.3em; }
+
+  .ProseMirror ul,
+  .ProseMirror ol {
+    padding-left: 1.5em;
+    margin: 0.75em 0;
+  }
+
+  .ProseMirror ul { list-style-type: disc; }
+  .ProseMirror ol { list-style-type: decimal; }
+  .ProseMirror li { margin: 0.25em 0; }
+
+  .ProseMirror blockquote {
+    border-left: 3px solid hsl(var(--campaign-lime));
+    padding-left: 1em;
+    margin: 1em 0;
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  .ProseMirror a {
+    color: hsl(var(--campaign-lime));
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .ProseMirror hr {
+    border: none;
+    border-top: 1px solid hsl(var(--border));
+    margin: 1.5em 0;
+  }
+
+  .ProseMirror p {
+    margin: 0.5em 0;
+  }
 }

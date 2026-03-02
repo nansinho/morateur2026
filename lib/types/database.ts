@@ -12,11 +12,15 @@ export interface Message {
 export interface Article {
   id: string
   title: string
+  slug?: string
   date: string
   image: string
   image_alt?: string
   tag: string
   description: string
+  content?: string
+  meta_description?: string
+  meta_keywords?: string
   sort_order: number
   created_at: string
 }

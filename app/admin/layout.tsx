@@ -1,5 +1,7 @@
 import { AdminLayoutClient } from './admin-layout-client'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Administration | Morateur 2026',
   robots: { index: false, follow: false },
