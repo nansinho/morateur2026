@@ -3,11 +3,13 @@
 import { useEffect, useState, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { ProgrammePillar, ProgrammeMeasure } from '@/lib/types/database'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { Badge } from '@/components/ui/badge'
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table'
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from '@/components/ui/dialog'
@@ -18,7 +20,7 @@ import {
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Plus, Pencil, Trash2, Loader2, GripVertical, MoreHorizontal } from 'lucide-react'
+import { Plus, Pencil, Trash2, Loader2, MoreHorizontal, ArrowLeft, BookOpen } from 'lucide-react'
 import { toast } from 'sonner'
 
 export default function ProgrammePage() {
@@ -26,6 +28,9 @@ export default function ProgrammePage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const supabase = createClient()
+
+  // Navigation: null = liste, string = détail du pilier
+  const [selectedPillarId, setSelectedPillarId] = useState<string | null>(null)
 
   const [pillarEditOpen, setPillarEditOpen] = useState(false)
   const [pillarEditId, setPillarEditId] = useState<string | null>(null)
@@ -51,6 +56,9 @@ export default function ProgrammePage() {
 
   useEffect(() => { fetchPillars() }, [fetchPillars])
 
+  const selectedPillar = pillars.find(p => p.id === selectedPillarId) || null
+
+  // Pillar CRUD
   const openPillarCreate = () => {
     setPillarEditId(null)
     setPillarData({ title: '', intro: '', icon: 'ShieldCheck', color: 'border-campaign-lime/30', icon_bg: 'gradient-lime', sort_order: pillars.length + 1 })
@@ -76,9 +84,11 @@ export default function ProgrammePage() {
   const deletePillar = async () => {
     if (!deletePillarId) return
     await supabase.from('programme_pillars').delete().eq('id', deletePillarId)
+    if (selectedPillarId === deletePillarId) setSelectedPillarId(null)
     toast.success('Pilier supprimé'); setDeletePillarId(null); fetchPillars()
   }
 
+  // Measure CRUD
   const openMeasureCreate = (pillarId: string) => {
     setMeasureEditId(null); setMeasurePillarId(pillarId)
     const pillar = pillars.find(p => p.id === pillarId)
@@ -108,84 +118,80 @@ export default function ProgrammePage() {
     toast.success('Mesure supprimée'); setDeleteMeasureId(null); fetchPillars()
   }
 
-  if (loading) {
+  // ─── VUE DÉTAIL D'UN PILIER ───
+  if (selectedPillar) {
     return (
       <div className="space-y-6">
-        <h2 className="text-2xl font-accent font-bold text-foreground uppercase tracking-wide">Programme</h2>
-        <div className="space-y-4">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-48 bg-card/50 rounded-2xl animate-pulse" />
-          ))}
+        {/* Header avec retour */}
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => setSelectedPillarId(null)}>
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
+          <div className="flex-1 min-w-0">
+            <h2 className="text-2xl font-accent font-bold text-foreground uppercase tracking-wide truncate">{selectedPillar.title}</h2>
+            <p className="text-sm text-muted-foreground/60 mt-0.5">Pilier {selectedPillar.sort_order} — {selectedPillar.measures.length} mesure(s)</p>
+          </div>
         </div>
-      </div>
-    )
-  }
 
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-accent font-bold text-foreground uppercase tracking-wide">Programme</h2>
-        <Button onClick={openPillarCreate} className="gradient-lime text-accent-foreground font-accent font-bold">
-          <Plus className="w-4 h-4 mr-2" /> Nouveau pilier
-        </Button>
-      </div>
-
-      <div className="space-y-6">
-        {pillars.map((pillar) => (
-          <Card key={pillar.id} className="bg-card/50 border-border/50">
-            <CardHeader className="flex flex-row items-start justify-between gap-4">
-              <div className="flex items-start gap-3">
-                <GripVertical className="w-5 h-5 text-muted-foreground/40 mt-0.5 flex-shrink-0" />
-                <div>
-                  <CardTitle className="text-foreground text-lg">{pillar.title}</CardTitle>
-                  <p className="text-sm text-muted-foreground mt-1">{pillar.intro}</p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className="text-[10px] text-muted-foreground/60 bg-secondary/50 px-2 py-0.5 rounded">Icône: {pillar.icon}</span>
-                    <span className="text-[10px] text-muted-foreground/60 bg-secondary/50 px-2 py-0.5 rounded">Ordre: {pillar.sort_order}</span>
-                  </div>
+        {/* Bloc récap pilier */}
+        <Card className="bg-card/50 border-border/50">
+          <CardContent className="p-4">
+            <div className="flex items-start justify-between gap-4">
+              <div className="space-y-2 flex-1 min-w-0">
+                <p className="text-sm text-foreground/90">{selectedPillar.intro}</p>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[10px] text-muted-foreground/60 bg-secondary/50 px-2 py-0.5 rounded">Icône : {selectedPillar.icon}</span>
+                  <span className="text-[10px] text-muted-foreground/60 bg-secondary/50 px-2 py-0.5 rounded">Couleur : {selectedPillar.color}</span>
+                  <span className="text-[10px] text-muted-foreground/60 bg-secondary/50 px-2 py-0.5 rounded">Fond : {selectedPillar.icon_bg}</span>
                 </div>
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
-                    <MoreHorizontal className="w-4 h-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-card border-border">
-                  <DropdownMenuItem onClick={() => openPillarEdit(pillar)}>
-                    <Pencil className="w-4 h-4 mr-2" /> Modifier
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setDeletePillarId(pillar.id)}>
-                    <Trash2 className="w-4 h-4 mr-2" /> Supprimer
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-semibold text-foreground/80">Mesures ({pillar.measures.length})</p>
-                  <Button variant="outline" size="sm" className="border-border text-foreground/80 hover:bg-secondary h-7 text-xs" onClick={() => openMeasureCreate(pillar.id)}>
-                    <Plus className="w-3 h-3 mr-1" /> Ajouter
-                  </Button>
-                </div>
-                {pillar.measures.map((measure) => (
-                  <div
+              <Button variant="outline" size="sm" className="border-border text-foreground/80 hover:bg-secondary flex-shrink-0" onClick={() => openPillarEdit(selectedPillar)}>
+                <Pencil className="w-3.5 h-3.5 mr-1.5" /> Modifier
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Table des mesures */}
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-accent font-semibold text-foreground">Mesures</h3>
+          <Button onClick={() => openMeasureCreate(selectedPillar.id)} className="gradient-lime text-accent-foreground font-accent font-bold">
+            <Plus className="w-4 h-4 mr-2" /> Nouvelle mesure
+          </Button>
+        </div>
+
+        <div className="rounded-2xl border border-border/50 bg-card/30 overflow-hidden">
+          <Table>
+            <TableHeader>
+              <TableRow className="border-border/50 hover:bg-transparent">
+                <TableHead className="text-muted-foreground w-12">#</TableHead>
+                <TableHead className="text-muted-foreground">Titre</TableHead>
+                <TableHead className="text-muted-foreground hidden md:table-cell">Détail</TableHead>
+                <TableHead className="text-muted-foreground text-right w-12"></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {selectedPillar.measures.length === 0 ? (
+                <TableRow className="border-border/50">
+                  <TableCell colSpan={4} className="text-center text-muted-foreground/60 py-8">
+                    Aucune mesure — ajoutez la première !
+                  </TableCell>
+                </TableRow>
+              ) : (
+                selectedPillar.measures.map((measure) => (
+                  <TableRow
                     key={measure.id}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors group cursor-pointer"
+                    className="border-border/50 hover:bg-secondary/20 cursor-pointer"
                     onClick={() => openMeasureEdit(measure)}
                   >
-                    <span className="text-xs text-muted-foreground/40 font-bold mt-0.5 w-6 text-right flex-shrink-0">{measure.sort_order}.</span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground">{measure.title}</p>
-                      <p className="text-xs text-muted-foreground/60 mt-0.5 line-clamp-2">{measure.detail}</p>
-                    </div>
-                    <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
+                    <TableCell className="text-muted-foreground/60 text-sm">{measure.sort_order}</TableCell>
+                    <TableCell className="text-foreground font-medium">{measure.title}</TableCell>
+                    <TableCell className="text-muted-foreground text-sm hidden md:table-cell max-w-xs truncate">{measure.detail}</TableCell>
+                    <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-foreground">
-                            <MoreHorizontal className="w-3.5 h-3.5" />
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                            <MoreHorizontal className="w-4 h-4" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="bg-card border-border">
@@ -198,16 +204,116 @@ export default function ProgrammePage() {
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* Dialogs */}
+        {renderPillarDialog()}
+        {renderMeasureDialog()}
+        {renderDeletePillarDialog()}
+        {renderDeleteMeasureDialog()}
+      </div>
+    )
+  }
+
+  // ─── VUE LISTE DES PILIERS ───
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-accent font-bold text-foreground uppercase tracking-wide">Programme</h2>
+        <Button onClick={openPillarCreate} className="gradient-lime text-accent-foreground font-accent font-bold">
+          <Plus className="w-4 h-4 mr-2" /> Nouveau pilier
+        </Button>
       </div>
 
-      {/* Pillar edit dialog */}
+      <div className="rounded-2xl border border-border/50 bg-card/30 overflow-hidden">
+        <Table>
+          <TableHeader>
+            <TableRow className="border-border/50 hover:bg-transparent">
+              <TableHead className="text-muted-foreground w-12">#</TableHead>
+              <TableHead className="text-muted-foreground">Titre</TableHead>
+              <TableHead className="text-muted-foreground hidden sm:table-cell">Mesures</TableHead>
+              <TableHead className="text-muted-foreground text-right w-12"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {loading ? (
+              Array.from({ length: 5 }).map((_, i) => (
+                <TableRow key={i} className="border-border/50">
+                  <TableCell colSpan={4}><div className="h-8 bg-secondary/30 rounded animate-pulse" /></TableCell>
+                </TableRow>
+              ))
+            ) : pillars.length === 0 ? (
+              <TableRow className="border-border/50">
+                <TableCell colSpan={4} className="text-center py-12">
+                  <div className="flex flex-col items-center gap-3">
+                    <BookOpen className="w-8 h-8 text-muted-foreground/30" />
+                    <p className="text-muted-foreground/60">Aucun pilier dans le programme</p>
+                    <Button onClick={openPillarCreate} variant="outline" className="border-border text-foreground/80 hover:bg-secondary">
+                      <Plus className="w-4 h-4 mr-2" /> Créer le premier pilier
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : (
+              pillars.map((pillar) => (
+                <TableRow
+                  key={pillar.id}
+                  className="border-border/50 hover:bg-secondary/20 cursor-pointer"
+                  onClick={() => setSelectedPillarId(pillar.id)}
+                >
+                  <TableCell className="text-muted-foreground/60 text-sm">{pillar.sort_order}</TableCell>
+                  <TableCell>
+                    <p className="text-foreground font-medium">{pillar.title}</p>
+                    <p className="text-xs text-muted-foreground/50 mt-0.5 line-clamp-1 hidden sm:block">{pillar.intro}</p>
+                  </TableCell>
+                  <TableCell className="hidden sm:table-cell">
+                    <Badge variant="secondary" className="text-[11px] bg-secondary/60 text-muted-foreground border-0">
+                      {pillar.measures.length} mesure{pillar.measures.length !== 1 ? 's' : ''}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="bg-card border-border">
+                        <DropdownMenuItem onClick={() => openPillarEdit(pillar)}>
+                          <Pencil className="w-4 h-4 mr-2" /> Modifier
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => setDeletePillarId(pillar.id)}>
+                          <Trash2 className="w-4 h-4 mr-2" /> Supprimer
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Dialogs */}
+      {renderPillarDialog()}
+      {renderMeasureDialog()}
+      {renderDeletePillarDialog()}
+      {renderDeleteMeasureDialog()}
+    </div>
+  )
+
+  // ─── DIALOGS ───
+
+  function renderPillarDialog() {
+    return (
       <Dialog open={pillarEditOpen} onOpenChange={setPillarEditOpen}>
         <DialogContent className="bg-card border-border text-foreground max-w-lg">
           <DialogHeader><DialogTitle>{pillarEditId ? 'Modifier le pilier' : 'Nouveau pilier'}</DialogTitle></DialogHeader>
@@ -250,8 +356,11 @@ export default function ProgrammePage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+    )
+  }
 
-      {/* Measure edit dialog */}
+  function renderMeasureDialog() {
+    return (
       <Dialog open={measureEditOpen} onOpenChange={setMeasureEditOpen}>
         <DialogContent className="bg-card border-border text-foreground max-w-lg">
           <DialogHeader><DialogTitle>{measureEditId ? 'Modifier la mesure' : 'Nouvelle mesure'}</DialogTitle></DialogHeader>
@@ -278,8 +387,11 @@ export default function ProgrammePage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+    )
+  }
 
-      {/* Delete pillar */}
+  function renderDeletePillarDialog() {
+    return (
       <AlertDialog open={!!deletePillarId} onOpenChange={(open) => !open && setDeletePillarId(null)}>
         <AlertDialogContent className="bg-card border-border">
           <AlertDialogHeader>
@@ -292,8 +404,11 @@ export default function ProgrammePage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+    )
+  }
 
-      {/* Delete measure */}
+  function renderDeleteMeasureDialog() {
+    return (
       <AlertDialog open={!!deleteMeasureId} onOpenChange={(open) => !open && setDeleteMeasureId(null)}>
         <AlertDialogContent className="bg-card border-border">
           <AlertDialogHeader>
@@ -306,6 +421,6 @@ export default function ProgrammePage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
-  )
+    )
+  }
 }
