@@ -13,8 +13,10 @@ const socials = [
 const navLinks = [
   { label: "Candidat", to: "/#candidat" },
   { label: "Programme", to: "/programme" },
+  { label: "Quartiers", to: "/quartiers" },
   { label: "Actualités", to: "/actualites" },
   { label: "Équipe", to: "/equipe" },
+  { label: "Presse", to: "/presse" },
   { label: "Contact", to: "/#procuration" },
 ];
 
@@ -117,6 +119,8 @@ const Footer = () => {
                 { label: "Mentions légales", to: "/mentions-legales" },
                 { label: "Cookies", to: "/cookies" },
                 { label: "Politique de confidentialité", to: "/politique-de-confidentialite" },
+                { label: "Accessibilité", to: "/accessibilite" },
+                { label: "Plan du site", to: "/plan-du-site" },
               ].map((link, i) => (
                 <button
                   key={i}
