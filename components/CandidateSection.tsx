@@ -14,9 +14,9 @@ const stats = [
 ];
 
 const highlights = [
-  { Icon: Briefcase, title: "Ancien adjoint au maire", desc: "De 2014 à 2020, engagé au service de Bouc-Bel-Air", color: "from-campaign-lime/20 to-campaign-lime/5 border-campaign-lime/30" },
-  { Icon: GraduationCap, title: "Analyste financier expert", desc: "Diplômé de Sciences Po Aix et de l'INSP (ex-ÉNA)", color: "from-primary/20 to-primary/5 border-primary/30" },
-  { Icon: Users, title: "Spécialiste du service public", desc: "Expert des délégations de service public", color: "from-campaign-steel/20 to-campaign-steel/5 border-campaign-steel/30" },
+  { Icon: Briefcase, title: "Ancien adjoint au maire", desc: "De 2014 à 2020, engagé au service de Bouc-Bel-Air", color: "from-campaign-lime/30 to-campaign-lime/10" },
+  { Icon: GraduationCap, title: "Analyste financier expert", desc: "Diplômé de Sciences Po Aix et de l'INSP (ex-ÉNA)", color: "from-campaign-teal/30 to-campaign-teal/10" },
+  { Icon: Users, title: "Spécialiste du service public", desc: "Expert des délégations de service public", color: "from-campaign-steel/30 to-campaign-steel/10" },
 ];
 
 const CounterStat = ({ value, label, suffix = "" }: { value: number; label: string; suffix?: string }) => {
@@ -118,7 +118,7 @@ const CandidateSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.5 + i * 0.1 }}
-                    className={`flex items-start gap-4 p-4 rounded-xl bg-gradient-to-r ${h.color} border backdrop-blur-sm hover:scale-[1.02] transition-transform`}
+                    className={`flex items-start gap-4 p-4 rounded-xl bg-gradient-to-r ${h.color} backdrop-blur-sm hover:scale-[1.02] transition-transform`}
                   >
                     <div className="w-10 h-10 rounded-lg gradient-lime flex items-center justify-center flex-shrink-0">
                       <h.Icon className="w-5 h-5 text-accent-foreground" />

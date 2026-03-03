@@ -57,8 +57,8 @@ const CounterStat = ({ value, label, suffix = "" }: { value: number; label: stri
   );
 };
 
-const HighlightCard = ({ Icon, title, desc }: { Icon: React.ElementType; title: string; desc: string }) => (
-  <div className="flex items-start gap-4 p-4 md:p-5 rounded-xl bg-gradient-to-r from-campaign-lime/15 to-campaign-lime/5 border border-campaign-lime/20 backdrop-blur-sm">
+const HighlightCard = ({ Icon, title, desc, color = "from-campaign-lime/30 to-campaign-lime/10" }: { Icon: React.ElementType; title: string; desc: string; color?: string }) => (
+  <div className={`flex items-start gap-4 p-4 md:p-5 rounded-xl bg-gradient-to-r ${color} backdrop-blur-sm`}>
     <div className="w-10 h-10 rounded-lg gradient-lime flex items-center justify-center flex-shrink-0">
       <Icon className="w-5 h-5 text-accent-foreground" />
     </div>
@@ -239,16 +239,19 @@ export default function CandidatContent() {
               Icon={Briefcase}
               title="Ancien adjoint au maire"
               desc="De 2014 à 2020, engagé au service de Bouc-Bel-Air"
+              color="from-campaign-lime/30 to-campaign-lime/10"
             />
             <HighlightCard
               Icon={GraduationCap}
               title="Analyste financier expert"
               desc="Diplômé de Sciences Po Aix et de l'INSP (ex-ÉNA)"
+              color="from-campaign-teal/30 to-campaign-teal/10"
             />
             <HighlightCard
               Icon={Users}
               title="Spécialiste du service public"
               desc="Expert des délégations de service public et de mutualisation des ressources"
+              color="from-campaign-steel/30 to-campaign-steel/10"
             />
           </div>
 
