@@ -108,6 +108,124 @@
     background: hsl(215 57% 42% / 0.2);
   }
 
+  /* ── Accessibilite : taille du texte ── */
+  html.a11y-text-lg { font-size: 120%; }
+  html.a11y-text-xl { font-size: 140%; }
+
+  /* ── Accessibilite : contraste eleve ── */
+  html.a11y-high-contrast {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 60 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 85%;
+    --accent: 60 100% 50%;
+    --accent-foreground: 0 0% 0%;
+    --border: 0 0% 40%;
+    --input: 0 0% 40%;
+    --ring: 60 100% 50%;
+    --campaign-teal: 60 100% 50%;
+    --campaign-teal-light: 60 100% 60%;
+    --campaign-steel: 0 0% 20%;
+    --campaign-ice: 0 0% 100%;
+    --campaign-olive: 60 100% 45%;
+    --campaign-lime: 60 100% 50%;
+    --campaign-lime-light: 60 100% 60%;
+  }
+
+  html.a11y-high-contrast img {
+    filter: contrast(1.2) brightness(1.1);
+  }
+
+  html.a11y-high-contrast .text-gradient-lime,
+  html.a11y-high-contrast .text-gradient-teal {
+    -webkit-text-fill-color: hsl(60 100% 50%);
+    background: none;
+  }
+
+  /* ── Accessibilite : souligner les liens ── */
+  html.a11y-underline-links a {
+    text-decoration: underline !important;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+  }
+
+  /* ── Accessibilite : interligne augmente ── */
+  html.a11y-line-spacing p,
+  html.a11y-line-spacing li,
+  html.a11y-line-spacing span,
+  html.a11y-line-spacing div {
+    line-height: 2 !important;
+  }
+
+  /* ── Accessibilite : espacement des lettres ── */
+  html.a11y-letter-spacing p,
+  html.a11y-letter-spacing li,
+  html.a11y-letter-spacing span,
+  html.a11y-letter-spacing a,
+  html.a11y-letter-spacing h1,
+  html.a11y-letter-spacing h2,
+  html.a11y-letter-spacing h3,
+  html.a11y-letter-spacing h4,
+  html.a11y-letter-spacing button {
+    letter-spacing: 0.12em !important;
+    word-spacing: 0.2em !important;
+  }
+
+  /* ── Accessibilite : stopper les animations ── */
+  html.a11y-no-motion *,
+  html.a11y-no-motion *::before,
+  html.a11y-no-motion *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* ── Accessibilite : police lisible ── */
+  html.a11y-readable-font *:not([class*="lucide"]) {
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+
+  /* ── Accessibilite : grand curseur ── */
+  html.a11y-big-cursor,
+  html.a11y-big-cursor * {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M5 2l20 14H14l-2 1 8 12-4 2-8-12-3 3V2z' fill='%23000' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E") 4 2, auto !important;
+  }
+
+  html.a11y-big-cursor a,
+  html.a11y-big-cursor button,
+  html.a11y-big-cursor [role="button"],
+  html.a11y-big-cursor input[type="submit"] {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M14 2c0 0 0 17 0 17M8 11h12M14 2C9 2 5 6 5 11s4 9 9 9 9-4 9-9S19 2 14 2z' fill='none' stroke='%23000' stroke-width='2.5'/%3E%3Cpath d='M14 2C9 2 5 6 5 11s4 9 9 9 9-4 9-9S19 2 14 2z' fill='none' stroke='%23fff' stroke-width='1'/%3E%3C/svg%3E") 14 14, pointer !important;
+  }
+
+  /* ── Accessibilite : focus ameliore ── */
+  html.a11y-focus-highlight *:focus-visible {
+    outline: 3px solid #ff8c00 !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 6px rgba(255, 140, 0, 0.3) !important;
+  }
+
+  /* ── Respect prefers-reduced-motion natif ── */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
 }
 
 @layer base {
