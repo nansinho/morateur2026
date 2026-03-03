@@ -173,7 +173,7 @@ export default function AccessibilityButton() {
             ? 'bg-campaign-lime text-accent-foreground'
             : hasAnyActive
               ? 'bg-campaign-lime text-accent-foreground'
-              : 'bg-white text-primary hover:bg-campaign-lime hover:text-accent-foreground'
+              : 'bg-campaign-lime text-accent-foreground hover:bg-campaign-lime-light'
         }`}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
