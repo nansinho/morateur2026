@@ -8,6 +8,7 @@ import {
 import AnalyticsScripts from '@/components/analytics'
 import AccessibilityButton from '@/components/AccessibilityButton'
 import ChatbotWidget from '@/components/ChatbotWidget'
+import CookieConsentBanner from '@/components/CookieConsentBanner'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -42,6 +43,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: '/',
+  },
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
   verification: {
     google: '', // Placeholder: remplacer par l'ID Google Search Console
@@ -136,8 +141,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <AccessibilityButton />
           <ChatbotWidget />
+          <CookieConsentBanner />
+          <AnalyticsScripts />
         </Providers>
-        <AnalyticsScripts />
       </body>
     </html>
   )

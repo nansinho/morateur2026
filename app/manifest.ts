@@ -10,11 +10,27 @@ export default function manifest(): MetadataRoute.Manifest {
     background_color: '#f7f9fb',
     theme_color: '#0e6478',
     lang: 'fr',
+    categories: ['politics'],
     icons: [
       {
         src: '/favicon.ico',
         sizes: '48x48',
         type: 'image/x-icon',
+      },
+      {
+        src: '/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+      {
+        src: '/icon-192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        src: '/icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
       },
     ],
   }

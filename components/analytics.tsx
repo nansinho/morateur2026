@@ -1,13 +1,32 @@
+'use client'
+
 import Script from 'next/script'
+import { useState, useEffect } from 'react'
+import { getConsent, CONSENT_EVENT } from '@/lib/cookie-consent'
+import type { ConsentState } from '@/lib/cookie-consent'
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
 
 export default function AnalyticsScripts() {
+  const [consent, setConsentState] = useState<ConsentState | null>(null)
+
+  useEffect(() => {
+    setConsentState(getConsent())
+
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<ConsentState>).detail
+      setConsentState(detail)
+    }
+
+    window.addEventListener(CONSENT_EVENT, handler)
+    return () => window.removeEventListener(CONSENT_EVENT, handler)
+  }, [])
+
   return (
     <>
-      {/* Google Analytics 4 */}
-      {GA_MEASUREMENT_ID && (
+      {/* Google Analytics 4 — only if analytics consent given */}
+      {GA_MEASUREMENT_ID && consent?.analytics && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
@@ -27,8 +46,8 @@ export default function AnalyticsScripts() {
         </>
       )}
 
-      {/* Meta Pixel (Facebook) */}
-      {META_PIXEL_ID && (
+      {/* Meta Pixel (Facebook) — only if marketing consent given */}
+      {META_PIXEL_ID && consent?.marketing && (
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)

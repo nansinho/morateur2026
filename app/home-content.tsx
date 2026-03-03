@@ -8,6 +8,7 @@ import ProgrammeSection from "@/components/ProgrammeSection";
 import EngagezVousSection from "@/components/EngagezVousSection";
 import VillageBanner from "@/components/VillageBanner";
 import ActualitesSection from "@/components/ActualitesSection";
+import RoadmapSection from "@/components/RoadmapSection";
 import ProcurationSection from "@/components/ProcurationSection";
 import Footer from "@/components/Footer";
 import SocialSidebar from "@/components/SocialSidebar";
@@ -30,6 +31,7 @@ export default function HomeContent({ articles, events }: HomeContentProps) {
       <ProgrammeSection />
       <VillageBanner />
       <ActualitesSection articles={articles} />
+      <RoadmapSection events={events} />
       <ProcurationSection />
       <Footer />
     </main>

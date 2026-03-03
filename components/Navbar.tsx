@@ -125,7 +125,7 @@ const Navbar = () => {
             <nav className="flex-1 flex flex-col justify-center px-8 gap-2">
               {[
                 ...navItems,
-                { label: "Contact", to: "/#procuration" },
+                { label: "Contact", to: "/contact" },
               ].map((item, i) => (
                 <motion.button
                   key={item.to}

@@ -51,6 +51,8 @@ export const PAGES = [
   { path: '/actualites', changeFrequency: 'weekly' as const, priority: 0.8 },
   { path: '/equipe', changeFrequency: 'monthly' as const, priority: 0.7 },
   { path: '/presse', changeFrequency: 'weekly' as const, priority: 0.6 },
+  { path: '/contact', changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/agenda', changeFrequency: 'weekly' as const, priority: 0.6 },
   { path: '/mentions-legales', changeFrequency: 'yearly' as const, priority: 0.3 },
   { path: '/politique-de-confidentialite', changeFrequency: 'yearly' as const, priority: 0.3 },
   { path: '/cookies', changeFrequency: 'yearly' as const, priority: 0.3 },

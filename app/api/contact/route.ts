@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
+import { headers } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
+import { rateLimit } from '@/lib/rate-limit'
 
 interface ContactFormData {
   prenom: string
@@ -21,6 +23,16 @@ function validateForm(data: ContactFormData): Record<string, string> {
 
 export async function POST(request: Request) {
   try {
+    const headersList = await headers()
+    const ip = headersList.get('x-forwarded-for')?.split(',')[0] ?? 'unknown'
+    const { success: allowed } = rateLimit(ip, 5, 60_000)
+    if (!allowed) {
+      return NextResponse.json(
+        { success: false, error: 'Trop de requêtes. Veuillez réessayer dans une minute.' },
+        { status: 429 }
+      )
+    }
+
     const body = await request.json() as ContactFormData
     const errors = validateForm(body)
 

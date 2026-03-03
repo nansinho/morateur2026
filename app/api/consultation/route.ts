@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
+import { headers } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
 import { sendConfirmationEmail, sendAdminNotificationEmail } from '@/lib/email'
+import { rateLimit } from '@/lib/rate-limit'
 
 interface ConsultationFormData {
   quartier_id: string
@@ -31,6 +33,16 @@ function validateForm(data: ConsultationFormData): Record<string, string> {
 
 export async function POST(request: Request) {
   try {
+    const headersList = await headers()
+    const ip = headersList.get('x-forwarded-for')?.split(',')[0] ?? 'unknown'
+    const { success: allowed } = rateLimit(ip, 3, 60_000)
+    if (!allowed) {
+      return NextResponse.json(
+        { success: false, error: 'Trop de requêtes. Veuillez réessayer dans une minute.' },
+        { status: 429 }
+      )
+    }
+
     const body = await request.json() as ConsultationFormData
     const errors = validateForm(body)
 

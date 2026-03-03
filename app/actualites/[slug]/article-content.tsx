@@ -2,10 +2,11 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Calendar, Clock, Share2, ChevronRight, Heart } from 'lucide-react'
+import { ArrowLeft, Calendar, Clock, ChevronRight, Heart } from 'lucide-react'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ShareButtons from '@/components/ShareButtons'
 import type { Article } from '@/lib/types/database'
 
 const tagStyles: Record<string, { bg: string; text: string; accent: string }> = {
@@ -45,15 +46,6 @@ export default function ArticleContent({
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  const handleShare = async () => {
-    const url = window.location.href
-    if (navigator.share) {
-      await navigator.share({ title: article.title, url })
-    } else {
-      await navigator.clipboard.writeText(url)
-    }
-  }
 
   const formattedDate = (() => {
     try {
@@ -169,14 +161,12 @@ export default function ArticleContent({
                   </>
                 )}
 
-                <button
-                  onClick={handleShare}
-                  className="ml-auto flex items-center gap-2 text-gray-400 hover:text-primary transition-colors text-sm font-medium bg-gray-50 hover:bg-gray-100 px-4 py-2 rounded-full"
-                  title="Partager"
-                >
-                  <Share2 className="w-4 h-4" />
-                  Partager
-                </button>
+                <div className="ml-auto">
+                  <ShareButtons
+                    url={typeof window !== 'undefined' ? window.location.href : ''}
+                    title={article.title}
+                  />
+                </div>
               </div>
             </motion.div>
 

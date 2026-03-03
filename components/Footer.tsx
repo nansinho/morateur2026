@@ -29,7 +29,7 @@ const navLinks = [
   { label: "Actualités", to: "/actualites" },
   { label: "Équipe", to: "/equipe" },
   { label: "Presse", to: "/presse" },
-  { label: "Contact", to: "/#procuration" },
+  { label: "Contact", to: "/contact" },
 ];
 
 const Footer = () => {

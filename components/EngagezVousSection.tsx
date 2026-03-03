@@ -61,9 +61,9 @@ const actions: {
   },
   {
     Icon: Mail,
-    title: "Newsletter",
-    desc: "Recevez chaque semaine les dernières infos de la campagne.",
-    href: "#procuration",
+    title: "Contactez-nous",
+    desc: "Rejoignez l'aventure et recevez les infos de la campagne.",
+    href: "/contact",
     external: false,
     bg: "gradient-teal-deep",
     iconColor: "text-campaign-lime",
