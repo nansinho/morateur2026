@@ -15,6 +15,8 @@ interface Stats {
   events: number
   team: number
   press: number
+  pillars: number
+  measures: number
 }
 
 const quickLinks = [
@@ -25,7 +27,7 @@ const quickLinks = [
 ]
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<Stats>({ messages: 0, unreadMessages: 0, articles: 0, events: 0, team: 0, press: 0 })
+  const [stats, setStats] = useState<Stats>({ messages: 0, unreadMessages: 0, articles: 0, events: 0, team: 0, press: 0, pillars: 0, measures: 0 })
   const [recentMessages, setRecentMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(true)
   const supabase = createClient()
@@ -40,6 +42,8 @@ export default function AdminDashboard() {
         { count: teamCount },
         { count: pressCount },
         { data: recent },
+        { count: pillarsCount },
+        { count: measuresCount },
       ] = await Promise.all([
         supabase.from('messages').select('*', { count: 'exact', head: true }),
         supabase.from('messages').select('*', { count: 'exact', head: true }).eq('is_read', false),
@@ -48,6 +52,8 @@ export default function AdminDashboard() {
         supabase.from('team_members').select('*', { count: 'exact', head: true }),
         supabase.from('press_articles').select('*', { count: 'exact', head: true }),
         supabase.from('messages').select('*').order('created_at', { ascending: false }).limit(5),
+        supabase.from('programme_pillars').select('*', { count: 'exact', head: true }),
+        supabase.from('programme_measures').select('*', { count: 'exact', head: true }),
       ])
 
       setStats({
@@ -57,6 +63,8 @@ export default function AdminDashboard() {
         events: eventsCount ?? 0,
         team: teamCount ?? 0,
         press: pressCount ?? 0,
+        pillars: pillarsCount ?? 0,
+        measures: measuresCount ?? 0,
       })
       setRecentMessages((recent as Message[]) || [])
       setLoading(false)
@@ -68,7 +76,7 @@ export default function AdminDashboard() {
   const statCards = [
     { label: 'Messages', value: stats.messages, sub: `${stats.unreadMessages} non lu(s)`, icon: Mail, href: '/admin/messages', accent: 'border-l-campaign-lime' },
     { label: 'Articles', value: stats.articles, icon: Newspaper, href: '/admin/articles', accent: 'border-l-campaign-teal' },
-    { label: 'Programme', value: '3 piliers', icon: BookOpen, href: '/admin/programme', accent: 'border-l-campaign-teal-light' },
+    { label: 'Programme', value: stats.pillars, sub: `${stats.measures} mesures`, icon: BookOpen, href: '/admin/programme', accent: 'border-l-campaign-teal-light' },
     { label: 'Événements', value: stats.events, icon: CalendarDays, href: '/admin/events', accent: 'border-l-blue-400' },
     { label: 'Équipe', value: stats.team, icon: Users, href: '/admin/team', accent: 'border-l-campaign-steel' },
     { label: 'Presse', value: stats.press, icon: FileText, href: '/admin/press', accent: 'border-l-purple-400' },

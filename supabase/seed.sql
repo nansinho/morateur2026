@@ -69,7 +69,7 @@ INSERT INTO programme_measures (pillar_id, title, detail, sort_order) VALUES
 INSERT INTO events (icon, date, title, description, is_done, sort_order) VALUES
 ('Megaphone', 'Janvier 2026', 'Lancement de la campagne', 'Présentation officielle de la liste et du programme.', true, 1),
 ('Users', 'Février 2026', 'Rencontres de terrain', 'Porte-à-porte, réunions publiques dans tous les quartiers.', true, 2),
-('Flag', 'Mars 2026', 'Meetings publics', 'Grands rassemblements thématiques sur les 3 piliers du programme.', false, 3),
+('Flag', 'Mars 2026', 'Meetings publics', 'Grands rassemblements thématiques sur les 9 engagements du programme.', false, 3),
 ('CalendarCheck', 'Mars 2026', '1ᵉʳ tour', 'Jour de vote – chaque voix compte pour l''avenir de notre commune.', false, 4),
 ('Vote', 'Mars 2026', '2ᵉ tour', 'Mobilisation générale pour confirmer le choix du renouveau.', false, 5),
 ('PartyPopper', 'Avril 2026', 'Installation du conseil', 'Mise en œuvre immédiate des premières mesures du programme.', false, 6);
@@ -90,7 +90,7 @@ INSERT INTO press_articles (source, author, date, title, excerpt, url, logo, sor
 INSERT INTO seo_pages (path, title, description, keywords, og_image) VALUES
 ('/', 'Morateur 2026 — Bouc Bel Air a de l''Avenir', 'Mathieu Morateur, candidat aux élections municipales 2026 à Bouc-Bel-Air. Découvrez le programme et l''équipe.', 'Morateur 2026, Mathieu Morateur, municipales 2026, Bouc-Bel-Air, élections municipales, candidat maire', '/images/candidat-banner.png'),
 ('/candidat', 'Le Candidat | Morateur 2026', 'Découvrez le parcours et les engagements de Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air.', 'Mathieu Morateur, candidat, parcours, engagements, Bouc-Bel-Air', '/images/candidat-banner.png'),
-('/programme', 'Le Programme | Morateur 2026', 'Trois piliers concrets pour redonner à Bouc-Bel-Air le cadre de vie qu''elle mérite. Urbanisme, infrastructures, village.', 'programme municipal, urbanisme, infrastructures, village, Bouc-Bel-Air', '/images/candidat-banner.png'),
+('/programme', 'Le Programme | Morateur 2026', '9 engagements concrets pour redonner à Bouc-Bel-Air le cadre de vie qu''elle mérite.', 'programme municipal, engagements, sécurité, urbanisme, écoles, moustiques, 5G, fast lanes, Bouc-Bel-Air', '/images/candidat-banner.png'),
 ('/actualites', 'Actualités | Morateur 2026', 'Suivez notre campagne au quotidien, sur le terrain et auprès des Boucains.', 'actualités, campagne, terrain, Bouc-Bel-Air, municipales', '/images/candidat-banner.png'),
 ('/equipe', 'L''Équipe | Morateur 2026', 'Découvrez l''équipe qui porte le projet Morateur 2026 pour Bouc-Bel-Air.', 'équipe, liste municipale, candidats, Bouc-Bel-Air', '/images/equipe-groupe.png'),
 ('/presse', 'Presse | Morateur 2026', 'Retrouvez les articles de presse consacrés à notre campagne pour Bouc-Bel-Air.', 'presse, médias, articles, La Provence, La Marseillaise, Bouc-Bel-Air', '/images/candidat-banner.png'),
