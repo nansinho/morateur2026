@@ -3,11 +3,23 @@
 import { Facebook, Instagram, ArrowUp, ArrowRight, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 import { scrollToHash } from "@/lib/scroll-to-hash";
 
 const socials = [
   { icon: Instagram, href: "https://www.instagram.com/morateur2026/", label: "Instagram" },
   { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61571627498498", label: "Facebook" },
+];
+
+const quartierLinks = [
+  { label: "Roumanille-Thiers", slug: "roumanille" },
+  { label: "La Bergerie", slug: "bergerie" },
+  { label: "La Mounine", slug: "mounine" },
+  { label: "Chabauds-Malle-Pin", slug: "chabauds-malle-pin" },
+  { label: "La Salle", slug: "salle" },
+  { label: "Violesi - San Baquis", slug: "violesiroussin" },
+  { label: "Centre Ville", slug: "centreville" },
+  { label: "Les Revenants", slug: "revenants" },
 ];
 
 const navLinks = [
@@ -205,6 +217,26 @@ const Footer = () => {
                 amélioration des écoles et des équipements publics, sécurité, mobilité douce, vie associative
                 et dynamisme économique local. Bouc-Bel-Air a de l&apos;Avenir avec une équipe engagée et à l&apos;écoute des habitants.
               </p>
+            </div>
+
+            {/* Quartier links for SEO */}
+            <div className="pt-6 border-t border-primary-foreground/[0.08] mt-6">
+              <p className="text-primary-foreground/50 text-[10px] uppercase tracking-[0.25em] font-bold mb-3 text-center">
+                Consultations par quartier
+              </p>
+              <div className="flex flex-wrap justify-center gap-x-1 gap-y-1.5 text-primary-foreground/40 text-xs">
+                {quartierLinks.map((q, i) => (
+                  <span key={q.slug}>
+                    <Link
+                      href={`/${q.slug}`}
+                      className="hover:text-campaign-lime transition-colors underline-offset-2 hover:underline"
+                    >
+                      {q.label}
+                    </Link>
+                    {i < quartierLinks.length - 1 && <span className="mx-1.5 text-primary-foreground/20">·</span>}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
