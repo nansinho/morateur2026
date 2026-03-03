@@ -65,8 +65,8 @@ const RoadmapSection = ({ events: propEvents }: RoadmapSectionProps) => {
                 key={m.id}
                 className={`flex-shrink-0 w-[75vw] sm:w-[280px] md:w-[300px] rounded-2xl p-6 sm:p-7 flex flex-col relative overflow-hidden transition-all duration-200 hover:-translate-y-1 active:scale-[0.97] ${
                   m.is_done
-                    ? "bg-primary-foreground/[0.08] border-2 border-campaign-lime/40 shadow-[0_0_30px_-10px_hsl(var(--campaign-lime)/0.2)]"
-                    : "bg-primary-foreground/[0.04] border border-primary-foreground/10"
+                    ? "bg-primary-foreground/[0.08] shadow-[0_0_30px_-10px_hsl(var(--campaign-lime)/0.2)]"
+                    : "bg-primary-foreground/[0.04]"
                 }`}
               >
                 {/* Numéro filigrane */}
