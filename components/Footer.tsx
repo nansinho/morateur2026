@@ -120,6 +120,7 @@ const Footer = () => {
                 { label: "Cookies", to: "/cookies" },
                 { label: "Politique de confidentialité", to: "/politique-de-confidentialite" },
                 { label: "Accessibilité", to: "/accessibilite" },
+                { label: "Plan du site", to: "/plan-du-site" },
               ].map((link, i) => (
                 <button
                   key={i}

@@ -55,4 +55,5 @@ export const PAGES = [
   { path: '/politique-de-confidentialite', changeFrequency: 'yearly' as const, priority: 0.3 },
   { path: '/cookies', changeFrequency: 'yearly' as const, priority: 0.3 },
   { path: '/accessibilite', changeFrequency: 'yearly' as const, priority: 0.3 },
+  { path: '/plan-du-site', changeFrequency: 'monthly' as const, priority: 0.3 },
 ] as const
