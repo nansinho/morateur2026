@@ -177,7 +177,7 @@ export default function ChatbotWidget() {
           <motion.button
             onClick={() => setIsOpen(true)}
             aria-label="Ouvrir le chatbot d'aide"
-            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-campaign-teal text-white shadow-lg shadow-campaign-teal/30 flex items-center justify-center hover:bg-campaign-teal/90 active:scale-90 transition-all duration-200"
+            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-campaign-lime text-accent-foreground shadow-lg shadow-campaign-lime/30 flex items-center justify-center hover:bg-campaign-lime-light active:scale-90 transition-all duration-200"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             initial={{ opacity: 0, scale: 0 }}
@@ -204,14 +204,14 @@ export default function ChatbotWidget() {
             transition={{ duration: 0.2 }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-campaign-teal text-white">
+            <div className="flex items-center justify-between px-4 py-3 bg-campaign-lime text-accent-foreground">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                   <MessageCircle className="w-4 h-4" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold leading-tight">Assistant Morateur 2026</p>
-                  <p className="text-[11px] text-white/70">En ligne</p>
+                  <p className="text-[11px] text-accent-foreground/70">En ligne</p>
                 </div>
               </div>
               <div className="flex items-center gap-1">
@@ -242,7 +242,7 @@ export default function ChatbotWidget() {
                     <div
                       className={`px-3.5 py-2.5 rounded-2xl text-[13px] leading-relaxed ${
                         msg.type === 'user'
-                          ? 'bg-campaign-teal text-white rounded-br-md'
+                          ? 'bg-primary text-white rounded-br-md'
                           : 'bg-white text-gray-800 shadow-sm border border-gray-100 rounded-bl-md'
                       }`}
                     >
@@ -254,7 +254,7 @@ export default function ChatbotWidget() {
                           <button
                             key={entry.id}
                             onClick={() => handleSuggestionClick(entry)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-[12px] font-medium bg-white border border-campaign-teal/20 text-campaign-teal hover:bg-campaign-teal/5 hover:border-campaign-teal/40 transition-colors shadow-sm"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-[12px] font-medium bg-white border border-campaign-lime/30 text-campaign-teal hover:bg-campaign-lime/5 hover:border-campaign-lime/50 transition-colors shadow-sm"
                           >
                             {entry.question}
                             <ChevronRight className="w-3 h-3 opacity-50" />
@@ -287,13 +287,13 @@ export default function ChatbotWidget() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Posez votre question..."
-                className="flex-1 px-3.5 py-2 rounded-full bg-gray-100 text-[13px] text-gray-800 placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-campaign-teal/30 transition-shadow"
+                className="flex-1 px-3.5 py-2 rounded-full bg-gray-100 text-[13px] text-gray-800 placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-campaign-lime/30 transition-shadow"
                 aria-label="Votre question"
               />
               <button
                 type="submit"
                 disabled={!inputValue.trim()}
-                className="w-9 h-9 rounded-full bg-campaign-teal text-white flex items-center justify-center hover:bg-campaign-teal/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                className="w-9 h-9 rounded-full bg-campaign-lime text-accent-foreground flex items-center justify-center hover:bg-campaign-lime-light disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                 aria-label="Envoyer"
               >
                 <Send className="w-4 h-4" />
