@@ -7,6 +7,7 @@ import {
 } from '@/lib/site-config'
 import AnalyticsScripts from '@/components/analytics'
 import AccessibilityButton from '@/components/AccessibilityButton'
+import ChatbotWidget from '@/components/ChatbotWidget'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -134,6 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           {children}
           <AccessibilityButton />
+          <ChatbotWidget />
         </Providers>
         <AnalyticsScripts />
       </body>

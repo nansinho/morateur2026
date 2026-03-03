@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const UniversalAccessIcon = ({ className }: { className?: string }) => (
   <svg
@@ -27,15 +27,18 @@ const UniversalAccessIcon = ({ className }: { className?: string }) => (
 
 const AccessibilityButton = () => {
   const router = useRouter();
+  const pathname = usePathname();
+
+  if (pathname.startsWith('/admin')) return null;
 
   return (
     <motion.button
       onClick={() => {
         router.push("/accessibilite");
-        window.scrollTo({ top: 0 });
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
       }}
       aria-label="Accessibilité — notre engagement pour tous"
-      className="fixed bottom-6 left-6 z-40 w-12 h-12 rounded-full bg-white shadow-lg shadow-black/20 flex items-center justify-center text-primary hover:bg-campaign-lime hover:text-accent-foreground active:scale-90 transition-all duration-200 group"
+      className="fixed bottom-6 left-6 z-50 w-12 h-12 rounded-full bg-white shadow-lg shadow-black/20 flex items-center justify-center text-primary hover:bg-campaign-lime hover:text-accent-foreground active:scale-90 transition-all duration-200 group"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       initial={{ opacity: 0, y: 20 }}
