@@ -156,3 +156,14 @@ export interface QuartierStats {
   wants_callback_count: number
   last_submission_at: string | null
 }
+
+export interface ChatbotEntry {
+  id: string
+  question: string
+  answer: string
+  category: string
+  parent_id: string | null
+  sort_order: number
+  is_active: boolean
+  created_at: string
+}
