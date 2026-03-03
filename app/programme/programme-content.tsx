@@ -29,7 +29,7 @@ interface ProgrammeContentProps {
 }
 
 const AccordionItem = ({ item, isOpen, toggle, index }: { item: { title: string; detail: string }; isOpen: boolean; toggle: () => void; index: number }) => (
-  <div className="border-b border-primary-foreground/[0.08] last:border-b-0">
+  <div className="border-b border-primary/[0.08] last:border-b-0">
     <button
       onClick={toggle}
       className="w-full flex items-center justify-between py-5 px-1 text-left group"
@@ -38,12 +38,12 @@ const AccordionItem = ({ item, isOpen, toggle, index }: { item: { title: string;
         <span className="font-accent text-sm font-extrabold text-campaign-lime/40">
           {String(index + 1).padStart(2, "0")}
         </span>
-        <span className="font-accent font-bold text-primary-foreground text-sm sm:text-base uppercase tracking-wide group-hover:text-campaign-lime transition-colors">
+        <span className="font-accent font-bold text-primary text-sm sm:text-base uppercase tracking-wide group-hover:text-campaign-lime transition-colors">
           {item.title}
         </span>
       </div>
       <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-        <ChevronDown className="w-5 h-5 text-primary-foreground/40 flex-shrink-0" />
+        <ChevronDown className="w-5 h-5 text-primary/40 flex-shrink-0" />
       </motion.div>
     </button>
     <AnimatePresence>
@@ -55,7 +55,7 @@ const AccordionItem = ({ item, isOpen, toggle, index }: { item: { title: string;
           transition={{ duration: 0.3 }}
           className="overflow-hidden"
         >
-          <p className="text-primary-foreground/50 leading-relaxed pb-5 pl-12 pr-4 text-sm sm:text-base">
+          <p className="text-primary/60 leading-relaxed pb-5 pl-12 pr-4 text-sm sm:text-base">
             {item.detail}
           </p>
         </motion.div>
@@ -78,11 +78,11 @@ export default function ProgrammeContent({ pillars }: ProgrammeContentProps) {
   };
 
   return (
-    <main className="min-h-screen bg-primary">
+    <main className="min-h-screen">
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-32 pb-16">
+      <section className="gradient-teal-deep pt-32 pb-16">
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="section-label justify-center">
@@ -113,7 +113,7 @@ export default function ProgrammeContent({ pillars }: ProgrammeContentProps) {
       </section>
 
       {/* Pillars */}
-      <section className="pb-24">
+      <section className="bg-campaign-ice pb-24 pt-8">
         <div className="container mx-auto px-4 sm:px-6 space-y-16">
           {pillars.map((pillar, i) => {
             const Icon = getIcon(pillar.icon);
@@ -135,17 +135,17 @@ export default function ProgrammeContent({ pillars }: ProgrammeContentProps) {
                     <Icon className="w-7 h-7 text-accent-foreground" />
                   </div>
                   <h2
-                    className="font-accent font-extrabold text-primary-foreground uppercase tracking-tight leading-[0.95] mb-3 break-words"
+                    className="font-accent font-extrabold text-primary uppercase tracking-tight leading-[0.95] mb-3 break-words"
                     style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
                   >
                     {pillar.title}
                   </h2>
-                  <p className="text-primary-foreground/50 leading-relaxed text-sm sm:text-base">{pillar.intro}</p>
+                  <p className="text-primary/60 leading-relaxed text-sm sm:text-base">{pillar.intro}</p>
                   <div className="mt-4 h-[2px] w-16 bg-campaign-lime rounded-full" />
                 </div>
 
                 {/* Accordion */}
-                <div className={`rounded-2xl border ${color} bg-primary-foreground/[0.03] p-6 md:p-8`}>
+                <div className={`rounded-2xl border ${color} bg-primary/[0.05] p-6 md:p-8`}>
                   {pillar.measures.map((measure, j) => (
                     <AccordionItem
                       key={measure.id}
@@ -165,16 +165,16 @@ export default function ProgrammeContent({ pillars }: ProgrammeContentProps) {
       <RoadmapSection />
 
       {/* CTA */}
-      <section className="border-t border-primary-foreground/[0.08] py-16 sm:py-24 text-center">
+      <section className="bg-campaign-ice border-t border-primary/[0.08] py-16 sm:py-24 text-center">
         <div className="container mx-auto px-4 sm:px-6">
           <span className="section-label justify-center">Convaincu·e ?</span>
           <h2
-            className="font-accent font-extrabold text-primary-foreground uppercase tracking-tight leading-[0.9] mb-4 break-words"
+            className="font-accent font-extrabold text-primary uppercase tracking-tight leading-[0.9] mb-4 break-words"
             style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
           >
             REJOIGNEZ-<span className="text-campaign-lime">NOUS</span>
           </h2>
-          <p className="text-primary-foreground/40 mb-10 max-w-lg mx-auto text-lg">
+          <p className="text-primary/50 mb-10 max-w-lg mx-auto text-lg">
             Participez à construire l&apos;avenir de Bouc-Bel-Air.
           </p>
           <motion.button

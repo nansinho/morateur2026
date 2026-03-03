@@ -14,7 +14,7 @@ const candidatImg = "/images/header_candidat_portrait.png";
 
 const PullQuote = ({ children }: { children: React.ReactNode }) => (
   <blockquote className="border-l-4 border-campaign-lime pl-6 md:pl-8 my-8 md:my-12">
-    <p className="font-heading font-bold text-primary-foreground text-lg md:text-xl leading-relaxed italic">
+    <p className="font-heading font-bold text-primary text-lg md:text-xl leading-relaxed italic">
       {children}
     </p>
   </blockquote>
@@ -47,12 +47,12 @@ const CounterStat = ({ value, label, suffix = "" }: { value: number; label: stri
   }, [inView, value]);
 
   return (
-    <div ref={ref} className="text-center p-4 md:p-6 rounded-2xl bg-primary-foreground/[0.06] border border-primary-foreground/10">
+    <div ref={ref} className="text-center p-4 md:p-6 rounded-2xl bg-primary/[0.06] border border-primary/10">
       <p className="font-accent text-campaign-lime text-3xl md:text-5xl font-extrabold tracking-tight">
         {count}{suffix}
       </p>
       <div className="w-10 h-px mx-auto mt-3 mb-2 bg-campaign-lime/40" />
-      <p className="text-primary-foreground/70 text-[10px] md:text-xs uppercase tracking-[0.15em] font-bold">{label}</p>
+      <p className="text-primary/60 text-[10px] md:text-xs uppercase tracking-[0.15em] font-bold">{label}</p>
     </div>
   );
 };
@@ -63,14 +63,14 @@ const HighlightCard = ({ Icon, title, desc, color = "from-campaign-lime/30 to-ca
       <Icon className="w-5 h-5 text-accent-foreground" />
     </div>
     <div>
-      <h3 className="font-accent font-bold text-primary-foreground text-sm uppercase tracking-wide">{title}</h3>
-      <p className="text-primary-foreground/70 text-sm mt-0.5">{desc}</p>
+      <h3 className="font-accent font-bold text-primary text-sm uppercase tracking-wide">{title}</h3>
+      <p className="text-primary/60 text-sm mt-0.5">{desc}</p>
     </div>
   </div>
 );
 
 /* ─── Prose paragraph style ─── */
-const prose = "text-primary-foreground/90 text-base md:text-lg leading-[1.85] md:leading-[1.9]";
+const prose = "text-primary/80 text-base md:text-lg leading-[1.85] md:leading-[1.9]";
 
 /* ─── Main Page ─── */
 
@@ -117,24 +117,24 @@ export default function CandidatContent() {
       </section>
 
       {/* ── Lettre intégrale ── */}
-      <section className="gradient-teal-deep relative" aria-label="Lettre intégrale du candidat">
+      <section className="bg-campaign-ice relative" aria-label="Lettre intégrale du candidat">
         <div className="container mx-auto px-4 sm:px-6 max-w-3xl py-12 md:py-20 space-y-7">
 
           {/* ── Bloc 1 : Introduction ── */}
-          <p className="text-primary-foreground text-lg md:text-xl leading-relaxed font-heading font-semibold">
+          <p className="text-primary text-lg md:text-xl leading-relaxed font-heading font-semibold">
             Chères Boucaines, Chers Boucains,
           </p>
 
           <p className={prose}>
             Le 15 mars prochain, vous élirez votre nouveau maire. Je m&apos;appelle{" "}
-            <strong className="text-primary-foreground font-bold">Mathieu Morateur</strong>, j&apos;ai 36 ans et je me présente à vos
+            <strong className="text-primary font-bold">Mathieu Morateur</strong>, j&apos;ai 36 ans et je me présente à vos
             suffrages pour le devenir.
           </p>
 
           <p className={prose}>
             Enfant de Bouc-Bel-Air, la principale motivation de ma candidature est de permettre à mes très jeunes
             enfants de grandir avec les mêmes chances et les mêmes opportunités que j&apos;ai eues à leur âge :{" "}
-            <strong className="text-primary-foreground font-bold">
+            <strong className="text-primary font-bold">
               grandir dans une commune audacieuse, au cadre de vie préservé.
             </strong>
           </p>
@@ -156,8 +156,8 @@ export default function CandidatContent() {
 
           <p className={prose}>
             Car en moins d&apos;un an, ce sont des permis de construire pour{" "}
-            <strong className="text-primary-foreground font-bold">plus de 1 000 logements</strong> qui ont été déposés et à ce
-            jour <strong className="text-primary-foreground font-bold">650 logements nouveaux</strong> ont été acceptés par la
+            <strong className="text-primary font-bold">plus de 1 000 logements</strong> qui ont été déposés et à ce
+            jour <strong className="text-primary font-bold">650 logements nouveaux</strong> ont été acceptés par la
             mairie.
           </p>
 
@@ -183,13 +183,13 @@ export default function CandidatContent() {
           <p className={prose}>
             Car en face, nos services et nos infrastructures publics se dégradent. La vétusté très avancée des
             crèches, des écoles et des bâtiments publics en général, comme le foyer des Anciens, est{" "}
-            <strong className="text-primary-foreground font-bold">indigne d&apos;une commune comme la nôtre</strong>.
+            <strong className="text-primary font-bold">indigne d&apos;une commune comme la nôtre</strong>.
           </p>
 
           <p className={prose}>
             Il est inacceptable que les toitures des écoles présentent des défauts d&apos;étanchéité, ou que même dans la
             dernière née, l&apos;école Virginie Dedieu, qui a été inaugurée il y a 10 ans, le thermomètre monte au-dessus
-            de <strong className="text-primary-foreground font-bold">30 °C dès la fin du mois de mai</strong>, et baisse à 16 °C
+            de <strong className="text-primary font-bold">30 °C dès la fin du mois de mai</strong>, et baisse à 16 °C
             en hiver.
           </p>
 
@@ -211,7 +211,7 @@ export default function CandidatContent() {
           <p className={prose}>
             Et dans le même temps, notre village se meurt. Les animations se concentrent sur la place principale et
             oublient les ruelles pittoresques du centre ancien. Pourtant,{" "}
-            <strong className="text-primary-foreground font-bold">il a tant à offrir !</strong>
+            <strong className="text-primary font-bold">il a tant à offrir !</strong>
           </p>
 
           <p className={prose}>
@@ -258,7 +258,7 @@ export default function CandidatContent() {
           <GradientDivider />
 
           {/* ── Bloc 6 : Appel ── */}
-          <p className="text-primary-foreground text-lg md:text-xl leading-relaxed font-heading font-semibold text-center">
+          <p className="text-primary text-lg md:text-xl leading-relaxed font-heading font-semibold text-center">
             Si vous aussi, vous pensez que{" "}
             <span className="text-campaign-lime">Bouc-Bel-Air a de l&apos;avenir</span>, rejoignez-nous !
           </p>
@@ -275,10 +275,10 @@ export default function CandidatContent() {
               />
             </div>
             <div className="text-center">
-              <p className="font-accent font-extrabold text-primary-foreground text-lg uppercase tracking-wide">
+              <p className="font-accent font-extrabold text-primary text-lg uppercase tracking-wide">
                 Mathieu Morateur
               </p>
-              <p className="text-primary-foreground/50 text-sm">Candidat aux élections municipales 2026</p>
+              <p className="text-primary/50 text-sm">Candidat aux élections municipales 2026</p>
             </div>
           </div>
 

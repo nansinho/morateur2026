@@ -25,7 +25,7 @@ export default function EquipeContent({ members }: EquipeContentProps) {
   };
 
   return (
-    <main className="min-h-screen bg-primary">
+    <main className="min-h-screen">
       <Navbar />
 
       {/* Hero */}
@@ -74,11 +74,11 @@ export default function EquipeContent({ members }: EquipeContentProps) {
       </section>
 
       {/* Team carousel */}
-      <section className="gradient-teal-deep py-16 sm:py-24">
+      <section className="bg-campaign-ice py-16 sm:py-24">
         <div className="container mx-auto px-4 sm:px-6 mb-10">
           <span className="section-label">Nos colistiers</span>
           <h2
-            className="font-accent font-extrabold uppercase leading-[0.9] tracking-tight text-primary-foreground break-words"
+            className="font-accent font-extrabold uppercase leading-[0.9] tracking-tight text-primary break-words"
             style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
           >
             CEUX QUI <span className="text-campaign-lime">S&apos;ENGAGENT</span>
@@ -140,16 +140,16 @@ export default function EquipeContent({ members }: EquipeContentProps) {
       <RoadmapSection />
 
       {/* CTA */}
-      <section className="gradient-teal-deep border-t border-primary-foreground/[0.08] py-16 sm:py-24 text-center">
+      <section className="bg-campaign-ice border-t border-primary/[0.08] py-16 sm:py-24 text-center">
         <div className="container mx-auto px-4 sm:px-6">
           <span className="section-label justify-center">Envie de nous rejoindre ?</span>
           <h2
-            className="font-accent font-extrabold text-primary-foreground uppercase tracking-tight leading-[0.9] mb-4 break-words"
+            className="font-accent font-extrabold text-primary uppercase tracking-tight leading-[0.9] mb-4 break-words"
             style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
           >
             REJOIGNEZ <span className="text-campaign-lime">L&apos;AVENTURE</span>
           </h2>
-          <p className="text-primary-foreground/40 mb-10 max-w-lg mx-auto text-lg">
+          <p className="text-primary/50 mb-10 max-w-lg mx-auto text-lg">
             Chaque voix compte. Engagez-vous à nos côtés pour Bouc-Bel-Air.
           </p>
           <motion.button
