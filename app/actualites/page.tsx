@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/actualites' },
   openGraph: {
     url: `${SITE_URL}/actualites`,
-    images: [{ url: '/images/candidat-marche.jpg', width: 1920, height: 1088, alt: 'Actualités campagne Morateur 2026' }],
+    images: [{ url: '/images/candidat-banner.png', width: 1920, height: 1150, alt: 'Actualités campagne Morateur 2026' }],
   },
   keywords: [
     'actualités Morateur 2026', 'campagne Bouc-Bel-Air',
