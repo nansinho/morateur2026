@@ -17,7 +17,7 @@ const actions: {
 }[] = [
   {
     Icon: HandHeart,
-    title: "J'agis sur le terrain",
+    title: "Je participe",
     desc: "Tractage, porte-à-porte, événements locaux — chaque geste compte.",
     href: "#procuration",
     external: false,

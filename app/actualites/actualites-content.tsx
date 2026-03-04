@@ -89,6 +89,7 @@ export default function ActualitesContent({ articles }: { articles: Article[] })
                           alt={article.image_alt || article.title}
                           className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110"
                           loading="lazy"
+                          onError={(e) => { e.currentTarget.src = '/images/candidat-banner.png' }}
                         />
                         <div className={`absolute inset-0 bg-gradient-to-t from-black/40 to-transparent`} />
                       </div>
