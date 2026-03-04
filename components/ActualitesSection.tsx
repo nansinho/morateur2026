@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Calendar, ChevronRight, ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -12,9 +12,7 @@ import {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-  type CarouselApi,
 } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
 import type { Article } from '@/lib/types/database';
 
 const tagStyles: Record<string, { bg: string; text: string; accent: string; tagBg: string }> = {
@@ -50,27 +48,6 @@ const ActualitesSection = ({ articles }: { articles: Article[] }) => {
   const autoplayPlugin = useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true })
   );
-  const [api, setApi] = useState<CarouselApi>();
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-
-  const onSelect = useCallback(() => {
-    if (!api) return;
-    setSelectedIndex(api.selectedScrollSnap());
-  }, [api]);
-
-  useEffect(() => {
-    if (!api) return;
-    setScrollSnaps(api.scrollSnapList());
-    onSelect();
-    api.on("select", onSelect);
-    api.on("reInit", onSelect);
-    return () => {
-      api.off("select", onSelect);
-      api.off("reInit", onSelect);
-    };
-  }, [api, onSelect]);
-
   return (
     <section aria-label="Actualités de la campagne" className="py-16 sm:py-24 bg-campaign-ice relative overflow-x-clip">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -93,7 +70,6 @@ const ActualitesSection = ({ articles }: { articles: Article[] }) => {
         <Carousel
           opts={{ align: "start", loop: true, dragFree: true }}
           plugins={[autoplayPlugin.current]}
-          setApi={setApi}
           className="w-full"
         >
           <CarouselContent className="-ml-5">
@@ -137,10 +113,10 @@ const ActualitesSection = ({ articles }: { articles: Article[] }) => {
                             </div>
                           </div>
 
-                          <h3 className={`font-accent font-extrabold ${style.text} text-lg sm:text-xl leading-snug mb-3 uppercase tracking-wide -rotate-1`}>
+                          <h3 className={`font-accent font-extrabold ${style.text} text-lg sm:text-xl leading-snug mb-3 uppercase tracking-wide -rotate-1 line-clamp-2`}>
                             {article.title}
                           </h3>
-                          <p className={`${style.accent} text-sm leading-relaxed flex-1`}>
+                          <p className={`${style.accent} text-sm leading-relaxed flex-1 line-clamp-3`}>
                             {article.description}
                           </p>
 
@@ -157,27 +133,9 @@ const ActualitesSection = ({ articles }: { articles: Article[] }) => {
             })}
           </CarouselContent>
 
-          {/* Navigation arrows + dots */}
+          {/* Navigation arrows */}
           <div className="flex items-center justify-center gap-4 mt-10">
             <CarouselPrevious className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200" />
-
-            {/* Pagination dots */}
-            <div className="flex items-center gap-2">
-              {scrollSnaps.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => api?.scrollTo(i)}
-                  aria-label={`Aller à la diapositive ${i + 1}`}
-                  className={cn(
-                    "h-2 rounded-full transition-all duration-300",
-                    i === selectedIndex
-                      ? "bg-primary w-6"
-                      : "bg-primary/30 w-2 hover:bg-primary/50"
-                  )}
-                />
-              ))}
-            </div>
-
             <CarouselNext className="static translate-y-0 w-12 h-12 rounded-xl border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200" />
           </div>
         </Carousel>
