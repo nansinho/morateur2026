@@ -3,8 +3,8 @@
 import { Facebook, Instagram } from "lucide-react";
 
 const socials = [
-  { icon: Instagram, href: "https://www.instagram.com/morateur2026/", label: "Instagram" },
-  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61571627498498", label: "Facebook" },
+  { icon: Instagram, href: "https://www.instagram.com/mathieumorateur/", label: "Instagram" },
+  { icon: Facebook, href: "https://www.facebook.com/morateur", label: "Facebook" },
 ];
 
 const SocialSidebar = () => {
