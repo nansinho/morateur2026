@@ -91,6 +91,7 @@ export default function ArticleContent({
               src={article.image}
               alt={article.image_alt || article.title}
               className="w-full h-full object-cover"
+              onError={(e) => { (e.target as HTMLImageElement).src = '/images/candidat-banner.png' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/5" />
 
