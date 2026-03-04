@@ -13,8 +13,8 @@ export const CANDIDATE = {
   description: 'Ancien adjoint au maire de Bouc-Bel-Air (2014-2020), diplômé de Sciences Po Aix et de l\'INSP (ex-ENA), analyste financier expert en délégation de service public.',
   image: '/images/header_candidat_portrait.png',
   sameAs: [
-    'https://www.instagram.com/morateur2026/',
-    'https://www.facebook.com/profile.php?id=61571627498498',
+    'https://www.instagram.com/mathieumorateur/',
+    'https://www.facebook.com/morateur',
   ],
 }
 

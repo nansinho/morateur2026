@@ -158,8 +158,8 @@ const Navbar = () => {
                 transition={{ delay: 0.5 }}
               >
                 <div className="flex gap-4">
-                  <a href="https://www.instagram.com/morateur2026/" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/50 hover:text-campaign-lime transition-colors text-sm font-medium">Instagram</a>
-                  <a href="https://www.facebook.com/profile.php?id=61571627498498" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/50 hover:text-campaign-lime transition-colors text-sm font-medium">Facebook</a>
+                  <a href="https://www.instagram.com/mathieumorateur/" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/50 hover:text-campaign-lime transition-colors text-sm font-medium">Instagram</a>
+                  <a href="https://www.facebook.com/morateur" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/50 hover:text-campaign-lime transition-colors text-sm font-medium">Facebook</a>
                 </div>
               </motion.div>
             </div>
