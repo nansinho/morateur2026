@@ -8,7 +8,7 @@ export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Programme',
-  description: 'Découvrez les 9 engagements de Mathieu Morateur pour Bouc-Bel-Air : écoles rénovées, mixité sociale choisie, référendum local, réseau 5G communal, lutte anti-nuisibles, urbanisation maîtrisée, police municipale renforcée, gouvernance métropolitaine, fast lanes boucaines.',
+  description: 'Découvrez les 9 engagements de Mathieu Morateur pour Bouc-Bel-Air : urbanisme maîtrisé, sécurité renforcée, écoles rénovées, fast lanes boucaines et référendum local.',
   alternates: { canonical: '/programme' },
   openGraph: {
     url: `${SITE_URL}/programme`,

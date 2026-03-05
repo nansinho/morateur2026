@@ -109,7 +109,7 @@ const ActualitesSection = ({ articles }: { articles: Article[] }) => {
                             </span>
                             <div className="flex items-center gap-1.5">
                               <Calendar className={`w-3 h-3 ${style.accent}`} />
-                              <span className={`${style.accent} text-[11px] font-bold`}>{article.date}</span>
+                              <time className={`${style.accent} text-[11px] font-bold`}>{article.date}</time>
                             </div>
                           </div>
 

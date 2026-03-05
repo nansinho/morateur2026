@@ -175,9 +175,9 @@ const Footer = () => {
 
           {/* Bottom */}
           <div className="border-t border-primary-foreground/[0.15] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-primary-foreground/50 text-xs flex items-center gap-1.5 font-medium">
-              © 2026 Morateur 2026 — Fait avec <Heart className="w-3 h-3 text-campaign-lime" /> pour Bouc-Bel-Air
-            </p>
+            <address className="not-italic text-primary-foreground/50 text-xs flex items-center gap-1.5 font-medium">
+              © 2026 Morateur 2026 — Bouc-Bel-Air, 13320 — Fait avec <Heart className="w-3 h-3 text-campaign-lime" /> pour Bouc-Bel-Air
+            </address>
             <div className="flex items-center gap-4">
               <p className="text-primary-foreground/40 text-xs font-medium">
                 Site créé par{" "}

@@ -42,9 +42,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: '/',
-  },
-  verification: {
-    google: '', // Placeholder: remplacer par l'ID Google Search Console
+    languages: { 'fr-FR': SITE_URL },
   },
 }
 

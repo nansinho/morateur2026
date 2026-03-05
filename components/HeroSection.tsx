@@ -1,10 +1,10 @@
 'use client'
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { useRef, useState, useEffect } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const candidatImg = "/images/header_candidat_portrait.png";
 
@@ -17,7 +17,6 @@ const rotatingWords = [
 ];
 
 const HeroSection = () => {
-  const router = useRouter();
   const ref = useRef<HTMLElement>(null);
   const [wordIndex, setWordIndex] = useState(0);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -71,47 +70,50 @@ const HeroSection = () => {
         </motion.span>
 
         <div className="relative">
-          <div className="overflow-hidden">
-            <motion.h1
-              className="font-accent text-primary-foreground font-extrabold uppercase leading-[0.85] tracking-tight"
-              style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
-              initial={{ y: "120%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            >
-              BOUC BEL AIR
-            </motion.h1>
-          </div>
-
-          <div className="relative" style={{ minHeight: "clamp(4.5rem, 11vw, 9rem)" }}>
-            {/* SERA badge - absolute, tucked between the two lines */}
-            <motion.span
-              className="absolute left-0 sm:left-4 md:left-8 top-0 -translate-y-1/2 font-accent font-extrabold uppercase text-primary text-xs sm:text-lg md:text-xl tracking-[0.3em] px-3 sm:px-4 py-0.5 sm:py-1 bg-campaign-lime rounded-md shadow-lg z-10"
-              style={{ rotate: "-3deg" }}
-              initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
-              animate={{ opacity: 1, scale: 1, rotate: -3 }}
-              transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            >
-              SERA
-            </motion.span>
-
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={rotatingWords[wordIndex]}
-                className="font-accent font-extrabold uppercase tracking-tight text-center text-campaign-lime"
-                style={{
-                  fontSize: "clamp(3rem, 9vw, 7rem)",
-                  lineHeight: 1.15,
-                }}
-                initial={{ y: "60%", opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: "-60%", opacity: 0 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          <h1>
+            <span className="sr-only">Bouc-Bel-Air sera sécurisée, propre, apaisée, respirable et sûre</span>
+            <div className="overflow-hidden" aria-hidden="true">
+              <motion.span
+                className="block font-accent text-primary-foreground font-extrabold uppercase leading-[0.85] tracking-tight"
+                style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
+                initial={{ y: "120%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               >
-                {rotatingWords[wordIndex]}
-              </motion.p>
-            </AnimatePresence>
-          </div>
+                BOUC BEL AIR
+              </motion.span>
+            </div>
+
+            <div className="relative" style={{ minHeight: "clamp(4.5rem, 11vw, 9rem)" }} aria-hidden="true">
+              {/* SERA badge - absolute, tucked between the two lines */}
+              <motion.span
+                className="absolute left-0 sm:left-4 md:left-8 top-0 -translate-y-1/2 font-accent font-extrabold uppercase text-primary text-xs sm:text-lg md:text-xl tracking-[0.3em] px-3 sm:px-4 py-0.5 sm:py-1 bg-campaign-lime rounded-md shadow-lg z-10"
+                style={{ rotate: "-3deg" }}
+                initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
+                animate={{ opacity: 1, scale: 1, rotate: -3 }}
+                transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              >
+                SERA
+              </motion.span>
+
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={rotatingWords[wordIndex]}
+                  className="block font-accent font-extrabold uppercase tracking-tight text-center text-campaign-lime"
+                  style={{
+                    fontSize: "clamp(3rem, 9vw, 7rem)",
+                    lineHeight: 1.15,
+                  }}
+                  initial={{ y: "60%", opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: "-60%", opacity: 0 }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {rotatingWords[wordIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </div>
+          </h1>
         </div>
 
         <div className="mb-6" />
@@ -131,13 +133,13 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.5 }}
         >
-          <button
-            onClick={() => router.push("/programme")}
+          <Link
+            href="/programme"
             className="gradient-lime text-accent-foreground px-6 py-4 sm:px-10 sm:py-5 rounded-2xl font-extrabold text-base flex items-center gap-3 shadow-2xl uppercase tracking-wide -rotate-2 hover:rotate-0 hover:scale-105 hover:shadow-[0_20px_50px_-10px_hsl(var(--campaign-lime)/0.5)] transition-all duration-200"
           >
             Découvrir le programme
             <ArrowRight className="w-5 h-5" />
-          </button>
+          </Link>
           <button
             onClick={() => scrollTo("#procuration")}
             className="bg-primary-foreground/10 backdrop-blur-sm border-2 border-primary-foreground/30 text-primary-foreground px-6 py-4 sm:px-10 sm:py-5 rounded-2xl font-extrabold text-base uppercase tracking-wide hover:bg-primary-foreground/20 rotate-1 hover:rotate-0 hover:scale-105 transition-all duration-200"
