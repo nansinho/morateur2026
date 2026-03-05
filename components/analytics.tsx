@@ -1,13 +1,34 @@
+'use client'
+
 import Script from 'next/script'
+import { useEffect, useState } from 'react'
+import { getConsentForCategory } from '@/lib/cookie-consent'
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
 
 export default function AnalyticsScripts() {
+  const [analyticsAllowed, setAnalyticsAllowed] = useState(false)
+  const [marketingAllowed, setMarketingAllowed] = useState(false)
+
+  useEffect(() => {
+    // Check current consent on mount
+    setAnalyticsAllowed(getConsentForCategory('analytics'))
+    setMarketingAllowed(getConsentForCategory('marketing'))
+
+    // Listen for consent changes
+    const handleConsentUpdate = () => {
+      setAnalyticsAllowed(getConsentForCategory('analytics'))
+      setMarketingAllowed(getConsentForCategory('marketing'))
+    }
+    window.addEventListener('consent-updated', handleConsentUpdate)
+    return () => window.removeEventListener('consent-updated', handleConsentUpdate)
+  }, [])
+
   return (
     <>
-      {/* Google Analytics 4 */}
-      {GA_MEASUREMENT_ID && (
+      {/* Google Analytics 4 — only loaded with analytics consent */}
+      {GA_MEASUREMENT_ID && analyticsAllowed && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
@@ -21,14 +42,15 @@ export default function AnalyticsScripts() {
               gtag('config', '${GA_MEASUREMENT_ID}', {
                 page_title: document.title,
                 send_page_view: true,
+                anonymize_ip: true,
               });
             `}
           </Script>
         </>
       )}
 
-      {/* Meta Pixel (Facebook) */}
-      {META_PIXEL_ID && (
+      {/* Meta Pixel (Facebook) — only loaded with marketing consent */}
+      {META_PIXEL_ID && marketingAllowed && (
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)

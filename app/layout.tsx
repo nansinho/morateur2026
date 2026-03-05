@@ -8,6 +8,7 @@ import {
 import AnalyticsScripts from '@/components/analytics'
 import AccessibilityButton from '@/components/AccessibilityButton'
 import ChatbotWidget from '@/components/ChatbotWidget'
+import CookieConsentBanner from '@/components/CookieConsentBanner'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -136,8 +137,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <AccessibilityButton />
           <ChatbotWidget />
+          <CookieConsentBanner />
+          <AnalyticsScripts />
         </Providers>
-        <AnalyticsScripts />
       </body>
     </html>
   )
