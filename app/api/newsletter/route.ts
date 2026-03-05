@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { sendNewsletterConfirmationEmail } from '@/lib/email'
+import { addBrevoContact } from '@/lib/brevo'
 
 interface NewsletterFormData {
   email: string
   first_name?: string
+  consent?: boolean
 }
 
 export async function POST(request: Request) {
@@ -14,6 +16,13 @@ export async function POST(request: Request) {
     if (!body.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
       return NextResponse.json(
         { success: false, error: 'Adresse email invalide.' },
+        { status: 400 }
+      )
+    }
+
+    if (!body.consent) {
+      return NextResponse.json(
+        { success: false, error: 'Vous devez accepter de recevoir la newsletter.' },
         { status: 400 }
       )
     }
@@ -38,6 +47,7 @@ export async function POST(request: Request) {
           email: body.email.trim().toLowerCase(),
           first_name: body.first_name?.trim() || null,
           is_active: true,
+          consent_date: new Date().toISOString(),
         },
         { onConflict: 'email' }
       )
@@ -48,6 +58,16 @@ export async function POST(request: Request) {
         { success: false, error: 'Erreur lors de l\'inscription.' },
         { status: 500 }
       )
+    }
+
+    // Sync contact to Brevo (non-blocking)
+    try {
+      await addBrevoContact(
+        body.email.trim(),
+        body.first_name?.trim()
+      )
+    } catch (e) {
+      console.error('[NEWSLETTER] Brevo sync error:', e)
     }
 
     // Send confirmation email (non-blocking)

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { sendContactConfirmationEmail } from '@/lib/email'
+import { addBrevoContact } from '@/lib/brevo'
 
 interface ContactFormData {
   prenom: string
@@ -8,6 +9,7 @@ interface ContactFormData {
   email: string
   tel: string
   motivations: string
+  newsletter_optin?: boolean
 }
 
 function validateForm(data: ContactFormData): Record<string, string> {
@@ -36,6 +38,7 @@ export async function POST(request: Request) {
       email: body.email,
       tel: body.tel,
       motivations: body.motivations.substring(0, 100) + (body.motivations.length > 100 ? '...' : ''),
+      newsletter_optin: body.newsletter_optin ?? false,
     })
 
     // Save to Supabase
@@ -54,6 +57,40 @@ export async function POST(request: Request) {
 
       if (dbError) {
         console.error('[CONTACT] Supabase error:', dbError)
+      }
+
+      // If newsletter opt-in, also add to newsletter_subscribers
+      if (body.newsletter_optin) {
+        const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+        if (supabaseServiceKey) {
+          const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
+          const { error: newsletterError } = await supabaseAdmin
+            .from('newsletter_subscribers')
+            .upsert(
+              {
+                email: body.email.trim().toLowerCase(),
+                first_name: body.prenom.trim(),
+                is_active: true,
+                consent_date: new Date().toISOString(),
+              },
+              { onConflict: 'email' }
+            )
+
+          if (newsletterError) {
+            console.error('[CONTACT] Newsletter subscribe error:', newsletterError)
+          }
+        }
+
+        // Sync to Brevo
+        try {
+          await addBrevoContact(
+            body.email.trim(),
+            body.prenom.trim(),
+            body.nom.trim()
+          )
+        } catch (e) {
+          console.error('[CONTACT] Brevo sync error:', e)
+        }
       }
     }
 
