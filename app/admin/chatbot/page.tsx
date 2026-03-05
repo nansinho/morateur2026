@@ -33,6 +33,7 @@ const emptyEntry = {
   answer: '',
   category: '',
   parent_id: null as string | null,
+  link_url: '' as string,
   sort_order: 0,
   is_active: true,
 }
@@ -86,6 +87,7 @@ export default function ChatbotPage() {
       answer: entry.answer,
       category: entry.category,
       parent_id: entry.parent_id,
+      link_url: entry.link_url || '',
       sort_order: entry.sort_order,
       is_active: entry.is_active,
     })
@@ -106,6 +108,7 @@ export default function ChatbotPage() {
     const payload = {
       ...editData,
       parent_id: editData.parent_id || null,
+      link_url: editData.link_url?.trim() || null,
     }
 
     if (editId) {
@@ -326,6 +329,18 @@ export default function ChatbotPage() {
                   className="bg-secondary/50 border-border text-foreground"
                 />
               </div>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-foreground/80">Lien de redirection (optionnel)</Label>
+              <Input
+                value={editData.link_url}
+                onChange={(e) => setEditData({ ...editData, link_url: e.target.value })}
+                className="bg-secondary/50 border-border text-foreground"
+                placeholder="Ex : /programme, /candidat, /#procuration"
+              />
+              <p className="text-[11px] text-muted-foreground/60">
+                Page vers laquelle le chatbot redirigera l&apos;utilisateur.
+              </p>
             </div>
             <div className="space-y-2">
               <Label className="text-foreground/80">Question parente (optionnel)</Label>

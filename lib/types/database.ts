@@ -163,6 +163,7 @@ export interface ChatbotEntry {
   answer: string
   category: string
   parent_id: string | null
+  link_url: string | null
   sort_order: number
   is_active: boolean
   created_at: string

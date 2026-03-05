@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS chatbot_entries (
   answer TEXT NOT NULL DEFAULT '',
   category TEXT NOT NULL DEFAULT '',
   parent_id UUID REFERENCES chatbot_entries(id) ON DELETE SET NULL,
+  link_url TEXT DEFAULT NULL,
   sort_order INTEGER DEFAULT 0,
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT now()
