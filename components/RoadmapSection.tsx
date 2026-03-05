@@ -85,11 +85,11 @@ const RoadmapSection = ({ events: propEvents }: RoadmapSectionProps) => {
 
                 {/* Date + badge */}
                 <div className="flex items-center gap-2 mb-3">
-                  <span className={`text-xs font-bold uppercase tracking-wider ${
+                  <time className={`text-xs font-bold uppercase tracking-wider ${
                     m.is_done ? "text-campaign-lime" : "text-primary-foreground/40"
                   }`}>
                     {m.date}
-                  </span>
+                  </time>
                   {m.is_done && (
                     <div className="w-5 h-5 rounded-full gradient-lime flex items-center justify-center">
                       <Check className="w-3 h-3 text-accent-foreground" />

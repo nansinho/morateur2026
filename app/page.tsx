@@ -29,6 +29,17 @@ const breadcrumbSchema = {
   ],
 }
 
+const speakableSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: `${SITE_NAME} — ${SITE_TAGLINE}`,
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['#candidat', '#programme', '#hero'],
+  },
+  url: SITE_URL,
+}
+
 export default async function HomePage() {
   const supabase = await createClient()
 
@@ -45,6 +56,10 @@ export default async function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }}
       />
       <HomeContent articles={articles} events={events} />
     </>

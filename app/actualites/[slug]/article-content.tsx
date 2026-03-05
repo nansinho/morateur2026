@@ -157,7 +157,7 @@ export default function ArticleContent({
 
                 <div className="flex items-center gap-1.5 text-gray-400">
                   <Calendar className="w-4 h-4" />
-                  <span className="text-sm font-medium">{formattedDate}</span>
+                  <time dateTime={article.date} className="text-sm font-medium">{formattedDate}</time>
                 </div>
 
                 {readingTime && (
@@ -315,7 +315,7 @@ export default function ArticleContent({
                             </h3>
                             <div className="flex items-center gap-1.5 text-gray-400 mt-3">
                               <Calendar className="w-3.5 h-3.5" />
-                              <span className="text-xs font-medium">{related.date}</span>
+                              <time dateTime={related.date} className="text-xs font-medium">{related.date}</time>
                             </div>
                           </div>
                         </Link>

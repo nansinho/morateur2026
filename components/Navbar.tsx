@@ -43,9 +43,10 @@ const Navbar = () => {
   };
 
   return (
+    <header className="fixed top-0 left-0 right-0 z-50">
     <motion.nav
       aria-label="Navigation principale"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-primary py-4 ${
+      className={`transition-all duration-300 bg-primary py-4 ${
         isScrolled
           ? "md:bg-background md:backdrop-blur-xl md:shadow-lg md:shadow-foreground/5 md:py-3"
           : "md:py-5"
@@ -167,6 +168,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
     </motion.nav>
+    </header>
   );
 };
 
