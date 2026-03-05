@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, ArrowLeft, ChevronRight, Home, ExternalLink } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
+import { scrollToHash } from '@/lib/scroll-to-hash'
 import type { ChatbotEntry } from '@/lib/types/database'
 
 const WELCOME_MESSAGE = 'Bonjour ! Je suis l\'assistant du site Morateur 2026. Sélectionnez un sujet ci-dessous pour en savoir plus :'
@@ -53,7 +54,23 @@ export default function ChatbotWidget() {
   const navigateTo = (url: string) => {
     setIsOpen(false)
     setCurrentEntry(null)
-    router.push(url)
+
+    const hashIndex = url.indexOf('#')
+    if (hashIndex !== -1) {
+      const path = url.substring(0, hashIndex) || '/'
+      const hash = url.substring(hashIndex)
+
+      if (pathname === path || (path === '/' && pathname === '/')) {
+        // Same page — just scroll
+        scrollToHash(hash)
+      } else {
+        // Navigate then scroll
+        router.push(url)
+        setTimeout(() => scrollToHash(hash), 600)
+      }
+    } else {
+      router.push(url)
+    }
   }
 
   const handleTopicClick = (entry: ChatbotEntry) => {
