@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
   email TEXT NOT NULL UNIQUE,
   first_name TEXT,
   subscribed_at TIMESTAMPTZ DEFAULT NOW(),
-  is_active BOOLEAN DEFAULT TRUE
+  is_active BOOLEAN DEFAULT TRUE,
+  consent_date TIMESTAMPTZ
 );
 
 -- Enable Row Level Security
