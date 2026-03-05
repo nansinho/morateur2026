@@ -14,6 +14,7 @@ const actions: {
   iconColor: string;
   textColor: string;
   subtextColor: string;
+  buttonLabel: string;
 }[] = [
   {
     Icon: HandHeart,
@@ -25,6 +26,7 @@ const actions: {
     iconColor: "text-accent-foreground",
     textColor: "text-accent-foreground",
     subtextColor: "text-accent-foreground/70",
+    buttonLabel: "Rejoignez nous !",
   },
   {
     Icon: FileText,
@@ -36,6 +38,7 @@ const actions: {
     iconColor: "text-primary-foreground",
     textColor: "text-primary-foreground",
     subtextColor: "text-primary-foreground/70",
+    buttonLabel: "Visiter",
   },
   {
     Icon: Instagram,
@@ -47,6 +50,7 @@ const actions: {
     iconColor: "text-white",
     textColor: "text-white",
     subtextColor: "text-white/70",
+    buttonLabel: "Visiter",
   },
   {
     Icon: Facebook,
@@ -58,6 +62,7 @@ const actions: {
     iconColor: "text-white",
     textColor: "text-white",
     subtextColor: "text-white/70",
+    buttonLabel: "Visiter",
   },
   {
     Icon: Mail,
@@ -69,6 +74,7 @@ const actions: {
     iconColor: "text-campaign-lime",
     textColor: "text-primary-foreground",
     subtextColor: "text-primary-foreground/60",
+    buttonLabel: "S'inscrire",
   },
   {
     Icon: BookOpen,
@@ -80,6 +86,7 @@ const actions: {
     iconColor: "text-primary-foreground",
     textColor: "text-primary-foreground",
     subtextColor: "text-primary-foreground/70",
+    buttonLabel: "Découvrir",
   },
 ];
 
@@ -144,17 +151,12 @@ const EngagezVousSection = () => {
                       {action.desc}
                     </p>
                   </div>
-                  <div className={`relative z-10 flex items-center gap-2 ${action.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-200`}>
+                  <div className={`relative z-10 inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-5 py-2.5 ${action.textColor} group-hover:bg-white/30 transition-all duration-200`}>
+                    <span className="text-sm font-bold uppercase tracking-wider">{action.buttonLabel}</span>
                     {action.external ? (
-                      <>
-                        <span className="text-xs font-bold uppercase tracking-wider">Visiter</span>
-                        <ExternalLink className="w-4 h-4" />
-                      </>
+                      <ExternalLink className="w-4 h-4" />
                     ) : (
-                      <>
-                        <span className="text-xs font-bold uppercase tracking-wider">Découvrir</span>
-                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-                      </>
+                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                     )}
                   </div>
                 </div>
