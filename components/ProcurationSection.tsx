@@ -5,7 +5,7 @@ import { useState, useCallback } from "react";
 import { FileText, CheckCircle, Send, ExternalLink, AlertCircle, User, Mail, Phone, MessageSquare, ArrowRight, ArrowLeft, Sparkles, PartyPopper } from "lucide-react";
 import Link from "next/link";
 
-type FormData = { prenom: string; nom: string; email: string; tel: string; motivations: string };
+type FormData = { prenom: string; nom: string; email: string; tel: string; motivations: string; newsletter_optin: boolean };
 type FormErrors = Partial<Record<keyof FormData, string>>;
 
 const validate = (form: FormData): FormErrors => {
@@ -24,7 +24,7 @@ const steps = [
   { id: 2, title: "Vos motivations", subtitle: "Dites-nous tout !", emoji: "💬", fields: ["motivations"] as const },
 ];
 
-const fieldConfig: Record<keyof FormData, { label: string; icon: typeof User; type: string; placeholder: string }> = {
+const fieldConfig: Record<Exclude<keyof FormData, 'newsletter_optin'>, { label: string; icon: typeof User; type: string; placeholder: string }> = {
   prenom: { label: "Prénom", icon: User, type: "text", placeholder: "Mathieu" },
   nom: { label: "Nom", icon: User, type: "text", placeholder: "Dupont" },
   email: { label: "Adresse email", icon: Mail, type: "email", placeholder: "mathieu@exemple.fr" },
@@ -65,7 +65,7 @@ const ProcurationSection = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [direction, setDirection] = useState(1);
-  const [form, setForm] = useState<FormData>({ prenom: "", nom: "", email: "", tel: "", motivations: "" });
+  const [form, setForm] = useState<FormData>({ prenom: "", nom: "", email: "", tel: "", motivations: "", newsletter_optin: false });
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Set<string>>(new Set());
 
@@ -407,37 +407,57 @@ const ProcurationSection = () => {
                         )}
 
                         {step === 2 && (
-                          <div className="group">
-                            <label htmlFor="motivations" className="text-xs font-bold text-white/50 uppercase tracking-wider mb-2 block">
-                              Dites-nous en plus
-                            </label>
-                            <div className="relative">
-                              <MessageSquare className="absolute left-4 top-4 w-4 h-4 text-white/30 group-focus-within:text-campaign-lime transition-colors duration-200" />
-                              <textarea
-                                id="motivations"
-                                required
-                                maxLength={500}
-                                rows={5}
-                                placeholder={fieldConfig.motivations.placeholder}
-                                value={form.motivations}
-                                onBlur={() => handleBlur("motivations")}
-                                onChange={e => handleChange("motivations", e.target.value)}
-                                className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200 resize-none"
+                          <div className="space-y-4">
+                            <div className="group">
+                              <label htmlFor="motivations" className="text-xs font-bold text-white/50 uppercase tracking-wider mb-2 block">
+                                Dites-nous en plus
+                              </label>
+                              <div className="relative">
+                                <MessageSquare className="absolute left-4 top-4 w-4 h-4 text-white/30 group-focus-within:text-campaign-lime transition-colors duration-200" />
+                                <textarea
+                                  id="motivations"
+                                  required
+                                  maxLength={500}
+                                  rows={5}
+                                  placeholder={fieldConfig.motivations.placeholder}
+                                  value={form.motivations}
+                                  onBlur={() => handleBlur("motivations")}
+                                  onChange={e => handleChange("motivations", e.target.value)}
+                                  className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200 resize-none"
+                                />
+                              </div>
+                              <div className="flex justify-between mt-1.5">
+                                {touched.has("motivations") && errors.motivations ? (
+                                  <motion.p
+                                    initial={{ opacity: 0, y: -5 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    role="alert"
+                                    className="text-red-400 text-xs flex items-center gap-1"
+                                  >
+                                    <AlertCircle className="w-3 h-3" /> {errors.motivations}
+                                  </motion.p>
+                                ) : <span />}
+                                <span className="text-white/30 text-xs">{form.motivations.length}/500</span>
+                              </div>
+                            </div>
+
+                            {/* Opt-in newsletter */}
+                            <label className="flex items-start gap-3 cursor-pointer group/check rounded-xl p-3 bg-white/[0.04] border border-white/10 hover:border-campaign-lime/30 transition-all duration-200">
+                              <input
+                                type="checkbox"
+                                checked={form.newsletter_optin}
+                                onChange={e => setForm(prev => ({ ...prev, newsletter_optin: e.target.checked }))}
+                                className="mt-0.5 w-4 h-4 rounded border-white/30 bg-white/10 accent-[hsl(var(--campaign-lime))] cursor-pointer flex-shrink-0"
                               />
-                            </div>
-                            <div className="flex justify-between mt-1.5">
-                              {touched.has("motivations") && errors.motivations ? (
-                                <motion.p
-                                  initial={{ opacity: 0, y: -5 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  role="alert"
-                                  className="text-red-400 text-xs flex items-center gap-1"
-                                >
-                                  <AlertCircle className="w-3 h-3" /> {errors.motivations}
-                                </motion.p>
-                              ) : <span />}
-                              <span className="text-white/30 text-xs">{form.motivations.length}/500</span>
-                            </div>
+                              <div>
+                                <span className="text-white/70 text-sm leading-relaxed group-hover/check:text-white/90 transition-colors">
+                                  Je souhaite recevoir la newsletter de la campagne par email
+                                </span>
+                                <span className="block text-white/30 text-[11px] mt-0.5">
+                                  Actualités, événements et avancées du projet. Désabonnement possible à tout moment.
+                                </span>
+                              </div>
+                            </label>
                           </div>
                         )}
                       </motion.div>

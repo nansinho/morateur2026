@@ -30,14 +30,18 @@ export default function PolitiqueConfidentialitePage() {
           <section>
             <h2 className="text-xl font-semibold text-foreground">Données collectées</h2>
             <p>
-              Nous collectons les données personnelles suivantes via le formulaire de contact
-              &laquo; Rejoignez-nous &raquo; :
+              Nous collectons les données personnelles suivantes :
             </p>
+            <p className="font-medium text-foreground/80 mt-2">Via le formulaire de contact &laquo; Rejoignez-nous &raquo; :</p>
             <ul className="list-disc pl-5 space-y-1">
               <li>Prénom et nom</li>
               <li>Adresse email</li>
               <li>Numéro de téléphone</li>
               <li>Message de motivations</li>
+            </ul>
+            <p className="font-medium text-foreground/80 mt-2">Via le formulaire d&apos;inscription à la newsletter :</p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Adresse email</li>
             </ul>
           </section>
 
@@ -48,6 +52,7 @@ export default function PolitiqueConfidentialitePage() {
               <li>Répondre à votre demande de contact ou d&apos;engagement dans la campagne</li>
               <li>Vous informer des événements et actualités de la campagne</li>
               <li>Gérer les relations avec les sympathisants et bénévoles</li>
+              <li>Vous envoyer la newsletter de la campagne (uniquement si vous y avez consenti explicitement)</li>
             </ul>
           </section>
 
@@ -75,6 +80,13 @@ export default function PolitiqueConfidentialitePage() {
               Elles ne sont ni vendues, ni cédées, ni communiquées à des tiers à des fins
               commerciales.
             </p>
+            <p className="mt-2">
+              <strong>Sous-traitant :</strong> pour l&apos;envoi de la newsletter, nous utilisons
+              la plateforme <strong>Brevo</strong> (anciennement Sendinblue), société Sendinblue SAS,
+              dont les données sont hébergées au sein de l&apos;Union européenne. Brevo agit en tant
+              que sous-traitant au sens de l&apos;article 28 du RGPD et ne traite vos données que
+              sur nos instructions, aux seules fins d&apos;envoi de la newsletter.
+            </p>
           </section>
 
           <section>
@@ -96,6 +108,32 @@ export default function PolitiqueConfidentialitePage() {
               <a href="mailto:contact@morateur2026.fr" className="text-campaign-lime hover:underline">
                 contact@morateur2026.fr
               </a>
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-semibold text-foreground">Newsletter</h2>
+            <p>
+              Vous pouvez vous inscrire à la newsletter de la campagne Morateur 2026 via le
+              formulaire dédié sur notre site ou en cochant l&apos;option correspondante dans le
+              formulaire &laquo; Rejoignez-nous &raquo;.
+            </p>
+            <p className="mt-2">
+              <strong>Consentement explicite :</strong> l&apos;inscription à la newsletter nécessite
+              votre consentement explicite via une case à cocher. Votre adresse email est alors
+              transmise à notre sous-traitant Brevo pour l&apos;envoi des communications.
+            </p>
+            <p className="mt-2">
+              <strong>Contenu :</strong> actualités de la campagne, événements, avancées du projet
+              municipal pour Bouc-Bel-Air.
+            </p>
+            <p className="mt-2">
+              <strong>Désinscription :</strong> vous pouvez vous désinscrire à tout moment en
+              cliquant sur le lien de désinscription présent dans chaque email, ou en nous
+              contactant à{' '}
+              <a href="mailto:contact@morateur2026.fr" className="text-campaign-lime hover:underline">
+                contact@morateur2026.fr
+              </a>.
             </p>
           </section>
 
