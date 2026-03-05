@@ -6,7 +6,7 @@ import Link from 'next/link'
 import {
   LayoutDashboard, Mail, Newspaper, BookOpen, CalendarDays,
   Users, FileText, Search, LogOut, ExternalLink, ChevronLeft, ChevronRight, Menu,
-  MessageSquareText, MapPin, Download, Bot,
+  MessageSquareText, MapPin, Download, Bot, Send,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -35,6 +35,7 @@ const navGroups = [
     label: 'Communication',
     items: [
       { href: '/admin/messages', icon: Mail, label: 'Messages' },
+      { href: '/admin/newsletter', icon: Send, label: 'Newsletter' },
       { href: '/admin/consultations', icon: MessageSquareText, label: 'Consultations' },
       { href: '/admin/quartiers', icon: MapPin, label: 'Quartiers' },
       { href: '/admin/chatbot', icon: Bot, label: 'Chatbot' },

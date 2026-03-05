@@ -157,6 +157,15 @@ export interface QuartierStats {
   last_submission_at: string | null
 }
 
+export interface NewsletterSubscriber {
+  id: string
+  email: string
+  first_name: string | null
+  subscribed_at: string
+  is_active: boolean
+  consent_date: string | null
+}
+
 export interface ChatbotEntry {
   id: string
   question: string
