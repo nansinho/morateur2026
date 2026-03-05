@@ -39,18 +39,30 @@ export async function POST(request: Request) {
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
+    const emailNormalized = body.email.trim().toLowerCase()
 
-    const { error: dbError } = await supabase
+    // Try upsert with consent_date first, fallback without if column doesn't exist yet
+    const upsertData: Record<string, unknown> = {
+      email: emailNormalized,
+      first_name: body.first_name?.trim() || null,
+      is_active: true,
+    }
+
+    let { error: dbError } = await supabase
       .from('newsletter_subscribers')
       .upsert(
-        {
-          email: body.email.trim().toLowerCase(),
-          first_name: body.first_name?.trim() || null,
-          is_active: true,
-          consent_date: new Date().toISOString(),
-        },
+        { ...upsertData, consent_date: new Date().toISOString() },
         { onConflict: 'email' }
       )
+
+    // If consent_date column doesn't exist yet, retry without it
+    if (dbError && dbError.message?.includes('consent_date')) {
+      console.warn('[NEWSLETTER] consent_date column not found, retrying without it')
+      const result = await supabase
+        .from('newsletter_subscribers')
+        .upsert(upsertData, { onConflict: 'email' })
+      dbError = result.error
+    }
 
     if (dbError) {
       console.error('[NEWSLETTER] Supabase error:', dbError)
@@ -62,20 +74,14 @@ export async function POST(request: Request) {
 
     // Sync contact to Brevo (non-blocking)
     try {
-      await addBrevoContact(
-        body.email.trim(),
-        body.first_name?.trim()
-      )
+      await addBrevoContact(emailNormalized, body.first_name?.trim())
     } catch (e) {
       console.error('[NEWSLETTER] Brevo sync error:', e)
     }
 
     // Send confirmation email (non-blocking)
     try {
-      await sendNewsletterConfirmationEmail(
-        body.email.trim(),
-        body.first_name?.trim()
-      )
+      await sendNewsletterConfirmationEmail(emailNormalized, body.first_name?.trim())
     } catch (e) {
       console.error('[NEWSLETTER] Confirmation email error:', e)
     }

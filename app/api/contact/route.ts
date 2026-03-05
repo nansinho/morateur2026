@@ -64,17 +64,28 @@ export async function POST(request: Request) {
         const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
         if (supabaseServiceKey) {
           const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
-          const { error: newsletterError } = await supabaseAdmin
+          const emailNormalized = body.email.trim().toLowerCase()
+          const upsertData: Record<string, unknown> = {
+            email: emailNormalized,
+            first_name: body.prenom.trim(),
+            is_active: true,
+          }
+
+          let { error: newsletterError } = await supabaseAdmin
             .from('newsletter_subscribers')
             .upsert(
-              {
-                email: body.email.trim().toLowerCase(),
-                first_name: body.prenom.trim(),
-                is_active: true,
-                consent_date: new Date().toISOString(),
-              },
+              { ...upsertData, consent_date: new Date().toISOString() },
               { onConflict: 'email' }
             )
+
+          // Fallback if consent_date column doesn't exist yet
+          if (newsletterError && newsletterError.message?.includes('consent_date')) {
+            console.warn('[CONTACT] consent_date column not found, retrying without it')
+            const result = await supabaseAdmin
+              .from('newsletter_subscribers')
+              .upsert(upsertData, { onConflict: 'email' })
+            newsletterError = result.error
+          }
 
           if (newsletterError) {
             console.error('[CONTACT] Newsletter subscribe error:', newsletterError)
