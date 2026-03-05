@@ -5,6 +5,7 @@ interface RootEntry {
   question: string
   answer: string
   category: string
+  link_url: string | null
   sort_order: number
 }
 
@@ -12,6 +13,7 @@ interface ChildEntry {
   question: string
   answer: string
   category: string
+  link_url: string | null
   sort_order: number
   parentKey: string
 }
@@ -21,31 +23,57 @@ const ROOT_ENTRIES: Record<string, RootEntry> = {
     question: 'Le candidat',
     answer: 'Mathieu Morateur, 36 ans, est un enfant de Bouc-Bel-Air. Ancien adjoint au maire (2014-2020), il est analyste financier spécialisé en délégation de service public. Diplômé de Sciences Po Aix et de l\'INSP, il met son expertise au service de sa commune natale.',
     category: 'Candidat',
+    link_url: '/candidat',
     sort_order: 1,
   },
   programme: {
     question: 'Le programme',
     answer: 'Notre projet repose sur 9 engagements concrets pour redonner à Bouc-Bel-Air le cadre de vie qu\'elle mérite. Sécurité, urbanisme maîtrisé, écoles rénovées, démocratie locale renforcée : découvrez nos propositions.',
     category: 'Programme',
+    link_url: '/programme',
     sort_order: 2,
   },
   election: {
     question: 'L\'élection',
     answer: 'Les élections municipales de Bouc-Bel-Air se tiendront le 15 mars 2026 (1er tour) et le 22 mars 2026 (2nd tour). Chaque voix compte pour l\'avenir de notre commune !',
     category: 'Élection',
+    link_url: '/#roadmap',
     sort_order: 3,
   },
   rejoindre: {
     question: 'Nous rejoindre',
     answer: 'Plusieurs façons de soutenir notre campagne et de participer à l\'aventure collective pour Bouc-Bel-Air !',
     category: 'Engagement',
+    link_url: '/#procuration',
     sort_order: 4,
   },
   contact: {
     question: 'Nous contacter',
     answer: 'Retrouvez-nous sur Instagram (@morateur2026) et Facebook (Morateur 2026). Vous pouvez aussi nous écrire via le formulaire de contact sur le site. Nous sommes à votre écoute !',
     category: 'Contact',
+    link_url: '/#procuration',
     sort_order: 5,
+  },
+  equipe: {
+    question: 'L\'équipe',
+    answer: 'Découvrez les membres de notre équipe de campagne, engagés pour l\'avenir de Bouc-Bel-Air.',
+    category: 'Équipe',
+    link_url: '/equipe',
+    sort_order: 6,
+  },
+  actualites: {
+    question: 'Actualités',
+    answer: 'Suivez toute l\'actualité de notre campagne : événements, rencontres, annonces et prises de position.',
+    category: 'Actualités',
+    link_url: '/actualites',
+    sort_order: 7,
+  },
+  presse: {
+    question: 'Presse',
+    answer: 'Retrouvez les articles de presse et revues médiatiques concernant notre campagne et nos propositions.',
+    category: 'Presse',
+    link_url: '/presse',
+    sort_order: 8,
   },
 }
 
@@ -56,6 +84,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Son parcours',
     answer: 'Natif de Bouc-Bel-Air, Mathieu Morateur a grandi dans cette commune qu\'il aime profondément. Diplômé de Sciences Po Aix et de l\'INSP (anciennement ENA), il est analyste financier expert en délégation de service public et en mutualisation des moyens. Il a été adjoint au maire de 2014 à 2020.',
     category: 'Candidat',
+    link_url: '/candidat',
     sort_order: 1,
   },
   {
@@ -63,15 +92,17 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Sa motivation',
     answer: 'Père de jeunes enfants, Mathieu Morateur veut leur permettre de grandir avec les mêmes chances que celles qu\'il a eues dans une commune préservée et ambitieuse. Face à l\'urbanisation galopante et à la dégradation des équipements, il s\'engage pour que Bouc-Bel-Air retrouve son dynamisme.',
     category: 'Candidat',
+    link_url: '/candidat',
     sort_order: 2,
   },
 
-  // --- Le programme (9 engagements) ---
+  // --- Le programme (9 engagements avec ancres spécifiques) ---
   {
     parentKey: 'programme',
     question: 'Écoles, crèches et centre aéré',
     answer: 'L\'état de nos bâtiments scolaires est indigne : fuites, 30°C en mai, 16°C en hiver. Nous lancerons un grand marché de rénovation énergétique pour offrir un éclairage adaptatif et un confort thermique optimal. Ce sont les économies d\'énergie qui financeront ces travaux.',
     category: 'Programme',
+    link_url: '/programme#ecoles-creches-et-centre-aere',
     sort_order: 1,
   },
   {
@@ -79,6 +110,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Mixité sociale choisie (BRS)',
     answer: 'Nous ne construirons que le nécessaire grâce au Bail Réel Solidaire (BRS). Si nous avons besoin de 60 logements pour nos quotas, nous construisons 60 appartements en BRS — pas 60 de plus pour les promoteurs. C\'est la fin des grands ensembles imposés et la garantie de familles propriétaires investies dans leur quartier.',
     category: 'Programme',
+    link_url: '/programme#mixite-sociale-choisie-brs',
     sort_order: 2,
   },
   {
@@ -86,6 +118,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Référendum local',
     answer: 'Tous les projets supérieurs à 1 million d\'euros seront soumis à un référendum local. Ils devront recueillir l\'approbation de plus de 25% des électeurs inscrits pour être validés. Vous avez réellement la parole !',
     category: 'Programme',
+    link_url: '/programme#referendum-local',
     sort_order: 3,
   },
   {
@@ -93,6 +126,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Réseau 5G communal et caméras',
     answer: 'Nous créerons un réseau 5G propre à la commune pour déployer des caméras nomades de vidéoprotection (dont la localisation peut changer rapidement), des capteurs de bruit, de qualité de l\'air et d\'éclairage intelligent par détection de présence — le tout pour un coût divisé par 10.',
     category: 'Programme',
+    link_url: '/programme#reseau-5g-communal-et-cameras',
     sort_order: 4,
   },
   {
@@ -100,6 +134,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Lutte contre les moustiques',
     answer: 'Nous lancerons une offensive complète : piégeage et prédateurs naturels dans l\'espace public, mobilisation citoyenne pour assécher les gîtes privés, pose de bornes aspirateurs autour des écoles et espaces verts, et tarifs négociés pour les dispositifs à installer chez soi.',
     category: 'Programme',
+    link_url: '/programme#lutte-contre-les-moustiques',
     sort_order: 5,
   },
   {
@@ -107,6 +142,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Urbanisation maîtrisée',
     answer: 'Nous ferons barrage aux promoteurs : suppression des opérations d\'aménagement programmées (OAP), réduction des droits à construire, préemption systématique, retrait des permis récemment octroyés aux promoteurs. Seuls les détachements familiaux seront facilités. Un parc naturel sera créé au vallat de Violesi.',
     category: 'Programme',
+    link_url: '/programme#urbanisation-maitrisee',
     sort_order: 6,
   },
   {
@@ -114,6 +150,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: '6 agents de police supplémentaires',
     answer: 'Comment financer 6 agents de terrain sans augmenter vos impôts ? Par des économies : suppression du collaborateur de cabinet (85 000€), baisse des frais de représentation (10 500€), réduction de 5% du budget communication (200 000€), recouvrement effectif de la TLPE (50 000€). Total : 600 000€/an.',
     category: 'Programme',
+    link_url: '/programme#6-agents-de-police-supplementaires',
     sort_order: 7,
   },
   {
@@ -121,6 +158,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Gouvernance métropolitaine',
     answer: 'Libres de toute allégeance partisane, nous représenterons Bouc-Bel-Air dans les instances métropolitaines et intercommunales en ayant à cœur uniquement les intérêts des Boucains. Notre indépendance politique est notre force.',
     category: 'Programme',
+    link_url: '/programme#gouvernance-metropolitaine',
     sort_order: 8,
   },
   {
@@ -128,6 +166,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Fast lanes boucaines',
     answer: 'De 7h à 9h et de 16h à 19h, le chemin de Violesi, le chemin des Revenants et le chemin de Sauvecanne seront réservés aux Boucains grâce à des barrières commandées par reconnaissance de plaques enregistrées en mairie. Cela forcera le Département et la Métropole à réaliser les aménagements routiers nécessaires.',
     category: 'Programme',
+    link_url: '/programme#fast-lanes-boucaines',
     sort_order: 9,
   },
 
@@ -137,6 +176,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Dates clés',
     answer: '1er tour : dimanche 15 mars 2026. 2nd tour : dimanche 22 mars 2026. Chaque voix compte pour l\'avenir de Bouc-Bel-Air. Mobilisez-vous !',
     category: 'Élection',
+    link_url: '/#roadmap',
     sort_order: 1,
   },
   {
@@ -144,6 +184,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Faire une procuration',
     answer: 'Vous ne pouvez pas vous déplacer le jour du vote ? Donnez procuration à un proche sur maprocuration.gouv.fr. C\'est simple, rapide, et votre voix comptera quand même !',
     category: 'Élection',
+    link_url: '/#procuration',
     sort_order: 2,
   },
 
@@ -153,6 +194,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Agir sur le terrain',
     answer: 'Rejoignez-nous pour le porte-à-porte, les distributions de tracts et les événements de campagne ! Contactez-nous via les réseaux sociaux ou le formulaire du site pour nous rejoindre sur le terrain.',
     category: 'Engagement',
+    link_url: '/#procuration',
     sort_order: 1,
   },
   {
@@ -160,6 +202,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Réseaux sociaux',
     answer: 'Suivez notre campagne au quotidien ! Instagram : @morateur2026 pour les coulisses et les actualités. Facebook : Morateur 2026 pour rejoindre la communauté et partager nos publications.',
     category: 'Engagement',
+    link_url: '/#procuration',
     sort_order: 2,
   },
   {
@@ -167,6 +210,7 @@ const CHILD_ENTRIES: ChildEntry[] = [
     question: 'Donner votre avis',
     answer: 'Participez aux consultations citoyennes par quartier sur notre site ! Roumanille-Thiers, La Bergerie, La Mounine, Centre Ville... Chaque quartier a ses enjeux, et votre avis compte pour construire notre projet.',
     category: 'Engagement',
+    link_url: '/quartiers',
     sort_order: 3,
   },
 ]
@@ -194,6 +238,7 @@ export async function POST() {
       answer: entry.answer,
       category: entry.category,
       parent_id: null,
+      link_url: entry.link_url,
       sort_order: entry.sort_order,
       is_active: true,
     }))
@@ -221,6 +266,7 @@ export async function POST() {
       answer: child.answer,
       category: child.category,
       parent_id: parentIdMap[child.parentKey],
+      link_url: child.link_url,
       sort_order: child.sort_order,
       is_active: true,
     }))

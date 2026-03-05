@@ -9,6 +9,7 @@ import RoadmapSection from "@/components/RoadmapSection";
 import Footer from "@/components/Footer";
 import { scrollToHash } from "@/lib/scroll-to-hash";
 import { getIcon } from "@/lib/icon-map";
+import { slugify } from "@/lib/slugify";
 
 interface ProgrammeContentProps {
   pillars: {
@@ -122,12 +123,13 @@ export default function ProgrammeContent({ pillars }: ProgrammeContentProps) {
 
             return (
               <motion.div
+                id={slugify(pillar.title)}
                 key={pillar.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="grid lg:grid-cols-[1fr_2fr] gap-10 items-start"
+                className="grid lg:grid-cols-[1fr_2fr] gap-10 items-start scroll-mt-24"
               >
                 {/* Pillar header */}
                 <div className="lg:sticky lg:top-24">

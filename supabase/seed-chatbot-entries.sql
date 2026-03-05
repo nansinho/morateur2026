@@ -39,7 +39,25 @@ INSERT INTO chatbot_entries (id, question, answer, category, parent_id, link_url
 ('c0000000-0000-0000-0000-000000000005',
  'Nous contacter',
  'Retrouvez-nous sur Instagram (@morateur2026) et Facebook (Morateur 2026). Vous pouvez aussi nous écrire via le formulaire de contact sur le site. Nous sommes à votre écoute !',
- 'Contact', NULL, '/#procuration', 5, true);
+ 'Contact', NULL, '/#procuration', 5, true),
+
+-- L''équipe
+('c0000000-0000-0000-0000-000000000006',
+ 'L''équipe',
+ 'Découvrez les membres de notre équipe de campagne, engagés pour l''avenir de Bouc-Bel-Air.',
+ 'Équipe', NULL, '/equipe', 6, true),
+
+-- Actualités
+('c0000000-0000-0000-0000-000000000007',
+ 'Actualités',
+ 'Suivez toute l''actualité de notre campagne : événements, rencontres, annonces et prises de position.',
+ 'Actualités', NULL, '/actualites', 7, true),
+
+-- Presse
+('c0000000-0000-0000-0000-000000000008',
+ 'Presse',
+ 'Retrouvez les articles de presse et revues médiatiques concernant notre campagne et nos propositions.',
+ 'Presse', NULL, '/presse', 8, true);
 
 -- =====================
 -- 2. Sous-sujets
@@ -56,42 +74,43 @@ INSERT INTO chatbot_entries (question, answer, category, parent_id, link_url, so
  'Candidat', 'c0000000-0000-0000-0000-000000000001', '/candidat', 2, true);
 
 -- --- Le programme (9 engagements) ---
+-- Les ancres correspondent aux slugs générés depuis les titres des piliers
 INSERT INTO chatbot_entries (question, answer, category, parent_id, link_url, sort_order, is_active) VALUES
 ('Écoles, crèches et centre aéré',
  'L''état de nos bâtiments scolaires est indigne : fuites, 30°C en mai, 16°C en hiver. Nous lancerons un grand marché de rénovation énergétique pour offrir un éclairage adaptatif et un confort thermique optimal. Ce sont les économies d''énergie qui financeront ces travaux.',
- 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme', 1, true),
+ 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme#ecoles-creches-et-centre-aere', 1, true),
 
 ('Mixité sociale choisie (BRS)',
  'Nous ne construirons que le nécessaire grâce au Bail Réel Solidaire (BRS). Si nous avons besoin de 60 logements pour nos quotas, nous construisons 60 appartements en BRS — pas 60 de plus pour les promoteurs. C''est la fin des grands ensembles imposés et la garantie de familles propriétaires investies dans leur quartier.',
- 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme', 2, true),
+ 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme#mixite-sociale-choisie-brs', 2, true),
 
 ('Référendum local',
  'Tous les projets supérieurs à 1 million d''euros seront soumis à un référendum local. Ils devront recueillir l''approbation de plus de 25% des électeurs inscrits pour être validés. Vous avez réellement la parole !',
- 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme', 3, true),
+ 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme#referendum-local', 3, true),
 
 ('Réseau 5G communal et caméras',
  'Nous créerons un réseau 5G propre à la commune pour déployer des caméras nomades de vidéoprotection (dont la localisation peut changer rapidement), des capteurs de bruit, de qualité de l''air et d''éclairage intelligent par détection de présence — le tout pour un coût divisé par 10.',
- 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme', 4, true),
+ 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme#reseau-5g-communal-et-cameras', 4, true),
 
 ('Lutte contre les moustiques',
  'Nous lancerons une offensive complète : piégeage et prédateurs naturels dans l''espace public, mobilisation citoyenne pour assécher les gîtes privés, pose de bornes aspirateurs autour des écoles et espaces verts, et tarifs négociés pour les dispositifs à installer chez soi.',
- 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme', 5, true),
+ 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme#lutte-contre-les-moustiques', 5, true),
 
 ('Urbanisation maîtrisée',
  'Nous ferons barrage aux promoteurs : suppression des opérations d''aménagement programmées (OAP), réduction des droits à construire, préemption systématique, retrait des permis récemment octroyés aux promoteurs. Seuls les détachements familiaux seront facilités. Un parc naturel sera créé au vallat de Violesi.',
- 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme', 6, true),
+ 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme#urbanisation-maitrisee', 6, true),
 
 ('6 agents de police supplémentaires',
  'Comment financer 6 agents de terrain sans augmenter vos impôts ? Par des économies : suppression du collaborateur de cabinet (85 000€), baisse des frais de représentation (10 500€), réduction de 5% du budget communication (200 000€), recouvrement effectif de la TLPE (50 000€). Total : 600 000€/an.',
- 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme', 7, true),
+ 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme#6-agents-de-police-supplementaires', 7, true),
 
 ('Gouvernance métropolitaine',
  'Libres de toute allégeance partisane, nous représenterons Bouc-Bel-Air dans les instances métropolitaines et intercommunales en ayant à cœur uniquement les intérêts des Boucains. Notre indépendance politique est notre force.',
- 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme', 8, true),
+ 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme#gouvernance-metropolitaine', 8, true),
 
 ('Fast lanes boucaines',
  'De 7h à 9h et de 16h à 19h, le chemin de Violesi, le chemin des Revenants et le chemin de Sauvecanne seront réservés aux Boucains grâce à des barrières commandées par reconnaissance de plaques enregistrées en mairie. Cela forcera le Département et la Métropole à réaliser les aménagements routiers nécessaires.',
- 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme', 9, true);
+ 'Programme', 'c0000000-0000-0000-0000-000000000002', '/programme#fast-lanes-boucaines', 9, true);
 
 -- --- L''élection (enfants) ---
 INSERT INTO chatbot_entries (question, answer, category, parent_id, link_url, sort_order, is_active) VALUES
