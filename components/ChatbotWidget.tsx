@@ -16,8 +16,6 @@ export default function ChatbotWidget() {
   const [loaded, setLoaded] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  if (pathname.startsWith('/admin')) return null
-
   const getRootEntries = useCallback((allEntries: ChatbotEntry[]) => {
     return allEntries.filter(e => !e.parent_id)
   }, [])
@@ -47,6 +45,9 @@ export default function ChatbotWidget() {
       scrollRef.current.scrollTop = 0
     }
   }, [currentEntry])
+
+  // Hide on admin pages (after all hooks)
+  if (pathname.startsWith('/admin')) return null
 
   const handleTopicClick = (entry: ChatbotEntry) => {
     setCurrentEntry(entry)
@@ -127,7 +128,14 @@ export default function ChatbotWidget() {
             {/* Content */}
             <AnimatePresence mode="wait">
               {!loaded ? (
-                <div key="loading" className="flex-1 flex items-center justify-center p-4 bg-gray-50/50 min-h-0">
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex-1 flex items-center justify-center p-4 bg-gray-50/50 min-h-0"
+                >
                   <div className="px-4 py-3 rounded-2xl bg-white shadow-sm border border-gray-100">
                     <div className="flex gap-1.5">
                       <span className="w-2 h-2 bg-gray-300 rounded-full animate-bounce [animation-delay:0ms]" />
@@ -135,7 +143,7 @@ export default function ChatbotWidget() {
                       <span className="w-2 h-2 bg-gray-300 rounded-full animate-bounce [animation-delay:300ms]" />
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ) : currentEntry === null ? (
                 <motion.div
                   key="welcome"
