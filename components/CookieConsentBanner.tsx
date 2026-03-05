@@ -300,7 +300,7 @@ function FloatingCookieButton({ onClick }: { onClick: () => void }) {
       onClick={onClick}
       aria-label="Gérer mes cookies"
       title="Gérer mes cookies"
-      className="fixed bottom-4 left-4 z-[9998] flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-[hsl(220,73%,12%)]/90 backdrop-blur-sm shadow-lg hover:bg-[hsl(220,73%,18%)] hover:border-campaign-lime/30 transition-all duration-200"
+      className="fixed bottom-20 left-4 z-[9998] flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-[hsl(220,73%,12%)]/90 backdrop-blur-sm shadow-lg hover:bg-[hsl(220,73%,18%)] hover:border-campaign-lime/30 transition-all duration-200"
     >
       <Cookie className="h-4 w-4 text-white/60" />
     </motion.button>
