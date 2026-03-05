@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { sendContactConfirmationEmail } from '@/lib/email'
 
 interface ContactFormData {
   prenom: string
@@ -56,12 +57,11 @@ export async function POST(request: Request) {
       }
     }
 
-    // Send email if SMTP is configured
-    const smtpHost = process.env.SMTP_HOST
-    const contactEmail = process.env.CONTACT_EMAIL_TO
-
-    if (smtpHost && contactEmail) {
-      console.log(`[CONTACT] Email would be sent to ${contactEmail} via ${smtpHost}`)
+    // Send confirmation email to the user (non-blocking)
+    try {
+      await sendContactConfirmationEmail(body.email.trim(), body.prenom.trim())
+    } catch (e) {
+      console.error('[CONTACT] Confirmation email error:', e)
     }
 
     return NextResponse.json({ success: true })

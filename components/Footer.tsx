@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { scrollToHash } from "@/lib/scroll-to-hash";
+import NewsletterForm from "@/components/NewsletterForm";
 
 const socials = [
   { icon: Instagram, href: "https://www.instagram.com/mathieumorateur/", label: "Instagram" },
@@ -145,8 +146,13 @@ const Footer = () => {
               ))}
             </nav>
 
-            {/* Socials */}
+            {/* Newsletter + Socials */}
             <div>
+              <div id="newsletter" className="mb-6">
+                <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-3">Newsletter</p>
+                <p className="text-primary-foreground/50 text-xs mb-3">Recevez les dernières infos de la campagne.</p>
+                <NewsletterForm />
+              </div>
               <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-4">Suivez-nous</p>
               <div className="flex flex-col gap-3">
                 {socials.map((s, i) => (
