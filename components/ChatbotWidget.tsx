@@ -2,14 +2,15 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageCircle, X, ArrowLeft, ChevronRight, Home } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { MessageCircle, X, ArrowLeft, ChevronRight, Home, ExternalLink } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 import type { ChatbotEntry } from '@/lib/types/database'
 
 const WELCOME_MESSAGE = 'Bonjour ! Je suis l\'assistant du site Morateur 2026. Sélectionnez un sujet ci-dessous pour en savoir plus :'
 
 export default function ChatbotWidget() {
   const pathname = usePathname()
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [entries, setEntries] = useState<ChatbotEntry[]>([])
   const [currentEntry, setCurrentEntry] = useState<ChatbotEntry | null>(null)
@@ -49,7 +50,22 @@ export default function ChatbotWidget() {
   // Hide on admin pages (after all hooks)
   if (pathname.startsWith('/admin')) return null
 
+  const navigateTo = (url: string) => {
+    setIsOpen(false)
+    setCurrentEntry(null)
+    router.push(url)
+  }
+
   const handleTopicClick = (entry: ChatbotEntry) => {
+    const children = getChildEntries(entry.id, entries)
+
+    // Si pas d'enfants et un lien → rediriger directement
+    if (children.length === 0 && entry.link_url) {
+      navigateTo(entry.link_url)
+      return
+    }
+
+    // Sinon, afficher les sous-sujets
     setCurrentEntry(entry)
   }
 
@@ -204,6 +220,19 @@ export default function ChatbotWidget() {
                       {currentEntry.answer}
                     </div>
                   </div>
+
+                  {/* Link to page */}
+                  {currentEntry.link_url && (
+                    <div className="mb-4">
+                      <button
+                        onClick={() => navigateTo(currentEntry.link_url!)}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-[13px] font-semibold bg-campaign-lime text-accent-foreground hover:bg-campaign-lime-light transition-colors shadow-sm"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span>Voir la page</span>
+                      </button>
+                    </div>
+                  )}
 
                   {/* Child subtopics */}
                   {children.length > 0 && (
