@@ -144,6 +144,13 @@ const Footer = () => {
                   {link.label}
                 </button>
               ))}
+              <button
+                onClick={() => window.dispatchEvent(new CustomEvent('open-cookie-preferences'))}
+                className="group text-left text-primary-foreground/70 hover:text-campaign-lime transition-colors text-sm font-medium flex items-center gap-2"
+              >
+                <span className="w-0 group-hover:w-3 h-px bg-campaign-lime transition-all duration-200" />
+                Gérer mes cookies
+              </button>
             </nav>
 
             {/* Newsletter + Socials */}
