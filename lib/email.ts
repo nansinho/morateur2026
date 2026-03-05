@@ -4,7 +4,7 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null
 
-const FROM_EMAIL = 'Morateur 2026 <contact@morateur2026.fr>'
+const FROM_EMAIL = 'Morateur 2026 <noreply@morateur2026.fr>'
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'contact@morateur2026.fr'
 
 export async function sendConfirmationEmail(
@@ -161,5 +161,116 @@ export async function sendAdminReplyEmail(
     })
   } catch (error) {
     console.error('[EMAIL] Erreur envoi réponse admin:', error)
+  }
+}
+
+export async function sendContactConfirmationEmail(
+  to: string,
+  firstName: string
+): Promise<void> {
+  if (!resend) {
+    console.log('[EMAIL] Resend non configuré, email de confirmation contact ignoré')
+    return
+  }
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to,
+      subject: 'Merci pour votre engagement — Morateur 2026',
+      html: `
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+          <div style="background: linear-gradient(135deg, #0e6478, #1a4b8c); padding: 30px; border-radius: 16px; margin-bottom: 24px;">
+            <h1 style="color: #50b87a; font-size: 24px; margin: 0 0 8px;">Morateur 2026</h1>
+            <p style="color: rgba(255,255,255,0.6); margin: 0; font-size: 14px;">Confirmation de votre message</p>
+          </div>
+
+          <p style="color: #333; font-size: 16px; line-height: 1.6;">
+            Bonjour <strong>${firstName}</strong>,
+          </p>
+
+          <p style="color: #333; font-size: 16px; line-height: 1.6;">
+            Nous avons bien reçu votre message et nous vous remercions pour votre engagement
+            aux côtés de Mathieu Morateur pour l'avenir de Bouc-Bel-Air.
+          </p>
+
+          <div style="background: #f0fdf4; border-left: 4px solid #50b87a; padding: 16px; border-radius: 0 8px 8px 0; margin: 24px 0;">
+            <p style="color: #166534; margin: 0; font-size: 14px;">
+              Nous reviendrons vers vous dans les meilleurs délais.
+            </p>
+          </div>
+
+          <p style="color: #666; font-size: 14px; line-height: 1.6; margin-top: 32px;">
+            Cordialement,<br/>
+            <strong>L'équipe Morateur 2026</strong>
+          </p>
+
+          <hr style="border: none; border-top: 1px solid #eee; margin: 32px 0 16px;" />
+          <p style="color: #999; font-size: 12px;">
+            Cet email a été envoyé suite à votre inscription sur morateur2026.fr.
+          </p>
+        </div>
+      `,
+    })
+  } catch (error) {
+    console.error('[EMAIL] Erreur envoi confirmation contact:', error)
+  }
+}
+
+export async function sendNewsletterConfirmationEmail(
+  to: string,
+  firstName?: string
+): Promise<void> {
+  if (!resend) {
+    console.log('[EMAIL] Resend non configuré, email de confirmation newsletter ignoré')
+    return
+  }
+
+  const greeting = firstName
+    ? `Bonjour <strong>${firstName}</strong>,`
+    : 'Bonjour,'
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to,
+      subject: 'Bienvenue dans la newsletter Morateur 2026',
+      html: `
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+          <div style="background: linear-gradient(135deg, #0e6478, #1a4b8c); padding: 30px; border-radius: 16px; margin-bottom: 24px;">
+            <h1 style="color: #50b87a; font-size: 24px; margin: 0 0 8px;">Morateur 2026</h1>
+            <p style="color: rgba(255,255,255,0.6); margin: 0; font-size: 14px;">Newsletter</p>
+          </div>
+
+          <p style="color: #333; font-size: 16px; line-height: 1.6;">
+            ${greeting}
+          </p>
+
+          <p style="color: #333; font-size: 16px; line-height: 1.6;">
+            Vous êtes bien inscrit(e) à la newsletter Morateur 2026.
+            Vous recevrez régulièrement les dernières actualités de la campagne
+            pour l'avenir de Bouc-Bel-Air.
+          </p>
+
+          <div style="background: #f0fdf4; border-left: 4px solid #50b87a; padding: 16px; border-radius: 0 8px 8px 0; margin: 24px 0;">
+            <p style="color: #166534; margin: 0; font-size: 14px;">
+              Restez connecté(e) ! Suivez-nous aussi sur nos réseaux sociaux.
+            </p>
+          </div>
+
+          <p style="color: #666; font-size: 14px; line-height: 1.6; margin-top: 32px;">
+            Cordialement,<br/>
+            <strong>L'équipe Morateur 2026</strong>
+          </p>
+
+          <hr style="border: none; border-top: 1px solid #eee; margin: 32px 0 16px;" />
+          <p style="color: #999; font-size: 12px;">
+            Cet email a été envoyé suite à votre inscription à la newsletter sur morateur2026.fr.
+          </p>
+        </div>
+      `,
+    })
+  } catch (error) {
+    console.error('[EMAIL] Erreur envoi confirmation newsletter:', error)
   }
 }

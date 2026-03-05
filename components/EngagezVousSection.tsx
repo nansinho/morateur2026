@@ -63,7 +63,7 @@ const actions: {
     Icon: Mail,
     title: "Newsletter",
     desc: "Recevez chaque semaine les dernières infos de la campagne.",
-    href: "#procuration",
+    href: "#newsletter",
     external: false,
     bg: "gradient-teal-deep",
     iconColor: "text-campaign-lime",
