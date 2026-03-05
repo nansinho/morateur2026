@@ -106,10 +106,10 @@ export default function ActualitesContent({ articles }: { articles: Article[] })
                           </div>
                         </div>
 
-                        <h2 className={`font-accent font-extrabold ${style.text} text-lg sm:text-xl leading-snug mb-3 uppercase tracking-wide -rotate-1 line-clamp-2`}>
+                        <h2 className={`font-accent font-extrabold ${style.text} text-lg sm:text-xl leading-snug mb-3 uppercase tracking-wide -rotate-1 line-clamp-2 min-h-[2lh]`}>
                           {article.title}
                         </h2>
-                        <p className={`${style.accent} text-sm leading-relaxed flex-1 line-clamp-3`}>
+                        <p className={`${style.accent} text-sm leading-relaxed line-clamp-3 min-h-[3lh]`}>
                           {article.description}
                         </p>
 
