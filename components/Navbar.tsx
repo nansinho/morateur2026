@@ -103,7 +103,7 @@ const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden fixed inset-0 top-0 z-40 gradient-teal-deep flex flex-col"
+            className="md:hidden fixed inset-0 top-0 z-50 gradient-teal-deep flex flex-col"
           >
             {/* Header row */}
             <div className="flex items-center justify-between px-6 py-5">

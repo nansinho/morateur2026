@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Providers } from './providers'
 import './globals.css'
 import {
@@ -9,6 +9,13 @@ import AnalyticsScripts from '@/components/analytics'
 import AccessibilityButton from '@/components/AccessibilityButton'
 import ChatbotWidget from '@/components/ChatbotWidget'
 import CookieConsentBanner from '@/components/CookieConsentBanner'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: THEME_COLOR,
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -37,9 +44,6 @@ export const metadata: Metadata = {
     title: `${SITE_NAME} — ${SITE_TAGLINE}`,
     description: SITE_DESCRIPTION,
     images: [DEFAULT_OG_IMAGE.url],
-  },
-  other: {
-    'theme-color': THEME_COLOR,
   },
   alternates: {
     canonical: '/',

@@ -316,7 +316,7 @@ const ProcurationSection = () => {
                   </div>
 
                   {/* Step content */}
-                  <div className="px-7 sm:px-9 pb-4 min-h-[220px] flex items-start">
+                  <div className="px-7 sm:px-9 pb-4 min-h-[180px] sm:min-h-[220px] flex items-start">
                     <AnimatePresence mode="wait" custom={direction}>
                       <motion.div
                         key={step}
@@ -348,7 +348,7 @@ const ProcurationSection = () => {
                                       value={form[key]}
                                       onBlur={() => handleBlur(key)}
                                       onChange={e => handleChange(key, e.target.value)}
-                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
+                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
                                     />
                                   </div>
                                   {touched.has(key) && errors[key] && (
@@ -387,7 +387,7 @@ const ProcurationSection = () => {
                                       value={form[key]}
                                       onBlur={() => handleBlur(key)}
                                       onChange={e => handleChange(key, e.target.value)}
-                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
+                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
                                     />
                                   </div>
                                   {touched.has(key) && errors[key] && (
@@ -423,7 +423,7 @@ const ProcurationSection = () => {
                                   value={form.motivations}
                                   onBlur={() => handleBlur("motivations")}
                                   onChange={e => handleChange("motivations", e.target.value)}
-                                  className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200 resize-none"
+                                  className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200 resize-none"
                                 />
                               </div>
                               <div className="flex justify-between mt-1.5">

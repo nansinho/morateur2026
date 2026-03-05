@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const candidatImg = "/images/header_candidat_portrait.png";
 
@@ -19,10 +20,11 @@ const rotatingWords = [
 const HeroSection = () => {
   const ref = useRef<HTMLElement>(null);
   const [wordIndex, setWordIndex] = useState(0);
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
-  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const textY = useTransform(scrollYProgress, [0, 0.5], ["0%", "30%"]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], isMobile ? [1, 1] : [1, 1.2]);
+  const imgY = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["0%", "20%"]);
+  const textY = useTransform(scrollYProgress, [0, 0.5], isMobile ? ["0%", "0%"] : ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
 
   useEffect(() => {
