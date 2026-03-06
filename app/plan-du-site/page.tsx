@@ -36,7 +36,6 @@ const legalPages = [
   { href: '/cookies', label: 'Gestion des cookies' },
   { href: '/accessibilite', label: 'Accessibilité' },
   { href: '/plan-du-site', label: 'Plan du site' },
-  { href: '/sitemap-xml', label: 'Sitemap XML' },
 ]
 
 export default async function PlanDuSitePage() {
