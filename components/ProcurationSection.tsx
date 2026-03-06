@@ -260,7 +260,7 @@ const ProcurationSection = () => {
                   onSubmit={handleSubmit}
                   noValidate
                   className="rounded-3xl border-2 border-white/30 overflow-hidden backdrop-blur-md shadow-[0_0_80px_-20px_rgba(255,255,255,0.08)]"
-                  style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))" }}
+                  style={{ background: "linear-gradient(160deg, rgba(15,30,70,0.92), rgba(20,45,90,0.88), rgba(25,60,80,0.85))" }}
                   role="form"
                   aria-label="Formulaire de contact campagne"
                 >
@@ -276,7 +276,7 @@ const ProcurationSection = () => {
                                 ? "gradient-lime text-accent-foreground"
                                 : i === step
                                 ? "bg-white/10 text-campaign-lime border-2 border-campaign-lime"
-                                : "bg-white/5 text-white/30 border border-white/15"
+                                : "bg-white/10 text-white/40 border border-white/25"
                             }`}
                             animate={i === step ? { scale: [1, 1.1, 1] } : {}}
                             transition={{ duration: 0.4 }}
@@ -285,7 +285,7 @@ const ProcurationSection = () => {
                           </motion.div>
                           {i < steps.length - 1 && (
                             <div className={`w-8 sm:w-12 h-0.5 rounded-full transition-colors duration-200 ${
-                              i < step ? "bg-campaign-lime" : "bg-white/10"
+                              i < step ? "bg-campaign-lime" : "bg-white/20"
                             }`} />
                           )}
                         </div>
@@ -335,7 +335,7 @@ const ProcurationSection = () => {
                               const Icon = config.icon;
                               return (
                                 <div key={key} className="group">
-                                  <label htmlFor={key} className="text-xs font-bold text-white/50 uppercase tracking-wider mb-2 block">
+                                  <label htmlFor={key} className="text-xs font-bold text-campaign-lime uppercase tracking-wider mb-2 block">
                                     {config.label}
                                   </label>
                                   <div className="relative">
@@ -348,7 +348,7 @@ const ProcurationSection = () => {
                                       value={form[key]}
                                       onBlur={() => handleBlur(key)}
                                       onChange={e => handleChange(key, e.target.value)}
-                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
+                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.15] border border-white/30 text-white text-base sm:text-sm outline-none placeholder:text-white/25 focus:border-campaign-lime focus:bg-campaign-lime/[0.08] focus:shadow-[0_0_20px_-5px_hsl(152_48%_50%/0.25)] shadow-sm transition-all duration-200"
                                     />
                                   </div>
                                   {touched.has(key) && errors[key] && (
@@ -374,7 +374,7 @@ const ProcurationSection = () => {
                               const Icon = config.icon;
                               return (
                                 <div key={key} className="group">
-                                  <label htmlFor={key} className="text-xs font-bold text-white/50 uppercase tracking-wider mb-2 block">
+                                  <label htmlFor={key} className="text-xs font-bold text-campaign-lime uppercase tracking-wider mb-2 block">
                                     {config.label}
                                   </label>
                                   <div className="relative">
@@ -387,7 +387,7 @@ const ProcurationSection = () => {
                                       value={form[key]}
                                       onBlur={() => handleBlur(key)}
                                       onChange={e => handleChange(key, e.target.value)}
-                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200"
+                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.15] border border-white/30 text-white text-base sm:text-sm outline-none placeholder:text-white/25 focus:border-campaign-lime focus:bg-campaign-lime/[0.08] focus:shadow-[0_0_20px_-5px_hsl(152_48%_50%/0.25)] shadow-sm transition-all duration-200"
                                     />
                                   </div>
                                   {touched.has(key) && errors[key] && (
@@ -409,7 +409,7 @@ const ProcurationSection = () => {
                         {step === 2 && (
                           <div className="space-y-4">
                             <div className="group">
-                              <label htmlFor="motivations" className="text-xs font-bold text-white/50 uppercase tracking-wider mb-2 block">
+                              <label htmlFor="motivations" className="text-xs font-bold text-campaign-lime uppercase tracking-wider mb-2 block">
                                 Dites-nous en plus
                               </label>
                               <div className="relative">
@@ -423,7 +423,7 @@ const ProcurationSection = () => {
                                   value={form.motivations}
                                   onBlur={() => handleBlur("motivations")}
                                   onChange={e => handleChange("motivations", e.target.value)}
-                                  className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.08] border border-white/20 text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime focus:bg-campaign-lime/[0.04] transition-all duration-200 resize-none"
+                                  className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.15] border border-white/30 text-white text-base sm:text-sm outline-none placeholder:text-white/25 focus:border-campaign-lime focus:bg-campaign-lime/[0.08] focus:shadow-[0_0_20px_-5px_hsl(152_48%_50%/0.25)] shadow-sm transition-all duration-200 resize-none"
                                 />
                               </div>
                               <div className="flex justify-between mt-1.5">
@@ -528,7 +528,7 @@ const ProcurationSection = () => {
                           className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-extrabold uppercase tracking-wider text-sm transition-all duration-200 ${
                             isStepValid(step)
                               ? "gradient-lime text-accent-foreground shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_15px_40px_-10px_hsl(var(--campaign-lime)/0.4)]"
-                              : "bg-white/[0.06] text-white/30 border border-white/10 cursor-default"
+                              : "bg-white/[0.12] text-white/50 border border-white/20 cursor-default"
                           }`}
                           whileHover={isStepValid(step) ? { scale: 1.02 } : {}}
                           whileTap={isStepValid(step) ? { scale: 0.97 } : {}}
@@ -543,7 +543,7 @@ const ProcurationSection = () => {
                           className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-extrabold uppercase tracking-wider text-sm transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:rotate-0 ${
                             form.accept_policy
                               ? "gradient-lime text-accent-foreground shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_15px_40px_-10px_hsl(var(--campaign-lime)/0.4)]"
-                              : "bg-white/[0.06] text-white/30 border border-white/10"
+                              : "bg-white/[0.12] text-white/50 border border-white/20"
                           }`}
                           whileHover={submitting || !form.accept_policy ? {} : { scale: 1.02 }}
                           whileTap={submitting || !form.accept_policy ? {} : { scale: 0.97 }}
