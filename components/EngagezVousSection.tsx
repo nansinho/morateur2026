@@ -90,7 +90,11 @@ const actions: {
   },
 ];
 
-const EngagezVousSection = () => {
+interface EngagezVousSectionProps {
+  onJoinClick?: () => void;
+}
+
+const EngagezVousSection = ({ onJoinClick }: EngagezVousSectionProps) => {
   return (
     <section aria-label="Rejoignez la campagne" className="bg-campaign-ice py-12 sm:py-16 overflow-x-clip">
       <div className="w-full relative z-10">
@@ -118,19 +122,23 @@ const EngagezVousSection = () => {
         {/* Grid / Horizontal scroll on mobile */}
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4 sm:overflow-visible sm:snap-none sm:pb-0 pt-2">
-            {actions.map((action, i) => (
-              <motion.a
+            {actions.map((action, i) => {
+              const isJoinCard = i === 0 && onJoinClick;
+              const Wrapper = isJoinCard ? motion.button : motion.a;
+              const wrapperProps = isJoinCard
+                ? { onClick: onJoinClick, type: "button" as const }
+                : { href: action.href, target: action.external ? "_blank" : undefined, rel: action.external ? "noopener noreferrer" : undefined };
+              return (
+              <Wrapper
                 key={i}
-                href={action.href}
-                target={action.external ? "_blank" : undefined}
-                rel={action.external ? "noopener noreferrer" : undefined}
+                {...(wrapperProps as Record<string, unknown>)}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06, duration: 0.3 }}
                 whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
                 whileTap={{ scale: 0.97 }}
-                className="block cursor-pointer group min-w-[65vw] snap-center sm:min-w-0"
+                className="block cursor-pointer group min-w-[65vw] snap-center sm:min-w-0 text-left"
               >
                 <div
                   className={`relative rounded-2xl ${action.bg}
@@ -161,8 +169,9 @@ const EngagezVousSection = () => {
                     )}
                   </div>
                 </div>
-              </motion.a>
-            ))}
+              </Wrapper>
+              );
+            })}
           </div>
         </div>
       </div>

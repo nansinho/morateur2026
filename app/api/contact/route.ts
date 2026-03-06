@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { sendContactConfirmationEmail } from '@/lib/email'
 import { addBrevoContact } from '@/lib/brevo'
+import { validateAntiSpam } from '@/lib/antispam'
 
 interface ContactFormData {
   prenom: string
@@ -10,6 +11,8 @@ interface ContactFormData {
   tel: string
   motivations: string
   newsletter_optin?: boolean
+  _hp?: string
+  _ts?: number
 }
 
 function validateForm(data: ContactFormData): Record<string, string> {
@@ -25,6 +28,16 @@ function validateForm(data: ContactFormData): Record<string, string> {
 export async function POST(request: Request) {
   try {
     const body = await request.json() as ContactFormData
+
+    // Anti-spam checks
+    const spamCheck = validateAntiSpam(request, { _hp: body._hp, _ts: body._ts })
+    if (!spamCheck.ok) {
+      if (spamCheck.error === 'success_fake') {
+        return NextResponse.json({ success: true }) // Silently discard spam
+      }
+      return NextResponse.json({ success: false, error: spamCheck.error }, { status: spamCheck.status || 400 })
+    }
+
     const errors = validateForm(body)
 
     if (Object.keys(errors).length > 0) {

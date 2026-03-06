@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { sendConfirmationEmail, sendAdminNotificationEmail } from '@/lib/email'
+import { validateAntiSpam } from '@/lib/antispam'
 
 interface ConsultationFormData {
   quartier_id: string
@@ -11,6 +12,8 @@ interface ConsultationFormData {
   wants_personal_response: boolean
   wants_callback: boolean
   answers: { question_id: string; answer_text: string }[]
+  _hp?: string
+  _ts?: number
 }
 
 function validateForm(data: ConsultationFormData): Record<string, string> {
@@ -32,6 +35,16 @@ function validateForm(data: ConsultationFormData): Record<string, string> {
 export async function POST(request: Request) {
   try {
     const body = await request.json() as ConsultationFormData
+
+    // Anti-spam checks
+    const spamCheck = validateAntiSpam(request, { _hp: body._hp, _ts: body._ts })
+    if (!spamCheck.ok) {
+      if (spamCheck.error === 'success_fake') {
+        return NextResponse.json({ success: true })
+      }
+      return NextResponse.json({ success: false, error: spamCheck.error }, { status: spamCheck.status || 400 })
+    }
+
     const errors = validateForm(body)
 
     if (Object.keys(errors).length > 0) {

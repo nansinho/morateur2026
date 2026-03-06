@@ -83,6 +83,7 @@ export default function ConsultationForm({ quartier, questions }: Props) {
   })
   const [errors, setErrors] = useState<FormErrors>({})
   const [touched, setTouched] = useState<Set<string>>(new Set())
+  const [formLoadedAt] = useState(() => Date.now())
 
   const handleChange = useCallback((field: string, value: string | boolean) => {
     setForm(prev => {
@@ -141,6 +142,8 @@ export default function ConsultationForm({ quartier, questions }: Props) {
           answers: questions
             .filter(q => form.answers[q.id]?.trim())
             .map(q => ({ question_id: q.id, answer_text: form.answers[q.id] })),
+          _hp: '',
+          _ts: formLoadedAt,
         }),
       })
 
