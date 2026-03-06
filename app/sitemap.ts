@@ -5,9 +5,11 @@ import { createClient } from '@supabase/supabase-js'
 export const dynamic = 'force-dynamic'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const now = new Date()
+
   const staticPages: MetadataRoute.Sitemap = PAGES.map((page) => ({
     url: `${SITE_URL}${page.path}`,
-    lastModified: new Date(),
+    lastModified: now,
     changeFrequency: page.changeFrequency,
     priority: page.priority,
   }))
@@ -15,58 +17,62 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Add quartiers hub page
   staticPages.push({
     url: `${SITE_URL}/quartiers`,
-    lastModified: new Date(),
+    lastModified: now,
     changeFrequency: 'weekly',
     priority: 0.7,
   })
 
-  // Add active quartier pages
-  try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    if (supabaseUrl && supabaseKey) {
-      const supabase = createClient(supabaseUrl, supabaseKey)
-      const { data: quartiers } = await supabase
-        .from('quartiers')
-        .select('slug')
-        .eq('is_active', true)
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-      if (quartiers) {
-        for (const q of quartiers) {
-          staticPages.push({
-            url: `${SITE_URL}/${q.slug}`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.6,
-          })
-        }
+  if (!supabaseUrl || !supabaseKey) {
+    return staticPages
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseKey)
+
+  // Add active quartier pages with real updated_at dates
+  try {
+    const { data: quartiers } = await supabase
+      .from('quartiers')
+      .select('slug, updated_at')
+      .eq('is_active', true)
+
+    if (quartiers) {
+      for (const q of quartiers) {
+        staticPages.push({
+          url: `${SITE_URL}/${q.slug}`,
+          lastModified: q.updated_at ? new Date(q.updated_at) : now,
+          changeFrequency: 'monthly',
+          priority: 0.6,
+        })
       }
     }
   } catch (e) {
     console.error('[SITEMAP] Error fetching quartiers:', e)
   }
 
-  // Add article pages with slug
+  // Add published article pages with real updated_at dates
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    if (supabaseUrl && supabaseKey) {
-      const supabase2 = createClient(supabaseUrl, supabaseKey)
-      const { data: articles } = await supabase2
-        .from('articles')
-        .select('slug')
-        .not('slug', 'is', null)
+    const { data: articles } = await supabase
+      .from('articles')
+      .select('slug, updated_at, published_at')
+      .not('slug', 'is', null)
+      .eq('status', 'published')
 
-      if (articles) {
-        for (const a of articles) {
-          if (a.slug) {
-            staticPages.push({
-              url: `${SITE_URL}/actualites/${a.slug}`,
-              lastModified: new Date(),
-              changeFrequency: 'monthly',
-              priority: 0.7,
-            })
-          }
+    if (articles) {
+      for (const a of articles) {
+        if (a.slug) {
+          staticPages.push({
+            url: `${SITE_URL}/actualites/${a.slug}`,
+            lastModified: a.updated_at
+              ? new Date(a.updated_at)
+              : a.published_at
+                ? new Date(a.published_at)
+                : now,
+            changeFrequency: 'monthly',
+            priority: 0.7,
+          })
         }
       }
     }
