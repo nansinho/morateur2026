@@ -29,7 +29,7 @@ export default function EquipeContent({ members }: EquipeContentProps) {
       <Navbar />
 
       {/* Hero */}
-      <section className="gradient-teal-deep pt-32 pb-20">
+      <section className="gradient-teal-deep pt-44 pb-20">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

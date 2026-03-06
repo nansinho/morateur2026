@@ -166,7 +166,7 @@ export default function ConsultationForm({ quartier, questions }: Props) {
         <div className="absolute top-20 right-10 w-72 h-72 bg-campaign-lime/[0.04] rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-20 left-10 w-56 h-56 bg-campaign-lime/[0.03] rounded-full blur-2xl pointer-events-none" />
 
-        <div className="container mx-auto px-4 sm:px-6 pt-32 pb-16 sm:pb-28 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 pt-44 pb-16 sm:pb-28 relative z-10">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}

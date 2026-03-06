@@ -112,7 +112,7 @@ export default function AccessibiliteContent() {
       <Navbar />
 
       {/* Hero with banner image */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden pt-20">
         {/* Banner image */}
         <div className="relative aspect-[16/7] sm:aspect-[21/9] w-full">
           <Image
