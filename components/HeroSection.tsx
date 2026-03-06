@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const candidatImg = "/images/candidat-portrait-decontracte.jpg";
+const candidatImgMobile = "/images/candidat-portrait-mobile.jpg";
 
 const rotatingWords = [
   "SÉCURISÉE",
@@ -43,11 +44,21 @@ const HeroSection = () => {
     <section ref={ref} id="hero" className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Fullscreen parallax photo */}
       <motion.div className="absolute inset-0" style={{ scale: imgScale, y: imgY }}>
+        {/* Photo desktop */}
         <Image
           src={candidatImg}
           alt="Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air"
           fill
-          className="object-cover object-[center_30%]"
+          className="object-cover object-[center_30%] hidden md:block"
+          priority
+          sizes="100vw"
+        />
+        {/* Photo mobile */}
+        <Image
+          src={candidatImgMobile}
+          alt="Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air"
+          fill
+          className="object-cover object-center block md:hidden"
           priority
           sizes="100vw"
         />
