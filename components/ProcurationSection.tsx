@@ -68,6 +68,7 @@ const ProcurationSection = () => {
   const [form, setForm] = useState<FormData>({ prenom: "", nom: "", email: "", tel: "", motivations: "", accept_policy: false, newsletter_optin: false });
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Set<string>>(new Set());
+  const [formLoadedAt] = useState(() => Date.now());
 
   const handleChange = useCallback((field: keyof FormData, value: string) => {
     setForm(prev => {
@@ -130,7 +131,7 @@ const ProcurationSection = () => {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, _hp: '', _ts: formLoadedAt }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
@@ -264,6 +265,9 @@ const ProcurationSection = () => {
                   role="form"
                   aria-label="Formulaire de contact campagne"
                 >
+                  {/* Honeypot - hidden from humans */}
+                  <input type="text" name="website" tabIndex={-1} autoComplete="off" style={{ position: 'absolute', left: '-9999px', opacity: 0 }} />
+
                   {/* Step header */}
                   <div className="px-7 sm:px-9 pt-7 sm:pt-9 pb-0">
                     {/* Inscription badge */}

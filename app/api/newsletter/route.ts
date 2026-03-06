@@ -2,16 +2,28 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { sendNewsletterConfirmationEmail } from '@/lib/email'
 import { addBrevoContact } from '@/lib/brevo'
+import { validateAntiSpam } from '@/lib/antispam'
 
 interface NewsletterFormData {
   email: string
   first_name?: string
   consent?: boolean
+  _hp?: string
+  _ts?: number
 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json() as NewsletterFormData
+
+    // Anti-spam checks
+    const spamCheck = validateAntiSpam(request, { _hp: body._hp, _ts: body._ts })
+    if (!spamCheck.ok) {
+      if (spamCheck.error === 'success_fake') {
+        return NextResponse.json({ success: true })
+      }
+      return NextResponse.json({ success: false, error: spamCheck.error }, { status: spamCheck.status || 400 })
+    }
 
     if (!body.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
       return NextResponse.json(

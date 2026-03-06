@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import AnnouncementBanner from "@/components/AnnouncementBanner";
 
 const navItems = [
@@ -15,10 +16,15 @@ const navItems = [
   { label: "Presse", to: "/presse" },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  onJoinClick?: () => void;
+}
+
+const Navbar = ({ onJoinClick }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
+  const pathname = usePathname();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
@@ -37,6 +43,13 @@ const Navbar = () => {
       <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between">
         <Link
           href="/"
+          onClick={(e) => {
+            if (pathname === '/') {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              window.location.href = '/';
+            }
+          }}
           className={`font-accent text-base font-extrabold tracking-widest uppercase transition-colors text-primary-foreground ${
             isScrolled ? "md:text-primary" : ""
           }`}
@@ -59,12 +72,12 @@ const Navbar = () => {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/#procuration"
+          <button
+            onClick={onJoinClick}
             className="gradient-lime text-accent-foreground px-6 py-2.5 rounded-xl text-[13px] font-extrabold tracking-wide shadow-md -rotate-1 hover:rotate-0 hover:shadow-[0_10px_30px_-8px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 transition-all duration-200"
           >
             Rejoignez-nous
-          </Link>
+          </button>
         </div>
 
         {/* Mobile toggle */}
@@ -91,7 +104,14 @@ const Navbar = () => {
             <div className="flex items-center justify-between px-6 py-5">
               <Link
                 href="/"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => {
+                  setIsOpen(false);
+                  if (pathname === '/') {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.location.href = '/';
+                  }
+                }}
                 className="font-accent text-base font-extrabold tracking-widest uppercase text-primary-foreground"
               >
                 MORATEUR <span className="text-campaign-lime">2026</span>
@@ -107,10 +127,7 @@ const Navbar = () => {
 
             {/* Nav links */}
             <nav className="flex-1 flex flex-col justify-center px-8 gap-2">
-              {[
-                ...navItems,
-                { label: "Contact", to: "/#procuration" },
-              ].map((item, i) => (
+              {navItems.map((item, i) => (
                 <motion.div
                   key={item.to}
                   initial={{ x: -30, opacity: 0 }}
@@ -135,13 +152,12 @@ const Navbar = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
               >
-                <Link
-                  href="/#procuration"
-                  onClick={() => setIsOpen(false)}
-                  className="block text-center gradient-lime text-accent-foreground py-4 rounded-2xl text-base font-extrabold uppercase tracking-wider shadow-lg"
+                <button
+                  onClick={() => { setIsOpen(false); onJoinClick?.(); }}
+                  className="block w-full text-center gradient-lime text-accent-foreground py-4 rounded-2xl text-base font-extrabold uppercase tracking-wider shadow-lg"
                 >
                   Rejoignez-nous
-                </Link>
+                </button>
               </motion.div>
               <motion.div
                 className="flex items-center justify-between"
