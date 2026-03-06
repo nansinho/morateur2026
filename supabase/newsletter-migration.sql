@@ -13,7 +13,7 @@ ALTER TABLE newsletter_subscribers ENABLE ROW LEVEL SECURITY;
 
 -- Allow public inserts (for newsletter signup from the website)
 CREATE POLICY "Allow public insert" ON newsletter_subscribers
-  FOR INSERT WITH CHECK (true);
+  FOR INSERT WITH CHECK (length(email) > 0);
 
 -- Allow authenticated users to read (for admin dashboard)
 CREATE POLICY "Allow authenticated read" ON newsletter_subscribers

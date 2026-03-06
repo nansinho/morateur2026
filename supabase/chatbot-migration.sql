@@ -24,6 +24,6 @@ CREATE INDEX IF NOT EXISTS idx_chatbot_entries_sort ON chatbot_entries(sort_orde
 ALTER TABLE chatbot_entries ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Lecture publique chatbot" ON chatbot_entries FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion chatbot" ON chatbot_entries FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification chatbot" ON chatbot_entries FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression chatbot" ON chatbot_entries FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion chatbot" ON chatbot_entries FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification chatbot" ON chatbot_entries FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression chatbot" ON chatbot_entries FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);

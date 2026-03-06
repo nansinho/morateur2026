@@ -91,7 +91,8 @@ BEGIN
   NEW.updated_at = now();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql
+SET search_path = '';
 
 CREATE TRIGGER set_quartiers_updated_at
   BEFORE UPDATE ON quartiers
@@ -134,30 +135,30 @@ ALTER TABLE admin_replies ENABLE ROW LEVEL SECURITY;
 
 -- Quartiers : lecture publique, écriture admin
 CREATE POLICY "Lecture publique des quartiers" ON quartiers FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion de quartiers" ON quartiers FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification de quartiers" ON quartiers FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression de quartiers" ON quartiers FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion de quartiers" ON quartiers FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification de quartiers" ON quartiers FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression de quartiers" ON quartiers FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Questions : lecture publique, écriture admin
 CREATE POLICY "Lecture publique des questions" ON quartier_questions FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion de questions" ON quartier_questions FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification de questions" ON quartier_questions FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression de questions" ON quartier_questions FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion de questions" ON quartier_questions FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification de questions" ON quartier_questions FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression de questions" ON quartier_questions FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Soumissions : insertion publique (formulaire), lecture/modification admin
-CREATE POLICY "Insertion publique de consultations" ON consultation_submissions FOR INSERT TO anon WITH CHECK (true);
+CREATE POLICY "Insertion publique de consultations" ON consultation_submissions FOR INSERT TO anon WITH CHECK (length(first_name) > 0 AND length(last_name) > 0 AND length(email) > 0);
 CREATE POLICY "Admin : lecture des consultations" ON consultation_submissions FOR SELECT TO authenticated USING (true);
-CREATE POLICY "Admin : modification des consultations" ON consultation_submissions FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression des consultations" ON consultation_submissions FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : modification des consultations" ON consultation_submissions FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression des consultations" ON consultation_submissions FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Réponses aux questions : insertion publique, lecture admin
-CREATE POLICY "Insertion publique de reponses consultation" ON consultation_answers FOR INSERT TO anon WITH CHECK (true);
+CREATE POLICY "Insertion publique de reponses consultation" ON consultation_answers FOR INSERT TO anon WITH CHECK (submission_id IS NOT NULL AND question_id IS NOT NULL);
 CREATE POLICY "Admin : lecture des reponses consultation" ON consultation_answers FOR SELECT TO authenticated USING (true);
-CREATE POLICY "Admin : suppression des reponses consultation" ON consultation_answers FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : suppression des reponses consultation" ON consultation_answers FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Réponses admin : authentifié uniquement
 CREATE POLICY "Admin : lecture des reponses admin" ON admin_replies FOR SELECT TO authenticated USING (true);
-CREATE POLICY "Admin : insertion de reponses admin" ON admin_replies FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Admin : insertion de reponses admin" ON admin_replies FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
 
 -- ============================================
 -- PARTIE 6 : PAGE SEO (quartiers)

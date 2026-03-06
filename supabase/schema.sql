@@ -109,53 +109,53 @@ ALTER TABLE press_articles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE seo_pages ENABLE ROW LEVEL SECURITY;
 
 -- Messages : insertion publique (formulaire de contact), lecture/modification admin uniquement
-CREATE POLICY "Permettre l'insertion publique de messages" ON messages FOR INSERT TO anon WITH CHECK (true);
+CREATE POLICY "Permettre l'insertion publique de messages" ON messages FOR INSERT TO anon WITH CHECK (length(prenom) > 0 AND length(nom) > 0 AND length(email) > 0);
 CREATE POLICY "Admin : lecture des messages" ON messages FOR SELECT TO authenticated USING (true);
-CREATE POLICY "Admin : modification des messages" ON messages FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression des messages" ON messages FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : modification des messages" ON messages FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression des messages" ON messages FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Contenu public : lecture pour tous, modification admin
 -- Articles
 CREATE POLICY "Lecture publique des articles" ON articles FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion d'articles" ON articles FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification d'articles" ON articles FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression d'articles" ON articles FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion d'articles" ON articles FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification d'articles" ON articles FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression d'articles" ON articles FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Programme piliers
 CREATE POLICY "Lecture publique des piliers" ON programme_pillars FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion de piliers" ON programme_pillars FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification de piliers" ON programme_pillars FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression de piliers" ON programme_pillars FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion de piliers" ON programme_pillars FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification de piliers" ON programme_pillars FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression de piliers" ON programme_pillars FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Programme mesures
 CREATE POLICY "Lecture publique des mesures" ON programme_measures FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion de mesures" ON programme_measures FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification de mesures" ON programme_measures FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression de mesures" ON programme_measures FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion de mesures" ON programme_measures FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification de mesures" ON programme_measures FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression de mesures" ON programme_measures FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Événements
 CREATE POLICY "Lecture publique des événements" ON events FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion d'événements" ON events FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification d'événements" ON events FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression d'événements" ON events FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion d'événements" ON events FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification d'événements" ON events FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression d'événements" ON events FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Équipe
 CREATE POLICY "Lecture publique de l'équipe" ON team_members FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion de membres" ON team_members FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification de membres" ON team_members FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression de membres" ON team_members FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion de membres" ON team_members FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification de membres" ON team_members FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression de membres" ON team_members FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Presse
 CREATE POLICY "Lecture publique de la presse" ON press_articles FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion de presse" ON press_articles FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification de presse" ON press_articles FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression de presse" ON press_articles FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion de presse" ON press_articles FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification de presse" ON press_articles FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression de presse" ON press_articles FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- SEO
 CREATE POLICY "Lecture publique du SEO" ON seo_pages FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion SEO" ON seo_pages FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification SEO" ON seo_pages FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression SEO" ON seo_pages FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion SEO" ON seo_pages FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification SEO" ON seo_pages FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression SEO" ON seo_pages FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- ============================================
 -- Consultations citoyennes par quartier
@@ -239,7 +239,8 @@ BEGIN
   NEW.updated_at = now();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql
+SET search_path = '';
 
 CREATE TRIGGER set_quartiers_updated_at
   BEFORE UPDATE ON quartiers
@@ -276,30 +277,30 @@ ALTER TABLE admin_replies ENABLE ROW LEVEL SECURITY;
 
 -- Quartiers : lecture publique, écriture admin
 CREATE POLICY "Lecture publique des quartiers" ON quartiers FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion de quartiers" ON quartiers FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification de quartiers" ON quartiers FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression de quartiers" ON quartiers FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion de quartiers" ON quartiers FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification de quartiers" ON quartiers FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression de quartiers" ON quartiers FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Questions : lecture publique, écriture admin
 CREATE POLICY "Lecture publique des questions" ON quartier_questions FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion de questions" ON quartier_questions FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification de questions" ON quartier_questions FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression de questions" ON quartier_questions FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion de questions" ON quartier_questions FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification de questions" ON quartier_questions FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression de questions" ON quartier_questions FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Soumissions : insertion publique (formulaire), lecture/modification admin
-CREATE POLICY "Insertion publique de consultations" ON consultation_submissions FOR INSERT TO anon WITH CHECK (true);
+CREATE POLICY "Insertion publique de consultations" ON consultation_submissions FOR INSERT TO anon WITH CHECK (length(first_name) > 0 AND length(last_name) > 0 AND length(email) > 0);
 CREATE POLICY "Admin : lecture des consultations" ON consultation_submissions FOR SELECT TO authenticated USING (true);
-CREATE POLICY "Admin : modification des consultations" ON consultation_submissions FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression des consultations" ON consultation_submissions FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : modification des consultations" ON consultation_submissions FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression des consultations" ON consultation_submissions FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Réponses aux questions : insertion publique, lecture admin
-CREATE POLICY "Insertion publique de reponses consultation" ON consultation_answers FOR INSERT TO anon WITH CHECK (true);
+CREATE POLICY "Insertion publique de reponses consultation" ON consultation_answers FOR INSERT TO anon WITH CHECK (submission_id IS NOT NULL AND question_id IS NOT NULL);
 CREATE POLICY "Admin : lecture des reponses consultation" ON consultation_answers FOR SELECT TO authenticated USING (true);
-CREATE POLICY "Admin : suppression des reponses consultation" ON consultation_answers FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : suppression des reponses consultation" ON consultation_answers FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Réponses admin : authentifié uniquement
 CREATE POLICY "Admin : lecture des reponses admin" ON admin_replies FOR SELECT TO authenticated USING (true);
-CREATE POLICY "Admin : insertion de reponses admin" ON admin_replies FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Admin : insertion de reponses admin" ON admin_replies FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
 
 -- ============================================
 -- Chatbot Q&A
@@ -326,6 +327,6 @@ CREATE INDEX IF NOT EXISTS idx_chatbot_entries_sort ON chatbot_entries(sort_orde
 ALTER TABLE chatbot_entries ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Lecture publique chatbot" ON chatbot_entries FOR SELECT TO anon, authenticated USING (true);
-CREATE POLICY "Admin : insertion chatbot" ON chatbot_entries FOR INSERT TO authenticated WITH CHECK (true);
-CREATE POLICY "Admin : modification chatbot" ON chatbot_entries FOR UPDATE TO authenticated USING (true);
-CREATE POLICY "Admin : suppression chatbot" ON chatbot_entries FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Admin : insertion chatbot" ON chatbot_entries FOR INSERT TO authenticated WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : modification chatbot" ON chatbot_entries FOR UPDATE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL) WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
+CREATE POLICY "Admin : suppression chatbot" ON chatbot_entries FOR DELETE TO authenticated USING ((SELECT auth.uid()) IS NOT NULL);
