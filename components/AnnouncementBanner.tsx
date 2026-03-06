@@ -77,8 +77,8 @@ export default function AnnouncementBanner() {
                 <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 min-w-0">
                   {/* VoteRRR message */}
                   <span className="font-accent font-extrabold text-sm sm:text-base tracking-wider uppercase whitespace-nowrap">
-                    <span className="text-campaign-lime animate-pulse">VoteRRR</span>{' '}
-                    <span className="text-white">Morateurr 2026</span>
+                    <span className="text-campaign-lime animate-pulse">Votez</span>{' '}
+                    <span className="text-white">Morateur 2026</span>
                   </span>
 
                   {/* Dates */}
