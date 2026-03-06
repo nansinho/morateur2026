@@ -1,19 +1,21 @@
 'use client'
 
 import { useState, useCallback } from "react";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import MarqueeBand from "@/components/MarqueeBand";
 import CandidateSection from "@/components/CandidateSection";
-import ProgrammeSection from "@/components/ProgrammeSection";
-import EngagezVousSection from "@/components/EngagezVousSection";
-import VillageBanner from "@/components/VillageBanner";
-import ActualitesSection from "@/components/ActualitesSection";
-import RoadmapSection from "@/components/RoadmapSection";
-import ProcurationSection from "@/components/ProcurationSection";
-import JoinPopup from "@/components/JoinPopup";
-import Footer from "@/components/Footer";
-import SocialSidebar from "@/components/SocialSidebar";
+
+const ProgrammeSection = dynamic(() => import("@/components/ProgrammeSection"));
+const EngagezVousSection = dynamic(() => import("@/components/EngagezVousSection"));
+const VillageBanner = dynamic(() => import("@/components/VillageBanner"));
+const ActualitesSection = dynamic(() => import("@/components/ActualitesSection"));
+const RoadmapSection = dynamic(() => import("@/components/RoadmapSection"));
+const ProcurationSection = dynamic(() => import("@/components/ProcurationSection"));
+const JoinPopup = dynamic(() => import("@/components/JoinPopup"));
+const Footer = dynamic(() => import("@/components/Footer"));
+const SocialSidebar = dynamic(() => import("@/components/SocialSidebar"));
 import type { Article, Event, ProgrammePillar } from '@/lib/types/database'
 
 interface HomeContentProps {
