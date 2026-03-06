@@ -2,9 +2,7 @@
 
 import { Facebook, Instagram, ArrowUp, ArrowRight, Heart } from "lucide-react";
 import { motion } from "framer-motion";
-import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { scrollToHash } from "@/lib/scroll-to-hash";
 import NewsletterForm from "@/components/NewsletterForm";
 
 const socials = [
@@ -36,24 +34,7 @@ const navLinks = [
 ];
 
 const Footer = () => {
-  const router = useRouter();
-  const pathname = usePathname();
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
-
-  const handleNav = (to: string) => {
-    if (to.startsWith("/#")) {
-      const hash = to.slice(1);
-      if (pathname === "/") {
-        scrollToHash(hash);
-      } else {
-        router.push("/");
-        setTimeout(() => scrollToHash(hash), 500);
-      }
-    } else {
-      router.push(to);
-      window.scrollTo({ top: 0 });
-    }
-  };
 
   return (
     <>
@@ -83,15 +64,15 @@ const Footer = () => {
             <p className="text-primary-foreground/70 text-lg max-w-md mx-auto mb-8 font-medium">
               Ensemble, construisons la ville de demain. Chaque voix compte.
             </p>
-            <motion.button
-              onClick={() => handleNav("/#procuration")}
+            <motion.a
+              href="/#procuration"
               className="inline-flex items-center gap-3 gradient-lime text-accent-foreground px-10 py-4 rounded-2xl font-extrabold uppercase tracking-wider text-sm shadow-lg -rotate-2 hover:rotate-0 hover:shadow-[0_20px_50px_-10px_hsl(70_80%_43%/0.5)] transition-all duration-200"
               whileHover={{ scale: 1.08, y: -3 }}
               whileTap={{ scale: 0.94, rotate: -4 }}
             >
               Rejoignez-nous
               <ArrowRight className="w-5 h-5" />
-            </motion.button>
+            </motion.a>
           </motion.div>
         </div>
 
@@ -116,14 +97,14 @@ const Footer = () => {
             <nav aria-label="Navigation secondaire" className="flex flex-col gap-3">
               <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-1">Navigation</p>
               {navLinks.map((link, i) => (
-                <button
+                <Link
                   key={i}
-                  onClick={() => handleNav(link.to)}
-                  className="group text-left text-primary-foreground/70 hover:text-campaign-lime transition-colors text-sm font-medium flex items-center gap-2"
+                  href={link.to}
+                  className="group text-primary-foreground/70 hover:text-campaign-lime transition-colors text-sm font-medium flex items-center gap-2"
                 >
                   <span className="w-0 group-hover:w-3 h-px bg-campaign-lime transition-all duration-200" />
                   {link.label}
-                </button>
+                </Link>
               ))}
             </nav>
 
@@ -137,14 +118,14 @@ const Footer = () => {
                 { label: "Accessibilité", to: "/accessibilite" },
                 { label: "Plan du site", to: "/plan-du-site" },
               ].map((link, i) => (
-                <button
+                <Link
                   key={i}
-                  onClick={() => handleNav(link.to)}
-                  className="group text-left text-primary-foreground/70 hover:text-campaign-lime transition-colors text-sm font-medium flex items-center gap-2"
+                  href={link.to}
+                  className="group text-primary-foreground/70 hover:text-campaign-lime transition-colors text-sm font-medium flex items-center gap-2"
                 >
                   <span className="w-0 group-hover:w-3 h-px bg-campaign-lime transition-all duration-200" />
                   {link.label}
-                </button>
+                </Link>
               ))}
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('open-cookie-preferences'))}

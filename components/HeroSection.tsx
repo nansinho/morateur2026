@@ -151,7 +151,8 @@ const HeroSection = () => {
       </motion.div>
 
       {/* Scroll indicator */}
-      <motion.div
+      <motion.button
+        aria-label="Défiler vers le contenu"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-10"
         onClick={() => scrollTo("#candidat")}
         style={{ opacity }}
@@ -166,7 +167,7 @@ const HeroSection = () => {
         >
           <ArrowDown className="w-5 h-5 text-primary-foreground/60" />
         </motion.div>
-      </motion.div>
+      </motion.button>
     </section>
   );
 };
