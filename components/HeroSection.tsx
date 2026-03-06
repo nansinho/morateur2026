@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const candidatImg = "/images/candidat-portrait-decontracte.jpg";
+const candidatImg = "/images/544920789_10163962052379897_1378899732117512397_n.jpg";
 
 const rotatingWords = [
   "SÉCURISÉE",
@@ -47,7 +47,7 @@ const HeroSection = () => {
           src={candidatImg}
           alt="Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air"
           fill
-          className="object-cover object-[center_30%]"
+          className="object-cover object-top"
           priority
           sizes="100vw"
         />
