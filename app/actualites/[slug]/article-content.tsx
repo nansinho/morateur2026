@@ -82,7 +82,7 @@ export default function ArticleContent({
 
       {/* Hero image */}
       {article.image && (
-        <section className="relative pt-20">
+        <section className="relative pt-36">
           <div className="aspect-[16/9] max-h-[560px] overflow-hidden relative">
             <motion.img
               initial={{ scale: 1.05 }}

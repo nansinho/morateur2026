@@ -80,7 +80,7 @@ export default function CandidatContent() {
       <Navbar />
 
       {/* ── Hero ── */}
-      <section className="gradient-teal-deep relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24">
+      <section className="gradient-teal-deep relative overflow-hidden pt-36 pb-16 md:pt-44 md:pb-24">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-end">
             <div className="relative max-w-md mx-auto lg:mx-0">
