@@ -1,6 +1,21 @@
 import type { Metadata, Viewport } from 'next'
+import { Plus_Jakarta_Sans, Sora } from 'next/font/google'
 import { Providers } from './providers'
 import './globals.css'
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-body',
+  display: 'swap',
+})
+
+const sora = Sora({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-heading',
+  display: 'swap',
+})
 import {
   SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION,
   SITE_LOCALE, THEME_COLOR, DEFAULT_OG_IMAGE, CANDIDATE, ORGANIZATION
@@ -155,11 +170,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <html lang="fr">
+    <html lang="fr" className={`${plusJakarta.variable} ${sora.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
