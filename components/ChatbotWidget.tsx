@@ -16,6 +16,7 @@ export default function ChatbotWidget() {
   const [entries, setEntries] = useState<ChatbotEntry[]>([])
   const [currentEntry, setCurrentEntry] = useState<ChatbotEntry | null>(null)
   const [loaded, setLoaded] = useState(false)
+  const [fetchError, setFetchError] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const getRootEntries = useCallback((allEntries: ChatbotEntry[]) => {
@@ -30,13 +31,17 @@ export default function ChatbotWidget() {
   useEffect(() => {
     if (!isOpen || loaded) return
     fetch('/api/chatbot')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Erreur serveur')
+        return res.json()
+      })
       .then(data => {
         const allEntries = (data.entries || []) as ChatbotEntry[]
         setEntries(allEntries)
         setLoaded(true)
       })
       .catch(() => {
+        setFetchError(true)
         setLoaded(true)
       })
   }, [isOpen, loaded])
@@ -195,7 +200,11 @@ export default function ChatbotWidget() {
                   </div>
 
                   {/* Root topic buttons */}
-                  {rootEntries.length > 0 ? (
+                  {fetchError ? (
+                    <p className="text-[13px] text-red-400 text-center py-4">
+                      Impossible de charger les sujets. Veuillez réessayer plus tard.
+                    </p>
+                  ) : rootEntries.length > 0 ? (
                     <div className="space-y-2">
                       {rootEntries.map((entry) => (
                         <button

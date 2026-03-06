@@ -62,6 +62,7 @@ const NewsletterForm = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Votre email"
+            aria-label="Adresse email"
             required
             className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-primary-foreground/10 border border-primary-foreground/20 text-primary-foreground text-base sm:text-sm placeholder:text-primary-foreground/40 focus:outline-none focus:border-campaign-lime/50 focus:ring-1 focus:ring-campaign-lime/30 transition-all"
           />
@@ -100,7 +101,7 @@ const NewsletterForm = () => {
       </label>
 
       {status === 'error' && (
-        <p className="text-red-400 text-xs">{errorMsg}</p>
+        <p role="alert" className="text-red-400 text-xs">{errorMsg}</p>
       )}
     </form>
   )

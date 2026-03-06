@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { useRouter, usePathname } from "next/navigation";
-import { scrollToHash } from "@/lib/scroll-to-hash";
+import Link from "next/link";
 import AnnouncementBanner from "@/components/AnnouncementBanner";
 
 const navItems = [
@@ -20,28 +19,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
-  const router = useRouter();
-  const pathname = usePathname();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
   });
-
-  const handleNav = (to: string) => {
-    setIsOpen(false);
-    if (to.startsWith("/#")) {
-      const hash = to.slice(1);
-      if (pathname === "/") {
-        scrollToHash(hash);
-      } else {
-        router.push("/");
-        setTimeout(() => scrollToHash(hash), 500);
-      }
-    } else {
-      router.push(to);
-      window.scrollTo({ top: 0 });
-    }
-  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -54,21 +35,21 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between">
-        <button
-          onClick={() => handleNav("/#hero")}
+        <Link
+          href="/"
           className={`font-accent text-base font-extrabold tracking-widest uppercase transition-colors text-primary-foreground ${
             isScrolled ? "md:text-primary" : ""
           }`}
         >
           MORATEUR <span className="text-campaign-lime">2026</span>
-        </button>
+        </Link>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-10">
           {navItems.map((item) => (
-            <button
+            <Link
               key={item.to}
-              onClick={() => handleNav(item.to)}
+              href={item.to}
               className={`relative text-[13px] font-semibold tracking-wide uppercase transition-all duration-200 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:transition-all after:duration-200 hover:after:w-full after:bg-campaign-lime ${
                 isScrolled
                   ? "text-foreground/60 hover:text-foreground"
@@ -76,14 +57,14 @@ const Navbar = () => {
               }`}
             >
               {item.label}
-            </button>
+            </Link>
           ))}
-          <button
-            onClick={() => handleNav("/#procuration")}
+          <Link
+            href="/#procuration"
             className="gradient-lime text-accent-foreground px-6 py-2.5 rounded-xl text-[13px] font-extrabold tracking-wide shadow-md -rotate-1 hover:rotate-0 hover:shadow-[0_10px_30px_-8px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 transition-all duration-200"
           >
             Rejoignez-nous
-          </button>
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -108,12 +89,13 @@ const Navbar = () => {
           >
             {/* Header row */}
             <div className="flex items-center justify-between px-6 py-5">
-              <button
-                onClick={() => handleNav("/#hero")}
+              <Link
+                href="/"
+                onClick={() => setIsOpen(false)}
                 className="font-accent text-base font-extrabold tracking-widest uppercase text-primary-foreground"
               >
                 MORATEUR <span className="text-campaign-lime">2026</span>
-              </button>
+              </Link>
               <button
                 onClick={() => setIsOpen(false)}
                 aria-label="Fermer le menu"
@@ -129,30 +111,38 @@ const Navbar = () => {
                 ...navItems,
                 { label: "Contact", to: "/#procuration" },
               ].map((item, i) => (
-                <motion.button
+                <motion.div
                   key={item.to}
-                  onClick={() => handleNav(item.to)}
-                  className="text-left text-primary-foreground/80 hover:text-campaign-lime text-3xl font-accent font-extrabold uppercase tracking-wide py-3 border-b border-primary-foreground/10 transition-colors duration-200"
                   initial={{ x: -30, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.1 + i * 0.06 }}
                 >
-                  {item.label}
-                </motion.button>
+                  <Link
+                    href={item.to}
+                    onClick={() => setIsOpen(false)}
+                    className="block text-primary-foreground/80 hover:text-campaign-lime text-3xl font-accent font-extrabold uppercase tracking-wide py-3 border-b border-primary-foreground/10 transition-colors duration-200"
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
               ))}
             </nav>
 
             {/* Bottom actions */}
             <div className="px-8 pb-10 flex flex-col gap-5">
-              <motion.button
-                onClick={() => handleNav("/#procuration")}
-                className="gradient-lime text-accent-foreground py-4 rounded-2xl text-base font-extrabold uppercase tracking-wider shadow-lg"
+              <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
               >
-                Rejoignez-nous
-              </motion.button>
+                <Link
+                  href="/#procuration"
+                  onClick={() => setIsOpen(false)}
+                  className="block text-center gradient-lime text-accent-foreground py-4 rounded-2xl text-base font-extrabold uppercase tracking-wider shadow-lg"
+                >
+                  Rejoignez-nous
+                </Link>
+              </motion.div>
               <motion.div
                 className="flex items-center justify-between"
                 initial={{ opacity: 0 }}
