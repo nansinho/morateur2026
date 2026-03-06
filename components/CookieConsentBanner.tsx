@@ -292,14 +292,15 @@ function FloatingCookieTab({ onClick }: { onClick: () => void }) {
 
   return (
     <motion.button
-      initial={{ y: 36, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      initial={{ y: 30, opacity: 0 }}
+      animate={{ y: 26, opacity: 1 }}
       exit={{ y: 36, opacity: 0 }}
-      transition={{ delay: 0.5, type: 'spring', damping: 25, stiffness: 200 }}
+      whileHover={{ y: 0 }}
+      transition={{ type: 'spring', damping: 25, stiffness: 200 }}
       onClick={onClick}
       aria-label="Gérer mes cookies"
       title="Gérer mes cookies"
-      className="fixed bottom-0 left-4 z-[9998] flex h-9 items-center gap-1.5 rounded-t-lg border border-b-0 border-white/10 bg-[hsl(220,73%,12%)]/90 backdrop-blur-sm px-3.5 shadow-lg hover:bg-[hsl(220,73%,18%)] hover:border-campaign-lime/30 transition-all duration-200"
+      className="fixed bottom-0 left-4 z-[9998] flex h-9 items-center gap-1.5 rounded-t-lg border border-b-0 border-white/10 bg-[hsl(220,73%,12%)]/90 backdrop-blur-sm px-3.5 shadow-lg transition-none"
     >
       <Cookie className="h-3.5 w-3.5 text-white/60" />
       <span className="text-[11px] font-medium text-white/60">Cookies</span>
