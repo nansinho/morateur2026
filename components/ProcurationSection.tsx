@@ -533,10 +533,10 @@ const ProcurationSection = () => {
                         <motion.button
                           type="button"
                           onClick={goNext}
-                          className={`flex-1 flex items-center justify-center gap-2 py-4.5 rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-300 ${
+                          className={`flex-1 flex items-center justify-center gap-2 py-[1.125rem] rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-300 ${
                             isStepValid(step)
                               ? "gradient-lime text-accent-foreground shadow-[0_8px_30px_-6px_hsl(152_48%_50%/0.5)] hover:shadow-[0_16px_44px_-8px_hsl(152_48%_50%/0.5)] hover:brightness-110"
-                              : "bg-white/[0.08] text-white/40 border border-white/[0.12] cursor-default"
+                              : "bg-white/[0.15] text-white/60 border border-white/20 cursor-default"
                           }`}
                           whileHover={isStepValid(step) ? { scale: 1.02 } : {}}
                           whileTap={isStepValid(step) ? { scale: 0.97 } : {}}
@@ -548,10 +548,10 @@ const ProcurationSection = () => {
                         <motion.button
                           type="submit"
                           disabled={submitting || !form.accept_policy}
-                          className={`flex-1 flex items-center justify-center gap-2 py-4.5 rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed ${
+                          className={`flex-1 flex items-center justify-center gap-2 py-[1.125rem] rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed ${
                             form.accept_policy
                               ? "gradient-lime text-accent-foreground shadow-[0_8px_30px_-6px_hsl(152_48%_50%/0.5)] hover:shadow-[0_16px_44px_-8px_hsl(152_48%_50%/0.5)] hover:brightness-110"
-                              : "bg-white/[0.08] text-white/40 border border-white/[0.12]"
+                              : "bg-white/[0.15] text-white/60 border border-white/20"
                           }`}
                           whileHover={submitting || !form.accept_policy ? {} : { scale: 1.02 }}
                           whileTap={submitting || !form.accept_policy ? {} : { scale: 0.97 }}
