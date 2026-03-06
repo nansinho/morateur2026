@@ -25,7 +25,11 @@ export default function AdminLoginPage() {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error) {
-      setError('Identifiants incorrects')
+      if (error.message === 'Invalid login credentials') {
+        setError('Identifiants incorrects')
+      } else {
+        setError(error.message || 'Erreur de connexion')
+      }
       setLoading(false)
       return
     }
