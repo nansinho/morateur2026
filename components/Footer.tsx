@@ -77,7 +77,7 @@ const Footer = () => {
               className="font-accent font-extrabold text-primary-foreground uppercase tracking-tight leading-[0.85] mb-6"
               style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)" }}
             >
-              <span className="text-primary">Bouc</span> Bel Air a<br />
+              <span className="text-[#07132C]">Bouc</span> Bel Air a<br />
               de l&apos;<span className="text-campaign-lime">Avenir</span>
             </h2>
             <p className="text-primary-foreground/70 text-lg max-w-md mx-auto mb-8 font-medium">
@@ -108,7 +108,7 @@ const Footer = () => {
               <p className="font-accent text-2xl font-extrabold text-primary-foreground uppercase tracking-widest mb-2">
                 MORATEUR <span className="text-campaign-lime">2026</span>
               </p>
-              <p className="text-primary-foreground/50 text-sm font-medium mb-4"><span className="text-primary">Bouc</span> Bel Air a de l&apos;Avenir</p>
+              <p className="text-primary-foreground/50 text-sm font-medium mb-4"><span className="text-[#07132C]">Bouc</span> Bel Air a de l&apos;Avenir</p>
               <div className="w-12 h-1 rounded-full bg-campaign-lime/40" />
             </div>
 
