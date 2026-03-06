@@ -57,7 +57,7 @@ const RoadmapSection = ({ events: propEvents }: RoadmapSectionProps) => {
           </div>
         </div>
 
-        <div ref={scrollRef} className="flex gap-4 sm:gap-5 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6">
+        <div ref={scrollRef} className="flex gap-4 sm:gap-5 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 items-stretch">
           {events.map((m, i) => {
             const Icon = getIcon(m.icon);
             const isNext = !m.is_done && events.findIndex(e => !e.is_done) === i;
@@ -113,7 +113,7 @@ const RoadmapSection = ({ events: propEvents }: RoadmapSectionProps) => {
                 </h3>
 
                 {/* Description */}
-                <p className={`text-sm leading-relaxed mt-auto ${
+                <p className={`text-sm leading-relaxed mt-auto line-clamp-3 ${
                   m.is_done ? "text-primary-foreground/60" : isNext ? "text-primary-foreground/70" : "text-primary-foreground/25"
                 }`}>
                   {m.description}
