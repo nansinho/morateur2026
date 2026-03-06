@@ -11,14 +11,15 @@ import ActualitesSection from "@/components/ActualitesSection";
 import ProcurationSection from "@/components/ProcurationSection";
 import Footer from "@/components/Footer";
 import SocialSidebar from "@/components/SocialSidebar";
-import type { Article, Event } from '@/lib/types/database'
+import type { Article, Event, ProgrammePillar } from '@/lib/types/database'
 
 interface HomeContentProps {
   articles: Article[]
   events: Event[]
+  pillars: ProgrammePillar[]
 }
 
-export default function HomeContent({ articles, events }: HomeContentProps) {
+export default function HomeContent({ articles, events, pillars }: HomeContentProps) {
   return (
     <main>
       <SocialSidebar />
@@ -27,7 +28,7 @@ export default function HomeContent({ articles, events }: HomeContentProps) {
       <MarqueeBand />
       <CandidateSection />
       <EngagezVousSection />
-      <ProgrammeSection />
+      <ProgrammeSection pillars={pillars} />
       <VillageBanner />
       <ActualitesSection articles={articles} />
       <ProcurationSection />
