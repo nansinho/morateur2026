@@ -83,9 +83,9 @@ const Footer = () => {
 
         {/* Main grid */}
         <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-12">
             {/* Logo */}
-            <div>
+            <div className="col-span-2 sm:col-span-1">
               <p className="font-accent text-2xl font-extrabold text-primary-foreground uppercase tracking-widest mb-2">
                 MORATEUR <span className="text-campaign-lime">2026</span>
               </p>
@@ -137,7 +137,7 @@ const Footer = () => {
             </nav>
 
             {/* Newsletter + Socials */}
-            <div>
+            <div className="col-span-2 sm:col-span-1">
               <div id="newsletter" className="mb-6">
                 <p className="font-accent font-bold text-xs uppercase tracking-[0.2em] text-campaign-lime mb-3">Newsletter</p>
                 <NewsletterForm />
@@ -163,9 +163,11 @@ const Footer = () => {
           </div>
 
           {/* Bottom */}
-          <div className="border-t border-primary-foreground/[0.15] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <address className="not-italic text-primary-foreground/50 text-xs flex items-center gap-1.5 font-medium">
-              © 2026 Morateur 2026 — Bouc-Bel-Air, 13320 — Fait avec <Heart className="w-3 h-3 text-campaign-lime" /> pour Bouc-Bel-Air
+          <div className="border-t border-primary-foreground/[0.15] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <address className="not-italic text-primary-foreground/50 text-xs flex flex-col sm:flex-row items-center gap-1 sm:gap-1.5 font-medium text-center sm:text-left">
+              <span>© 2026 Morateur 2026</span>
+              <span className="hidden sm:inline">—</span>
+              <span className="flex items-center gap-1.5">Bouc-Bel-Air, 13320 — Fait avec <Heart className="w-3 h-3 text-campaign-lime" /> pour Bouc-Bel-Air</span>
             </address>
             <div className="flex items-center gap-4">
               <p className="text-primary-foreground/40 text-xs font-medium">

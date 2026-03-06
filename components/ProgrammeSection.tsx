@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -14,7 +13,6 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 import { getIcon } from "@/lib/icon-map";
-import { createClient } from '@/lib/supabase/client';
 import type { ProgrammePillar } from '@/lib/types/database';
 
 const cardStyles = [
@@ -74,16 +72,12 @@ const cardStyles = [
   },
 ];
 
-const ProgrammeSection = () => {
-  const router = useRouter();
-  const [pillars, setPillars] = useState<ProgrammePillar[]>([]);
+interface ProgrammeSectionProps {
+  pillars: ProgrammePillar[];
+}
 
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.from('programme_pillars').select('*').order('sort_order').then(({ data }) => {
-      if (data) setPillars(data as ProgrammePillar[]);
-    });
-  }, []);
+const ProgrammeSection = ({ pillars }: ProgrammeSectionProps) => {
+  const router = useRouter();
 
   return (
     <section id="programme" aria-label="Programme de campagne" className="gradient-teal-deep relative overflow-x-clip">

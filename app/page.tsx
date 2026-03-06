@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import HomeContent from './home-content'
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION, DEFAULT_OG_IMAGE } from '@/lib/site-config'
 import { createClient } from '@/lib/supabase/server'
-import type { Article, Event } from '@/lib/types/database'
+import type { Article, Event, ProgrammePillar } from '@/lib/types/database'
 
 export const revalidate = 60
 
@@ -43,13 +43,15 @@ const speakableSchema = {
 export default async function HomePage() {
   const supabase = await createClient()
 
-  const [{ data: articlesData }, { data: eventsData }] = await Promise.all([
+  const [{ data: articlesData }, { data: eventsData }, { data: pillarsData }] = await Promise.all([
     supabase.from('articles').select('*').order('sort_order'),
     supabase.from('events').select('*').order('sort_order'),
+    supabase.from('programme_pillars').select('*').order('sort_order'),
   ])
 
   const articles: Article[] = articlesData ?? []
   const events: Event[] = eventsData ?? []
+  const pillars: ProgrammePillar[] = pillarsData ?? []
 
   return (
     <>
@@ -61,7 +63,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableSchema) }}
       />
-      <HomeContent articles={articles} events={events} />
+      <HomeContent articles={articles} events={events} pillars={pillars} />
     </>
   )
 }

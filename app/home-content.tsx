@@ -14,14 +14,15 @@ import ProcurationSection from "@/components/ProcurationSection";
 import JoinPopup from "@/components/JoinPopup";
 import Footer from "@/components/Footer";
 import SocialSidebar from "@/components/SocialSidebar";
-import type { Article, Event } from '@/lib/types/database'
+import type { Article, Event, ProgrammePillar } from '@/lib/types/database'
 
 interface HomeContentProps {
   articles: Article[]
   events: Event[]
+  pillars: ProgrammePillar[]
 }
 
-export default function HomeContent({ articles, events }: HomeContentProps) {
+export default function HomeContent({ articles, events, pillars }: HomeContentProps) {
   const [joinOpen, setJoinOpen] = useState(false);
   const openJoin = useCallback(() => setJoinOpen(true), []);
   const closeJoin = useCallback(() => setJoinOpen(false), []);
@@ -34,7 +35,7 @@ export default function HomeContent({ articles, events }: HomeContentProps) {
       <MarqueeBand />
       <CandidateSection />
       <EngagezVousSection onJoinClick={openJoin} />
-      <ProgrammeSection />
+      <ProgrammeSection pillars={pillars} />
       <RoadmapSection events={events} />
       <VillageBanner />
       <ActualitesSection articles={articles} />
