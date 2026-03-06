@@ -5,7 +5,7 @@ import { useState, useCallback } from "react";
 import { FileText, CheckCircle, Send, ExternalLink, AlertCircle, User, Mail, Phone, MessageSquare, ArrowRight, ArrowLeft, Sparkles, PartyPopper } from "lucide-react";
 import Link from "next/link";
 
-type FormData = { prenom: string; nom: string; email: string; tel: string; motivations: string; newsletter_optin: boolean };
+type FormData = { prenom: string; nom: string; email: string; tel: string; motivations: string; accept_policy: boolean; newsletter_optin: boolean };
 type FormErrors = Partial<Record<keyof FormData, string>>;
 
 const validate = (form: FormData): FormErrors => {
@@ -24,7 +24,7 @@ const steps = [
   { id: 2, title: "Vos motivations", subtitle: "Dites-nous tout !", emoji: "💬", fields: ["motivations"] as const },
 ];
 
-const fieldConfig: Record<Exclude<keyof FormData, 'newsletter_optin'>, { label: string; icon: typeof User; type: string; placeholder: string }> = {
+const fieldConfig: Record<Exclude<keyof FormData, 'accept_policy' | 'newsletter_optin'>, { label: string; icon: typeof User; type: string; placeholder: string }> = {
   prenom: { label: "Prénom", icon: User, type: "text", placeholder: "Mathieu" },
   nom: { label: "Nom", icon: User, type: "text", placeholder: "Dupont" },
   email: { label: "Adresse email", icon: Mail, type: "email", placeholder: "mathieu@exemple.fr" },
@@ -65,7 +65,7 @@ const ProcurationSection = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [direction, setDirection] = useState(1);
-  const [form, setForm] = useState<FormData>({ prenom: "", nom: "", email: "", tel: "", motivations: "", newsletter_optin: false });
+  const [form, setForm] = useState<FormData>({ prenom: "", nom: "", email: "", tel: "", motivations: "", accept_policy: false, newsletter_optin: false });
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Set<string>>(new Set());
 
@@ -441,8 +441,40 @@ const ProcurationSection = () => {
                               </div>
                             </div>
 
-                            {/* Opt-in newsletter */}
-                            <label className="flex items-start gap-3 cursor-pointer group/check rounded-xl p-3 bg-white/[0.04] border border-white/10 hover:border-campaign-lime/30 transition-all duration-200">
+                            {/* Acceptation politique de confidentialité (obligatoire) */}
+                            <label className={`flex items-start gap-3 cursor-pointer group/check rounded-xl p-3 border transition-all duration-200 ${
+                              form.accept_policy
+                                ? "bg-campaign-lime/[0.06] border-campaign-lime/30"
+                                : "bg-white/[0.04] border-white/10 hover:border-white/20"
+                            }`}>
+                              <input
+                                type="checkbox"
+                                checked={form.accept_policy}
+                                onChange={e => setForm(prev => ({ ...prev, accept_policy: e.target.checked }))}
+                                className="mt-0.5 w-4 h-4 rounded border-white/30 bg-white/10 accent-[hsl(var(--campaign-lime))] cursor-pointer flex-shrink-0"
+                              />
+                              <div>
+                                <span className="text-white/80 text-sm leading-relaxed">
+                                  J&apos;accepte que mes données soient traitées conformément à la{' '}
+                                  <Link
+                                    href="/politique-de-confidentialite"
+                                    target="_blank"
+                                    className="text-campaign-lime underline hover:text-campaign-lime/80 transition-colors"
+                                    onClick={e => e.stopPropagation()}
+                                  >
+                                    politique de confidentialité
+                                  </Link>
+                                  {' '}de Morateur 2026. <span className="text-red-400">*</span>
+                                </span>
+                              </div>
+                            </label>
+
+                            {/* Opt-in newsletter (optionnel) */}
+                            <label className={`flex items-start gap-3 cursor-pointer group/check rounded-xl p-3 border transition-all duration-200 ${
+                              form.newsletter_optin
+                                ? "bg-campaign-lime/[0.06] border-campaign-lime/30"
+                                : "bg-white/[0.04] border-white/10 hover:border-white/20"
+                            }`}>
                               <input
                                 type="checkbox"
                                 checked={form.newsletter_optin}
@@ -451,7 +483,7 @@ const ProcurationSection = () => {
                               />
                               <div>
                                 <span className="text-white/70 text-sm leading-relaxed group-hover/check:text-white/90 transition-colors">
-                                  Je souhaite recevoir la newsletter de la campagne par email
+                                  Je souhaite également recevoir la newsletter de la campagne par email
                                 </span>
                                 <span className="block text-white/30 text-[11px] mt-0.5">
                                   Actualités, événements et avancées du projet. Désabonnement possible à tout moment.
@@ -507,10 +539,14 @@ const ProcurationSection = () => {
                       ) : (
                         <motion.button
                           type="submit"
-                          disabled={submitting}
-                          className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl gradient-lime text-accent-foreground font-extrabold uppercase tracking-wider text-sm shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_15px_40px_-10px_hsl(var(--campaign-lime)/0.4)] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:rotate-0"
-                          whileHover={submitting ? {} : { scale: 1.02 }}
-                          whileTap={submitting ? {} : { scale: 0.97 }}
+                          disabled={submitting || !form.accept_policy}
+                          className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-extrabold uppercase tracking-wider text-sm transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:rotate-0 ${
+                            form.accept_policy
+                              ? "gradient-lime text-accent-foreground shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_15px_40px_-10px_hsl(var(--campaign-lime)/0.4)]"
+                              : "bg-white/[0.06] text-white/30 border border-white/10"
+                          }`}
+                          whileHover={submitting || !form.accept_policy ? {} : { scale: 1.02 }}
+                          whileTap={submitting || !form.accept_policy ? {} : { scale: 0.97 }}
                         >
                           {submitting ? (
                             <>
@@ -532,13 +568,12 @@ const ProcurationSection = () => {
                       )}
                     </div>
 
-                    {/* RGPD */}
-                    <p className="text-white/25 text-xs text-center mt-4">
-                      En soumettant ce formulaire, vous acceptez notre{' '}
-                      <Link href="/politique-de-confidentialite" className="text-campaign-lime/50 hover:text-campaign-lime underline transition-colors duration-200">
-                        politique de confidentialité
-                      </Link>.
-                    </p>
+                    {/* Indication champ obligatoire */}
+                    {step === steps.length - 1 && !form.accept_policy && (
+                      <p className="text-white/30 text-xs text-center mt-3">
+                        <span className="text-red-400">*</span> Veuillez accepter la politique de confidentialité pour envoyer le formulaire.
+                      </p>
+                    )}
                   </div>
                 </form>
               )}
