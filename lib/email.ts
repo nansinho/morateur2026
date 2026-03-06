@@ -7,8 +7,6 @@ const resend = process.env.RESEND_API_KEY
 const FROM_EMAIL = 'Morateur 2026 <noreply@morateur2026.fr>'
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'contact@morateur2026.fr'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://morateur2026.fr'
-const PHOTO_URL = `${SITE_URL}/images/candidat-portrait-decontracte.jpg`
-
 function emailLayout(subtitle: string, body: string, footerText: string): string {
   return `
     <div style="background-color: #f5f5f0; padding: 32px 16px; font-family: 'Helvetica Neue', Arial, sans-serif;">
@@ -16,17 +14,8 @@ function emailLayout(subtitle: string, body: string, footerText: string): string
 
         <!-- Header -->
         <div style="background: linear-gradient(135deg, #0e6478, #1a4b8c); padding: 32px 30px; text-align: center;">
-          <table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;">
-            <tr>
-              <td style="vertical-align: middle; padding-right: 20px;">
-                <img src="${PHOTO_URL}" alt="Mathieu Morateur" width="80" height="80" style="border-radius: 50%; border: 3px solid rgba(255,255,255,0.8); display: block;" />
-              </td>
-              <td style="vertical-align: middle; text-align: left;">
-                <h1 style="color: #50b87a; font-size: 26px; margin: 0 0 6px; font-weight: 700;">Morateur 2026</h1>
-                <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: 14px; letter-spacing: 0.5px;">${subtitle}</p>
-              </td>
-            </tr>
-          </table>
+          <h1 style="color: #50b87a; font-size: 26px; margin: 0 0 6px; font-weight: 700;">Morateur 2026</h1>
+          <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: 14px; letter-spacing: 0.5px;">${subtitle}</p>
         </div>
 
         <!-- Bandeau lime -->
