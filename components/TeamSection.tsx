@@ -56,7 +56,7 @@ const TeamSection = () => {
                   transition={{ delay: i * 0.08, duration: 0.5 }}
                   whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
                   whileTap={{ scale: 0.97 }}
-                  className="group cursor-pointer"
+                  className="group"
                 >
                   <div className="relative rounded-2xl overflow-hidden aspect-[3/4] shadow-lg">
                     <Image

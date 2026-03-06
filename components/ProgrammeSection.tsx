@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { slugify } from "@/lib/slugify";
 import {
   Carousel,
   CarouselContent,
@@ -115,6 +117,7 @@ const ProgrammeSection = () => {
               const number = String(i + 1).padStart(2, "0");
               return (
                 <CarouselItem key={pillar.id} className="pl-5 basis-[75%] sm:basis-[40%] lg:basis-[28%]">
+                  <Link href={`/programme#${slugify(pillar.title)}`}>
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -159,6 +162,7 @@ const ProgrammeSection = () => {
                       </div>
                     </div>
                   </motion.div>
+                  </Link>
                 </CarouselItem>
               );
             })}
