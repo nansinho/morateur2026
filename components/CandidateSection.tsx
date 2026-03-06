@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from "react";
 import { Briefcase, GraduationCap, Users } from "lucide-react";
 import Image from "next/image";
 
-const candidatImg = "/images/header_candidat_portrait.png";
+const candidatImg = "/images/544920789_10163962052379897_1378899732117512397_n.jpg";
 
 const stats = [
   { value: 36, label: "ans", suffix: "" },
