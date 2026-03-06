@@ -21,6 +21,8 @@ const quartierLinks = [
   { label: "Violesi - San Baquis", slug: "violesiroussin" },
   { label: "Centre Ville", slug: "centreville" },
   { label: "Les Revenants", slug: "revenants" },
+  { label: "Gratiane", slug: "gratiane" },
+  { label: "Montaury", slug: "montaury" },
 ];
 
 const navLinks = [
