@@ -134,33 +134,31 @@ const EngagezVousSection = () => {
               >
                 <div
                   className={`relative rounded-2xl ${action.bg}
-                    flex flex-col p-4 sm:p-5 sm:flex-row sm:items-center sm:gap-5
-                    text-center sm:text-left overflow-hidden min-h-[180px] sm:min-h-0
+                    flex flex-col items-center justify-between p-6 sm:p-7 text-center
+                    overflow-hidden h-[220px] sm:h-[250px]
                     transition-all duration-200 shadow-lg
                     group-hover:shadow-2xl group-hover:shadow-black/20`}
                 >
-                  <div className="relative z-10 flex-shrink-0 mx-auto sm:mx-0 mb-3 sm:mb-0">
-                    <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                      <action.Icon className={`w-6 h-6 ${action.iconColor}`} strokeWidth={1.5} />
+                  <div className="relative z-10 mt-4">
+                    <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto">
+                      <action.Icon className={`w-7 h-7 ${action.iconColor}`} strokeWidth={1.5} />
                     </div>
                   </div>
-                  <div className="relative z-10 flex-1 min-w-0">
-                    <h3 className={`font-accent text-base sm:text-lg font-extrabold ${action.textColor} uppercase tracking-wide leading-tight mb-1`}>
+                  <div className="relative z-10 flex-1 flex flex-col justify-center py-3">
+                    <h3 className={`font-accent text-lg sm:text-xl lg:text-2xl font-extrabold ${action.textColor} uppercase tracking-wide leading-tight mb-2 -rotate-2`}>
                       {action.title}
                     </h3>
-                    <p className={`${action.subtextColor} text-xs sm:text-sm leading-snug line-clamp-2`}>
+                    <p className={`${action.subtextColor} text-xs sm:text-sm leading-snug`}>
                       {action.desc}
                     </p>
                   </div>
-                  <div className="relative z-10 flex-shrink-0 mt-3 sm:mt-0">
-                    <div className={`inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur-sm px-3 py-1.5 ${action.textColor} group-hover:bg-white/30 transition-all duration-200`}>
-                      <span className="text-xs font-bold uppercase tracking-wider">{action.buttonLabel}</span>
-                      {action.external ? (
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      ) : (
-                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
-                      )}
-                    </div>
+                  <div className={`relative z-10 inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 ${action.textColor} group-hover:bg-white/30 transition-all duration-200`}>
+                    <span className="text-xs font-bold uppercase tracking-wider">{action.buttonLabel}</span>
+                    {action.external ? (
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    ) : (
+                      <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
+                    )}
                   </div>
                 </div>
               </motion.a>
