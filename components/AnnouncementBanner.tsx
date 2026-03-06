@@ -70,20 +70,20 @@ export default function AnnouncementBanner() {
           transition={{ duration: 0.3, ease: 'easeInOut' }}
           className="overflow-hidden"
         >
-          <div className="relative bg-gradient-to-r from-campaign-lime to-[hsl(152,55%,40%)] border-b border-white/20">
+          <div className="relative bg-gradient-to-r from-campaign-lime to-[hsl(152,55%,40%)] border-b border-[hsl(220,73%,12%)]/20">
             <div className="container mx-auto px-4 sm:px-6 py-2.5">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4">
                 {/* Message + Dates */}
                 <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 min-w-0">
                   <span className="font-accent font-extrabold text-sm sm:text-base tracking-wider uppercase whitespace-nowrap">
-                    <span className="text-white">Votez</span>{' '}
-                    <span className="text-white">Morateur 2026</span>
+                    <span className="text-[hsl(220,73%,12%)]">Votez</span>{' '}
+                    <span className="text-[hsl(220,73%,12%)]">Morateur 2026</span>
                   </span>
 
-                  <div className="hidden sm:flex items-center gap-3 text-xs text-white/80">
-                    <Calendar className="h-3.5 w-3.5 text-white/70" />
+                  <div className="hidden sm:flex items-center gap-3 text-xs text-[hsl(220,73%,12%)]/80">
+                    <Calendar className="h-3.5 w-3.5 text-[hsl(220,73%,12%)]/70" />
                     <span>1er tour : 15 mars</span>
-                    <span className="text-white/40">|</span>
+                    <span className="text-[hsl(220,73%,12%)]/40">|</span>
                     <span>2nd tour : 22 mars</span>
                   </div>
                 </div>
@@ -91,9 +91,9 @@ export default function AnnouncementBanner() {
                 {/* Countdown + CTA + Close */}
                 <div className="flex items-center gap-3 sm:gap-4 shrink-0">
                   {countdown && (
-                    <div className="flex items-center gap-1.5 text-xs text-white/90">
-                      <span className="text-white/70 font-medium">{targetLabel} :</span>
-                      <span className="font-mono font-bold text-white tabular-nums">
+                    <div className="flex items-center gap-1.5 text-xs text-[hsl(220,73%,12%)]/80">
+                      <span className="text-[hsl(220,73%,12%)]/70 font-medium">{targetLabel} :</span>
+                      <span className="font-mono font-bold text-[hsl(220,73%,12%)] tabular-nums">
                         J-{countdown.days} {pad(countdown.hours)}:{pad(countdown.minutes)}:{pad(countdown.seconds)}
                       </span>
                     </div>
@@ -101,7 +101,7 @@ export default function AnnouncementBanner() {
 
                   <Link
                     href="/programme"
-                    className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 border border-white/30 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap"
+                    className="flex items-center gap-1.5 bg-[hsl(220,73%,12%)]/15 hover:bg-[hsl(220,73%,12%)]/25 border border-[hsl(220,73%,12%)]/30 text-[hsl(220,73%,12%)] text-xs font-bold px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap"
                   >
                     Notre programme
                     <ArrowRight className="h-3 w-3" />
@@ -110,7 +110,7 @@ export default function AnnouncementBanner() {
                   <button
                     onClick={handleDismiss}
                     aria-label="Fermer le bandeau"
-                    className="flex items-center justify-center h-6 w-6 rounded text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+                    className="flex items-center justify-center h-6 w-6 rounded text-[hsl(220,73%,12%)]/50 hover:text-[hsl(220,73%,12%)] hover:bg-[hsl(220,73%,12%)]/10 transition-colors"
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>
@@ -118,10 +118,10 @@ export default function AnnouncementBanner() {
               </div>
 
               {/* Mobile dates */}
-              <div className="flex sm:hidden items-center justify-center gap-3 text-[11px] text-white/70 mt-1">
-                <Calendar className="h-3 w-3 text-white/60" />
+              <div className="flex sm:hidden items-center justify-center gap-3 text-[11px] text-[hsl(220,73%,12%)]/70 mt-1">
+                <Calendar className="h-3 w-3 text-[hsl(220,73%,12%)]/60" />
                 <span>1er tour : 15 mars</span>
-                <span className="text-white/30">|</span>
+                <span className="text-[hsl(220,73%,12%)]/30">|</span>
                 <span>2nd tour : 22 mars</span>
               </div>
             </div>
