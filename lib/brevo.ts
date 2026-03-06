@@ -23,8 +23,8 @@ export async function addBrevoContact(
 
   try {
     const attributes: Record<string, string> = {}
-    if (firstName) attributes.PRENOM = firstName
-    if (lastName) attributes.NOM = lastName
+    if (firstName) attributes.FIRSTNAME = firstName
+    if (lastName) attributes.LASTNAME = lastName
 
     await client.contacts.createContact({
       email: email.trim().toLowerCase(),
