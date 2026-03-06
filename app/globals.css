@@ -317,11 +317,12 @@
   .prose-article > p:first-child::first-letter {
     float: left;
     font-family: var(--font-heading, 'Sora', sans-serif);
-    font-size: 3.5em;
+    font-size: 4em;
     font-weight: 800;
-    line-height: 0.85;
-    margin-right: 0.1em;
-    margin-top: 0.05em;
+    line-height: 0.8;
+    margin-right: 0.12em;
+    margin-top: 0.06em;
+    padding-right: 0.05em;
     color: hsl(220 73% 34%);
   }
 
@@ -336,12 +337,23 @@
   }
 
   .prose-article h2 {
-    margin-top: 2.5em;
-    margin-bottom: 0.75em;
-    font-size: 1.6em;
-    padding-left: 1em;
-    border-left: 4px solid hsl(152 48% 50%);
+    margin-top: 3em;
+    margin-bottom: 1em;
+    font-size: 1.75em;
+    padding-left: 0;
+    border-left: none;
     border-bottom: none;
+    position: relative;
+  }
+
+  .prose-article h2::after {
+    content: '';
+    display: block;
+    width: 3rem;
+    height: 3px;
+    background: linear-gradient(135deg, hsl(152 48% 50%), hsl(152 55% 72%));
+    border-radius: 2px;
+    margin-top: 0.5em;
   }
 
   .prose-article h3 {
@@ -368,13 +380,25 @@
 
   .prose-article blockquote {
     border-left: 4px solid hsl(152 48% 50%);
-    background: hsl(152 48% 50% / 0.06);
-    border-radius: 0 0.75rem 0.75rem 0;
-    padding: 1.25em 1.5em;
+    background: hsl(152 48% 50% / 0.04);
+    border-radius: 0 1rem 1rem 0;
+    padding: 1.5em 2em;
     font-style: italic;
-    color: hsl(220 25% 35%);
-    margin: 2em 0;
-    font-size: 1.05em;
+    color: hsl(220 25% 30%);
+    margin: 2.5em 0;
+    font-size: 1.15em;
+    position: relative;
+  }
+
+  .prose-article blockquote::before {
+    content: '\201C';
+    font-family: var(--font-heading, 'Sora', sans-serif);
+    font-size: 4em;
+    color: hsl(152 48% 50% / 0.15);
+    position: absolute;
+    top: -0.15em;
+    left: 0.15em;
+    line-height: 1;
   }
 
   .prose-article blockquote p {
@@ -413,15 +437,36 @@
 
   .prose-article hr {
     border: none;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(152 48% 50% / 0.3), transparent);
-    margin: 3em 0;
+    height: 0;
+    margin: 3.5em auto;
+    position: relative;
+  }
+
+  .prose-article hr::after {
+    content: '***';
+    display: block;
+    text-align: center;
+    font-family: var(--font-heading, 'Sora', sans-serif);
+    font-size: 1.5em;
+    letter-spacing: 0.5em;
+    color: hsl(152 48% 50% / 0.3);
   }
 
   .prose-article img {
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 20px hsl(220 50% 20% / 0.08);
-    margin: 2em 0;
+    border-radius: 1rem;
+    box-shadow: 0 8px 30px hsl(220 50% 20% / 0.1);
+    margin: 2.5em -2rem;
+    max-width: calc(100% + 4rem);
+    width: calc(100% + 4rem);
+  }
+
+  @media (max-width: 1023px) {
+    .prose-article img {
+      margin-left: 0;
+      margin-right: 0;
+      max-width: 100%;
+      width: 100%;
+    }
   }
 
 }
