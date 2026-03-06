@@ -13,7 +13,7 @@ const socials = [
 ];
 
 const quartierLinks = [
-  { label: "Roumanille-Thiers", slug: "roumanille" },
+  { label: "Roumanille-Thiers", slug: "roumanille-thiers" },
   { label: "La Bergerie", slug: "bergerie" },
   { label: "La Mounine", slug: "mounine" },
   { label: "Chabauds-Malle-Pin", slug: "chabauds-malle-pin" },

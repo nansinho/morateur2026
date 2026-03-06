@@ -101,7 +101,7 @@ INSERT INTO seo_pages (path, title, description, keywords, og_image) VALUES
 -- ============================================
 
 INSERT INTO quartiers (slug, name, description, closing_image_url, is_active, display_order) VALUES
-  ('roumanille', 'Roumanille-Thiers', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 1),
+  ('roumanille-thiers', 'Roumanille-Thiers', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 1),
   ('bergerie', 'La Bergerie', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 2),
   ('mounine', 'La Mounine', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 3),
   ('chabauds-malle-pin', 'Chabauds-Malle-Pin', 'Merci à vous de prendre le temps de répondre aux questions suivantes. Vos réponses nous aideront à mieux comprendre vos attentes.', '', true, 4),
@@ -114,9 +114,9 @@ INSERT INTO quartiers (slug, name, description, closing_image_url, is_active, di
 
 -- Questions : Roumanille-Thiers
 INSERT INTO quartier_questions (quartier_id, question_number, question_text) VALUES
-  ((SELECT id FROM quartiers WHERE slug = 'roumanille'), 1, 'La circulation, tant des voitures que des poids lourds, asphyxie notre quartier. Quelles sont à votre avis les mesures immédiates à prendre pour limiter les nuisances de ce trafic sur votre vie quotidienne ?'),
-  ((SELECT id FROM quartiers WHERE slug = 'roumanille'), 2, 'Une orientation d''aménagement programmé a été inscrite au Plan local d''urbanisme intercommunal du 5 décembre 2024, à la demande de la mairie, au lieu-dit Leï Morts. Elle prévoit 150 logements, avec une voie de desserte à sens unique depuis l''avenue Thiers, au niveau de la rue du Petit Lac, débouchant sur le chemin Joseph de Roumanille. Ce projet prend place sur des terrains très régulièrement inondés. Souhaitez-vous que cette orientation d''aménagement programmée soit :'),
-  ((SELECT id FROM quartiers WHERE slug = 'roumanille'), 3, 'La requalification de l''Avenue Thiers, préparée en 2019 et budgétisée dès 2020, est à l''arrêt depuis 5 ans. En cause, la décision de ne pas toucher à l''alignement des pins parasol la bordant. Que proposez-vous pour relancer ce projet ?');
+  ((SELECT id FROM quartiers WHERE slug = 'roumanille-thiers'), 1, 'La circulation, tant des voitures que des poids lourds, asphyxie notre quartier. Quelles sont à votre avis les mesures immédiates à prendre pour limiter les nuisances de ce trafic sur votre vie quotidienne ?'),
+  ((SELECT id FROM quartiers WHERE slug = 'roumanille-thiers'), 2, 'Une orientation d''aménagement programmé a été inscrite au Plan local d''urbanisme intercommunal du 5 décembre 2024, à la demande de la mairie, au lieu-dit Leï Morts. Elle prévoit 150 logements, avec une voie de desserte à sens unique depuis l''avenue Thiers, au niveau de la rue du Petit Lac, débouchant sur le chemin Joseph de Roumanille. Ce projet prend place sur des terrains très régulièrement inondés. Souhaitez-vous que cette orientation d''aménagement programmée soit :'),
+  ((SELECT id FROM quartiers WHERE slug = 'roumanille-thiers'), 3, 'La requalification de l''Avenue Thiers, préparée en 2019 et budgétisée dès 2020, est à l''arrêt depuis 5 ans. En cause, la décision de ne pas toucher à l''alignement des pins parasol la bordant. Que proposez-vous pour relancer ce projet ?');
 
 -- Questions : La Bergerie
 INSERT INTO quartier_questions (quartier_id, question_number, question_text) VALUES
