@@ -112,22 +112,34 @@ const HeroSection = () => {
                 SERA
               </motion.span>
 
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={rotatingWords[wordIndex]}
+              {isFirstRender ? (
+                <span
                   className="block font-accent font-extrabold uppercase tracking-tight text-center text-campaign-lime"
                   style={{
                     fontSize: "clamp(3rem, 9vw, 7rem)",
                     lineHeight: 1.15,
                   }}
-                  initial={isFirstRender ? false : { y: "60%", opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: "-60%", opacity: 0 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  {rotatingWords[wordIndex]}
-                </motion.span>
-              </AnimatePresence>
+                  {rotatingWords[0]}
+                </span>
+              ) : (
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={rotatingWords[wordIndex]}
+                    className="block font-accent font-extrabold uppercase tracking-tight text-center text-campaign-lime"
+                    style={{
+                      fontSize: "clamp(3rem, 9vw, 7rem)",
+                      lineHeight: 1.15,
+                    }}
+                    initial={{ y: "60%", opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: "-60%", opacity: 0 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    {rotatingWords[wordIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              )}
             </div>
           </h1>
         </div>
