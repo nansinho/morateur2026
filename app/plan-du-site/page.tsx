@@ -106,7 +106,7 @@ export default async function PlanDuSitePage() {
                   {quartiers.map((q) => (
                     <li key={q.slug}>
                       <Link
-                        href={`/quartiers/${q.slug}`}
+                        href={`/${q.slug}`}
                         className="text-campaign-lime hover:underline font-medium"
                       >
                         {q.name}
