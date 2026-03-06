@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const candidatImg = "/images/header_candidat_portrait.png";
+const candidatImg = "/images/candidat-portrait-decontracte.jpg";
 
 const rotatingWords = [
   "SÉCURISÉE",
@@ -47,15 +47,14 @@ const HeroSection = () => {
           src={candidatImg}
           alt="Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air"
           fill
-          className="object-cover object-top"
+          className="object-cover object-[center_30%]"
           priority
           sizes="100vw"
         />
       </motion.div>
 
-      {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-primary/30" />
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-transparent to-primary/40" />
+      {/* Overlay gradient — minimal, juste pour lisibilité du texte en bas */}
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent" />
 
       {/* Centered text */}
       <motion.div
