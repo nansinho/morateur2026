@@ -18,6 +18,26 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/mounine/index.html',
+        destination: '/mounine',
+        permanent: true,
+      },
+      {
+        source: '/bergerie/index.html',
+        destination: '/bergerie',
+        permanent: true,
+      },
+      {
+        source: '/revenants/index.html',
+        destination: '/revenants',
+        permanent: true,
+      },
+      {
+        source: '/roumanille/roumanille.html',
+        destination: '/roumanille-thiers',
+        permanent: true,
+      },
+      {
         source: '/roumanille',
         destination: '/quartiers',
         permanent: true,
