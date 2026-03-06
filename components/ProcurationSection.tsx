@@ -19,9 +19,9 @@ const validate = (form: FormData): FormErrors => {
 };
 
 const steps = [
-  { id: 0, title: "Qui êtes-vous ?", subtitle: "Faisons connaissance", emoji: "👋", fields: ["prenom", "nom"] as const },
-  { id: 1, title: "Comment vous joindre ?", subtitle: "Pour vous recontacter", emoji: "📬", fields: ["email", "tel"] as const },
-  { id: 2, title: "Vos motivations", subtitle: "Dites-nous tout !", emoji: "💬", fields: ["motivations"] as const },
+  { id: 0, title: "Rejoignez les troupes", subtitle: "Inscrivez-vous pour soutenir notre projet", emoji: "✊", fields: ["prenom", "nom"] as const },
+  { id: 1, title: "Restons en contact", subtitle: "Pour vous tenir informé de la campagne", emoji: "📩", fields: ["email", "tel"] as const },
+  { id: 2, title: "Votre engagement", subtitle: "Dites-nous pourquoi vous nous rejoignez !", emoji: "💪", fields: ["motivations"] as const },
 ];
 
 const fieldConfig: Record<Exclude<keyof FormData, 'accept_policy' | 'newsletter_optin'>, { label: string; icon: typeof User; type: string; placeholder: string }> = {
@@ -259,33 +259,41 @@ const ProcurationSection = () => {
                   key="form"
                   onSubmit={handleSubmit}
                   noValidate
-                  className="rounded-3xl border-2 border-white/30 overflow-hidden backdrop-blur-md shadow-[0_0_80px_-20px_rgba(255,255,255,0.08)]"
-                  style={{ background: "linear-gradient(160deg, rgba(15,30,70,0.92), rgba(20,45,90,0.88), rgba(25,60,80,0.85))" }}
+                  className="rounded-3xl border border-white/[0.12] overflow-hidden backdrop-blur-xl shadow-[0_8px_60px_-12px_rgba(0,0,0,0.5),inset_0_1px_0_0_rgba(255,255,255,0.06)]"
+                  style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))" }}
                   role="form"
                   aria-label="Formulaire de contact campagne"
                 >
                   {/* Step header */}
                   <div className="px-7 sm:px-9 pt-7 sm:pt-9 pb-0">
+                    {/* Inscription badge */}
+                    <div className="mb-5">
+                      <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-campaign-lime/10 border border-campaign-lime/20 text-campaign-lime text-xs font-bold uppercase tracking-widest">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        Inscription — Rejoignez-nous
+                      </span>
+                    </div>
+
                     {/* Progress dots */}
                     <div className="flex items-center gap-2 mb-6">
                       {steps.map((s, i) => (
                         <div key={i} className="flex items-center gap-2">
                           <motion.div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors duration-200 ${
+                            className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                               i < step
-                                ? "gradient-lime text-accent-foreground"
+                                ? "gradient-lime text-accent-foreground shadow-[0_0_16px_-2px_hsl(152_48%_50%/0.5)]"
                                 : i === step
-                                ? "bg-white/10 text-campaign-lime border-2 border-campaign-lime"
-                                : "bg-white/10 text-white/40 border border-white/25"
+                                ? "bg-campaign-lime/10 text-campaign-lime border-2 border-campaign-lime shadow-[0_0_20px_-4px_hsl(152_48%_50%/0.3)]"
+                                : "bg-white/[0.06] text-white/30 border border-white/15"
                             }`}
-                            animate={i === step ? { scale: [1, 1.1, 1] } : {}}
+                            animate={i === step ? { scale: [1, 1.08, 1] } : {}}
                             transition={{ duration: 0.4 }}
                           >
                             {i < step ? <CheckCircle className="w-4 h-4" /> : i + 1}
                           </motion.div>
                           {i < steps.length - 1 && (
-                            <div className={`w-8 sm:w-12 h-0.5 rounded-full transition-colors duration-200 ${
-                              i < step ? "bg-campaign-lime" : "bg-white/20"
+                            <div className={`w-8 sm:w-14 h-[3px] rounded-full transition-all duration-300 ${
+                              i < step ? "bg-campaign-lime/80" : "bg-white/10"
                             }`} />
                           )}
                         </div>
@@ -335,7 +343,7 @@ const ProcurationSection = () => {
                               const Icon = config.icon;
                               return (
                                 <div key={key} className="group">
-                                  <label htmlFor={key} className="text-xs font-bold text-campaign-lime uppercase tracking-wider mb-2 block">
+                                  <label htmlFor={key} className="text-sm font-bold text-campaign-lime/90 uppercase tracking-wider mb-2.5 block">
                                     {config.label}
                                   </label>
                                   <div className="relative">
@@ -348,7 +356,7 @@ const ProcurationSection = () => {
                                       value={form[key]}
                                       onBlur={() => handleBlur(key)}
                                       onChange={e => handleChange(key, e.target.value)}
-                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.15] border border-white/30 text-white text-base sm:text-sm outline-none placeholder:text-white/25 focus:border-campaign-lime focus:bg-campaign-lime/[0.08] focus:shadow-[0_0_20px_-5px_hsl(152_48%_50%/0.25)] shadow-sm transition-all duration-200"
+                                      className="w-full pl-11 pr-4 py-4 rounded-2xl bg-white/[0.06] border border-white/[0.12] text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime/60 focus:bg-campaign-lime/[0.06] focus:shadow-[0_0_24px_-4px_hsl(152_48%_50%/0.3),inset_0_1px_0_0_rgba(255,255,255,0.04)] transition-all duration-300"
                                     />
                                   </div>
                                   {touched.has(key) && errors[key] && (
@@ -374,7 +382,7 @@ const ProcurationSection = () => {
                               const Icon = config.icon;
                               return (
                                 <div key={key} className="group">
-                                  <label htmlFor={key} className="text-xs font-bold text-campaign-lime uppercase tracking-wider mb-2 block">
+                                  <label htmlFor={key} className="text-sm font-bold text-campaign-lime/90 uppercase tracking-wider mb-2.5 block">
                                     {config.label}
                                   </label>
                                   <div className="relative">
@@ -387,7 +395,7 @@ const ProcurationSection = () => {
                                       value={form[key]}
                                       onBlur={() => handleBlur(key)}
                                       onChange={e => handleChange(key, e.target.value)}
-                                      className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.15] border border-white/30 text-white text-base sm:text-sm outline-none placeholder:text-white/25 focus:border-campaign-lime focus:bg-campaign-lime/[0.08] focus:shadow-[0_0_20px_-5px_hsl(152_48%_50%/0.25)] shadow-sm transition-all duration-200"
+                                      className="w-full pl-11 pr-4 py-4 rounded-2xl bg-white/[0.06] border border-white/[0.12] text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime/60 focus:bg-campaign-lime/[0.06] focus:shadow-[0_0_24px_-4px_hsl(152_48%_50%/0.3),inset_0_1px_0_0_rgba(255,255,255,0.04)] transition-all duration-300"
                                     />
                                   </div>
                                   {touched.has(key) && errors[key] && (
@@ -409,7 +417,7 @@ const ProcurationSection = () => {
                         {step === 2 && (
                           <div className="space-y-4">
                             <div className="group">
-                              <label htmlFor="motivations" className="text-xs font-bold text-campaign-lime uppercase tracking-wider mb-2 block">
+                              <label htmlFor="motivations" className="text-sm font-bold text-campaign-lime/90 uppercase tracking-wider mb-2.5 block">
                                 Dites-nous en plus
                               </label>
                               <div className="relative">
@@ -423,7 +431,7 @@ const ProcurationSection = () => {
                                   value={form.motivations}
                                   onBlur={() => handleBlur("motivations")}
                                   onChange={e => handleChange("motivations", e.target.value)}
-                                  className="w-full pl-11 pr-4 py-4 rounded-xl bg-white/[0.15] border border-white/30 text-white text-base sm:text-sm outline-none placeholder:text-white/25 focus:border-campaign-lime focus:bg-campaign-lime/[0.08] focus:shadow-[0_0_20px_-5px_hsl(152_48%_50%/0.25)] shadow-sm transition-all duration-200 resize-none"
+                                  className="w-full pl-11 pr-4 py-4 rounded-2xl bg-white/[0.06] border border-white/[0.12] text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime/60 focus:bg-campaign-lime/[0.06] focus:shadow-[0_0_24px_-4px_hsl(152_48%_50%/0.3),inset_0_1px_0_0_rgba(255,255,255,0.04)] transition-all duration-300 resize-none"
                                 />
                               </div>
                               <div className="flex justify-between mt-1.5">
@@ -442,7 +450,7 @@ const ProcurationSection = () => {
                             </div>
 
                             {/* Acceptation politique de confidentialité (obligatoire) */}
-                            <label className={`flex items-start gap-3 cursor-pointer group/check rounded-xl p-3 border transition-all duration-200 ${
+                            <label className={`flex items-start gap-3 cursor-pointer group/check rounded-2xl p-3.5 border transition-all duration-300 ${
                               form.accept_policy
                                 ? "bg-campaign-lime/[0.06] border-campaign-lime/30"
                                 : "bg-white/[0.04] border-white/10 hover:border-white/20"
@@ -470,7 +478,7 @@ const ProcurationSection = () => {
                             </label>
 
                             {/* Opt-in newsletter (optionnel) */}
-                            <label className={`flex items-start gap-3 cursor-pointer group/check rounded-xl p-3 border transition-all duration-200 ${
+                            <label className={`flex items-start gap-3 cursor-pointer group/check rounded-2xl p-3.5 border transition-all duration-300 ${
                               form.newsletter_optin
                                 ? "bg-campaign-lime/[0.06] border-campaign-lime/30"
                                 : "bg-white/[0.04] border-white/10 hover:border-white/20"
@@ -512,7 +520,7 @@ const ProcurationSection = () => {
                         <motion.button
                           type="button"
                           onClick={goPrev}
-                          className="flex items-center gap-2 px-5 py-4 rounded-xl border border-white/15 text-white/60 hover:text-white hover:border-white/30 active:scale-95 font-bold text-sm uppercase tracking-wider transition-all duration-200"
+                          className="flex items-center gap-2 px-5 py-4 rounded-2xl border border-white/[0.12] text-white/50 hover:text-white/80 hover:border-white/25 hover:bg-white/[0.04] active:scale-95 font-bold text-sm uppercase tracking-wider transition-all duration-300"
                           whileHover={{ x: -3 }}
                           whileTap={{ scale: 0.95 }}
                         >
@@ -525,10 +533,10 @@ const ProcurationSection = () => {
                         <motion.button
                           type="button"
                           onClick={goNext}
-                          className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-extrabold uppercase tracking-wider text-sm transition-all duration-200 ${
+                          className={`flex-1 flex items-center justify-center gap-2 py-4.5 rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-300 ${
                             isStepValid(step)
-                              ? "gradient-lime text-accent-foreground shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_15px_40px_-10px_hsl(var(--campaign-lime)/0.4)]"
-                              : "bg-white/[0.12] text-white/50 border border-white/20 cursor-default"
+                              ? "gradient-lime text-accent-foreground shadow-[0_8px_30px_-6px_hsl(152_48%_50%/0.5)] hover:shadow-[0_16px_44px_-8px_hsl(152_48%_50%/0.5)] hover:brightness-110"
+                              : "bg-white/[0.08] text-white/40 border border-white/[0.12] cursor-default"
                           }`}
                           whileHover={isStepValid(step) ? { scale: 1.02 } : {}}
                           whileTap={isStepValid(step) ? { scale: 0.97 } : {}}
@@ -540,10 +548,10 @@ const ProcurationSection = () => {
                         <motion.button
                           type="submit"
                           disabled={submitting || !form.accept_policy}
-                          className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-extrabold uppercase tracking-wider text-sm transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:rotate-0 ${
+                          className={`flex-1 flex items-center justify-center gap-2 py-4.5 rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed ${
                             form.accept_policy
-                              ? "gradient-lime text-accent-foreground shadow-lg -rotate-1 hover:rotate-0 hover:shadow-[0_15px_40px_-10px_hsl(var(--campaign-lime)/0.4)]"
-                              : "bg-white/[0.12] text-white/50 border border-white/20"
+                              ? "gradient-lime text-accent-foreground shadow-[0_8px_30px_-6px_hsl(152_48%_50%/0.5)] hover:shadow-[0_16px_44px_-8px_hsl(152_48%_50%/0.5)] hover:brightness-110"
+                              : "bg-white/[0.08] text-white/40 border border-white/[0.12]"
                           }`}
                           whileHover={submitting || !form.accept_policy ? {} : { scale: 1.02 }}
                           whileTap={submitting || !form.accept_policy ? {} : { scale: 0.97 }}
