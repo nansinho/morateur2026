@@ -21,6 +21,7 @@ const rotatingWords = [
 const HeroSection = () => {
   const ref = useRef<HTMLElement>(null);
   const [wordIndex, setWordIndex] = useState(0);
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const imgScale = useTransform(scrollYProgress, [0, 1], isMobile ? [1, 1] : [1, 1.2]);
@@ -31,6 +32,7 @@ const HeroSection = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % rotatingWords.length);
+      setIsFirstRender(false);
     }, 2500);
     return () => clearInterval(interval);
   }, []);
@@ -51,7 +53,8 @@ const HeroSection = () => {
           fill
           className="object-cover object-[center_30%] hidden md:block"
           priority
-          sizes="100vw"
+          sizes="(max-width: 767px) 0px, 100vw"
+          quality={80}
         />
         {/* Photo mobile */}
         <Image
@@ -60,7 +63,8 @@ const HeroSection = () => {
           fill
           className="object-cover object-center block md:hidden"
           priority
-          sizes="100vw"
+          sizes="(min-width: 768px) 0px, 100vw"
+          quality={80}
         />
       </motion.div>
 
@@ -116,7 +120,7 @@ const HeroSection = () => {
                     fontSize: "clamp(3rem, 9vw, 7rem)",
                     lineHeight: 1.15,
                   }}
-                  initial={{ y: "60%", opacity: 0 }}
+                  initial={isFirstRender ? false : { y: "60%", opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: "-60%", opacity: 0 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
