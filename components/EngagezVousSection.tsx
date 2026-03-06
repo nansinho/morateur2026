@@ -138,12 +138,12 @@ const EngagezVousSection = ({ onJoinClick }: EngagezVousSectionProps) => {
                 transition={{ delay: i * 0.06, duration: 0.3 }}
                 whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
                 whileTap={{ scale: 0.97 }}
-                className="block cursor-pointer group min-w-[65vw] snap-center sm:min-w-0 text-left"
+                className="block cursor-pointer group min-w-[65vw] snap-center sm:min-w-0 sm:h-full text-left"
               >
                 <div
                   className={`relative rounded-2xl ${action.bg}
                     flex flex-col items-center justify-between p-6 sm:p-7 text-center
-                    overflow-hidden min-h-[220px] sm:min-h-[250px]
+                    overflow-hidden min-h-[220px] sm:min-h-[250px] h-full
                     transition-all duration-200 shadow-lg
                     group-hover:shadow-2xl group-hover:shadow-black/20`}
                 >
