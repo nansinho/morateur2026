@@ -296,7 +296,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                     aria-label="Formulaire de contact campagne"
                   >
                     {/* Honeypot - hidden from humans */}
-                    <input type="text" name="website" tabIndex={-1} autoComplete="off" style={{ position: 'absolute', left: '-9999px', opacity: 0 }} />
+                    <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px', opacity: 0 }} />
 
                     {/* Step header */}
                     <div className="px-7 sm:px-9 pt-7 sm:pt-9 pb-0">

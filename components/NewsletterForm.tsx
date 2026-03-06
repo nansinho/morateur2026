@@ -53,7 +53,7 @@ const NewsletterForm = () => {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
       {/* Honeypot - hidden from humans */}
-      <input type="text" name="website" tabIndex={-1} autoComplete="off" style={{ position: 'absolute', left: '-9999px', opacity: 0 }} />
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px', opacity: 0 }} />
       <p className="text-primary-foreground/50 text-xs leading-relaxed">
         Inscrivez-vous pour recevoir les actualités de la campagne Morateur 2026 par email.
       </p>

@@ -44,12 +44,14 @@ const RoadmapSection = ({ events: propEvents }: RoadmapSectionProps) => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => scroll(-1)}
+              aria-label="Étape précédente"
               className="w-12 h-12 rounded-xl border-2 border-primary-foreground/20 text-primary-foreground/60 flex items-center justify-center hover:border-campaign-lime hover:text-campaign-lime transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={() => scroll(1)}
+              aria-label="Étape suivante"
               className="w-12 h-12 rounded-xl border-2 border-primary-foreground/20 text-primary-foreground/60 flex items-center justify-center hover:border-campaign-lime hover:text-campaign-lime transition-colors"
             >
               <ChevronRight className="w-5 h-5" />
