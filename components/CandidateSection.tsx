@@ -62,8 +62,8 @@ const CandidateSection = () => {
               transition={{ duration: 0.7 }}
               className="relative"
             >
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[3/4]">
-                <Image src={candidatImg} alt="Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air" fill className="object-cover object-top" sizes="(max-width: 1024px) 100vw, 50vw" />
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] sm:aspect-[3/4]">
+                <Image src={candidatImg} alt="Mathieu Morateur, candidat aux municipales 2026 à Bouc-Bel-Air" fill className="object-cover object-[center_20%] sm:object-top" sizes="(max-width: 1024px) 100vw, 50vw" />
                 <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-primary/60 to-transparent" />
               </div>
               <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-xl gradient-lime opacity-40 -z-10" aria-hidden="true" />

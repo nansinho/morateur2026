@@ -265,13 +265,13 @@ export default function CandidatContent() {
 
           {/* Signature */}
           <div className="pt-8 flex flex-col items-center gap-4">
-            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-campaign-lime/40 shadow-lg relative">
+            <div className="w-28 h-28 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-campaign-lime/40 shadow-lg relative">
               <Image
                 src={candidatImg}
                 alt="Mathieu Morateur"
                 fill
                 className="object-cover object-top"
-                sizes="80px"
+                sizes="112px"
               />
             </div>
             <div className="text-center">
