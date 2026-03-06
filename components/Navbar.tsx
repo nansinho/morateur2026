@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-
 import { Menu, X } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 import { scrollToHash } from "@/lib/scroll-to-hash";
+import AnnouncementBanner from "@/components/AnnouncementBanner";
 
 const navItems = [
   { label: "Le Candidat", to: "/candidat" },
@@ -168,6 +169,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
     </motion.nav>
+    <AnnouncementBanner />
     </header>
   );
 };
