@@ -105,7 +105,8 @@ CREATE TRIGGER set_consultation_submissions_updated_at
 -- PARTIE 4 : VUE STATS
 -- ============================================
 
-CREATE OR REPLACE VIEW quartier_stats AS
+CREATE OR REPLACE VIEW quartier_stats
+WITH (security_invoker = on) AS
 SELECT
   q.id AS quartier_id,
   q.slug,

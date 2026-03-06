@@ -250,7 +250,8 @@ CREATE TRIGGER set_consultation_submissions_updated_at
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- Vue stats pour le dashboard admin
-CREATE OR REPLACE VIEW quartier_stats AS
+CREATE OR REPLACE VIEW quartier_stats
+WITH (security_invoker = on) AS
 SELECT
   q.id AS quartier_id,
   q.slug,
