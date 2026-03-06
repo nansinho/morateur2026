@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const candidatImg = "/images/candidat-portrait-decontracte.jpg";
-const candidatImgMobile = "/images/header_candidat_portrait.png";
+const candidatImgMobile = "/images/header_candidat_portrait.jpg";
 
 const rotatingWords = [
   "SÉCURISÉE",
@@ -78,7 +78,7 @@ const HeroSection = () => {
       >
         <motion.span
           className="section-label justify-center mb-6"
-          initial={{ opacity: 0 }}
+          initial={isFirstRender ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
@@ -92,7 +92,7 @@ const HeroSection = () => {
               <motion.span
                 className="block font-accent text-primary-foreground font-extrabold uppercase leading-[0.85] tracking-tight"
                 style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
-                initial={{ y: "120%" }}
+                initial={isFirstRender ? false : { y: "120%" }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               >
@@ -105,7 +105,7 @@ const HeroSection = () => {
               <motion.span
                 className="absolute left-0 sm:left-4 md:left-8 top-0 -translate-y-1/2 font-accent font-extrabold uppercase text-primary text-xs sm:text-lg md:text-xl tracking-[0.3em] px-3 sm:px-4 py-0.5 sm:py-1 bg-campaign-lime rounded-md shadow-lg z-10"
                 style={{ rotate: "-3deg" }}
-                initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
+                initial={isFirstRender ? false : { opacity: 0, scale: 0.7, rotate: -8 }}
                 animate={{ opacity: 1, scale: 1, rotate: -3 }}
                 transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
@@ -148,7 +148,7 @@ const HeroSection = () => {
 
         <motion.p
           className="text-primary-foreground/70 text-lg sm:text-xl leading-relaxed max-w-lg mx-auto mb-10"
-          initial={{ opacity: 0, y: 10 }}
+          initial={isFirstRender ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
@@ -157,7 +157,7 @@ const HeroSection = () => {
 
         <motion.div
           className="flex flex-wrap justify-center gap-4"
-          initial={{ opacity: 0, y: 10 }}
+          initial={isFirstRender ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.5 }}
         >
@@ -183,7 +183,7 @@ const HeroSection = () => {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-10"
         onClick={() => scrollTo("#candidat")}
         style={{ opacity }}
-        initial={{ opacity: 0 }}
+        initial={isFirstRender ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
