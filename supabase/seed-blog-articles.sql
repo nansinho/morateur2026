@@ -209,7 +209,7 @@ INSERT INTO articles (title, slug, date, image, image_alt, tag, description, con
   'Bouc-Bel-Air ville intelligente : réseau 5G, capteurs et caméras',
   'smart-city-5g-cameras-capteurs',
   '2 Février 2026',
-  'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&h=500&fit=crop',
+  'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=500&fit=crop',
   'Technologies smart city : capteurs et caméras intelligentes pour Bouc-Bel-Air',
   'Programme',
   'Un réseau 5G communal pour déployer caméras nomades, capteurs de qualité de l''air et éclairage intelligent. La technologie au service de la sécurité et du cadre de vie.',

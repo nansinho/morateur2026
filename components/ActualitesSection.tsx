@@ -72,13 +72,13 @@ const ActualitesSection = ({ articles }: { articles: Article[] }) => {
           plugins={[autoplayPlugin.current]}
           className="w-full"
         >
-          <CarouselContent className="-ml-5">
+          <CarouselContent className="-ml-5 items-stretch">
             {articles.map((article) => {
               const style = tagStyles[article.tag] || defaultStyle;
               const articleLink = article.slug ? `/actualites/${article.slug}` : '/actualites';
               return (
                 <CarouselItem key={article.id} className="pl-5 basis-full sm:basis-1/2 lg:basis-1/3">
-                  <Link href={articleLink} className="block">
+                  <Link href={articleLink} className="block h-full">
                     <motion.article
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -86,11 +86,11 @@ const ActualitesSection = ({ articles }: { articles: Article[] }) => {
                       transition={{ duration: 0.4 }}
                       whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
                       whileTap={{ scale: 0.97 }}
-                      className="group cursor-pointer"
+                      className="group cursor-pointer h-full"
                     >
                       <div className={`relative rounded-[1.25rem] overflow-hidden shadow-lg ${style.bg} flex flex-col h-full transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/20`}>
                         {/* Image */}
-                        <div className="aspect-[16/9] overflow-hidden relative">
+                        <div className="aspect-[16/9] overflow-hidden relative bg-muted">
                           <Image
                             src={article.image}
                             alt={article.image_alt || article.title}
@@ -113,10 +113,10 @@ const ActualitesSection = ({ articles }: { articles: Article[] }) => {
                             </div>
                           </div>
 
-                          <h3 className={`font-accent font-extrabold ${style.text} text-lg sm:text-xl leading-snug mb-3 uppercase tracking-wide -rotate-1 line-clamp-2 min-h-[2lh]`}>
+                          <h3 className={`font-accent font-extrabold ${style.text} text-lg sm:text-xl leading-snug mb-3 uppercase tracking-wide -rotate-1 line-clamp-2 min-h-[3.5rem]`}>
                             {article.title}
                           </h3>
-                          <p className={`${style.accent} text-sm leading-relaxed line-clamp-3 min-h-[3lh]`}>
+                          <p className={`${style.accent} text-sm leading-relaxed line-clamp-3 min-h-[4.5rem]`}>
                             {article.description}
                           </p>
 
