@@ -81,7 +81,7 @@ const HeroSection = () => {
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               >
-                <span className="text-primary">BOUC</span> BEL AIR
+                <span className="text-[#07132C]">BOUC</span> BEL AIR
               </motion.span>
             </div>
 
