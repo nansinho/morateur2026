@@ -143,7 +143,7 @@ const EngagezVousSection = ({ onJoinClick }: EngagezVousSectionProps) => {
                 <div
                   className={`relative rounded-2xl ${action.bg}
                     flex flex-col items-center justify-between p-6 sm:p-7 text-center
-                    overflow-hidden h-[220px] sm:h-[250px]
+                    overflow-hidden min-h-[220px] sm:min-h-[250px]
                     transition-all duration-200 shadow-lg
                     group-hover:shadow-2xl group-hover:shadow-black/20`}
                 >

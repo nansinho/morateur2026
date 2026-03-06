@@ -38,7 +38,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="relative gradient-teal-deep overflow-hidden">
+      <footer className="relative gradient-teal-deep overflow-x-hidden">
         {/* Top lime border */}
         <div className="h-1 w-full gradient-lime" />
 

@@ -69,7 +69,7 @@ INSERT INTO programme_measures (pillar_id, title, detail, sort_order) VALUES
 INSERT INTO events (icon, date, title, description, is_done, sort_order) VALUES
 ('Megaphone', 'Janvier 2026', 'Lancement de la campagne', 'Présentation officielle de la liste et du programme.', true, 1),
 ('Users', 'Février 2026', 'Rencontres de terrain', 'Porte-à-porte, réunions publiques dans tous les quartiers.', true, 2),
-('Flag', 'Mars 2026', 'Meetings publics', 'Grands rassemblements thématiques sur les 9 engagements du programme.', false, 3),
+('Flag', '8 mars 2026', 'Meetings publics', 'Grands rassemblements thématiques sur les 9 engagements du programme.', false, 3),
 ('CalendarCheck', '15 mars 2026', '1ᵉʳ tour', 'Jour de vote – chaque voix compte pour l''avenir de notre commune.', false, 4),
 ('Vote', '22 mars 2026', '2ᵉ tour', 'Mobilisation générale pour confirmer le choix du renouveau.', false, 5),
 ('PartyPopper', 'Avril 2026', 'Installation du conseil', 'Mise en œuvre immédiate des premières mesures du programme.', false, 6);
