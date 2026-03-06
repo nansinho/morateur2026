@@ -63,7 +63,7 @@ const NewsletterForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Votre email"
             required
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-primary-foreground/10 border border-primary-foreground/20 text-primary-foreground text-sm placeholder:text-primary-foreground/40 focus:outline-none focus:border-campaign-lime/50 focus:ring-1 focus:ring-campaign-lime/30 transition-all"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-primary-foreground/10 border border-primary-foreground/20 text-primary-foreground text-base sm:text-sm placeholder:text-primary-foreground/40 focus:outline-none focus:border-campaign-lime/50 focus:ring-1 focus:ring-campaign-lime/30 transition-all"
           />
         </div>
         <button

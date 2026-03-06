@@ -18,7 +18,7 @@ const MarqueeBand = () => {
   return (
     <div className="gradient-lime py-4 overflow-hidden" role="marquee" aria-label="Messages clés de la campagne">
       <div
-        className="flex whitespace-nowrap gap-12 animate-marquee"
+        className="flex whitespace-nowrap gap-12 animate-marquee will-change-transform"
       >
         {[...items, ...items].map((item, i) => (
           <span

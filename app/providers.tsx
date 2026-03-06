@@ -1,6 +1,7 @@
 'use client'
 
 import { QueryClient, QueryClientProvider as TanstackQueryClientProvider } from '@tanstack/react-query'
+import { MotionConfig } from 'framer-motion'
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
@@ -10,11 +11,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient())
   return (
     <TanstackQueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        {children}
-      </TooltipProvider>
+      <MotionConfig reducedMotion="user">
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          {children}
+        </TooltipProvider>
+      </MotionConfig>
     </TanstackQueryClientProvider>
   )
 }
