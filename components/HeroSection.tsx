@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const candidatImg = "/images/candidat-portrait-decontracte.jpg";
-const candidatImgMobile = "/images/candidat-portrait-mobile.jpg";
+const candidatImgMobile = "/images/header_candidat_portrait.png";
 
 const rotatingWords = [
   "SÉCURISÉE",
