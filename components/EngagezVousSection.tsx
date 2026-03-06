@@ -92,7 +92,7 @@ const actions: {
 
 const EngagezVousSection = () => {
   return (
-    <section aria-label="Rejoignez la campagne" className="bg-campaign-ice py-16 sm:py-24 overflow-x-clip">
+    <section aria-label="Rejoignez la campagne" className="bg-campaign-ice py-12 sm:py-16 overflow-x-clip">
       <div className="w-full relative z-10">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div
@@ -100,7 +100,7 @@ const EngagezVousSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-14"
+            className="text-center mb-10"
           >
             <span className="section-label justify-center">Passez à l&#39;action</span>
             <h2
@@ -117,7 +117,7 @@ const EngagezVousSection = () => {
 
         {/* Grid / Horizontal scroll on mobile */}
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:overflow-visible sm:snap-none sm:pb-0 pt-2">
+          <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4 sm:overflow-visible sm:snap-none sm:pb-0 pt-2">
             {actions.map((action, i) => (
               <motion.a
                 key={i}
@@ -130,34 +130,37 @@ const EngagezVousSection = () => {
                 transition={{ delay: i * 0.06, duration: 0.3 }}
                 whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
                 whileTap={{ scale: 0.97 }}
-                className="block cursor-pointer group min-w-[75vw] snap-center sm:min-w-0"
+                className="block cursor-pointer group min-w-[65vw] snap-center sm:min-w-0"
               >
                 <div
-                  className={`relative rounded-[1.25rem] aspect-[4/5] ${action.bg}
-                    flex flex-col items-center justify-between p-6 sm:p-8 text-center overflow-hidden
+                  className={`relative rounded-2xl ${action.bg}
+                    flex flex-col p-4 sm:p-5 sm:flex-row sm:items-center sm:gap-5
+                    text-center sm:text-left overflow-hidden min-h-[180px] sm:min-h-0
                     transition-all duration-200 shadow-lg
                     group-hover:shadow-2xl group-hover:shadow-black/20`}
                 >
-                  <div className="relative z-10 mt-8">
-                    <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto">
-                      <action.Icon className={`w-10 h-10 ${action.iconColor}`} strokeWidth={1.5} />
+                  <div className="relative z-10 flex-shrink-0 mx-auto sm:mx-0 mb-3 sm:mb-0">
+                    <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                      <action.Icon className={`w-6 h-6 ${action.iconColor}`} strokeWidth={1.5} />
                     </div>
                   </div>
-                  <div className="relative z-10 flex-1 flex flex-col justify-center py-4">
-                    <h3 className={`font-accent text-xl sm:text-2xl lg:text-3xl font-extrabold ${action.textColor} uppercase tracking-wide leading-tight mb-3 break-words -rotate-3`}>
+                  <div className="relative z-10 flex-1 min-w-0">
+                    <h3 className={`font-accent text-base sm:text-lg font-extrabold ${action.textColor} uppercase tracking-wide leading-tight mb-1`}>
                       {action.title}
                     </h3>
-                    <p className={`${action.subtextColor} text-sm sm:text-base leading-relaxed`}>
+                    <p className={`${action.subtextColor} text-xs sm:text-sm leading-snug line-clamp-2`}>
                       {action.desc}
                     </p>
                   </div>
-                  <div className={`relative z-10 inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-5 py-2.5 ${action.textColor} group-hover:bg-white/30 transition-all duration-200`}>
-                    <span className="text-sm font-bold uppercase tracking-wider">{action.buttonLabel}</span>
-                    {action.external ? (
-                      <ExternalLink className="w-4 h-4" />
-                    ) : (
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-                    )}
+                  <div className="relative z-10 flex-shrink-0 mt-3 sm:mt-0">
+                    <div className={`inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur-sm px-3 py-1.5 ${action.textColor} group-hover:bg-white/30 transition-all duration-200`}>
+                      <span className="text-xs font-bold uppercase tracking-wider">{action.buttonLabel}</span>
+                      {action.external ? (
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      ) : (
+                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
+                      )}
+                    </div>
                   </div>
                 </div>
               </motion.a>
