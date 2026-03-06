@@ -24,12 +24,27 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
-  authors: [{ name: SITE_NAME }],
+  authors: [{ name: CANDIDATE.name }],
+  creator: CANDIDATE.name,
+  publisher: ORGANIZATION.name,
   keywords: [
     'Morateur 2026', 'Mathieu Morateur', 'municipales 2026',
     'Bouc-Bel-Air', 'élections municipales', 'candidat maire',
     'programme municipal', 'Bouches-du-Rhône', 'Provence',
+    'mairie Bouc-Bel-Air', '13320', 'élections 2026',
   ],
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   openGraph: {
     type: 'website',
     locale: SITE_LOCALE,
@@ -49,6 +64,7 @@ export const metadata: Metadata = {
     canonical: '/',
     languages: { 'fr-FR': SITE_URL },
   },
+  category: 'politics',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -67,6 +83,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       postalCode: ORGANIZATION.address.postalCode,
       addressCountry: ORGANIZATION.address.addressCountry,
     },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: ORGANIZATION.contactPoint.email,
+      contactType: ORGANIZATION.contactPoint.contactType,
+      availableLanguage: ORGANIZATION.contactPoint.availableLanguage,
+    },
     areaServed: {
       '@type': 'City',
       name: ORGANIZATION.areaServed.name,
@@ -84,8 +106,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     name: SITE_NAME,
     alternateName: `${SITE_NAME} — ${SITE_TAGLINE}`,
     url: SITE_URL,
+    description: SITE_DESCRIPTION,
     inLanguage: 'fr',
     publisher: { '@type': 'Organization', name: ORGANIZATION.name, url: ORGANIZATION.url },
+    about: {
+      '@type': 'Person',
+      name: CANDIDATE.name,
+      jobTitle: CANDIDATE.jobTitle,
+    },
   }
 
   const personSchema = {
@@ -109,10 +137,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       postalCode: '13320',
       addressCountry: 'FR',
     },
+    nationality: { '@type': 'Country', name: 'France' },
+    alumniOf: [
+      { '@type': 'EducationalOrganization', name: 'Sciences Po Aix' },
+      { '@type': 'EducationalOrganization', name: 'INSP (ex-ENA)' },
+    ],
     knowsAbout: [
       'Finances publiques', 'Urbanisme', 'Service public',
       'Gestion municipale', 'Politique locale',
+      'Délégation de service public', 'Analyse financière',
     ],
+    hasOccupation: {
+      '@type': 'Occupation',
+      name: 'Analyste financier',
+      description: 'Expert en délégation de service public',
+    },
   }
 
   return (

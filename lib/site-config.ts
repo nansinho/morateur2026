@@ -22,8 +22,14 @@ export const ORGANIZATION = {
   name: 'Morateur 2026',
   alternateName: 'Liste Morateur 2026 - Bouc Bel Air a de l\'Avenir',
   url: SITE_URL,
-  logo: `${SITE_URL}/favicon.ico`,
+  logo: `${SITE_URL}/icon-512.png`,
   sameAs: CANDIDATE.sameAs,
+  contactPoint: {
+    type: 'ContactPoint',
+    email: 'contact@morateur2026.fr',
+    contactType: 'customer service',
+    availableLanguage: 'French',
+  },
   address: {
     addressLocality: 'Bouc-Bel-Air',
     addressRegion: 'Provence-Alpes-Côte d\'Azur',
