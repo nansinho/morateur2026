@@ -260,38 +260,52 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
             {/* LEFT PANEL: Candidate photo (desktop only) */}
             <div className="hidden lg:block lg:w-1/2 relative">
               <Image
-                src="/images/candidat-portrait-decontracte.jpg"
+                src="/images/header_candidat_portrait.png"
                 alt="Mathieu Morateur"
                 fill
-                className="object-cover object-top"
+                className="object-cover object-center"
                 sizes="50vw"
                 priority
               />
-              {/* Gradient overlay for smooth blending */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[hsl(210,60%,12%)]" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(210,60%,12%)] via-transparent to-transparent" />
+              {/* Gradient overlays for smooth blending */}
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 50%, hsl(var(--primary)) 100%)' }} />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, hsl(var(--primary)) 0%, transparent 40%)' }} />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, hsl(var(--primary)) 0%, transparent 20%)' }} />
             </div>
 
             {/* RIGHT PANEL: Form */}
-            <div className="flex-1 lg:w-1/2 overflow-y-auto px-5 sm:px-8 lg:px-10 xl:px-14 pb-8">
-              {/* Big title */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1, duration: 0.5 }}
-                className="mb-8 lg:mb-10 mt-2 lg:mt-6"
-              >
-                <h1 className="font-accent font-extrabold text-4xl sm:text-5xl lg:text-6xl text-primary-foreground uppercase leading-[1.1] tracking-wide">
+            <div className="flex-1 lg:w-1/2 overflow-y-auto flex flex-col justify-center px-6 sm:px-10 lg:px-12 xl:px-16 py-6">
+              {/* Animated title */}
+              <div className="mb-6 lg:mb-8">
+                <motion.h1
+                  initial={{ opacity: 0, x: -40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.15, duration: 0.6, ease: "easeOut" }}
+                  className="font-accent font-extrabold text-3xl sm:text-4xl lg:text-5xl text-primary-foreground uppercase leading-[1.1] tracking-wide"
+                >
                   Rejoignez{' '}
                   <span className="text-campaign-lime">le mouv&apos; !</span>
-                </h1>
-                <p className="text-white/50 text-base mt-4 max-w-md leading-relaxed">
-                  Inscrivez-vous et participez activement au renouveau de notre commune.
-                </p>
-              </motion.div>
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.35, duration: 0.6, ease: "easeOut" }}
+                  className="font-accent font-extrabold text-2xl sm:text-3xl lg:text-4xl text-primary-foreground/80 uppercase leading-[1.1] tracking-wide mt-1"
+                >
+                  Morateur <span className="text-campaign-lime">2026</span>
+                </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.55, duration: 0.5 }}
+                  className="text-white/50 text-sm sm:text-base mt-4 max-w-sm leading-relaxed"
+                >
+                  Inscrivez-vous et participez au renouveau de notre commune.
+                </motion.p>
+              </div>
 
               {/* Form / Success */}
-              <div className="max-w-lg">
+              <div className="max-w-md">
                 <AnimatePresence mode="wait">
                   {submitted ? (
                     <motion.div
@@ -519,7 +533,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                               className={`group flex-1 flex items-center justify-center gap-2.5 py-4 rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-200 ${
                                 isStepValid(step)
                                   ? "gradient-lime text-accent-foreground shadow-[0_4px_24px_-4px_hsl(152_48%_50%/0.5)] hover:shadow-[0_8px_36px_-4px_hsl(152_48%_50%/0.6)] hover:brightness-110"
-                                  : "bg-white/[0.06] text-white/30 border border-white/[0.10] cursor-default"
+                                  : "bg-white/15 text-white/50 border border-white/20 cursor-default"
                               }`}
                               whileHover={isStepValid(step) ? { scale: 1.02 } : {}}
                               whileTap={isStepValid(step) ? { scale: 0.97 } : {}}
@@ -534,7 +548,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                               className={`group flex-1 flex items-center justify-center gap-2.5 py-4 rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-200 disabled:cursor-not-allowed ${
                                 form.accept_policy && !submitting
                                   ? "gradient-lime text-accent-foreground shadow-[0_4px_24px_-4px_hsl(152_48%_50%/0.5)] hover:shadow-[0_8px_36px_-4px_hsl(152_48%_50%/0.6)] hover:brightness-110"
-                                  : "bg-white/[0.06] text-white/30 border border-white/[0.10]"
+                                  : "bg-white/15 text-white/50 border border-white/20"
                               }`}
                               whileHover={submitting || !form.accept_policy ? {} : { scale: 1.02 }}
                               whileTap={submitting || !form.accept_policy ? {} : { scale: 0.97 }}
