@@ -267,8 +267,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                 sizes="50vw"
                 priority
               />
-              {/* Clean edge blend - no heavy fade */}
-              <div className="absolute inset-y-0 right-0 w-32" style={{ background: 'linear-gradient(to right, transparent, hsl(var(--primary)))' }} />
+              {/* No overlay - clean photo */}
             </div>
 
             {/* RIGHT PANEL: Form */}
