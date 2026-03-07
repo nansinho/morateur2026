@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback, useEffect } from "react";
 import { X, CheckCircle, Send, AlertCircle, User, Mail, Phone, MessageSquare, ArrowRight, ArrowLeft, Sparkles, PartyPopper } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import IconCaptcha from "./IconCaptcha";
 
 type FormData = { prenom: string; nom: string; email: string; tel: string; motivations: string; accept_policy: boolean; newsletter_optin: boolean };
 type FormErrors = Partial<Record<keyof FormData, string>>;
@@ -74,6 +76,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Set<string>>(new Set());
   const [formLoadedAt] = useState(() => Date.now());
+  const [showCaptcha, setShowCaptcha] = useState(false);
 
   // Lock body scroll when popup is open
   useEffect(() => {
@@ -88,11 +91,11 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
   // Close on Escape
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape' && !showCaptcha) onClose();
     };
     if (isOpen) window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, showCaptcha]);
 
   const handleChange = useCallback((field: keyof FormData, value: string) => {
     setForm(prev => {
@@ -145,10 +148,17 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
     setStep(s => Math.max(s - 1, 0));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // When user clicks "Envoyer", show captcha instead of submitting directly
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateStep(step)) return;
+    if (!form.accept_policy) return;
+    setShowCaptcha(true);
+  };
 
+  // After captcha success, actually submit the form
+  const doSubmit = async () => {
+    setShowCaptcha(false);
     setSubmitting(true);
     setSubmitError(null);
     try {
@@ -232,7 +242,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
           style={{ height: '100dvh' }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-5 sm:px-8 py-4 sm:py-5 flex-shrink-0">
+          <div className="flex items-center justify-between px-5 sm:px-8 py-4 sm:py-5 flex-shrink-0 relative z-10">
             <span className="font-accent text-base font-extrabold tracking-widest uppercase text-primary-foreground">
               MORATEUR <span className="text-campaign-lime">2026</span>
             </span>
@@ -245,303 +255,346 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
             </button>
           </div>
 
-          {/* Content */}
-          <div className="flex-1 overflow-y-auto px-5 sm:px-8 pb-8">
-            <div className="max-w-lg mx-auto">
-              <AnimatePresence mode="wait">
-                {submitted ? (
-                  <motion.div
-                    key="success"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                    className="relative rounded-3xl p-10 sm:p-14 text-center border-2 border-white/30 overflow-hidden backdrop-blur-md shadow-[0_0_80px_-20px_rgba(255,255,255,0.08)] mt-8"
-                    style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))" }}
-                  >
-                    <Confetti />
+          {/* Main content: split layout */}
+          <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+            {/* LEFT PANEL: Candidate photo (desktop only) */}
+            <div className="hidden lg:block lg:w-1/2 relative">
+              <Image
+                src="/images/candidat-portrait-decontracte.jpg"
+                alt="Mathieu Morateur"
+                fill
+                className="object-cover object-top"
+                sizes="50vw"
+                priority
+              />
+              {/* Gradient overlay for smooth blending */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[hsl(210,60%,12%)]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(210,60%,12%)] via-transparent to-transparent" />
+            </div>
+
+            {/* RIGHT PANEL: Form */}
+            <div className="flex-1 lg:w-1/2 overflow-y-auto px-5 sm:px-8 lg:px-10 xl:px-14 pb-8">
+              {/* Big title */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.5 }}
+                className="mb-6 lg:mb-8 mt-2 lg:mt-4"
+              >
+                <h1 className="font-accent font-extrabold text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl text-primary-foreground uppercase leading-tight tracking-wide">
+                  Ensemble,{' '}
+                  <span className="block text-campaign-lime">
+                    construisons Morateur
+                  </span>
+                </h1>
+                <p className="text-white/40 text-sm sm:text-base mt-3 max-w-md">
+                  Rejoignez notre mouvement citoyen et participez activement au renouveau de notre commune.
+                </p>
+              </motion.div>
+
+              {/* Form / Success */}
+              <div className="max-w-lg">
+                <AnimatePresence mode="wait">
+                  {submitted ? (
                     <motion.div
-                      initial={{ scale: 0, rotate: -180 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0.2 }}
-                      className="w-20 h-20 rounded-full gradient-lime mx-auto mb-6 flex items-center justify-center"
+                      key="success"
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                      className="relative rounded-3xl p-10 sm:p-14 text-center border-2 border-white/30 overflow-hidden backdrop-blur-md shadow-[0_0_80px_-20px_rgba(255,255,255,0.08)]"
+                      style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))" }}
                     >
-                      <CheckCircle className="w-10 h-10 text-accent-foreground" />
-                    </motion.div>
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        <PartyPopper className="w-6 h-6 text-campaign-lime" />
-                        <h3 className="font-accent font-extrabold text-3xl text-primary-foreground uppercase">Merci !</h3>
-                        <PartyPopper className="w-6 h-6 text-campaign-lime -scale-x-100" />
-                      </div>
-                      <p className="text-primary-foreground/60 text-lg mb-2">
-                        Bienvenue dans l&apos;aventure, <span className="text-campaign-lime font-bold">{form.prenom}</span> !
-                      </p>
-                      <p className="text-primary-foreground/40 text-sm mb-6">Nous vous recontacterons très vite.</p>
-                      <button
-                        onClick={onClose}
-                        className="gradient-lime text-accent-foreground px-8 py-3 rounded-2xl font-extrabold uppercase tracking-wider text-sm hover:shadow-[0_16px_44px_-8px_hsl(152_48%_50%/0.5)] hover:brightness-110 transition-all duration-200"
+                      <Confetti />
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0.2 }}
+                        className="w-20 h-20 rounded-full gradient-lime mx-auto mb-6 flex items-center justify-center"
                       >
-                        Fermer
-                      </button>
+                        <CheckCircle className="w-10 h-10 text-accent-foreground" />
+                      </motion.div>
+                      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                        <div className="flex items-center justify-center gap-2 mb-2">
+                          <PartyPopper className="w-6 h-6 text-campaign-lime" />
+                          <h3 className="font-accent font-extrabold text-3xl text-primary-foreground uppercase">Merci !</h3>
+                          <PartyPopper className="w-6 h-6 text-campaign-lime -scale-x-100" />
+                        </div>
+                        <p className="text-primary-foreground/60 text-lg mb-2">
+                          Bienvenue dans l&apos;aventure, <span className="text-campaign-lime font-bold">{form.prenom}</span> !
+                        </p>
+                        <p className="text-primary-foreground/40 text-sm mb-6">Nous vous recontacterons très vite.</p>
+                        <button
+                          onClick={onClose}
+                          className="gradient-lime text-accent-foreground px-8 py-3.5 rounded-2xl font-extrabold uppercase tracking-wider text-sm hover:shadow-[0_16px_44px_-8px_hsl(152_48%_50%/0.5)] hover:brightness-110 transition-all duration-200"
+                        >
+                          Fermer
+                        </button>
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                ) : (
-                  <form
-                    key="form"
-                    onSubmit={handleSubmit}
-                    noValidate
-                    className="rounded-3xl border border-white/[0.12] overflow-hidden backdrop-blur-xl shadow-[0_8px_60px_-12px_rgba(0,0,0,0.5),inset_0_1px_0_0_rgba(255,255,255,0.06)] mt-4"
-                    style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))" }}
-                    role="form"
-                    aria-label="Formulaire de contact campagne"
-                  >
-                    {/* Honeypot - hidden from humans */}
-                    <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px', opacity: 0 }} />
+                  ) : (
+                    <form
+                      key="form"
+                      onSubmit={handleSubmit}
+                      noValidate
+                      className="rounded-3xl border border-white/[0.12] overflow-hidden backdrop-blur-xl shadow-[0_8px_60px_-12px_rgba(0,0,0,0.5),inset_0_1px_0_0_rgba(255,255,255,0.06)]"
+                      style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))" }}
+                      role="form"
+                      aria-label="Formulaire de contact campagne"
+                    >
+                      {/* Honeypot - hidden from humans */}
+                      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px', opacity: 0 }} />
 
-                    {/* Step header */}
-                    <div className="px-7 sm:px-9 pt-7 sm:pt-9 pb-0">
-                      <div className="mb-5">
-                        <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-campaign-lime/10 border border-campaign-lime/20 text-campaign-lime text-xs font-bold uppercase tracking-widest">
-                          <Sparkles className="w-3.5 h-3.5" />
-                          Inscription — Rejoignez-nous
-                        </span>
+                      {/* Step header */}
+                      <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-0">
+                        <div className="mb-4">
+                          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-campaign-lime/10 border border-campaign-lime/20 text-campaign-lime text-xs font-bold uppercase tracking-widest">
+                            <Sparkles className="w-3.5 h-3.5" />
+                            Inscription — Rejoignez-nous
+                          </span>
+                        </div>
+
+                        {/* Progress dots */}
+                        <div className="flex items-center gap-2 mb-5">
+                          {steps.map((s, i) => (
+                            <div key={s.id} className="flex items-center gap-2">
+                              <motion.div
+                                className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+                                  i < step
+                                    ? "gradient-lime text-accent-foreground shadow-[0_0_16px_-2px_hsl(152_48%_50%/0.5)]"
+                                    : i === step
+                                    ? "bg-campaign-lime/10 text-campaign-lime border-2 border-campaign-lime shadow-[0_0_20px_-4px_hsl(152_48%_50%/0.3)]"
+                                    : "bg-white/[0.06] text-white/30 border border-white/15"
+                                }`}
+                                animate={i === step ? { scale: [1, 1.08, 1] } : {}}
+                                transition={{ duration: 0.4 }}
+                              >
+                                {i < step ? <CheckCircle className="w-4 h-4" /> : i + 1}
+                              </motion.div>
+                              {i < steps.length - 1 && (
+                                <div className={`w-8 sm:w-12 h-[3px] rounded-full transition-all duration-300 ${
+                                  i < step ? "bg-campaign-lime/80" : "bg-white/10"
+                                }`} />
+                              )}
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Step title */}
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={step}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.2 }}
+                            className="mb-5"
+                          >
+                            <div className="flex items-center gap-3 mb-1">
+                              <span className="text-2xl">{steps[step].emoji}</span>
+                              <h3 className="font-accent font-extrabold text-primary-foreground text-xl sm:text-2xl uppercase tracking-wide">
+                                {steps[step].title}
+                              </h3>
+                            </div>
+                            <p className="text-white/40 text-sm pl-10">{steps[step].subtitle}</p>
+                          </motion.div>
+                        </AnimatePresence>
                       </div>
 
-                      {/* Progress dots */}
-                      <div className="flex items-center gap-2 mb-6">
-                        {steps.map((s, i) => (
-                          <div key={i} className="flex items-center gap-2">
-                            <motion.div
-                              className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
-                                i < step
-                                  ? "gradient-lime text-accent-foreground shadow-[0_0_16px_-2px_hsl(152_48%_50%/0.5)]"
-                                  : i === step
-                                  ? "bg-campaign-lime/10 text-campaign-lime border-2 border-campaign-lime shadow-[0_0_20px_-4px_hsl(152_48%_50%/0.3)]"
-                                  : "bg-white/[0.06] text-white/30 border border-white/15"
-                              }`}
-                              animate={i === step ? { scale: [1, 1.08, 1] } : {}}
-                              transition={{ duration: 0.4 }}
-                            >
-                              {i < step ? <CheckCircle className="w-4 h-4" /> : i + 1}
-                            </motion.div>
-                            {i < steps.length - 1 && (
-                              <div className={`w-8 sm:w-14 h-[3px] rounded-full transition-all duration-300 ${
-                                i < step ? "bg-campaign-lime/80" : "bg-white/10"
-                              }`} />
-                            )}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Step title */}
-                      <AnimatePresence mode="wait">
-                        <motion.div
-                          key={step}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.2 }}
-                          className="mb-6"
-                        >
-                          <div className="flex items-center gap-3 mb-1">
-                            <span className="text-2xl">{steps[step].emoji}</span>
-                            <h3 className="font-accent font-extrabold text-primary-foreground text-xl sm:text-2xl uppercase tracking-wide">
-                              {steps[step].title}
-                            </h3>
-                          </div>
-                          <p className="text-white/40 text-sm pl-10">{steps[step].subtitle}</p>
-                        </motion.div>
-                      </AnimatePresence>
-                    </div>
-
-                    {/* Step content */}
-                    <div className="px-7 sm:px-9 pb-4 min-h-[180px] sm:min-h-[220px] flex items-start">
-                      <AnimatePresence mode="wait" custom={direction}>
-                        <motion.div
-                          key={step}
-                          custom={direction}
-                          variants={slideVariants}
-                          initial="enter"
-                          animate="center"
-                          exit="exit"
-                          transition={{ duration: 0.25, ease: "easeInOut" }}
-                          className="w-full space-y-4"
-                        >
-                          {step === 0 && (
-                            <div className="grid sm:grid-cols-2 gap-4">
-                              {(["prenom", "nom"] as const).map(renderField)}
-                            </div>
-                          )}
-
-                          {step === 1 && (
-                            <div className="space-y-4">
-                              {(["email", "tel"] as const).map(renderField)}
-                            </div>
-                          )}
-
-                          {step === 2 && (
-                            <div className="space-y-4">
-                              <div className="group">
-                                <label htmlFor="popup-motivations" className="text-sm font-bold text-campaign-lime/90 uppercase tracking-wider mb-2.5 block">
-                                  Dites-nous en plus
-                                </label>
-                                <div className="relative">
-                                  <MessageSquare className="absolute left-4 top-4 w-4 h-4 text-white/30 group-focus-within:text-campaign-lime transition-colors duration-200" />
-                                  <textarea
-                                    id="popup-motivations"
-                                    required
-                                    maxLength={500}
-                                    rows={4}
-                                    placeholder={fieldConfig.motivations.placeholder}
-                                    value={form.motivations}
-                                    onBlur={() => handleBlur("motivations")}
-                                    onChange={e => handleChange("motivations", e.target.value)}
-                                    className="w-full pl-11 pr-4 py-4 rounded-2xl bg-white/[0.06] border border-white/[0.12] text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime/60 focus:bg-campaign-lime/[0.06] focus:shadow-[0_0_24px_-4px_hsl(152_48%_50%/0.3),inset_0_1px_0_0_rgba(255,255,255,0.04)] transition-all duration-300 resize-none"
-                                  />
-                                </div>
-                                <div className="flex justify-between mt-1.5">
-                                  {touched.has("motivations") && errors.motivations ? (
-                                    <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} role="alert" className="text-red-400 text-xs flex items-center gap-1">
-                                      <AlertCircle className="w-3 h-3" /> {errors.motivations}
-                                    </motion.p>
-                                  ) : <span />}
-                                  <span className="text-white/30 text-xs">{form.motivations.length}/500</span>
-                                </div>
+                      {/* Step content */}
+                      <div className="px-6 sm:px-8 pb-4 min-h-[180px] sm:min-h-[220px] flex items-start">
+                        <AnimatePresence mode="wait" custom={direction}>
+                          <motion.div
+                            key={step}
+                            custom={direction}
+                            variants={slideVariants}
+                            initial="enter"
+                            animate="center"
+                            exit="exit"
+                            transition={{ duration: 0.25, ease: "easeInOut" }}
+                            className="w-full space-y-4"
+                          >
+                            {step === 0 && (
+                              <div className="grid sm:grid-cols-2 gap-4">
+                                {(["prenom", "nom"] as const).map(renderField)}
                               </div>
-
-                              {/* Privacy policy */}
-                              <label className={`flex items-start gap-3 cursor-pointer group/check rounded-2xl p-3.5 border transition-all duration-300 ${
-                                form.accept_policy
-                                  ? "bg-campaign-lime/[0.06] border-campaign-lime/30"
-                                  : "bg-white/[0.04] border-white/10 hover:border-white/20"
-                              }`}>
-                                <input
-                                  type="checkbox"
-                                  checked={form.accept_policy}
-                                  onChange={e => setForm(prev => ({ ...prev, accept_policy: e.target.checked }))}
-                                  className="mt-0.5 w-4 h-4 rounded border-white/30 bg-white/10 accent-[hsl(var(--campaign-lime))] cursor-pointer flex-shrink-0"
-                                />
-                                <div>
-                                  <span className="text-white/80 text-sm leading-relaxed">
-                                    J&apos;accepte que mes données soient traitées conformément à la{' '}
-                                    <Link href="/politique-de-confidentialite" target="_blank" className="text-campaign-lime underline hover:text-campaign-lime/80 transition-colors" onClick={e => e.stopPropagation()}>
-                                      politique de confidentialité
-                                    </Link>
-                                    {' '}de Morateur 2026. <span className="text-red-400">*</span>
-                                  </span>
-                                </div>
-                              </label>
-
-                              {/* Newsletter opt-in */}
-                              <label className={`flex items-start gap-3 cursor-pointer group/check rounded-2xl p-3.5 border transition-all duration-300 ${
-                                form.newsletter_optin
-                                  ? "bg-campaign-lime/[0.06] border-campaign-lime/30"
-                                  : "bg-white/[0.04] border-white/10 hover:border-white/20"
-                              }`}>
-                                <input
-                                  type="checkbox"
-                                  checked={form.newsletter_optin}
-                                  onChange={e => setForm(prev => ({ ...prev, newsletter_optin: e.target.checked }))}
-                                  className="mt-0.5 w-4 h-4 rounded border-white/30 bg-white/10 accent-[hsl(var(--campaign-lime))] cursor-pointer flex-shrink-0"
-                                />
-                                <div>
-                                  <span className="text-white/70 text-sm leading-relaxed group-hover/check:text-white/90 transition-colors">
-                                    Je souhaite également recevoir la newsletter de la campagne par email
-                                  </span>
-                                  <span className="block text-white/30 text-[11px] mt-0.5">
-                                    Actualités, événements et avancées du projet. Désabonnement possible à tout moment.
-                                  </span>
-                                </div>
-                              </label>
-                            </div>
-                          )}
-                        </motion.div>
-                      </AnimatePresence>
-                    </div>
-
-                    {/* Error message */}
-                    {submitError && (
-                      <div className="px-7 sm:px-9 pb-2">
-                        <p role="alert" className="text-red-400 text-sm text-center flex items-center justify-center gap-1.5">
-                          <AlertCircle className="w-4 h-4" /> {submitError}
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Navigation buttons */}
-                    <div className="px-7 sm:px-9 pb-7 sm:pb-9 pt-4">
-                      <div className="flex items-center gap-3">
-                        {step > 0 && (
-                          <motion.button
-                            type="button"
-                            onClick={goPrev}
-                            className="flex items-center gap-2 px-5 py-4 rounded-2xl border border-white/[0.12] text-white/50 hover:text-white/80 hover:border-white/25 hover:bg-white/[0.04] active:scale-95 font-bold text-sm uppercase tracking-wider transition-all duration-300"
-                            whileHover={{ x: -3 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <ArrowLeft className="w-4 h-4" />
-                            Retour
-                          </motion.button>
-                        )}
-
-                        {step < steps.length - 1 ? (
-                          <motion.button
-                            type="button"
-                            onClick={goNext}
-                            className={`flex-1 flex items-center justify-center gap-2 py-4.5 rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-300 ${
-                              isStepValid(step)
-                                ? "gradient-lime text-accent-foreground shadow-[0_8px_30px_-6px_hsl(152_48%_50%/0.5)] hover:shadow-[0_16px_44px_-8px_hsl(152_48%_50%/0.5)] hover:brightness-110"
-                                : "bg-white/[0.08] text-white/40 border border-white/[0.12] cursor-default"
-                            }`}
-                            whileHover={isStepValid(step) ? { scale: 1.02 } : {}}
-                            whileTap={isStepValid(step) ? { scale: 0.97 } : {}}
-                          >
-                            Continuer
-                            <ArrowRight className="w-4 h-4" />
-                          </motion.button>
-                        ) : (
-                          <motion.button
-                            type="submit"
-                            disabled={submitting || !form.accept_policy}
-                            className={`flex-1 flex items-center justify-center gap-2 py-4.5 rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed ${
-                              form.accept_policy
-                                ? "gradient-lime text-accent-foreground shadow-[0_8px_30px_-6px_hsl(152_48%_50%/0.5)] hover:shadow-[0_16px_44px_-8px_hsl(152_48%_50%/0.5)] hover:brightness-110"
-                                : "bg-white/[0.08] text-white/40 border border-white/[0.12]"
-                            }`}
-                            whileHover={submitting || !form.accept_policy ? {} : { scale: 1.02 }}
-                            whileTap={submitting || !form.accept_policy ? {} : { scale: 0.97 }}
-                          >
-                            {submitting ? (
-                              <>
-                                <motion.div
-                                  className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full"
-                                  animate={{ rotate: 360 }}
-                                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                                />
-                                Envoi en cours...
-                              </>
-                            ) : (
-                              <>
-                                <Sparkles className="w-4 h-4" />
-                                Envoyer
-                                <Send className="w-4 h-4" />
-                              </>
                             )}
-                          </motion.button>
-                        )}
+
+                            {step === 1 && (
+                              <div className="space-y-4">
+                                {(["email", "tel"] as const).map(renderField)}
+                              </div>
+                            )}
+
+                            {step === 2 && (
+                              <div className="space-y-4">
+                                <div className="group">
+                                  <label htmlFor="popup-motivations" className="text-sm font-bold text-campaign-lime/90 uppercase tracking-wider mb-2.5 block">
+                                    Dites-nous en plus
+                                  </label>
+                                  <div className="relative">
+                                    <MessageSquare className="absolute left-4 top-4 w-4 h-4 text-white/30 group-focus-within:text-campaign-lime transition-colors duration-200" />
+                                    <textarea
+                                      id="popup-motivations"
+                                      required
+                                      maxLength={500}
+                                      rows={4}
+                                      placeholder={fieldConfig.motivations.placeholder}
+                                      value={form.motivations}
+                                      onBlur={() => handleBlur("motivations")}
+                                      onChange={e => handleChange("motivations", e.target.value)}
+                                      className="w-full pl-11 pr-4 py-4 rounded-2xl bg-white/[0.06] border border-white/[0.12] text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime/60 focus:bg-campaign-lime/[0.06] focus:shadow-[0_0_24px_-4px_hsl(152_48%_50%/0.3),inset_0_1px_0_0_rgba(255,255,255,0.04)] transition-all duration-300 resize-none"
+                                    />
+                                  </div>
+                                  <div className="flex justify-between mt-1.5">
+                                    {touched.has("motivations") && errors.motivations ? (
+                                      <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} role="alert" className="text-red-400 text-xs flex items-center gap-1">
+                                        <AlertCircle className="w-3 h-3" /> {errors.motivations}
+                                      </motion.p>
+                                    ) : <span />}
+                                    <span className="text-white/30 text-xs">{form.motivations.length}/500</span>
+                                  </div>
+                                </div>
+
+                                {/* Privacy policy */}
+                                <label className={`flex items-start gap-3 cursor-pointer group/check rounded-2xl p-3.5 border transition-all duration-300 ${
+                                  form.accept_policy
+                                    ? "bg-campaign-lime/[0.06] border-campaign-lime/30"
+                                    : "bg-white/[0.04] border-white/10 hover:border-white/20"
+                                }`}>
+                                  <input
+                                    type="checkbox"
+                                    checked={form.accept_policy}
+                                    onChange={e => setForm(prev => ({ ...prev, accept_policy: e.target.checked }))}
+                                    className="mt-0.5 w-4 h-4 rounded border-white/30 bg-white/10 accent-[hsl(var(--campaign-lime))] cursor-pointer flex-shrink-0"
+                                  />
+                                  <div>
+                                    <span className="text-white/80 text-sm leading-relaxed">
+                                      J&apos;accepte que mes données soient traitées conformément à la{' '}
+                                      <Link href="/politique-de-confidentialite" target="_blank" className="text-campaign-lime underline hover:text-campaign-lime/80 transition-colors" onClick={e => e.stopPropagation()}>
+                                        politique de confidentialité
+                                      </Link>
+                                      {' '}de Morateur 2026. <span className="text-red-400">*</span>
+                                    </span>
+                                  </div>
+                                </label>
+
+                                {/* Newsletter opt-in */}
+                                <label className={`flex items-start gap-3 cursor-pointer group/check rounded-2xl p-3.5 border transition-all duration-300 ${
+                                  form.newsletter_optin
+                                    ? "bg-campaign-lime/[0.06] border-campaign-lime/30"
+                                    : "bg-white/[0.04] border-white/10 hover:border-white/20"
+                                }`}>
+                                  <input
+                                    type="checkbox"
+                                    checked={form.newsletter_optin}
+                                    onChange={e => setForm(prev => ({ ...prev, newsletter_optin: e.target.checked }))}
+                                    className="mt-0.5 w-4 h-4 rounded border-white/30 bg-white/10 accent-[hsl(var(--campaign-lime))] cursor-pointer flex-shrink-0"
+                                  />
+                                  <div>
+                                    <span className="text-white/70 text-sm leading-relaxed group-hover/check:text-white/90 transition-colors">
+                                      Je souhaite également recevoir la newsletter de la campagne par email
+                                    </span>
+                                    <span className="block text-white/30 text-[11px] mt-0.5">
+                                      Actualités, événements et avancées du projet. Désabonnement possible à tout moment.
+                                    </span>
+                                  </div>
+                                </label>
+                              </div>
+                            )}
+                          </motion.div>
+                        </AnimatePresence>
                       </div>
 
-                      {step === steps.length - 1 && !form.accept_policy && (
-                        <p className="text-white/30 text-xs text-center mt-3">
-                          <span className="text-red-400">*</span> Veuillez accepter la politique de confidentialité pour envoyer le formulaire.
-                        </p>
+                      {/* Error message */}
+                      {submitError && (
+                        <div className="px-6 sm:px-8 pb-2">
+                          <p role="alert" className="text-red-400 text-sm text-center flex items-center justify-center gap-1.5">
+                            <AlertCircle className="w-4 h-4" /> {submitError}
+                          </p>
+                        </div>
                       )}
-                    </div>
-                  </form>
-                )}
-              </AnimatePresence>
+
+                      {/* Navigation buttons */}
+                      <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-4">
+                        <div className="flex items-center gap-3">
+                          {step > 0 && (
+                            <motion.button
+                              type="button"
+                              onClick={goPrev}
+                              className="group flex items-center gap-2.5 px-6 py-4 rounded-2xl bg-white/[0.05] border border-white/[0.15] text-white/60 hover:text-white hover:bg-white/[0.10] hover:border-white/[0.25] active:scale-95 font-bold text-sm uppercase tracking-wider transition-all duration-200"
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
+                              Retour
+                            </motion.button>
+                          )}
+
+                          {step < steps.length - 1 ? (
+                            <motion.button
+                              type="button"
+                              onClick={goNext}
+                              className={`group flex-1 flex items-center justify-center gap-2.5 py-4 rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-200 ${
+                                isStepValid(step)
+                                  ? "gradient-lime text-accent-foreground shadow-[0_4px_24px_-4px_hsl(152_48%_50%/0.5)] hover:shadow-[0_8px_36px_-4px_hsl(152_48%_50%/0.6)] hover:brightness-110"
+                                  : "bg-white/[0.06] text-white/30 border border-white/[0.10] cursor-default"
+                              }`}
+                              whileHover={isStepValid(step) ? { scale: 1.02 } : {}}
+                              whileTap={isStepValid(step) ? { scale: 0.97 } : {}}
+                            >
+                              Continuer
+                              <ArrowRight className={`w-4 h-4 transition-transform duration-200 ${isStepValid(step) ? 'group-hover:translate-x-1' : ''}`} />
+                            </motion.button>
+                          ) : (
+                            <motion.button
+                              type="submit"
+                              disabled={submitting || !form.accept_policy}
+                              className={`group flex-1 flex items-center justify-center gap-2.5 py-4 rounded-2xl font-extrabold uppercase tracking-wider text-sm transition-all duration-200 disabled:cursor-not-allowed ${
+                                form.accept_policy && !submitting
+                                  ? "gradient-lime text-accent-foreground shadow-[0_4px_24px_-4px_hsl(152_48%_50%/0.5)] hover:shadow-[0_8px_36px_-4px_hsl(152_48%_50%/0.6)] hover:brightness-110"
+                                  : "bg-white/[0.06] text-white/30 border border-white/[0.10]"
+                              }`}
+                              whileHover={submitting || !form.accept_policy ? {} : { scale: 1.02 }}
+                              whileTap={submitting || !form.accept_policy ? {} : { scale: 0.97 }}
+                            >
+                              {submitting ? (
+                                <>
+                                  <motion.div
+                                    className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full"
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                                  />
+                                  Envoi en cours...
+                                </>
+                              ) : (
+                                <>
+                                  <Sparkles className="w-4 h-4" />
+                                  Envoyer ma candidature
+                                  <Send className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                                </>
+                              )}
+                            </motion.button>
+                          )}
+                        </div>
+
+                        {step === steps.length - 1 && !form.accept_policy && (
+                          <p className="text-white/30 text-xs text-center mt-3">
+                            <span className="text-red-400">*</span> Veuillez accepter la politique de confidentialité pour envoyer le formulaire.
+                          </p>
+                        )}
+                      </div>
+                    </form>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           </div>
+
+          {/* Icon Captcha */}
+          <IconCaptcha
+            isOpen={showCaptcha}
+            onSuccess={doSubmit}
+            onClose={() => setShowCaptcha(false)}
+          />
         </motion.div>
       )}
     </AnimatePresence>
