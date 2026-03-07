@@ -200,11 +200,11 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
     const Icon = config.icon;
     return (
       <div key={key} className="group">
-        <label htmlFor={`popup-${key}`} className="text-sm font-bold text-campaign-lime/90 uppercase tracking-wider mb-2.5 block">
+        <label htmlFor={`popup-${key}`} className="text-sm font-semibold text-white/80 uppercase tracking-wider mb-2 block">
           {config.label}
         </label>
         <div className="relative">
-          <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-campaign-lime transition-colors duration-200" />
+          <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-campaign-lime transition-colors duration-200" />
           <input
             id={`popup-${key}`}
             type={config.type}
@@ -213,7 +213,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
             value={form[key]}
             onBlur={() => handleBlur(key)}
             onChange={e => handleChange(key, e.target.value)}
-            className="w-full pl-11 pr-4 py-4 rounded-2xl bg-white/[0.06] border border-white/[0.12] text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime/60 focus:bg-campaign-lime/[0.06] focus:shadow-[0_0_24px_-4px_hsl(152_48%_50%/0.3),inset_0_1px_0_0_rgba(255,255,255,0.04)] transition-all duration-300"
+            className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-base outline-none placeholder:text-gray-400 focus:border-campaign-lime focus:ring-2 focus:ring-campaign-lime/30 shadow-sm transition-all duration-200"
           />
         </div>
         {touched.has(key) && errors[key] && (
@@ -279,16 +279,14 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.5 }}
-                className="mb-6 lg:mb-8 mt-2 lg:mt-4"
+                className="mb-8 lg:mb-10 mt-2 lg:mt-6"
               >
-                <h1 className="font-accent font-extrabold text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl text-primary-foreground uppercase leading-tight tracking-wide">
-                  Ensemble,{' '}
-                  <span className="block text-campaign-lime">
-                    construisons Morateur
-                  </span>
+                <h1 className="font-accent font-extrabold text-4xl sm:text-5xl lg:text-6xl text-primary-foreground uppercase leading-[1.1] tracking-wide">
+                  Rejoignez{' '}
+                  <span className="text-campaign-lime">le mouv&apos; !</span>
                 </h1>
-                <p className="text-white/40 text-sm sm:text-base mt-3 max-w-md">
-                  Rejoignez notre mouvement citoyen et participez activement au renouveau de notre commune.
+                <p className="text-white/50 text-base mt-4 max-w-md leading-relaxed">
+                  Inscrivez-vous et participez activement au renouveau de notre commune.
                 </p>
               </motion.div>
 
@@ -336,72 +334,57 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                       key="form"
                       onSubmit={handleSubmit}
                       noValidate
-                      className="rounded-3xl border border-white/[0.12] overflow-hidden backdrop-blur-xl shadow-[0_8px_60px_-12px_rgba(0,0,0,0.5),inset_0_1px_0_0_rgba(255,255,255,0.06)]"
-                      style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))" }}
                       role="form"
                       aria-label="Formulaire de contact campagne"
                     >
                       {/* Honeypot - hidden from humans */}
                       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px', opacity: 0 }} />
 
-                      {/* Step header */}
-                      <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-0">
-                        <div className="mb-4">
-                          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-campaign-lime/10 border border-campaign-lime/20 text-campaign-lime text-xs font-bold uppercase tracking-widest">
-                            <Sparkles className="w-3.5 h-3.5" />
-                            Inscription — Rejoignez-nous
-                          </span>
-                        </div>
-
-                        {/* Progress dots */}
-                        <div className="flex items-center gap-2 mb-5">
-                          {steps.map((s, i) => (
-                            <div key={s.id} className="flex items-center gap-2">
-                              <motion.div
-                                className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
-                                  i < step
-                                    ? "gradient-lime text-accent-foreground shadow-[0_0_16px_-2px_hsl(152_48%_50%/0.5)]"
-                                    : i === step
-                                    ? "bg-campaign-lime/10 text-campaign-lime border-2 border-campaign-lime shadow-[0_0_20px_-4px_hsl(152_48%_50%/0.3)]"
-                                    : "bg-white/[0.06] text-white/30 border border-white/15"
-                                }`}
-                                animate={i === step ? { scale: [1, 1.08, 1] } : {}}
-                                transition={{ duration: 0.4 }}
-                              >
-                                {i < step ? <CheckCircle className="w-4 h-4" /> : i + 1}
-                              </motion.div>
-                              {i < steps.length - 1 && (
-                                <div className={`w-8 sm:w-12 h-[3px] rounded-full transition-all duration-300 ${
-                                  i < step ? "bg-campaign-lime/80" : "bg-white/10"
-                                }`} />
-                              )}
-                            </div>
-                          ))}
-                        </div>
-
-                        {/* Step title */}
-                        <AnimatePresence mode="wait">
-                          <motion.div
-                            key={step}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.2 }}
-                            className="mb-5"
-                          >
-                            <div className="flex items-center gap-3 mb-1">
-                              <span className="text-2xl">{steps[step].emoji}</span>
-                              <h3 className="font-accent font-extrabold text-primary-foreground text-xl sm:text-2xl uppercase tracking-wide">
-                                {steps[step].title}
-                              </h3>
-                            </div>
-                            <p className="text-white/40 text-sm pl-10">{steps[step].subtitle}</p>
-                          </motion.div>
-                        </AnimatePresence>
+                      {/* Progress dots */}
+                      <div className="flex items-center gap-2.5 mb-6">
+                        {steps.map((s, i) => (
+                          <div key={s.id} className="flex items-center gap-2.5">
+                            <motion.div
+                              className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+                                i < step
+                                  ? "gradient-lime text-accent-foreground shadow-[0_0_16px_-2px_hsl(152_48%_50%/0.5)]"
+                                  : i === step
+                                  ? "bg-white text-[hsl(210,60%,12%)] shadow-[0_0_20px_-4px_rgba(255,255,255,0.4)]"
+                                  : "bg-white/10 text-white/30 border border-white/15"
+                              }`}
+                              animate={i === step ? { scale: [1, 1.08, 1] } : {}}
+                              transition={{ duration: 0.4 }}
+                            >
+                              {i < step ? <CheckCircle className="w-4 h-4" /> : i + 1}
+                            </motion.div>
+                            {i < steps.length - 1 && (
+                              <div className={`w-10 sm:w-14 h-[3px] rounded-full transition-all duration-300 ${
+                                i < step ? "bg-campaign-lime/80" : "bg-white/15"
+                              }`} />
+                            )}
+                          </div>
+                        ))}
                       </div>
 
+                      {/* Step title */}
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={step}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="mb-6"
+                        >
+                          <h3 className="font-accent font-extrabold text-primary-foreground text-xl sm:text-2xl uppercase tracking-wide mb-1">
+                            {steps[step].title}
+                          </h3>
+                          <p className="text-white/50 text-sm">{steps[step].subtitle}</p>
+                        </motion.div>
+                      </AnimatePresence>
+
                       {/* Step content */}
-                      <div className="px-6 sm:px-8 pb-4 min-h-[180px] sm:min-h-[220px] flex items-start">
+                      <div className="pb-6 min-h-[180px] sm:min-h-[200px] flex items-start">
                         <AnimatePresence mode="wait" custom={direction}>
                           <motion.div
                             key={step}
@@ -428,11 +411,11 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                             {step === 2 && (
                               <div className="space-y-4">
                                 <div className="group">
-                                  <label htmlFor="popup-motivations" className="text-sm font-bold text-campaign-lime/90 uppercase tracking-wider mb-2.5 block">
+                                  <label htmlFor="popup-motivations" className="text-sm font-semibold text-white/80 uppercase tracking-wider mb-2 block">
                                     Dites-nous en plus
                                   </label>
                                   <div className="relative">
-                                    <MessageSquare className="absolute left-4 top-4 w-4 h-4 text-white/30 group-focus-within:text-campaign-lime transition-colors duration-200" />
+                                    <MessageSquare className="absolute left-4 top-4 w-4 h-4 text-gray-400 group-focus-within:text-campaign-lime transition-colors duration-200" />
                                     <textarea
                                       id="popup-motivations"
                                       required
@@ -442,7 +425,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                                       value={form.motivations}
                                       onBlur={() => handleBlur("motivations")}
                                       onChange={e => handleChange("motivations", e.target.value)}
-                                      className="w-full pl-11 pr-4 py-4 rounded-2xl bg-white/[0.06] border border-white/[0.12] text-white text-base sm:text-sm outline-none placeholder:text-white/20 focus:border-campaign-lime/60 focus:bg-campaign-lime/[0.06] focus:shadow-[0_0_24px_-4px_hsl(152_48%_50%/0.3),inset_0_1px_0_0_rgba(255,255,255,0.04)] transition-all duration-300 resize-none"
+                                      className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-white border border-gray-200 text-gray-900 text-base outline-none placeholder:text-gray-400 focus:border-campaign-lime focus:ring-2 focus:ring-campaign-lime/30 shadow-sm transition-all duration-200 resize-none"
                                     />
                                   </div>
                                   <div className="flex justify-between mt-1.5">
@@ -451,7 +434,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                                         <AlertCircle className="w-3 h-3" /> {errors.motivations}
                                       </motion.p>
                                     ) : <span />}
-                                    <span className="text-white/30 text-xs">{form.motivations.length}/500</span>
+                                    <span className="text-white/40 text-xs">{form.motivations.length}/500</span>
                                   </div>
                                 </div>
 
@@ -507,7 +490,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
 
                       {/* Error message */}
                       {submitError && (
-                        <div className="px-6 sm:px-8 pb-2">
+                        <div className="pb-2">
                           <p role="alert" className="text-red-400 text-sm text-center flex items-center justify-center gap-1.5">
                             <AlertCircle className="w-4 h-4" /> {submitError}
                           </p>
@@ -515,7 +498,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                       )}
 
                       {/* Navigation buttons */}
-                      <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-4">
+                      <div className="pt-2 pb-2">
                         <div className="flex items-center gap-3">
                           {step > 0 && (
                             <motion.button
@@ -568,7 +551,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                               ) : (
                                 <>
                                   <Sparkles className="w-4 h-4" />
-                                  Envoyer ma candidature
+                                  Envoyer
                                   <Send className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                                 </>
                               )}
