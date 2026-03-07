@@ -267,21 +267,19 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                 sizes="50vw"
                 priority
               />
-              {/* Gradient overlays for smooth blending */}
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 50%, hsl(var(--primary)) 100%)' }} />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, hsl(var(--primary)) 0%, transparent 40%)' }} />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, hsl(var(--primary)) 0%, transparent 20%)' }} />
+              {/* Clean edge blend - no heavy fade */}
+              <div className="absolute inset-y-0 right-0 w-32" style={{ background: 'linear-gradient(to right, transparent, hsl(var(--primary)))' }} />
             </div>
 
             {/* RIGHT PANEL: Form */}
             <div className="flex-1 lg:w-1/2 overflow-y-auto flex flex-col justify-center px-6 sm:px-10 lg:px-12 xl:px-16 py-6">
-              {/* Animated title */}
+              {/* Title */}
               <div className="mb-6 lg:mb-8">
                 <motion.h1
                   initial={{ opacity: 0, x: -40 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.15, duration: 0.6, ease: "easeOut" }}
-                  className="font-accent font-extrabold text-3xl sm:text-4xl lg:text-5xl text-primary-foreground uppercase leading-[1.1] tracking-wide"
+                  className="font-accent font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-primary-foreground uppercase leading-[1.05] tracking-wide"
                 >
                   Rejoignez{' '}
                   <span className="text-campaign-lime">le mouv&apos; !</span>
@@ -290,7 +288,7 @@ const JoinPopup = ({ isOpen, onClose }: JoinPopupProps) => {
                   initial={{ opacity: 0, x: 40 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.35, duration: 0.6, ease: "easeOut" }}
-                  className="font-accent font-extrabold text-2xl sm:text-3xl lg:text-4xl text-primary-foreground/80 uppercase leading-[1.1] tracking-wide mt-1"
+                  className="font-accent font-extrabold text-3xl sm:text-4xl lg:text-5xl text-primary-foreground/80 uppercase leading-[1.1] tracking-wide mt-1"
                 >
                   Morateur <span className="text-campaign-lime">2026</span>
                 </motion.p>
