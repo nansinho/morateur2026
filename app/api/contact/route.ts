@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { sendContactConfirmationEmail } from '@/lib/email'
+import { sendContactConfirmationEmail, sendContactAdminNotificationEmail } from '@/lib/email'
 import { addBrevoContact } from '@/lib/brevo'
 import { validateAntiSpam } from '@/lib/antispam'
 
@@ -123,6 +123,19 @@ export async function POST(request: Request) {
       await sendContactConfirmationEmail(body.email.trim(), body.prenom.trim())
     } catch (e) {
       console.error('[CONTACT] Confirmation email error:', e)
+    }
+
+    // Send notification email to admin
+    try {
+      await sendContactAdminNotificationEmail({
+        firstName: body.prenom.trim(),
+        lastName: body.nom.trim(),
+        email: body.email.trim(),
+        phone: body.tel.trim(),
+        motivations: body.motivations.trim(),
+      })
+    } catch (e) {
+      console.error('[CONTACT] Admin notification error:', e)
     }
 
     return NextResponse.json({ success: true })

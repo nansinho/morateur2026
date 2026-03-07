@@ -383,6 +383,66 @@ Cet email a été envoyé suite à votre inscription sur morateur2026.fr.`
   }
 }
 
+export async function sendContactAdminNotificationEmail(params: {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  motivations: string
+}): Promise<void> {
+  if (!resend) {
+    console.log('[EMAIL] Resend non configuré, notification admin contact ignorée')
+    return
+  }
+
+  const subject = `Nouveau message de contact — ${params.firstName} ${params.lastName}`
+
+  const innerHtml = `
+    <div style="background-color: #f5f5f0; padding: 32px 16px; font-family: 'Helvetica Neue', Arial, sans-serif;">
+      <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06);">
+        <div style="background: #1a4b8c; padding: 20px 24px;">
+          <h2 style="color: #ffffff; font-size: 18px; margin: 0;">Nouveau message de contact</h2>
+        </div>
+        <div style="height: 4px; background: #50b87a;"></div>
+        <div style="padding: 24px;">
+          <table style="width: 100%; border-collapse: collapse; margin: 0 0 24px;">
+            <tr><td style="padding: 10px 0; color: #888; width: 150px; border-bottom: 1px solid #f0f0f0;">Nom</td><td style="padding: 10px 0; color: #1a1a17; font-weight: bold; border-bottom: 1px solid #f0f0f0;">${params.firstName} ${params.lastName}</td></tr>
+            <tr><td style="padding: 10px 0; color: #888; border-bottom: 1px solid #f0f0f0;">Email</td><td style="padding: 10px 0; color: #1a1a17; border-bottom: 1px solid #f0f0f0;">${params.email}</td></tr>
+            <tr><td style="padding: 10px 0; color: #888; border-bottom: 1px solid #f0f0f0;">Téléphone</td><td style="padding: 10px 0; color: #1a1a17; border-bottom: 1px solid #f0f0f0;">${params.phone}</td></tr>
+            <tr><td style="padding: 10px 0; color: #888; vertical-align: top;">Motivations</td><td style="padding: 10px 0; color: #1a1a17; white-space: pre-wrap;">${params.motivations}</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  `
+
+  const textContent = `Nouveau message de contact
+
+Nom : ${params.firstName} ${params.lastName}
+Email : ${params.email}
+Téléphone : ${params.phone}
+Motivations : ${params.motivations}`
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: ADMIN_EMAIL,
+      replyTo: params.email,
+      subject,
+      html: wrapInDocument(subject, innerHtml),
+      text: textContent,
+      headers: {
+        'X-Entity-Ref-ID': generateEntityId(),
+      },
+      tags: [
+        { name: 'category', value: 'contact-admin-notification' },
+      ],
+    })
+  } catch (error) {
+    console.error('[EMAIL] Erreur envoi notification admin contact:', error)
+  }
+}
+
 export async function sendNewsletterConfirmationEmail(
   to: string,
   firstName?: string
