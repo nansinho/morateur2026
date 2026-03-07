@@ -127,55 +127,53 @@ const IconCaptcha = ({ isOpen, onSuccess, onClose }: IconCaptchaProps) => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-[110] flex items-center justify-center p-4"
-          style={{ backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}
+          style={{ backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)' }}
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="w-full max-w-sm rounded-3xl border border-white/[0.12] overflow-hidden shadow-2xl"
-            style={{ background: 'linear-gradient(160deg, rgba(20,35,60,0.98), rgba(10,20,40,0.98))' }}
+            className="w-full max-w-sm rounded-2xl bg-white overflow-hidden shadow-2xl"
           >
-            {/* Header */}
-            <div className="flex items-center justify-between px-6 pt-6 pb-2">
+            {/* Header - teal bar */}
+            <div className="gradient-teal-deep px-5 py-4 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-campaign-lime/10 border border-campaign-lime/20 flex items-center justify-center">
-                  <Shield className="w-4 h-4 text-campaign-lime" />
-                </div>
-                <h3 className="font-accent font-extrabold text-white text-base uppercase tracking-wide">
-                  Vérification
+                <Shield className="w-5 h-5 text-campaign-lime" />
+                <h3 className="font-accent font-extrabold text-white text-sm uppercase tracking-wide">
+                  Vérification de sécurité
                 </h3>
               </div>
               <button
                 onClick={handleClose}
-                className="w-8 h-8 rounded-lg border border-white/10 text-white/40 flex items-center justify-center hover:border-white/30 hover:text-white/70 transition-colors"
+                className="w-7 h-7 rounded-lg text-white/50 flex items-center justify-center hover:text-white transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Progress dots */}
-            <div className="flex items-center justify-center gap-2 py-3">
-              {Array.from({ length: TOTAL_ROUNDS }, (_, i) => (
-                <div
-                  key={i}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    i < currentRound || isComplete
-                      ? 'bg-campaign-lime shadow-[0_0_8px_hsl(152_48%_50%/0.5)]'
-                      : i === currentRound
-                      ? 'bg-campaign-lime/60 border border-campaign-lime'
-                      : 'bg-white/15'
-                  }`}
-                />
-              ))}
+            {/* Progress */}
+            <div className="px-5 pt-4 pb-2">
+              <div className="flex items-center justify-center gap-2 mb-1">
+                {Array.from({ length: TOTAL_ROUNDS }, (_, i) => (
+                  <div
+                    key={i}
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                      i < currentRound || isComplete
+                        ? 'bg-campaign-lime shadow-[0_0_6px_hsl(152_48%_50%/0.4)]'
+                        : i === currentRound
+                        ? 'bg-[hsl(210,60%,25%)]'
+                        : 'bg-gray-200'
+                    }`}
+                  />
+                ))}
+              </div>
+              <p className="text-gray-400 text-xs text-center">
+                Étape {Math.min(currentRound + 1, TOTAL_ROUNDS)} sur {TOTAL_ROUNDS}
+              </p>
             </div>
-            <p className="text-white/40 text-xs text-center mb-3">
-              Étape {Math.min(currentRound + 1, TOTAL_ROUNDS)} sur {TOTAL_ROUNDS}
-            </p>
 
             {isComplete ? (
-              /* Success state */
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -185,27 +183,27 @@ const IconCaptcha = ({ isOpen, onSuccess, onClose }: IconCaptchaProps) => {
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 12 }}
-                  className="w-16 h-16 rounded-full bg-campaign-lime/20 border-2 border-campaign-lime flex items-center justify-center mb-4"
+                  className="w-16 h-16 rounded-full gradient-lime flex items-center justify-center mb-4"
                 >
-                  <Check className="w-8 h-8 text-campaign-lime" />
+                  <Check className="w-8 h-8 text-white" />
                 </motion.div>
-                <p className="text-white font-bold text-lg">Vérifié !</p>
-                <p className="text-white/40 text-sm">Envoi en cours...</p>
+                <p className="text-gray-900 font-bold text-lg">Vérifié !</p>
+                <p className="text-gray-400 text-sm">Envoi en cours...</p>
               </motion.div>
             ) : (
               <>
                 {/* Instruction */}
-                <div className="mx-6 mb-4 px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center gap-3">
+                <div className="mx-5 my-3 px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-3">
                   {(() => {
                     const TargetIcon = round.gridIcons[round.targetIndex].icon
                     return <TargetIcon className="w-5 h-5 text-campaign-lime flex-shrink-0" />
                   })()}
-                  <p className="text-white/80 text-sm">
-                    Cliquez sur : <strong className="text-campaign-lime font-bold">{targetName}</strong>
+                  <p className="text-gray-700 text-sm">
+                    Cliquez sur : <strong className="text-[hsl(210,60%,25%)] font-bold">{targetName}</strong>
                   </p>
                   <button
                     onClick={regenerate}
-                    className="ml-auto text-white/30 hover:text-white/60 transition-colors flex-shrink-0"
+                    className="ml-auto text-gray-300 hover:text-gray-500 transition-colors flex-shrink-0"
                     title="Nouvelles icônes"
                   >
                     <RefreshCw className="w-4 h-4" />
@@ -213,7 +211,7 @@ const IconCaptcha = ({ isOpen, onSuccess, onClose }: IconCaptchaProps) => {
                 </div>
 
                 {/* 3x3 Grid */}
-                <div className="px-6 pb-6">
+                <div className="px-5 pb-5">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={`${currentRound}-${round.gridIcons.map(i => i.name).join()}`}
@@ -233,12 +231,12 @@ const IconCaptcha = ({ isOpen, onSuccess, onClose }: IconCaptchaProps) => {
                             key={`${item.name}-${i}`}
                             type="button"
                             onClick={() => handleIconClick(i)}
-                            className={`aspect-square rounded-2xl border flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                            className={`aspect-square rounded-xl border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
                               isCorrect
-                                ? 'bg-campaign-lime/20 border-campaign-lime shadow-[0_0_20px_hsl(152_48%_50%/0.3)]'
+                                ? 'bg-green-50 border-campaign-lime shadow-[0_0_12px_hsl(152_48%_50%/0.3)]'
                                 : isWrong
-                                ? 'bg-red-500/20 border-red-500'
-                                : 'bg-white/[0.04] border-white/[0.10] hover:border-campaign-lime/40 hover:bg-campaign-lime/[0.06]'
+                                ? 'bg-red-50 border-red-400'
+                                : 'bg-gray-50 border-gray-200 hover:border-[hsl(210,60%,25%)] hover:bg-gray-100'
                             }`}
                             whileHover={!isCorrect && !isWrong ? { scale: 1.05 } : {}}
                             whileTap={!isCorrect && !isWrong ? { scale: 0.95 } : {}}
@@ -257,7 +255,7 @@ const IconCaptcha = ({ isOpen, onSuccess, onClose }: IconCaptchaProps) => {
                                 ? 'text-campaign-lime'
                                 : isWrong
                                 ? 'text-red-400'
-                                : 'text-white/60'
+                                : 'text-gray-500'
                             }`} />
                           </motion.button>
                         )
@@ -269,8 +267,8 @@ const IconCaptcha = ({ isOpen, onSuccess, onClose }: IconCaptchaProps) => {
             )}
 
             {/* Footer */}
-            <div className="px-6 pb-5 pt-1">
-              <p className="text-white/20 text-[11px] text-center">
+            <div className="px-5 pb-4 pt-1">
+              <p className="text-gray-300 text-[11px] text-center">
                 Vérification de sécurité Morateur 2026
               </p>
             </div>
