@@ -1,11 +1,14 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
 import AnnouncementBanner from "@/components/AnnouncementBanner";
+
+const JoinPopup = dynamic(() => import("@/components/JoinPopup"));
 
 const navItems = [
   { label: "Le Candidat", to: "/candidat" },
@@ -23,8 +26,17 @@ interface NavbarProps {
 const Navbar = ({ onJoinClick }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [joinOpen, setJoinOpen] = useState(false);
   const { scrollY } = useScroll();
   const pathname = usePathname();
+
+  const handleJoinClick = useCallback(() => {
+    if (onJoinClick) {
+      onJoinClick();
+    } else {
+      setJoinOpen(true);
+    }
+  }, [onJoinClick]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
@@ -73,7 +85,7 @@ const Navbar = ({ onJoinClick }: NavbarProps) => {
             </Link>
           ))}
           <button
-            onClick={onJoinClick}
+            onClick={handleJoinClick}
             className="gradient-lime text-accent-foreground px-6 py-2.5 rounded-xl text-[13px] font-extrabold tracking-wide shadow-md -rotate-1 hover:rotate-0 hover:shadow-[0_10px_30px_-8px_hsl(var(--campaign-lime)/0.5)] hover:scale-105 transition-all duration-200"
           >
             Rejoignez-nous
@@ -153,7 +165,7 @@ const Navbar = ({ onJoinClick }: NavbarProps) => {
                 transition={{ delay: 0.4 }}
               >
                 <button
-                  onClick={() => { setIsOpen(false); onJoinClick?.(); }}
+                  onClick={() => { setIsOpen(false); handleJoinClick(); }}
                   className="block w-full text-center gradient-lime text-accent-foreground py-4 rounded-2xl text-base font-extrabold uppercase tracking-wider shadow-lg"
                 >
                   Rejoignez-nous
@@ -176,6 +188,7 @@ const Navbar = ({ onJoinClick }: NavbarProps) => {
       </AnimatePresence>
     </motion.nav>
     <AnnouncementBanner />
+    {!onJoinClick && <JoinPopup isOpen={joinOpen} onClose={() => setJoinOpen(false)} />}
     </header>
   );
 };
