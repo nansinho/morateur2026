@@ -41,7 +41,7 @@ const eventSchemas = [
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     image: `${SITE_URL}/images/candidat-banner.png`,
     performer: { '@type': 'Person', name: CANDIDATE.name },
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR', url: `${SITE_URL}/actualites`, availability: 'https://schema.org/InStock' },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR', url: `${SITE_URL}/actualites`, availability: 'https://schema.org/InStock', validFrom: '2026-01-15' },
     location: {
       '@type': 'Place',
       name: 'Bouc-Bel-Air',
@@ -60,7 +60,7 @@ const eventSchemas = [
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     image: `${SITE_URL}/images/candidat-banner.png`,
     performer: { '@type': 'Person', name: CANDIDATE.name },
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR', url: `${SITE_URL}/actualites`, availability: 'https://schema.org/InStock' },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR', url: `${SITE_URL}/actualites`, availability: 'https://schema.org/InStock', validFrom: '2026-01-28' },
     location: {
       '@type': 'Place',
       name: 'Centre-village de Bouc-Bel-Air',
@@ -79,7 +79,7 @@ const eventSchemas = [
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     image: `${SITE_URL}/images/candidat-banner.png`,
     performer: { '@type': 'Person', name: CANDIDATE.name },
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR', url: `${SITE_URL}/actualites`, availability: 'https://schema.org/InStock' },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR', url: `${SITE_URL}/actualites`, availability: 'https://schema.org/InStock', validFrom: '2026-02-05' },
     location: {
       '@type': 'Place',
       name: 'Bouc-Bel-Air',
