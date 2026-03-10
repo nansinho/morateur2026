@@ -15,10 +15,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Aucun fichier fourni' }, { status: 400 })
   }
 
+  // Server-side file size limit (5MB)
+  const MAX_FILE_SIZE = 5 * 1024 * 1024
+  if (file.size > MAX_FILE_SIZE) {
+    return NextResponse.json({ error: 'Fichier trop volumineux (max 5 Mo)' }, { status: 400 })
+  }
+
   const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
-  const allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']
+  const allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp']
   if (!allowed.includes(ext)) {
-    return NextResponse.json({ error: 'Format non supporté' }, { status: 400 })
+    return NextResponse.json({ error: 'Format non supporté. Formats acceptés : jpg, png, gif, webp' }, { status: 400 })
   }
 
   const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
@@ -36,7 +42,7 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     console.error('Upload error:', error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: 'Erreur lors de l\'upload du fichier' }, { status: 500 })
   }
 
   const { data: urlData } = supabase.storage

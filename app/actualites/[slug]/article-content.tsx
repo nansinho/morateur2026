@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Calendar, Clock, Share2, ChevronRight, Heart } from 'lucide-react'
 import Link from 'next/link'
+import DOMPurify from 'isomorphic-dompurify'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import type { Article } from '@/lib/types/database'
@@ -52,6 +53,10 @@ export default function ArticleContent({
   relatedArticles: Article[]
 }) {
   const style = tagStyles[article.tag] || { bg: 'bg-muted', text: 'text-foreground', accent: 'bg-muted/10' }
+  const sanitizedContent = useMemo(
+    () => article.content ? DOMPurify.sanitize(article.content, { ADD_TAGS: ['iframe'], ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'target'] }) : '',
+    [article.content]
+  )
   const readingTime = article.content ? estimateReadingTime(article.content) : null
   const [progress, setProgress] = useState(0)
   const articleRef = useRef<HTMLDivElement>(null)
@@ -272,7 +277,7 @@ export default function ArticleContent({
                 >
                   <div
                     className="prose prose-lg prose-article max-w-none"
-                    dangerouslySetInnerHTML={{ __html: article.content }}
+                    dangerouslySetInnerHTML={{ __html: sanitizedContent }}
                   />
                 </motion.div>
               )}

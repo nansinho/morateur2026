@@ -54,6 +54,13 @@ const QUARTIERS_CONFIG = [
 export async function POST() {
   try {
     const supabase = await createClient()
+
+    // Authentication check - only admins can seed data
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    }
+
     const results: string[] = []
 
     for (const config of QUARTIERS_CONFIG) {
