@@ -27,6 +27,9 @@ export async function POST(request: NextRequest) {
   const arrayBuffer = await file.arrayBuffer()
   const buffer = new Uint8Array(arrayBuffer)
 
+  // Creer le bucket s'il n'existe pas (idempotent)
+  await supabase.storage.createBucket('images', { public: true }).catch(() => {})
+
   const { error } = await supabase.storage
     .from('images')
     .upload(filePath, buffer, {

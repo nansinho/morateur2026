@@ -59,10 +59,12 @@ export default function TeamPage() {
     if (!editData.name) { toast.error('Le nom est obligatoire'); return }
     setSaving(true)
     if (editId) {
-      await supabase.from('team_members').update(editData).eq('id', editId)
+      const { error } = await supabase.from('team_members').update(editData).eq('id', editId)
+      if (error) { toast.error('Erreur lors de la modification : ' + error.message); setSaving(false); return }
       toast.success('Membre modifié')
     } else {
-      await supabase.from('team_members').insert(editData)
+      const { error } = await supabase.from('team_members').insert(editData)
+      if (error) { toast.error('Erreur lors de l\'ajout : ' + error.message); setSaving(false); return }
       toast.success('Membre ajouté')
     }
     setSaving(false)
