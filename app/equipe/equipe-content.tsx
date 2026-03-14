@@ -119,13 +119,13 @@ export default function EquipeContent({ members }: EquipeContentProps) {
                 </div>
 
                 {/* Info band below image */}
-                <div className="bg-primary p-4 sm:p-5 flex flex-col gap-2">
+                <div className="bg-primary/85 backdrop-blur-sm p-4 sm:p-5 flex flex-col gap-2">
                   <h3
-                    className="font-accent font-extrabold text-primary-foreground text-lg sm:text-xl leading-[0.95] group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide break-words"
+                    className="font-accent font-extrabold text-primary-foreground text-sm sm:text-base leading-[0.95] group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide truncate"
                   >
                     {member.name}
                   </h3>
-                  <p className="text-primary-foreground/60 text-xs sm:text-sm leading-relaxed line-clamp-3">
+                  <p className="text-primary-foreground/60 text-xs sm:text-sm leading-relaxed line-clamp-2">
                     {member.description}
                   </p>
                 </div>
