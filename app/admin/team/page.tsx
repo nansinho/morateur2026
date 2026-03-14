@@ -152,7 +152,7 @@ export default function TeamPage() {
               </div>
 
               {/* Info band - slide up on hover */}
-              <div className="absolute bottom-0 left-0 right-0 z-10 bg-primary/85 backdrop-blur-sm p-4 flex flex-col gap-1.5 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out">
+              <div className="absolute bottom-0 left-0 right-0 z-10 bg-primary/85 backdrop-blur-sm p-4 flex flex-col gap-1.5 max-h-[60%] translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out">
                 <p className="font-accent font-extrabold text-primary-foreground text-sm uppercase tracking-wide truncate">
                   {member.name}
                 </p>

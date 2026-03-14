@@ -56,8 +56,8 @@ const TeamSection = () => {
                   transition={{ delay: i * 0.08, duration: 0.5 }}
                   className="group"
                 >
-                  <div className="relative rounded-2xl overflow-hidden shadow-lg flex flex-col">
-                    <div className="aspect-[3/4] overflow-hidden relative -mb-px">
+                  <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                    <div className="aspect-[3/4] overflow-hidden relative">
                       <Image
                         src={m.img}
                         alt={m.name}
@@ -71,7 +71,8 @@ const TeamSection = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="relative z-10 bg-primary/85 backdrop-blur-sm p-4 sm:p-5">
+                    {/* Info band - slide up on hover */}
+                    <div className="absolute bottom-0 left-0 right-0 z-10 bg-primary/85 backdrop-blur-sm p-4 sm:p-5 max-h-[60%] translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out">
                       <h3 className="font-accent font-extrabold text-primary-foreground text-sm sm:text-base leading-snug group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide truncate">
                         {m.name}
                       </h3>
