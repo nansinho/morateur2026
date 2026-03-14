@@ -100,7 +100,7 @@ export default function EquipeContent({ members }: EquipeContentProps) {
             >
               <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/40 flex flex-col">
                 {/* Photo */}
-                <div className="aspect-[3/4] overflow-hidden relative">
+                <div className="aspect-[3/4] overflow-hidden relative -mb-px">
                   <Image
                     src={member.image}
                     alt={member.name}
@@ -119,7 +119,7 @@ export default function EquipeContent({ members }: EquipeContentProps) {
                 </div>
 
                 {/* Info band below image */}
-                <div className="bg-primary/85 backdrop-blur-sm p-4 sm:p-5 flex flex-col gap-2">
+                <div className="relative z-10 bg-primary/85 backdrop-blur-sm p-4 sm:p-5 flex flex-col gap-2">
                   <h3
                     className="font-accent font-extrabold text-primary-foreground text-sm sm:text-base leading-[0.95] group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide truncate"
                   >

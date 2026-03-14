@@ -59,7 +59,7 @@ const TeamSection = () => {
                   className="group"
                 >
                   <div className="relative rounded-2xl overflow-hidden shadow-lg flex flex-col">
-                    <div className="aspect-[3/4] overflow-hidden relative">
+                    <div className="aspect-[3/4] overflow-hidden relative -mb-px">
                       <Image
                         src={m.img}
                         alt={m.name}
@@ -73,7 +73,7 @@ const TeamSection = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="bg-primary/85 backdrop-blur-sm p-4 sm:p-5">
+                    <div className="relative z-10 bg-primary/85 backdrop-blur-sm p-4 sm:p-5">
                       <h3 className="font-accent font-extrabold text-primary-foreground text-sm sm:text-base leading-snug group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide truncate">
                         {m.name}
                       </h3>
