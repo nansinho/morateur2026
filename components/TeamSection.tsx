@@ -57,7 +57,7 @@ const TeamSection = () => {
                   className="group"
                 >
                   <div className="relative rounded-2xl overflow-hidden shadow-lg">
-                    <div className="aspect-[3/4] overflow-hidden relative">
+                    <div className="aspect-[3/5] overflow-hidden relative">
                       <Image
                         src={m.img}
                         alt={m.name}

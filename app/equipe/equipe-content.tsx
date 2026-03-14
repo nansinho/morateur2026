@@ -98,7 +98,7 @@ export default function EquipeContent({ members }: EquipeContentProps) {
             >
               <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/40">
                 {/* Photo */}
-                <div className="aspect-[3/4] overflow-hidden relative">
+                <div className="aspect-[3/5] overflow-hidden relative">
                   <Image
                     src={member.image}
                     alt={member.name}

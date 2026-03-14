@@ -92,7 +92,7 @@ export default function TeamPage() {
       {loading ? (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="aspect-[3/4] bg-card/50 rounded-[1.25rem] animate-pulse" />
+            <div key={i} className="aspect-[3/5] bg-card/50 rounded-[1.25rem] animate-pulse" />
           ))}
         </div>
       ) : members.length === 0 ? (
@@ -108,7 +108,7 @@ export default function TeamPage() {
               onClick={() => openEdit(member)}
             >
               {/* Photo */}
-              <div className="aspect-[3/4] overflow-hidden relative -mb-px bg-secondary/30">
+              <div className="aspect-[3/5] overflow-hidden relative -mb-px bg-secondary/30">
                 {member.image ? (
                   <Image
                     src={member.image}
