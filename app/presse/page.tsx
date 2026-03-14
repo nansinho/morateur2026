@@ -57,7 +57,7 @@ export default async function PressePage() {
   const { data } = await supabase
     .from('press_articles')
     .select('*')
-    .order('sort_order')
+    .order('sort_order', { ascending: false })
 
   const articles = (data ?? []) as PressArticle[]
 
