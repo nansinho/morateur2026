@@ -96,9 +96,9 @@ export default function EquipeContent({ members }: EquipeContentProps) {
               transition={{ delay: i * 0.1, duration: 0.5 }}
               className="group cursor-pointer"
             >
-              <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/40 flex flex-col">
+              <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/40">
                 {/* Photo */}
-                <div className="aspect-[3/4] overflow-hidden relative -mb-px">
+                <div className="aspect-[3/4] overflow-hidden relative">
                   <Image
                     src={member.image}
                     alt={member.name}
@@ -116,14 +116,14 @@ export default function EquipeContent({ members }: EquipeContentProps) {
                   </div>
                 </div>
 
-                {/* Info band below image */}
-                <div className="relative z-10 bg-primary/85 backdrop-blur-sm p-4 sm:p-5 flex flex-col gap-2">
+                {/* Info band - slide up on hover */}
+                <div className="absolute bottom-0 left-0 right-0 z-10 bg-primary/85 backdrop-blur-sm p-4 sm:p-5 flex flex-col gap-2 max-h-[60%] translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out">
                   <h3
                     className="font-accent font-extrabold text-primary-foreground text-sm sm:text-base leading-[0.95] group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide truncate"
                   >
                     {member.name}
                   </h3>
-                  <p className="text-primary-foreground/60 text-xs sm:text-sm leading-relaxed line-clamp-2">
+                  <p className="text-primary-foreground/60 text-xs sm:text-sm leading-relaxed overflow-y-auto">
                     {member.description}
                   </p>
                 </div>
