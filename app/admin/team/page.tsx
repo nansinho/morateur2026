@@ -90,9 +90,9 @@ export default function TeamPage() {
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-64 bg-card/50 rounded-2xl animate-pulse" />
+            <div key={i} className="aspect-[3/4] bg-card/50 rounded-[1.25rem] animate-pulse" />
           ))}
         </div>
       ) : members.length === 0 ? (
@@ -100,20 +100,21 @@ export default function TeamPage() {
           <CardContent className="py-12 text-center text-muted-foreground/60">Aucun membre dans l&apos;équipe</CardContent>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {members.map((member) => (
-            <Card
+            <div
               key={member.id}
-              className="bg-card/50 border-border/50 group hover:bg-card/80 transition-all cursor-pointer overflow-hidden"
+              className="group cursor-pointer rounded-[1.25rem] overflow-hidden shadow-lg flex flex-col"
               onClick={() => openEdit(member)}
             >
-              <div className="relative aspect-[4/3] bg-secondary/30 overflow-hidden">
+              {/* Photo */}
+              <div className="aspect-[3/4] overflow-hidden relative -mb-px bg-secondary/30">
                 {member.image ? (
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
-                    className="object-cover transition-transform group-hover:scale-105"
+                    className="object-cover object-top transition-transform duration-200 group-hover:scale-110"
                     unoptimized
                   />
                 ) : (
@@ -121,6 +122,15 @@ export default function TeamPage() {
                     <User className="w-12 h-12 text-muted-foreground/20" />
                   </div>
                 )}
+
+                {/* Role badge */}
+                <div className="absolute top-3 left-3">
+                  <span className="gradient-lime text-accent-foreground px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-extrabold uppercase tracking-wider">
+                    {member.role}
+                  </span>
+                </div>
+
+                {/* Menu */}
                 <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -140,14 +150,17 @@ export default function TeamPage() {
                   </DropdownMenu>
                 </div>
               </div>
-              <CardContent className="p-4">
-                <p className="font-semibold text-foreground truncate">{member.name}</p>
-                <p className="text-sm text-campaign-lime mt-0.5">{member.role}</p>
+
+              {/* Info band */}
+              <div className="relative z-10 bg-primary/85 backdrop-blur-sm p-4 flex flex-col gap-1.5">
+                <p className="font-accent font-extrabold text-primary-foreground text-sm uppercase tracking-wide truncate">
+                  {member.name}
+                </p>
                 {member.description && (
-                  <p className="text-xs text-muted-foreground/60 mt-2 line-clamp-2">{member.description}</p>
+                  <p className="text-primary-foreground/60 text-xs leading-relaxed line-clamp-2">{member.description}</p>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       )}
