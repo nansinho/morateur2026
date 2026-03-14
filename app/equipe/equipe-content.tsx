@@ -98,9 +98,9 @@ export default function EquipeContent({ members }: EquipeContentProps) {
               whileTap={{ scale: 0.97 }}
               className="group cursor-pointer"
             >
-              <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/40">
-                {/* Photo 9:16 */}
-                <div className="aspect-[3/4] sm:aspect-[9/16] overflow-hidden relative">
+              <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/40 flex flex-col">
+                {/* Photo */}
+                <div className="aspect-[3/4] overflow-hidden relative">
                   <Image
                     src={member.image}
                     alt={member.name}
@@ -109,7 +109,6 @@ export default function EquipeContent({ members }: EquipeContentProps) {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     unoptimized
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/15 to-transparent" />
 
                   {/* Role badge */}
                   <div className="absolute top-4 left-4">
@@ -117,18 +116,18 @@ export default function EquipeContent({ members }: EquipeContentProps) {
                       {member.role}
                     </span>
                   </div>
+                </div>
 
-                  {/* Bottom content */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 flex flex-col justify-end">
-                    <h3
-                      className="font-accent font-extrabold text-primary-foreground text-2xl sm:text-3xl leading-[0.95] group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide -rotate-3 mb-3 break-words overflow-hidden"
-                    >
-                      {member.name}
-                    </h3>
-                    <p className="text-primary-foreground/60 text-xs sm:text-sm leading-relaxed line-clamp-3">
-                      {member.description}
-                    </p>
-                  </div>
+                {/* Info band below image */}
+                <div className="bg-primary p-4 sm:p-5 flex flex-col gap-2">
+                  <h3
+                    className="font-accent font-extrabold text-primary-foreground text-lg sm:text-xl leading-[0.95] group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide break-words"
+                  >
+                    {member.name}
+                  </h3>
+                  <p className="text-primary-foreground/60 text-xs sm:text-sm leading-relaxed line-clamp-3">
+                    {member.description}
+                  </p>
                 </div>
               </div>
             </motion.div>
