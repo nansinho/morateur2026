@@ -58,22 +58,23 @@ const TeamSection = () => {
                   whileTap={{ scale: 0.97 }}
                   className="group"
                 >
-                  <div className="relative rounded-2xl overflow-hidden aspect-[3/4] shadow-lg">
-                    <Image
-                      src={m.img}
-                      alt={m.name}
-                      fill
-                      className="object-cover object-center transition-transform duration-200 group-hover:scale-110"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent" />
-                    <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
-                      <span className="gradient-lime text-accent-foreground px-3 py-1 sm:px-4 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider">
-                        {m.role}
-                      </span>
+                  <div className="relative rounded-2xl overflow-hidden shadow-lg flex flex-col">
+                    <div className="aspect-[3/4] overflow-hidden relative">
+                      <Image
+                        src={m.img}
+                        alt={m.name}
+                        fill
+                        className="object-cover object-center transition-transform duration-200 group-hover:scale-110"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                      <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+                        <span className="gradient-lime text-accent-foreground px-3 py-1 sm:px-4 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider">
+                          {m.role}
+                        </span>
+                      </div>
                     </div>
-                    <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-                      <h3 className="font-accent font-extrabold text-primary-foreground text-base sm:text-lg leading-snug group-hover:text-campaign-lime transition-colors duration-200">
+                    <div className="bg-primary p-4 sm:p-5">
+                      <h3 className="font-accent font-extrabold text-primary-foreground text-base sm:text-lg leading-snug group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide">
                         {m.name}
                       </h3>
                     </div>
