@@ -20,7 +20,7 @@ import {
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Plus, Pencil, Trash2, Loader2, ExternalLink, MoreHorizontal } from 'lucide-react'
+import { Plus, Pencil, Trash2, Loader2, ExternalLink, MoreHorizontal, Globe, Sparkles } from 'lucide-react'
 import { toast } from 'sonner'
 import ImageUpload from '@/components/admin/image-upload'
 
@@ -34,6 +34,8 @@ export default function PressPage() {
   const [editId, setEditId] = useState<string | null>(null)
   const [editData, setEditData] = useState(emptyPress)
   const [deleteId, setDeleteId] = useState<string | null>(null)
+  const [scrapeUrl, setScrapeUrl] = useState('')
+  const [scraping, setScraping] = useState(false)
   const supabase = createClient()
 
   const fetchArticles = useCallback(async () => {
@@ -47,7 +49,37 @@ export default function PressPage() {
   const openCreate = () => {
     setEditId(null)
     setEditData({ ...emptyPress, sort_order: articles.length + 1 })
+    setScrapeUrl('')
     setEditOpen(true)
+  }
+
+  const handleScrape = async () => {
+    if (!scrapeUrl.trim()) { toast.error('Collez une URL d\'article'); return }
+    setScraping(true)
+    try {
+      const res = await fetch('/api/press/scrape', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: scrapeUrl.trim() }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Erreur lors de la récupération')
+      setEditData(prev => ({
+        ...prev,
+        title: data.title || prev.title,
+        excerpt: data.excerpt || prev.excerpt,
+        source: data.source || prev.source,
+        author: data.author || prev.author,
+        date: data.date || prev.date,
+        logo: data.logo || prev.logo,
+        url: data.url || scrapeUrl.trim(),
+      }))
+      toast.success('Métadonnées récupérées !')
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Erreur lors de la récupération')
+    } finally {
+      setScraping(false)
+    }
   }
 
   const openEdit = (a: PressArticle) => {
@@ -162,6 +194,35 @@ export default function PressPage() {
             <DialogTitle>{editId ? 'Modifier l\'article presse' : 'Nouvel article presse'}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 mt-2">
+            {/* Auto-fetch from URL */}
+            {!editId && (
+              <div className="space-y-2 pb-4 border-b border-border/50">
+                <Label className="text-foreground/80 flex items-center gap-1.5">
+                  <Globe className="w-3.5 h-3.5" />
+                  Récupérer depuis une URL
+                </Label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    value={scrapeUrl}
+                    onChange={(e) => setScrapeUrl(e.target.value)}
+                    className="bg-secondary/50 border-border text-foreground flex-1"
+                    placeholder="https://www.laprovence.com/article/..."
+                    onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleScrape())}
+                  />
+                  <Button
+                    type="button"
+                    onClick={handleScrape}
+                    disabled={scraping}
+                    className="gradient-lime text-accent-foreground font-accent font-bold shrink-0"
+                  >
+                    {scraping ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 mr-1.5" />}
+                    {scraping ? 'Récupération...' : 'Récupérer'}
+                  </Button>
+                </div>
+                <p className="text-[10px] text-muted-foreground/50">Collez l&apos;URL de l&apos;article pour pré-remplir automatiquement les champs</p>
+              </div>
+            )}
+
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="text-foreground/80">Source (média)</Label>
