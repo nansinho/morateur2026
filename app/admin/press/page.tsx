@@ -39,7 +39,7 @@ export default function PressPage() {
   const supabase = createClient()
 
   const fetchArticles = useCallback(async () => {
-    const { data } = await supabase.from('press_articles').select('*').order('sort_order')
+    const { data } = await supabase.from('press_articles').select('*').order('sort_order', { ascending: false })
     setArticles((data as PressArticle[]) || [])
     setLoading(false)
   }, [supabase])
