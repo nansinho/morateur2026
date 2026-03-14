@@ -73,8 +73,8 @@ const TeamSection = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="bg-primary p-4 sm:p-5">
-                      <h3 className="font-accent font-extrabold text-primary-foreground text-base sm:text-lg leading-snug group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide">
+                    <div className="bg-primary/85 backdrop-blur-sm p-4 sm:p-5">
+                      <h3 className="font-accent font-extrabold text-primary-foreground text-sm sm:text-base leading-snug group-hover:text-campaign-lime transition-colors duration-200 uppercase tracking-wide truncate">
                         {m.name}
                       </h3>
                     </div>
