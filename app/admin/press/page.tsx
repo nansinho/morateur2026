@@ -23,6 +23,7 @@ import {
 import { Plus, Pencil, Trash2, Loader2, ExternalLink, MoreHorizontal, Globe, Sparkles } from 'lucide-react'
 import { toast } from 'sonner'
 import ImageUpload from '@/components/admin/image-upload'
+import { parseFrenchDate } from '@/lib/utils'
 
 const emptyPress = { source: '', author: '', date: '', title: '', excerpt: '', url: '', logo: '', sort_order: 0 }
 
@@ -39,8 +40,11 @@ export default function PressPage() {
   const supabase = createClient()
 
   const fetchArticles = useCallback(async () => {
-    const { data } = await supabase.from('press_articles').select('*').order('sort_order', { ascending: false })
-    setArticles((data as PressArticle[]) || [])
+    const { data } = await supabase.from('press_articles').select('*')
+    const sorted = ((data as PressArticle[]) || []).sort(
+      (a, b) => parseFrenchDate(b.date).getTime() - parseFrenchDate(a.date).getTime()
+    )
+    setArticles(sorted)
     setLoading(false)
   }, [supabase])
 

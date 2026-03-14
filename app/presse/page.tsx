@@ -3,6 +3,7 @@ import PresseContent from './presse-content'
 import { SITE_URL, CANDIDATE } from '@/lib/site-config'
 import { createClient } from '@/lib/supabase/server'
 import type { PressArticle } from '@/lib/types/database'
+import { parseFrenchDate } from '@/lib/utils'
 
 export const revalidate = 60
 
@@ -57,9 +58,10 @@ export default async function PressePage() {
   const { data } = await supabase
     .from('press_articles')
     .select('*')
-    .order('sort_order', { ascending: false })
 
-  const articles = (data ?? []) as PressArticle[]
+  const articles = ((data ?? []) as PressArticle[]).sort(
+    (a, b) => parseFrenchDate(b.date).getTime() - parseFrenchDate(a.date).getTime()
+  )
 
   return (
     <>
