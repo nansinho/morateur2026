@@ -107,6 +107,7 @@ export default function EquipeContent({ members }: EquipeContentProps) {
                     fill
                     className="object-cover object-top transition-transform duration-200 group-hover:scale-110"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    unoptimized
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/15 to-transparent" />
 
