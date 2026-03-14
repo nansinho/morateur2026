@@ -94,8 +94,6 @@ export default function EquipeContent({ members }: EquipeContentProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
-              whileHover={{ y: -4, transition: { type: "tween", duration: 0.15 } }}
-              whileTap={{ scale: 0.97 }}
               className="group cursor-pointer"
             >
               <div className="relative rounded-[1.25rem] overflow-hidden shadow-lg transition-all duration-200 group-hover:shadow-2xl group-hover:shadow-black/40 flex flex-col">
