@@ -104,7 +104,7 @@ export default function TeamPage() {
           {members.map((member) => (
             <div
               key={member.id}
-              className="group cursor-pointer rounded-[1.25rem] overflow-hidden shadow-lg flex flex-col"
+              className="group cursor-pointer rounded-[1.25rem] overflow-hidden shadow-lg relative"
               onClick={() => openEdit(member)}
             >
               {/* Photo */}
@@ -151,13 +151,13 @@ export default function TeamPage() {
                 </div>
               </div>
 
-              {/* Info band */}
-              <div className="relative z-10 bg-primary/85 backdrop-blur-sm p-4 flex flex-col gap-1.5">
+              {/* Info band - slide up on hover */}
+              <div className="absolute bottom-0 left-0 right-0 z-10 bg-primary/85 backdrop-blur-sm p-4 flex flex-col gap-1.5 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out">
                 <p className="font-accent font-extrabold text-primary-foreground text-sm uppercase tracking-wide truncate">
                   {member.name}
                 </p>
                 {member.description && (
-                  <p className="text-primary-foreground/60 text-xs leading-relaxed line-clamp-2">{member.description}</p>
+                  <p className="text-primary-foreground/60 text-xs leading-relaxed">{member.description}</p>
                 )}
               </div>
             </div>
